@@ -4,7 +4,6 @@ import logo from './assets/logo-symbol.png';
 import profilePhoto from './assets/profile-photo.jpg';
 
 export default function App() {
-  export default function App() {
   const [isHovered, setIsHovered] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
@@ -685,5 +684,4 @@ export default function App() {
       </div>
     </div>
   );
-}
 }
