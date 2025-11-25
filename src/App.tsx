@@ -576,7 +576,7 @@ export default function App() {
               <div 
                 key={index}
                 style={{
-                  padding: '24px',
+                  padding: '8px 24px',
                   borderRadius: '16px',
                   cursor: 'pointer',
                   background: expandedFaq === index ? 'rgba(0, 0, 0, 0.02)' : 'rgba(0, 0, 0, 0.01)',
