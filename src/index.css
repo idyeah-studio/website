@@ -209,6 +209,10 @@ html {
     box-sizing: border-box !important;
   }
 
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
   /* Shrink logo */
   img[alt="IDYeah Studio"] {
     width: 180px !important;
