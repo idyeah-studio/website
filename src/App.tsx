@@ -226,7 +226,7 @@ export default function App() {
         </div>
 
         {/* Testimonials */}
-        <!--
+        {/*
         <div 
           style={{
             paddingBottom: 'clamp(96px, 20vw, 144px)',
@@ -318,7 +318,7 @@ export default function App() {
             </div>
           </div>
         </div>
-        -->
+        */}
 
         {/* How This Works */}
         <div 
