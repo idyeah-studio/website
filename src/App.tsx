@@ -8,17 +8,43 @@ export default function App() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif' }}>
-      <div className="w-full max-w-[720px] mx-auto px-4 sm:px-6">
+    <div 
+      style={{ 
+        minHeight: '100vh',
+        backgroundColor: '#ffffff',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif'
+      }}
+    >
+      <div 
+        style={{
+          width: '100%',
+          maxWidth: '720px',
+          margin: '0 auto',
+          padding: '0 16px'
+        }}
+      >
         
         {/* Hero Section */}
-        <div className="pt-16 sm:pt-24 pb-24 sm:pb-36 text-center">
-          <div className="flex justify-center mb-12 sm:mb-20">
+        <div 
+          style={{
+            paddingTop: '64px',
+            paddingBottom: '96px',
+            textAlign: 'center'
+          }}
+        >
+          <div 
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: '48px'
+            }}
+          >
             <img 
               src={logo} 
               alt="IDYeah Studio"
-              className="w-[240px] sm:w-[320px] h-auto"
               style={{
+                width: 'clamp(240px, 60vw, 320px)',
+                height: 'auto',
                 animation: 'float 5s ease-in-out infinite alternate',
                 filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 0.06))'
               }}
@@ -26,27 +52,28 @@ export default function App() {
           </div>
 
           <h1 
-            className="mb-6 sm:mb-10 px-4"
             style={{
               fontSize: 'clamp(32px, 8vw, 40px)',
               fontWeight: 600,
               lineHeight: 1.15,
               color: '#222222',
-              letterSpacing: '-0.02em'
+              letterSpacing: '-0.02em',
+              marginBottom: 'clamp(24px, 5vw, 40px)',
+              padding: '0 16px'
             }}
           >
             Clarity that ships.
           </h1>
 
           <p 
-            className="px-4 mb-8"
             style={{
               fontSize: 'clamp(16px, 4vw, 18px)',
               fontWeight: 400,
               lineHeight: 1.6,
               color: '#505050',
               maxWidth: '600px',
-              margin: '0 auto 32px'
+              margin: '0 auto 32px',
+              padding: '0 16px'
             }}
           >
             Strategic brand and UX direction for founders building real products. No bloat. No endless decks. Just the clarity you need to move forward.
@@ -66,40 +93,56 @@ export default function App() {
         </div>
 
         {/* What You Get */}
-        <div className="pb-24 sm:pb-36 relative">
+        <div 
+          style={{
+            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            position: 'relative'
+          }}
+        >
           <div 
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-px" 
-            style={{ backgroundColor: '#E5E5E5' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '48px',
+              height: '1px',
+              backgroundColor: '#E5E5E5'
+            }}
           />
           
           <h2 
-            className="text-center mb-16 sm:mb-24 pt-16 sm:pt-20"
             style={{
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
               color: '#222222',
-              letterSpacing: '-0.01em'
+              letterSpacing: '-0.01em',
+              textAlign: 'center',
+              marginBottom: 'clamp(64px, 15vw, 96px)',
+              paddingTop: 'clamp(64px, 15vw, 80px)'
             }}
           >
             What You Get
           </h2>
 
-          <div className="space-y-8 sm:space-y-14">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 8vw, 56px)' }}>
             <div 
-              className="p-6 sm:p-8 rounded-2xl transition-all duration-300"
               style={{
+                padding: 'clamp(24px, 6vw, 32px)',
+                borderRadius: '16px',
                 background: 'rgba(0, 0, 0, 0.01)',
-                border: '1px solid rgba(0, 0, 0, 0.04)'
+                border: '1px solid rgba(0, 0, 0, 0.04)',
+                transition: 'all 0.3s'
               }}
             >
               <h3 
-                className="mb-3 sm:mb-4"
                 style={{
                   fontSize: 'clamp(18px, 4.5vw, 20px)',
                   fontWeight: 600,
                   lineHeight: 1.3,
-                  color: '#222222'
+                  color: '#222222',
+                  marginBottom: 'clamp(12px, 3vw, 16px)'
                 }}
               >
                 Brand/UX Audit
@@ -117,19 +160,21 @@ export default function App() {
             </div>
 
             <div 
-              className="p-6 sm:p-8 rounded-2xl transition-all duration-300"
               style={{
+                padding: 'clamp(24px, 6vw, 32px)',
+                borderRadius: '16px',
                 background: 'rgba(0, 0, 0, 0.01)',
-                border: '1px solid rgba(0, 0, 0, 0.04)'
+                border: '1px solid rgba(0, 0, 0, 0.04)',
+                transition: 'all 0.3s'
               }}
             >
               <h3 
-                className="mb-3 sm:mb-4"
                 style={{
                   fontSize: 'clamp(18px, 4.5vw, 20px)',
                   fontWeight: 600,
                   lineHeight: 1.3,
-                  color: '#222222'
+                  color: '#222222',
+                  marginBottom: 'clamp(12px, 3vw, 16px)'
                 }}
               >
                 Positioning & Messaging
@@ -147,19 +192,21 @@ export default function App() {
             </div>
 
             <div 
-              className="p-6 sm:p-8 rounded-2xl transition-all duration-300"
               style={{
+                padding: 'clamp(24px, 6vw, 32px)',
+                borderRadius: '16px',
                 background: 'rgba(0, 0, 0, 0.01)',
-                border: '1px solid rgba(0, 0, 0, 0.04)'
+                border: '1px solid rgba(0, 0, 0, 0.04)',
+                transition: 'all 0.3s'
               }}
             >
               <h3 
-                className="mb-3 sm:mb-4"
                 style={{
                   fontSize: 'clamp(18px, 4.5vw, 20px)',
                   fontWeight: 600,
                   lineHeight: 1.3,
-                  color: '#222222'
+                  color: '#222222',
+                  marginBottom: 'clamp(12px, 3vw, 16px)'
                 }}
               >
                 Product Design
@@ -179,26 +226,48 @@ export default function App() {
         </div>
 
         {/* Testimonials */}
-        <div className="pb-24 sm:pb-36 relative">
+        <div 
+          style={{
+            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            position: 'relative'
+          }}
+        >
           <div 
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-px" 
-            style={{ backgroundColor: '#E5E5E5' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '48px',
+              height: '1px',
+              backgroundColor: '#E5E5E5'
+            }}
           />
           
           <h2 
-            className="text-center mb-16 sm:mb-24 pt-16 sm:pt-20"
             style={{
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
               color: '#222222',
-              letterSpacing: '-0.01em'
+              letterSpacing: '-0.01em',
+              textAlign: 'center',
+              marginBottom: 'clamp(64px, 15vw, 96px)',
+              paddingTop: 'clamp(64px, 15vw, 80px)'
             }}
           >
             What Founders Say
           </h2>
 
-          <div className="space-y-10 sm:space-y-12 max-w-[640px] mx-auto">
+          <div 
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'clamp(40px, 10vw, 48px)',
+              maxWidth: '640px',
+              margin: '0 auto'
+            }}
+          >
             <div>
               <p 
                 style={{
@@ -250,26 +319,48 @@ export default function App() {
         </div>
 
         {/* How This Works */}
-        <div className="pb-24 sm:pb-36 relative">
+        <div 
+          style={{
+            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            position: 'relative'
+          }}
+        >
           <div 
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-px" 
-            style={{ backgroundColor: '#E5E5E5' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '48px',
+              height: '1px',
+              backgroundColor: '#E5E5E5'
+            }}
           />
           
           <h2 
-            className="text-center mb-16 sm:mb-24 pt-16 sm:pt-20"
             style={{
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
               color: '#222222',
-              letterSpacing: '-0.01em'
+              letterSpacing: '-0.01em',
+              textAlign: 'center',
+              marginBottom: 'clamp(64px, 15vw, 96px)',
+              paddingTop: 'clamp(64px, 15vw, 80px)'
             }}
           >
             How This Works
           </h2>
 
-          <div className="space-y-8 sm:space-y-10 max-w-[640px] mx-auto">
+          <div 
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'clamp(32px, 8vw, 40px)',
+              maxWidth: '640px',
+              margin: '0 auto'
+            }}
+          >
             <p 
               style={{
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
@@ -305,63 +396,85 @@ export default function App() {
 
             {/* What You'll Receive */}
             <div 
-              className="mt-8 p-6 sm:p-8 rounded-2xl"
               style={{
+                marginTop: '32px',
+                padding: 'clamp(24px, 6vw, 32px)',
+                borderRadius: '16px',
                 background: 'rgba(0, 0, 0, 0.01)',
                 border: '1px solid rgba(0, 0, 0, 0.04)'
               }}
             >
               <h3 
-                className="mb-4"
                 style={{
                   fontSize: 'clamp(16px, 4vw, 18px)',
                   fontWeight: 600,
                   lineHeight: 1.3,
-                  color: '#222222'
+                  color: '#222222',
+                  marginBottom: '16px'
                 }}
               >
                 What You'll Receive
               </h3>
-              <ul 
+              <div 
                 style={{
                   fontSize: 'clamp(15px, 3.5vw, 16px)',
                   fontWeight: 400,
                   lineHeight: 1.8,
-                  color: '#505050',
-                  listStyle: 'none',
-                  padding: 0
+                  color: '#505050'
                 }}
               >
-                <li style={{ marginBottom: '8px' }}>→ Written summary in Notion or Figma</li>
-                <li style={{ marginBottom: '8px' }}>→ Prioritized action roadmap</li>
-                <li style={{ marginBottom: '8px' }}>→ Annotated designs or wireframes (if applicable)</li>
-                <li>→ 2 weeks of async support post-delivery</li>
-              </ul>
+                <div style={{ marginBottom: '8px' }}>→ Written summary in Notion or Figma</div>
+                <div style={{ marginBottom: '8px' }}>→ Prioritized action roadmap</div>
+                <div style={{ marginBottom: '8px' }}>→ Annotated designs or wireframes (if applicable)</div>
+                <div>→ 2 weeks of async support post-delivery</div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* What's Different */}
-        <div className="pb-24 sm:pb-36 relative">
+        <div 
+          style={{
+            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            position: 'relative'
+          }}
+        >
           <div 
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-px" 
-            style={{ backgroundColor: '#E5E5E5' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '48px',
+              height: '1px',
+              backgroundColor: '#E5E5E5'
+            }}
           />
           
           <h2 
-            className="text-center mb-16 sm:mb-24 pt-16 sm:pt-20"
             style={{
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
               color: '#222222',
-              letterSpacing: '-0.01em'
+              letterSpacing: '-0.01em',
+              textAlign: 'center',
+              marginBottom: 'clamp(64px, 15vw, 96px)',
+              paddingTop: 'clamp(64px, 15vw, 80px)'
             }}
           >
             What's Different
           </h2>
 
-          <div className="space-y-8 sm:space-y-10 max-w-[640px] mx-auto">
+          <div 
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'clamp(32px, 8vw, 40px)',
+              maxWidth: '640px',
+              margin: '0 auto'
+            }}
+          >
             <p 
               style={{
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
@@ -398,26 +511,48 @@ export default function App() {
         </div>
 
         {/* FAQ Section */}
-        <div className="pb-24 sm:pb-36 relative">
+        <div 
+          style={{
+            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            position: 'relative'
+          }}
+        >
           <div 
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-px" 
-            style={{ backgroundColor: '#E5E5E5' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '48px',
+              height: '1px',
+              backgroundColor: '#E5E5E5'
+            }}
           />
           
           <h2 
-            className="text-center mb-16 sm:mb-24 pt-16 sm:pt-20"
             style={{
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
               color: '#222222',
-              letterSpacing: '-0.01em'
+              letterSpacing: '-0.01em',
+              textAlign: 'center',
+              marginBottom: 'clamp(64px, 15vw, 96px)',
+              paddingTop: 'clamp(64px, 15vw, 80px)'
             }}
           >
             Common Questions
           </h2>
 
-          <div className="space-y-6 max-w-[640px] mx-auto">
+          <div 
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px',
+              maxWidth: '640px',
+              margin: '0 auto'
+            }}
+          >
             {[
               {
                 q: "What if I'm pre-launch or very early stage?",
@@ -438,10 +573,13 @@ export default function App() {
             ].map((faq, index) => (
               <div 
                 key={index}
-                className="p-6 rounded-2xl cursor-pointer transition-all duration-300"
                 style={{
+                  padding: '24px',
+                  borderRadius: '16px',
+                  cursor: 'pointer',
                   background: expandedFaq === index ? 'rgba(0, 0, 0, 0.02)' : 'rgba(0, 0, 0, 0.01)',
-                  border: '1px solid rgba(0, 0, 0, 0.04)'
+                  border: '1px solid rgba(0, 0, 0, 0.04)',
+                  transition: 'all 0.3s'
                 }}
                 onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
               >
@@ -494,26 +632,48 @@ export default function App() {
         </div>
 
         {/* This Is For You If */}
-        <div className="pb-24 sm:pb-36 relative">
+        <div 
+          style={{
+            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            position: 'relative'
+          }}
+        >
           <div 
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-px" 
-            style={{ backgroundColor: '#E5E5E5' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '48px',
+              height: '1px',
+              backgroundColor: '#E5E5E5'
+            }}
           />
           
           <h2 
-            className="text-center mb-16 sm:mb-24 pt-16 sm:pt-20"
             style={{
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
               color: '#222222',
-              letterSpacing: '-0.01em'
+              letterSpacing: '-0.01em',
+              textAlign: 'center',
+              marginBottom: 'clamp(64px, 15vw, 96px)',
+              paddingTop: 'clamp(64px, 15vw, 80px)'
             }}
           >
             This Is For You If
           </h2>
 
-          <div className="space-y-8 sm:space-y-10 max-w-[640px] mx-auto">
+          <div 
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'clamp(32px, 8vw, 40px)',
+              maxWidth: '640px',
+              margin: '0 auto'
+            }}
+          >
             <p 
               style={{
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
@@ -550,21 +710,30 @@ export default function App() {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center pb-16 sm:pb-24">
+        <div 
+          style={{
+            textAlign: 'center',
+            paddingBottom: 'clamp(64px, 15vw, 96px)'
+          }}
+        >
           <div 
-            className="inline-block p-8 sm:p-10 rounded-3xl mb-8 max-w-full"
             style={{
+              display: 'inline-block',
+              padding: 'clamp(32px, 8vw, 40px)',
+              borderRadius: '24px',
+              marginBottom: '32px',
               background: 'rgba(0, 0, 0, 0.015)',
-              border: '1px solid rgba(0, 0, 0, 0.05)'
+              border: '1px solid rgba(0, 0, 0, 0.05)',
+              maxWidth: '100%'
             }}
           >
             <p 
-              className="mb-6 sm:mb-8"
               style={{
                 fontSize: 'clamp(16px, 4vw, 18px)',
                 fontWeight: 500,
                 lineHeight: 1.6,
-                color: '#222222'
+                color: '#222222',
+                marginBottom: 'clamp(24px, 6vw, 32px)'
               }}
             >
               Let's talk about your product.
@@ -595,14 +764,14 @@ export default function App() {
             </a>
 
             <p 
-              className="mt-6 sm:mt-8 px-4"
               style={{
                 fontSize: 'clamp(13px, 3vw, 14px)',
                 fontWeight: 400,
                 lineHeight: 1.6,
                 color: '#8A8A8A',
                 maxWidth: '480px',
-                margin: '24px auto 0'
+                margin: '24px auto 0',
+                padding: '0 16px'
               }}
             >
               30-minute intro call. Free. We'll discuss your product and whether an audit makes sense.
@@ -611,8 +780,14 @@ export default function App() {
         </div>
 
         {/* About / Footer with Photo */}
-        <div className="text-center py-16 sm:py-20 border-t" style={{ borderColor: '#E5E5E5' }}>
-          <div className="flex flex-col items-center mb-8">
+        <div 
+          style={{
+            textAlign: 'center',
+            padding: 'clamp(64px, 15vw, 80px) 0',
+            borderTop: '1px solid #E5E5E5'
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '32px' }}>
             <img 
               src={profilePhoto}
               alt="Vishal"
@@ -641,11 +816,11 @@ export default function App() {
           </div>
 
           <p 
-            className="mb-2"
             style={{
               fontSize: 'clamp(13px, 3vw, 14px)',
               fontWeight: 400,
-              color: '#8A8A8A'
+              color: '#8A8A8A',
+              marginBottom: '8px'
             }}
           >
             Design for the real world.
