@@ -205,7 +205,7 @@ html {
 
   /* Limit max-width wrapper */
   body > div > div {
-    padding: 0 16px !important;
+    padding: 0 24px !important;
   }
 
   /* Shrink logo */
