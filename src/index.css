@@ -197,3 +197,58 @@ html {
     transform: translateY(-5px);
   }
 }
+
+/* -----------------------------------------
+   MOBILE FIXES FOR SPACING / TYPOGRAPHY
+-------------------------------------------- */
+@media (max-width: 480px) {
+
+  /* Limit max-width wrapper */
+  body > div > div {
+    padding: 0 16px !important;
+  }
+
+  /* Shrink logo */
+  img[alt="IDYeah Studio"] {
+    width: 180px !important;
+    margin-bottom: 40px !important;
+  }
+
+  /* H1 scaling */
+  h1 {
+    font-size: 28px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 24px !important;
+  }
+
+  /* Body text */
+  p {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Section spacing – reduce the huge padding */
+  [style*="paddingTop: 96px"] {
+    padding-top: 48px !important;
+  }
+
+  [style*="paddingBottom: 144px"] {
+    padding-bottom: 72px !important;
+  }
+
+  [style*="marginBottom: 96px"] {
+    margin-bottom: 48px !important;
+  }
+
+  /* Cards */
+  [style*="padding: '32px'"] {
+    padding: 20px !important;
+  }
+
+  /* CTA block */
+  a[href^="mailto"] {
+    padding: 12px 24px !important;
+    font-size: 15px !important;
+  }
+}
+
