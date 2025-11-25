@@ -88,7 +88,7 @@ export default function App() {
               letterSpacing: '0.02em'
             }}
           >
-            Trusted by founders at early-stage SaaS, fintech, and B2B products
+            Trusted by founders at early and mid stage startups
           </p>
         </div>
 
@@ -226,6 +226,7 @@ export default function App() {
         </div>
 
         {/* Testimonials */}
+        <!--
         <div 
           style={{
             paddingBottom: 'clamp(96px, 20vw, 144px)',
@@ -317,6 +318,7 @@ export default function App() {
             </div>
           </div>
         </div>
+        -->
 
         {/* How This Works */}
         <div 
@@ -380,7 +382,7 @@ export default function App() {
                 color: '#505050'
               }}
             >
-              Most engagements are scoped between 150-200 hours and delivered over 3-6 weeks. Projects can be structured as focused audits or complete redesigns. Retainer engagements are not currently available.
+              Most engagements are scoped between 100-150 hours and delivered over 3-6 weeks. Projects can be structured as focused audits or complete redesigns. Retainer engagements are not currently available.
             </p>
 
             <p 
