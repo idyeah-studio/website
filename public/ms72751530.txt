@@ -1,0 +1,5 @@
+﻿{
+  "Description": "Domain ownership verification file for Microsoft 365 - place in the website root",
+  "Domain": "idyeah.studio",
+  "Id": "96362446-f627-47c3-889e-5fd8661669e0"
+}
