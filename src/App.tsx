@@ -2,10 +2,17 @@ import { useState } from 'react';
 import './index.css';
 import logo from './assets/logo-symbol.png';
 import profilePhoto from './assets/profile-photo.jpg';
+import ProposalCyberultron from "./ProposalCyberultron";
 
 export default function App() {
   const [isHovered, setIsHovered] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+
+  const path = window.location.pathname;
+
+  if (path === "/proposal-cyberultron-dec2025") {
+    return <ProposalCyberultron />;
+  }
 
   return (
     <div 
