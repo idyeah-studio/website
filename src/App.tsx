@@ -8,7 +8,7 @@ export default function App() {
   const [isHovered, setIsHovered] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
-  const path = window.location.pathname;
+  //const path = window.location.pathname;
 
  // if (path === "/proposal-cyberultron-dec2025") {
    // return <ProposalCyberultron />;
