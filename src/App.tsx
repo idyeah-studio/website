@@ -10,9 +10,9 @@ export default function App() {
 
   const path = window.location.pathname;
 
-  if (path === "/proposal-cyberultron-dec2025") {
-    return <ProposalCyberultron />;
-  }
+ // if (path === "/proposal-cyberultron-dec2025") {
+   // return <ProposalCyberultron />;
+  //}
 
   return (
     <div 
