@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './index.css';
 import logo from './assets/logo-symbol.png';
 import profilePhoto from './assets/profile-photo.jpg';
-import ProposalCyberultron from "./ProposalCyberultron";
+//import ProposalCyberultron from "./ProposalCyberultron";
 
 export default function App() {
   const [isHovered, setIsHovered] = useState(false);
