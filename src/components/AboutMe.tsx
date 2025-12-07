@@ -1,5 +1,3 @@
-import React from 'react';
-
 const css = `/* cspell:disable-file */
 /* webkit printing magic: print all background colors */
 html {
