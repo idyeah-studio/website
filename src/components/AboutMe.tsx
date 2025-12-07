@@ -763,6 +763,11 @@ export default function AboutMe() {
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: css }} />
+      <style dangerouslySetInnerHTML={{ __html: `
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif !important;
+        }
+      ` }} />
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
     </div>
   );
