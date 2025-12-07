@@ -722,9 +722,48 @@ const htmlContent = `<article id="2c267ccc-6bef-8082-ba66-df87a290220d" class="p
 </p></div><div style="display:contents" dir="auto"><hr id="2c267ccc-6bef-80ec-a5ba-f16eb457bd6d"/></div><div style="display:contents" dir="auto"><p id="2c267ccc-6bef-8097-ab0a-f46e87229135" class="">
 </p></div><div style="display:contents" dir="auto"><h2 id="2c267ccc-6bef-8048-894e-fc03f6b080dd" class=""><strong>Let’s Connect</strong></h2></div><div style="display:contents" dir="auto"><p id="2c267ccc-6bef-806d-867a-f2f6c9a775e9" class=""><strong>Vishal Mehta</strong></p></div><div style="display:contents" dir="auto"><p id="2c267ccc-6bef-80e1-8112-d99b969162bf" class="">Founder, IDYeah Studio</p></div><div style="display:contents" dir="auto"><p id="2c267ccc-6bef-8080-b7be-fcfed8870cf8" class=""><a href="mailto:vishal@idyeah.studio">vishal@idyeah.studio</a> • <a href="https://www.linkedin.com/in/vishalme">LinkedIn</a></p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span>`;
 
+import { Link } from 'react-router-dom';
+
 export default function AboutMe() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
+      {/* Header */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '24px',
+          zIndex: 10
+        }}
+      >
+        <Link
+          to="/"
+          style={{
+            fontSize: '14px',
+            fontWeight: 400,
+            color: '#222222',
+            textDecoration: 'none',
+            padding: '6px 16px',
+            borderRadius: '16px',
+            border: '1px solid #000000',
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            transition: 'all 0.2s'
+          }}
+          onMouseEnter={(e) => {
+            const target = e.target as HTMLElement;
+            target.style.backgroundColor = '#000000';
+            target.style.color = '#ffffff';
+          }}
+          onMouseLeave={(e) => {
+            const target = e.target as HTMLElement;
+            target.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            target.style.color = '#222222';
+          }}
+        >
+          Home
+        </Link>
+      </div>
+
       <style dangerouslySetInnerHTML={{ __html: css }} />
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
     </div>

@@ -25,18 +25,28 @@ export default function Home() {
         }}
       >
         <Link
-          to="/about"
+          to="/aboutme"
           style={{
-            fontSize: '16px',
-            fontWeight: 500,
+            fontSize: '14px',
+            fontWeight: 400,
             color: '#222222',
             textDecoration: 'none',
-            padding: '8px 16px',
-            borderRadius: '8px',
-            transition: 'background-color 0.2s'
+            padding: '6px 16px',
+            borderRadius: '16px',
+            border: '1px solid #000000',
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            transition: 'all 0.2s'
           }}
-          onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = 'rgba(0, 0, 0, 0.05)'}
-          onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = 'transparent'}
+          onMouseEnter={(e) => {
+            const target = e.target as HTMLElement;
+            target.style.backgroundColor = '#000000';
+            target.style.color = '#ffffff';
+          }}
+          onMouseLeave={(e) => {
+            const target = e.target as HTMLElement;
+            target.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            target.style.color = '#222222';
+          }}
         >
           About Me
         </Link>
