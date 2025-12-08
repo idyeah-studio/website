@@ -6,7 +6,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/aboutme" element={<AboutMe />} />
+      <Route path="/founderprofile" element={<AboutMe />} />
     </Routes>
   );
 }
