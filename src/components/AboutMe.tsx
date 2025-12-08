@@ -724,7 +724,7 @@ import { Link } from 'react-router-dom';
 
 export default function AboutMe() {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif' }}>
       {/* Header */}
       <div
         style={{
@@ -758,17 +758,79 @@ export default function AboutMe() {
             target.style.color = '#222222';
           }}
         >
-          Home
+          IDYeah.Studio
         </Link>
       </div>
 
-      <style dangerouslySetInnerHTML={{ __html: css }} />
-      <style dangerouslySetInnerHTML={{ __html: `
-        body {
-          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif !important;
-        }
-      ` }} />
-      <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '720px',
+          margin: '0 auto',
+          padding: '0 16px'
+        }}
+      >
+        <style dangerouslySetInnerHTML={{ __html: css }} />
+        <style dangerouslySetInnerHTML={{ __html: `
+          body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif !important;
+            max-width: 720px !important;
+            line-height: 1.7 !important;
+          }
+          h1, h2, h3 {
+            text-align: center !important;
+          }
+          h2 {
+            margin-top: 1rem !important;
+            margin-bottom: 96px !important;
+            padding-top: 96px !important;
+            position: relative !important;
+          }
+          h2:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 48px;
+            height: 1px;
+            background-color: #E5E5E5;
+          }
+          p, ul, ol {
+            text-align: left !important;
+          }
+          p[id="2c267ccc-6bef-80dc-9280-e0dc8dc88bb2"] {
+            text-align: center !important;
+          }
+          .callout {
+            padding: 1.5rem !important;
+            padding-bottom: 0.5rem !important;
+          }
+          .callout .icon {
+            display: none !important;
+          }
+          hr {
+            display: none !important;
+          }
+          p {
+            margin-top: 0 !important;
+            margin-bottom: clamp(20px, 5vw, 24px) !important;
+            font-size: clamp(15px, 3.5vw, 16px) !important;
+            font-weight: 400 !important;
+            color: #505050 !important;
+          }
+          p[id="2c267ccc-6bef-806d-867a-f2f6c9a775e9"],
+          p[id="2c267ccc-6bef-80e1-8112-d99b969162bf"],
+          p[id="2c267ccc-6bef-8080-b7be-fcfed8870cf8"] {
+            text-align: center !important;
+          }
+          p[id="2c267ccc-6bef-80e1-8112-d99b969162bf"] {
+            display: none !important;
+          }
+        ` }} />
+        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+
+      </div>
     </div>
   );
 }

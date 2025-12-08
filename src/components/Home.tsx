@@ -25,7 +25,7 @@ export default function Home() {
         }}
       >
         <Link
-          to="/aboutme"
+          to="/founderprofile"
           style={{
             fontSize: '14px',
             fontWeight: 400,
@@ -48,7 +48,7 @@ export default function Home() {
             target.style.color = '#222222';
           }}
         >
-          About Me
+          Founder Profile
         </Link>
       </div>
 
@@ -132,7 +132,7 @@ export default function Home() {
         {/* What You Get */}
         <div
           style={{
-            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            paddingBottom: 'clamp(64px, 15vw, 96px)',
             position: 'relative'
           }}
         >
@@ -265,7 +265,7 @@ export default function Home() {
         {/* How This Works */}
         <div
           style={{
-            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            paddingBottom: 'clamp(64px, 15vw, 96px)',
             position: 'relative'
           }}
         >
@@ -300,7 +300,7 @@ export default function Home() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 'clamp(32px, 8vw, 40px)',
+              gap: 'clamp(20px, 5vw, 24px)',
               maxWidth: '640px',
               margin: '0 auto'
             }}
@@ -310,7 +310,9 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050'
+                color: '#505050',
+                marginTop: 0,
+                marginBottom: 0
               }}
             >
               Great products earn trust through clarity. Most lose it through inconsistency, misalignment, and noise.
@@ -321,7 +323,9 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050'
+                color: '#505050',
+                marginTop: 0,
+                marginBottom: 0
               }}
             >
               Most engagements are scoped between 100-150 hours and delivered over 3-6 weeks. Projects can be structured as focused audits or complete redesigns. Retainer engagements are not currently available.
@@ -332,7 +336,9 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050'
+                color: '#505050',
+                marginTop: 0,
+                marginBottom: 0
               }}
             >
               You get strategic thinking, practical execution, and outputs that fit your reality—not theoretical frameworks or month-long processes.
@@ -379,7 +385,7 @@ export default function Home() {
         {/* What's Different */}
         <div
           style={{
-            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            paddingBottom: 'clamp(64px, 15vw, 96px)',
             position: 'relative'
           }}
         >
@@ -414,7 +420,7 @@ export default function Home() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 'clamp(32px, 8vw, 40px)',
+              gap: 'clamp(20px, 5vw, 24px)',
               maxWidth: '640px',
               margin: '0 auto'
             }}
@@ -424,7 +430,9 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050'
+                color: '#505050',
+                marginTop: 0,
+                marginBottom: 0
               }}
             >
               This is a one-person studio. When you work with me, you get focused, undivided attention—no account managers, no handoffs, no time-sharing across multiple clients.
@@ -435,7 +443,9 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050'
+                color: '#505050',
+                marginTop: 0,
+                marginBottom: 0
               }}
             >
               I blend human craft with AI-assisted workflows to deliver strategic work at speed without compromising quality. You get senior-level thinking and execution, optimized for real constraints.
@@ -446,7 +456,9 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050'
+                color: '#505050',
+                marginTop: 0,
+                marginBottom: 0
               }}
             >
               Every project is designed to create momentum, not dependency. You walk away with clarity, direction, and the ability to move forward on your own terms.
@@ -457,7 +469,7 @@ export default function Home() {
         {/* FAQ Section */}
         <div
           style={{
-            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            paddingBottom: 'clamp(64px, 15vw, 96px)',
             position: 'relative'
           }}
         >
@@ -578,7 +590,7 @@ export default function Home() {
         {/* This Is For You If */}
         <div
           style={{
-            paddingBottom: 'clamp(96px, 20vw, 144px)',
+            paddingBottom: 'clamp(64px, 15vw, 96px)',
             position: 'relative'
           }}
         >
@@ -613,7 +625,7 @@ export default function Home() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 'clamp(32px, 8vw, 40px)',
+              gap: 'clamp(20px, 5vw, 24px)',
               maxWidth: '640px',
               margin: '0 auto'
             }}
@@ -623,7 +635,9 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050'
+                color: '#505050',
+                marginTop: 0,
+                marginBottom: 0
               }}
             >
               You're a founder or product leader shipping something real. You have constraints. You value craft, but you need to move fast.
@@ -634,7 +648,9 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050'
+                color: '#505050',
+                marginTop: 0,
+                marginBottom: 0
               }}
             >
               Your product needs sharper positioning, clearer UX, or more cohesive branding—but you don't need an agency or six months of strategy sessions.
@@ -645,7 +661,9 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050'
+                color: '#505050',
+                marginTop: 0,
+                marginBottom: 0
               }}
             >
               You need someone who understands the work and can help you get unstuck. Now.
