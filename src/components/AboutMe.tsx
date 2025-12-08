@@ -721,7 +721,6 @@ const htmlContent = `<article id="2c267ccc-6bef-8082-ba66-df87a290220d" class="p
 </p></div><div style="display:contents" dir="auto"><h2 id="2c267ccc-6bef-8048-894e-fc03f6b080dd" class=""><strong>Let’s Connect</strong></h2></div><div style="display:contents" dir="auto"><p id="2c267ccc-6bef-806d-867a-f2f6c9a775e9" class=""><strong>Vishal Mehta</strong></p></div><div style="display:contents" dir="auto"><p id="2c267ccc-6bef-80e1-8112-d99b969162bf" class="">Founder, IDYeah Studio</p></div><div style="display:contents" dir="auto"><p id="2c267ccc-6bef-8080-b7be-fcfed8870cf8" class=""><a href="mailto:vishal@idyeah.studio">vishal@idyeah.studio</a> • <a href="https://www.linkedin.com/in/vishalme">LinkedIn</a></p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span>`;
 
 import { Link } from 'react-router-dom';
-import profilePhoto from '../assets/profile-photo.jpg';
 
 export default function AboutMe() {
   return (
