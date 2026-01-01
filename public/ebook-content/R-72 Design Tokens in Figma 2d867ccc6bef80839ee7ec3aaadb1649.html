@@ -1,0 +1,795 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-72: Design Tokens in Figma</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d867ccc-6bef-8083-9ee7-ec3aaadb1649" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d867ccc-6bef-8061-b0d1-e8e8524e90fc" class="">Recipe #72: Design Tokens in Figma</h1></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8080-9ac8-cc4dfd6e6071" class="">Category: Bonus — Figma  |  ⏱️ 35-45 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8019-8963-d43e0c2417a5" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="48abadd3-4de7-4210-823e-9abc67c2ce14"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a52a374b-37e0-446b-8dc6-08c62db0b8ed" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="e876c6ac-c0b2-4ee2-aec3-533c90fa8f3f" class="">You&#x27;re building a design system in Figma, creating reusable design tokens (Figma Variables), managing colors/typography/spacing systematically, supporting light/dark mode themes, or preparing designs for developer handoff. Your current Figma file has hardcoded values, inconsistent colors, no systematic spacing, difficult theme switching, or poor designer-developer handoff.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-807c-9c8e-c9ef04ffeddd"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="fdc6a47e-2eb7-483f-8be3-06d201f31530"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ab66e651-ccc8-4db6-81ff-161ace2ca732" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="44385dd7-8d3a-4ccd-a40d-2f8b1d0382d9" class="">Many designers create messy Figma files - hardcoding hex values everywhere (#3B82F6 used 200 times), inconsistent spacing (12px here, 14px there, no system), no design tokens (can&#x27;t switch themes, every color change is manual find-replace), poor naming (color-1, color-2, blue-dark-2 meaningless to developers), mixing primitive and semantic tokens (button uses &quot;Blue 500&quot; instead of &quot;Primary&quot;), or no light/dark mode support (separate files for each theme, nightmare to maintain). Teams waste hours manually updating colors, can&#x27;t quickly test dark mode, hand off designs with vague &quot;make it blue&quot; specs, or build products with visual inconsistencies. You need systematic design tokens - primitive tokens (foundational values: Blue 500, Spacing 4, Font Size 16), semantic tokens (purpose-based: Primary Color, Button Padding, Body Text), Figma Variables (color, number, string, boolean variables), mode support (light/dark themes, brand variants), token hierarchies (primitives → semantic → component-specific), and developer-friendly naming (follows code conventions, clear purpose).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80c0-b051-eb0732a5e2eb"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="f24514fa-f96d-448c-9eae-3775fff88700"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="027f3050-d050-43d9-9fb3-033508748591" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="7e9909c9-2737-4156-837d-8b3d045fa500" class="">The AI will provide token hierarchy (primitives → semantic → component tokens, three-tier organization), color token systems (primitive palettes, semantic tokens for Surface/Text/Border/Brand with light/dark modes), typography tokens (font size scales, weights, line heights, semantic text styles), spacing tokens (4px/8px-based scales, semantic Padding/Gap), semantic naming conventions (developer-friendly Category/Property/Variant patterns), light/dark mode implementation (Figma Variable modes, color variants, theme switching), token organization in Figma (collections, groups, scoping, documentation), and developer handoff guidance (JSON export, code naming alignment, Style Dictionary integration). You&#x27;ll get systematic approaches to build maintainable, scalable design token systems.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="c127d240-8385-4c4c-8001-3efe7beac25f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="ae8e5216-4de4-434e-ba42-06052db4349a"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="09cfc24f-4614-424a-b99d-7391b00ea32f" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c32c291-500d-4c7d-9eaa-abec6de609a3" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Design Systems Specialist focusing on design tokens, Figma Variables, semantic naming, and systematic design at scale.
+
+I&#x27;m creating design tokens in Figma for [Product/Design System] to systematize [Design Attributes] by building [Token Types] while supporting [Themes/Modes] and optimizing for [Team Needs].
+
+[OPTIONAL: Attach current Figma files with hardcoded values or existing token structure]
+
+Design token requirements:
+- Product type: [e.g., Design system, Component library, Product design, Multi-brand system]
+- Team size: [e.g., Solo designer, Small team (2-5), Large team (10+), Multiple product teams]
+- Token scope: [e.g., Colors only, Full system (color/type/spacing), Multi-brand, Component-specific tokens]
+- Themes needed: [e.g., Light/dark mode, Brand variants, Accessibility themes, Seasonal themes]
+- Developer handoff: [e.g., Design tokens export to code, Figma API integration, Manual specs]
+
+Current token problems:
+- [Problem 1: e.g., Hardcoded values - #3B82F6 used 500 times, can&#x27;t update globally, manual find-replace]
+- [Problem 2: e.g., No semantic tokens - buttons use &quot;Blue 500&quot; not &quot;Primary&quot;, unclear purpose]
+- [Problem 3: e.g., Inconsistent spacing - 12px, 14px, 16px, 18px random gaps, no system]
+- [Problem 4: e.g., No theme support - separate files for light/dark, double maintenance, sync nightmare]
+- [Problem 5: e.g., Poor naming - color-1, gray-dark-2, blue-thing meaningless to developers]
+
+Team context: [Figma expertise, design system maturity, developer collaboration, token export needs]
+
+Please provide:
+1. Token hierarchy and structure (primitives vs semantic vs component tokens, organization)
+2. Color tokens in Figma (primitive colors, semantic colors, surface/text/border tokens, modes for themes)
+3. Typography tokens (font families, sizes, weights, line heights, semantic text styles)
+4. Spacing tokens (spacing scale, semantic spacing, layout tokens, component-specific padding/gaps)
+5. Semantic naming conventions (purpose-based names, developer-friendly, clear hierarchy)
+6. Light/dark mode implementation (using Figma modes, color token variants, switching themes)
+7. Token organization in Figma (collections, groups, naming patterns, documentation)
+8. Developer handoff (token export, naming conventions match code, JSON/CSS output)
+
+Consider: [Constraints - e.g., Large team (consistency critical), Multi-brand support, Developer handoff to React/CSS, Accessibility requirements]</code></pre></div><div style="display:contents" dir="auto"><p id="c4d5a93a-1fef-47bc-a7be-4db3b11b2505" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="51271dd5-9985-4ca0-a284-511f5187e9a1" class="bulleted-list"><li style="list-style-type:disc">[Product/Design System] = What you&#x27;re creating tokens for</li></ul></div><div style="display:contents" dir="auto"><ul id="158997bb-fcc3-4f39-82f8-8a0832563a5b" class="bulleted-list"><li style="list-style-type:disc">[Design Attributes] = Colors, spacing, typography, etc.</li></ul></div><div style="display:contents" dir="auto"><ul id="7c45d5b5-1653-448b-86bc-58d04a2416b8" class="bulleted-list"><li style="list-style-type:disc">[Token Types] = Primitives, semantic, component tokens</li></ul></div><div style="display:contents" dir="auto"><ul id="fc604118-166b-433d-813a-f07e0a50ac65" class="bulleted-list"><li style="list-style-type:disc">[Themes/Modes] = Light/dark, brand variants</li></ul></div><div style="display:contents" dir="auto"><ul id="1e5a8b13-0e2e-4072-a6cf-6702aa7bc6c1" class="bulleted-list"><li style="list-style-type:disc">[Team Needs] = Scale, handoff, consistency</li></ul></div><div style="display:contents" dir="auto"><ul id="4251b947-3cd1-420c-9328-0be7294c9520" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current token issues</li></ul></div><div style="display:contents" dir="auto"><ul id="c44900ea-620c-4332-b0c8-45b2b7026a21" class="bulleted-list"><li style="list-style-type:disc">Attach Figma files with hardcoded values</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-807c-b18b-c70fc7081a85"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f4986ccb-9802-471c-8f01-25eaaa20211c"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="19c3fad0-378a-4b74-b636-b9f79012d082" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4453ae27-2090-4e77-acdb-baca2c11c648" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Design Systems Specialist focusing on design tokens, Figma Variables, semantic naming, and systematic design at scale.
+
+I&#x27;m creating design tokens in Figma for a SaaS Design System (project management tool used by 50,000+ users, 15-person design/dev team) to systematize colors, typography, spacing, and component properties by building primitive tokens (color palette, spacing scale, type scale), semantic tokens (purpose-based: primary/secondary/error colors, body/heading text, component padding), and component-specific tokens (button sizes, card spacing, form field heights) while supporting light mode and dark mode themes and optimizing for designer consistency, developer handoff (React component library), and multi-product usage (3 related products sharing design system).
+
+[User would attach current Figma files - components with hardcoded values, inconsistent colors, no systematic tokens]
+
+Design token requirements:
+- Product type: SaaS design system (component library shared across 3 products)
+- Team size: Large team (8 designers, 15 developers, growing to 25 total)
+- Token scope: Full design system (colors, typography, spacing, elevation, border radius, component-specific)
+- Themes needed:
+  - Light mode (primary theme, most users)
+  - Dark mode (30% of users prefer, accessibility)
+  - High contrast mode (accessibility, WCAG AAA goal)
+  - Future: Potential brand variants (white-label for enterprise customers)
+- Developer handoff:
+  - Export tokens to JSON (Style Dictionary to generate CSS variables, React theme tokens)
+  - Figma Variables → code sync
+  - Developers expect semantic naming matching their component props
+
+Current token problems:
+- Hardcoded hex values everywhere - Primary blue #3B82F6 hardcoded in 347 components/instances, want to test new brand color (blue → purple) but would require manually updating hundreds of layers, took 8 hours last time we tried, missed 50+ instances, visual inconsistencies, no single source of truth
+- No semantic tokens - Buttons use primitive &quot;Blue 500&quot; fill directly, developers don&#x27;t know which blue is &quot;primary&quot; vs &quot;accent&quot; vs &quot;link&quot;, components break when we change palette (Blue 500 → Purple 500 doesn&#x27;t update button automatically because not semantically named), unclear purpose of each color
+- Inconsistent spacing - Components use random spacing values: 12px, 14px, 15px, 16px, 18px, 20px, 22px, 24px gaps with no system, developers implement with different values, visual inconsistency across products, want systematic 4px/8px-based scale but currently chaos
+- No theme support for dark mode - Built dark mode by duplicating entire component library into separate Figma file &quot;Components - Dark&quot;, nightmare to maintain (update button → must manually update light AND dark versions), sync issues (forgot to update dark, shipped inconsistent), want single source with mode switching
+- Poor naming convention - Color variables named &quot;color-primary-1&quot;, &quot;gray-darker&quot;, &quot;blue-thing&quot;, &quot;text-color-2&quot; meaningless to developers, doesn&#x27;t match code (code uses &quot;primary&quot;, &quot;secondary&quot;, &quot;error&quot;), handoff friction (designers say &quot;use color-primary-1&quot;, devs ask &quot;what&#x27;s that in our theme?&quot;), no clear hierarchy
+- Component token chaos - Button padding hardcoded differently everywhere (some buttons 12px 24px, others 16px 32px, others 14px 28px for same size variant), card spacing inconsistent (16px vs 20px vs 24px for same card type), form fields different heights (36px, 40px, 44px for &quot;medium&quot; size), no component-level token system
+- Developer handoff friction - Designers spec &quot;use Blue 500&quot; but developers need semantic &quot;primary&quot; color, token names don&#x27;t match (Figma: &quot;Text/Primary&quot;, code: &quot;textPrimary&quot;), manual translation required, slow and error-prone
+
+Team context:
+- Figma expertise: Advanced (team uses components, variants, Auto Layout extensively)
+- Design system: Mature (2 years old, 200+ components, used across 3 products)
+- Scale: 15-person team, will grow to 25 designers/developers
+- Current workflow: Designers design in Figma → hand off specs → developers manually translate to code tokens
+- Goal: Figma Variables → automated export to JSON → Style Dictionary → CSS/React tokens (single source of truth)
+- Developer stack: React with CSS-in-JS (styled-components), use design tokens extensively
+- Timeline: 2 months to implement full token system (leadership priority for consistency)
+
+Please provide:
+1. Token hierarchy and structure (primitives vs semantic vs component tokens, organization)
+2. Color tokens in Figma (primitive colors, semantic colors, surface/text/border tokens, modes for themes)
+3. Typography tokens (font families, sizes, weights, line heights, semantic text styles)
+4. Spacing tokens (spacing scale, semantic spacing, layout tokens, component-specific padding/gaps)
+5. Semantic naming conventions (purpose-based names, developer-friendly, clear hierarchy)
+6. Light/dark mode implementation (using Figma modes, color token variants, switching themes)
+7. Token organization in Figma (collections, groups, naming patterns, documentation)
+8. Developer handoff (token export, naming conventions match code, JSON/CSS output)
+
+Consider: Large team (15 people, consistency critical). Multi-product (3 products share system). Light/dark mode required. Developer handoff (React, CSS-in-JS, automated export). Component library (200+ components). Mature system (refactoring from hardcoded to tokens). Future white-label (multi-brand potential).</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-800a-ae1f-c4e40a8ec098"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="5bd3b97a-7b6c-4081-a5fd-c14c006368fd"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a3f602e3-6311-402a-9d35-75f569fa1715" class=""><strong>CHEF’S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="dfe3c59f-60c9-497d-916b-871b3436d36a" class="">✦ Three-tier system: Primitives (Blue 500) → Semantic (Primary Color) → Component (Button Background) - never skip semantic layer<br/>✦ Common mistake: Using primitive tokens directly in components - always use semantic tokens for flexibility<br/>✦ Best with: Claude (excellent at systematic token structures, naming conventions), ChatGPT (good for Figma Variable examples)<br/>✦ Remix it: &quot;Create design token system in Figma - primitive colors, semantic tokens, spacing scale, light/dark modes&quot;<br/>✦ Pro move: Ask &quot;Audit my Figma token structure - check naming, hierarchy, mode support, developer handoff readiness&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8032-837f-fd4adefbdad9"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="698d2326-8af4-4e3e-9ac9-225e2e417ccf"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="44d82a92-5319-4a75-8587-e544a37a79a5" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="4b66ba5a-31d4-4cd7-b483-1bedc9597f87" class="bulleted-list"><li style="list-style-type:disc">&quot;Create color token system - primitive palette (50-900), semantic tokens (Surface/Text/Border), light/dark modes&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="975b8465-0309-47f4-b079-b37e0accebc5" class="bulleted-list"><li style="list-style-type:disc">&quot;Design spacing token scale - 4px/8px-based (0-96px), semantic spacing (Padding/Gap), component-specific tokens&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="81d85f90-7faa-4a6c-8378-adc75bb4ef5a" class="bulleted-list"><li style="list-style-type:disc">&quot;Set up typography tokens - font size scale, weights, line heights, semantic text styles (H1-Body-Caption)&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="100a0fea-aedf-45fc-8791-80e0a21f26a0" class="bulleted-list"><li style="list-style-type:disc">&quot;Design token naming convention - semantic not technical, developer-friendly, hierarchical (Category/Property/Variant)&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-803c-bd60-fb7c0b70b324"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="0bdfca81-f683-4755-a91e-056722bffd12"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="082757dd-4454-4c64-8668-35b5cb7bf0e4" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="3a3fd404-6322-42f1-9dac-2bb281327007" class="image"><a href="72_Example_Output.png"><img src="72_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80d3-8981-fe9979d6f79b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="324b6d31-e6f7-41d7-b920-745aa6b2805b"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8a0099ce-c2f4-47ea-984d-032a26cc5ceb" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="632ce8a5-99b6-4794-b88c-e3c3858d8f9f" class="">→ Recipe #73: <a href="R-73 Developer-Friendly Design Specs 2d867ccc6bef804eae58c28f42a64b2d.html">Developer-Friendly Design Specs</a><br/>→ Recipe #46: <a href="R-46 Build a Design System Foundation 2d767ccc6bef80169c93ff15b9a23dff.html">Build a Design System Foundation</a><br/>→ Recipe #56: <a href="R-56 Build Color Palettes 2d767ccc6bef80268ce9ff601c08a13e.html">Build Color Palettes</a><br/>→ Recipe #22: <a href="R-22 Check Your Color Contrast 2d667ccc6bef8030822cc761e4959070.html">Check Your Color Contrast</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80dd-8253-e3829ee7fc77" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,801 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-70: Internationalization &amp; Localization</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d867ccc-6bef-8090-8126-c55fa1dbe103" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d867ccc-6bef-8096-8a63-c7bf425f68b9" class="">Recipe #70: Internationalization &amp; Localization</h1></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8012-946e-f7f65902001b" class="">Category: Bonus — Content &amp; Copy  |  ⏱️ 30-40 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-801e-b7b2-cc345485a031" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="d1d76391-f0bb-48f9-a7f2-d49a3ee7c77d"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ba4bb0e6-8258-41f5-82df-15097b3adf53" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="ef29b26f-ca93-468a-afcf-42d3fea604ad" class="">You&#x27;re designing products for global markets - supporting multiple languages, handling right-to-left (RTL) languages like Arabic or Hebrew, accommodating text expansion when translating, adapting to different cultural contexts, or formatting dates, times, numbers, and currencies correctly. Your current design breaks when translated, assumes left-to-right reading, has hardcoded English text in images, or ignores cultural differences.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8096-9759-e51da3cfcaa1"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="97c15491-efae-46ac-9d9e-74cad93e9bf4"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="42fd95c6-ba92-4dfa-ade3-186e19c90b1e" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="ab460806-8ade-485f-9468-14eeea5b80d8" class="">Many designers create English-only interfaces that break globally - layouts cramped when German text expands 30%, RTL languages (Arabic, Hebrew) completely broken with left-aligned text, hardcoded English in graphics/icons that can&#x27;t be translated, culturally inappropriate colors or imagery (white for mourning in some cultures, hand gestures offensive elsewhere), wrong date formats (MM/DD/YYYY vs DD/MM/YYYY confusion), or fixed-width components that can&#x27;t handle varying text lengths. Teams launch in new markets with broken UI, poor translations that don&#x27;t fit, offensive cultural mistakes, or expensive redesigns for each language. You need systematic internationalization - flexible layouts (accommodate 30-50% text expansion), RTL support (mirror layouts, flip icons appropriately), translation-friendly design (separate text from graphics, use symbols not text in icons), cultural awareness (colors, imagery, gestures vary), proper formatting (locale-aware dates, times, numbers, currencies), and scalable text (avoid fixed widths, use dynamic sizing).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8068-bf20-f7acca41d5a1"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="fb84d579-15f7-4b35-adae-a1b1bc254c49"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d7542f69-cfda-442a-91ac-ce44bd66acb4" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="63c36efc-cad8-4e19-9ee4-b2341ab1eb46" class="">The AI will provide text expansion strategies (accommodate 30-50% longer text, flexible layouts, truncation rules), RTL design guidance (mirror layouts, flip icons, bidirectional text for Arabic/Hebrew), translation-friendly design principles (separate text from graphics, avoid text in images, complete translatable strings), cultural considerations (colors, imagery, icons, gestures that vary by region), locale-aware formatting (dates, times, numbers, currency display per locale), typography guidance for multiple scripts (Latin, Arabic, CJK, Devanagari fonts and sizing), layout flexibility techniques (avoid fixed widths, dynamic sizing), and testing methods (pseudo-localization, RTL testing, locale validation). You&#x27;ll get systematic approaches to design products that work globally.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="ef39e322-fc84-47b7-a556-0045b013f0df"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="951320f8-ff95-47b3-9d9c-de365dfa4509"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="18035193-fe63-4029-b342-721260243780" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="bc9054a7-72b9-4a95-b48f-43f263df3379" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Internationalization (i18n) Design Specialist focusing on global design, localization, RTL languages, cultural adaptation, and translation-friendly interfaces.
+
+I&#x27;m designing for internationalization to support [Target Markets] by handling [Languages] including [RTL Languages if applicable], accommodating [Text Expansion], respecting [Cultural Differences], and properly formatting [Locale-Specific Data].
+
+[OPTIONAL: Attach current English-only designs needing i18n adaptation]
+
+Internationalization requirements:
+- Target markets: [e.g., Global (100+ countries), Europe, Middle East, Asia, Latin America]
+- Languages: [e.g., English, Spanish, French, German, Arabic, Hebrew, Japanese, Chinese, Hindi]
+- RTL languages: [e.g., Arabic, Hebrew, Farsi/Persian, Urdu - or None if not supporting RTL]
+- Priority markets: [e.g., US/UK (English), Spain/LatAm (Spanish), MENA (Arabic), etc.]
+- Product type: [e.g., SaaS, E-commerce, Mobile app, Marketing site, Content platform]
+
+Current i18n problems:
+- [Problem 1: e.g., Layout breaks - German text 40% longer, buttons overflow, text truncates]
+- [Problem 2: e.g., No RTL support - Arabic text left-aligned, icons don&#x27;t flip, completely broken]
+- [Problem 3: e.g., Text in graphics - buttons with English text baked into images, can&#x27;t translate]
+- [Problem 4: e.g., Cultural issues - colors/imagery inappropriate for some markets, hand gestures offensive]
+- [Problem 5: e.g., Wrong formats - dates show MM/DD/YYYY (US only), prices show $ instead of local currency]
+
+Team context: [Translation resources, target launch markets, timeline, budget for localization]
+
+Please provide:
+1. Text expansion strategies (accommodate 30-50% longer text, flexible layouts, truncation rules)
+2. RTL (right-to-left) design (mirror layouts, flip icons, bidirectional text, Arabic/Hebrew specifics)
+3. Translation-friendly design (separate text from graphics, avoid text in images, use i18n-friendly copy)
+4. Cultural considerations (colors, imagery, icons, gestures, symbols that vary by culture)
+5. Date, time, and number formatting (locale-aware formats, avoid ambiguity, currency display)
+6. Typography for multiple scripts (Latin, Arabic, CJK, Devanagari, font selection, fallbacks)
+7. Layout flexibility (avoid fixed widths, dynamic sizing, responsive to content length)
+8. Testing and QA (pseudo-localization, RTL testing, translation validation)
+
+Consider: [Constraints - e.g., RTL support required, 20+ languages, Limited translation budget, Mobile-first, Cultural sensitivity critical]</code></pre></div><div style="display:contents" dir="auto"><p id="7ffddfef-7439-4b8e-be5b-82357bef7266" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="6f92f790-ed6c-43f3-a457-e908378cf8f9" class="bulleted-list"><li style="list-style-type:disc">[Target Markets] = Which countries/regions</li></ul></div><div style="display:contents" dir="auto"><ul id="f7c2a5d4-7e97-444e-9183-1765142f9fcf" class="bulleted-list"><li style="list-style-type:disc">[Languages] = Which languages to support</li></ul></div><div style="display:contents" dir="auto"><ul id="cb96ccb0-1e8b-4127-8c96-077ffd4c1677" class="bulleted-list"><li style="list-style-type:disc">[RTL Languages] = Arabic, Hebrew, etc. (if applicable)</li></ul></div><div style="display:contents" dir="auto"><ul id="51e8e45a-2262-426c-bab5-7b3e3cf95710" class="bulleted-list"><li style="list-style-type:disc">[Text Expansion] = How much text grows when translated</li></ul></div><div style="display:contents" dir="auto"><ul id="3a065495-7b83-4462-b142-bd6add98e0e3" class="bulleted-list"><li style="list-style-type:disc">[Cultural Differences] = Regional sensitivities</li></ul></div><div style="display:contents" dir="auto"><ul id="329d37c2-3a0e-483b-b4c1-acdb51fcc826" class="bulleted-list"><li style="list-style-type:disc">[Locale-Specific Data] = Dates, currency, numbers</li></ul></div><div style="display:contents" dir="auto"><ul id="6fc0fb9c-9c21-4331-9699-3bf16c89012b" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current i18n issues</li></ul></div><div style="display:contents" dir="auto"><ul id="27861141-bb60-4776-a718-9ed0b11d4c89" class="bulleted-list"><li style="list-style-type:disc">Attach English-only designs needing adaptation</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8027-a1ee-e6f015afb07e"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-8016-a29e-eea77211574f"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8018-95a5-da92216fc089" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d867ccc-6bef-80a5-8c1d-ec2ff522b947" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Internationalization (i18n) Design Specialist focusing on global design, localization, RTL languages, cultural adaptation, and translation-friendly interfaces.
+
+I&#x27;m designing for internationalization for a SaaS Project Management Tool to support global markets (Europe, Middle East, Asia, Latin America - 25+ countries) by handling 12 languages (English, Spanish, French, German, Portuguese, Arabic, Hebrew, Japanese, Chinese, Korean, Hindi, Russian) including RTL languages (Arabic, Hebrew), accommodating text expansion (German 35% longer, Russian 30% longer), respecting cultural differences (colors, date formats, imagery), and properly formatting dates, times, currencies, and numbers per locale.
+
+[User would attach current English-only designs - buttons, forms, navigation that break when translated]
+
+Internationalization requirements:
+- Target markets:
+  - Europe: UK, Spain, France, Germany, Portugal, Russia
+  - Middle East: UAE, Saudi Arabia, Israel, Qatar
+  - Asia: Japan, China, South Korea, India
+  - Latin America: Mexico, Brazil, Argentina
+  - Total: 25+ countries, diverse cultures and scripts
+- Languages (priority order):
+  1. English (primary, US/UK)
+  2. Spanish (Spain + LatAm, 400M speakers)
+  3. Arabic (MENA region, RTL, 300M speakers)
+  4. French, German, Portuguese (Europe)
+  5. Hebrew (Israel, RTL)
+  6. Japanese, Chinese, Korean (Asia, CJK scripts)
+  7. Hindi, Russian (large markets)
+- RTL languages: Arabic and Hebrew (critical for MENA and Israel markets)
+- Priority markets:
+  - Tier 1: US/UK (English), MENA (Arabic), Europe (Spanish, French, German)
+  - Tier 2: LatAm (Spanish/Portuguese), Japan, Israel (Hebrew)
+  - Tier 3: China, Korea, India, Russia
+- Product type: SaaS web app (desktop-focused, some mobile usage)
+
+Current i18n problems:
+- Layout breaks with longer text - German translations 35% longer than English (e.g., &quot;Settings&quot; → &quot;Einstellungen&quot; 11 chars → 14 chars, &quot;Create project&quot; → &quot;Projekt erstellen&quot;), buttons designed for English overflow with German text, navigation menu items truncate with &quot;...&quot; unreadable, forms designed for &quot;Name&quot; (4 chars) break with &quot;Nombre completo&quot; (15 chars in Spanish), card titles cut off, fixed-width columns in tables can&#x27;t fit translated headers
+- No RTL support - Arabic users see left-aligned Arabic text (reads right-to-left, completely wrong), navigation on left side (should be on right for RTL), icons point wrong direction (back arrow points left, should point right in RTL), checkboxes on left of labels (should be on right), text direction completely broken, Arabic text mixed with English numbers looks garbled
+- Text baked into graphics - Button graphics have &quot;Create Project&quot; text embedded in image (can&#x27;t translate without recreating graphic for each language), illustrations have English labels, icons use text instead of symbols, screenshots in help documentation all English, 50+ graphics need recreation per language (expensive, slow)
+- Cultural issues - Green used for success (but green has negative connotations in some MENA countries), thumbs-up icon (offensive gesture in parts of Middle East), calendar shows Sunday as first day (many countries start week on Monday), date picker defaults to MM/DD/YYYY (confusing outside US, most use DD/MM/YYYY), hand gesture icons in onboarding (some gestures offensive in certain cultures)
+- Wrong date/time/currency formats - Dates hardcoded as &quot;12/05/2024&quot; (is it December 5 or May 12? ambiguous), times show &quot;3:00 PM&quot; (24-hour clock preferred in many countries), prices show &quot;$50&quot; (should show €, £, ¥, etc. based on locale), numbers show &quot;1,000.50&quot; with comma separator (many countries use &quot;1.000,50&quot; with period separator), phone number format assumes US &quot;(555) 123-4567&quot; (international numbers vary wildly)
+- Typography issues - Font looks good in Latin scripts (English, Spanish) but breaks with Arabic (wrong font), Chinese characters tiny and unreadable, Hindi/Devanagari not supported, Japanese text line height too tight (characters overlap), no fallback fonts, Unicode rendering issues with some characters
+
+Team context:
+- Translation resources: Budget for professional translation (not machine translation), have translation agency for all 12 languages
+- Target launch markets: Europe Q2, MENA Q3, Asia Q4 (staggered rollout)
+- Timeline: 4 months to prepare for Europe launch (German, French, Spanish first)
+- RTL priority: High (MENA is top 3 market, Arabic critical for success)
+- Cultural sensitivity: Very important (enterprise customers, can&#x27;t afford offensive mistakes)
+- Development: React (supports i18n libraries, can implement RTL with CSS), have i18n engineering lead
+
+Please provide:
+1. Text expansion strategies (accommodate 30-50% longer text, flexible layouts, truncation rules)
+2. RTL (right-to-left) design (mirror layouts, flip icons, bidirectional text, Arabic/Hebrew specifics)
+3. Translation-friendly design (separate text from graphics, avoid text in images, use i18n-friendly copy)
+4. Cultural considerations (colors, imagery, icons, gestures, symbols that vary by culture)
+5. Date, time, and number formatting (locale-aware formats, avoid ambiguity, currency display)
+6. Typography for multiple scripts (Latin, Arabic, CJK, Devanagari, font selection, fallbacks)
+7. Layout flexibility (avoid fixed widths, dynamic sizing, responsive to content length)
+8. Testing and QA (pseudo-localization, RTL testing, translation validation)
+
+Consider: 12 languages including Arabic/Hebrew RTL. Text expansion 30-50% (German, Russian especially). Cultural sensitivity (MENA market critical). Enterprise customers (professional quality required). Staggered rollout (Europe first, then MENA, then Asia). React implementation (i18n library support). Budget for professional translation.</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-806d-83d3-f2f60f764dbb"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="855a8804-32bc-45cf-b6f7-66dd0d4b7793"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d9bdefae-d63f-4f98-9e61-ba7d1b17a44a" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="fc1a77f2-d569-4782-83f0-2accdf959c03" class="">✦ Design for 50% text expansion: German and Russian translations can be 30-50% longer than English<br/>✦ Common mistake: Hardcoding dates as &quot;12/05/2025&quot; - ambiguous globally, use &quot;Dec 5, 2025&quot; or ISO 8601<br/>✦ Best with: Claude (excellent at cultural nuances, systematic i18n patterns), ChatGPT (good for locale examples)<br/>✦ Remix it: &quot;Adapt this design for internationalization - support RTL, 50% text expansion, cultural sensitivity&quot;<br/>✦ Pro move: Ask &quot;Audit my design for i18n issues - check fixed widths, RTL support, cultural appropriateness, date formats&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80a0-8620-ebcf021606fa"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="9c19aca2-520e-4463-8d65-c80652d355fc"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3e680e46-6f4e-4351-969f-611795e57c11" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="8bc05fd2-ae72-425a-bd84-712f1e2302b7" class="bulleted-list"><li style="list-style-type:disc">&quot;Design RTL version of this layout - mirror navigation, flip icons, right-align text for Arabic/Hebrew&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="ef57b9e3-3932-4f9e-8b6a-b7095eab6d11" class="bulleted-list"><li style="list-style-type:disc">&quot;Adapt this button/form for text expansion - handle German 35% longer text, avoid fixed widths, allow wrapping&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="35ef140a-fa8c-4b70-93f2-42b456f7253b" class="bulleted-list"><li style="list-style-type:disc">&quot;Review color and imagery for cultural appropriateness - identify potential issues for MENA, Asia, LatAm markets&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="698cbc2f-615d-43e8-98ec-38a578175b34" class="bulleted-list"><li style="list-style-type:disc">&quot;Design locale-aware date picker - support DD/MM/YYYY and MM/DD/YYYY, unambiguous display, international formats&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8035-835d-c267faf9abcf"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-808d-a3ad-d40d1d9fdc2e"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8099-8193-d3b001813f47" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-8004-b968-daf3c6199b51" class="image"><a href="70_Example_Output.png"><img style="width:643.9921875px" src="70_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-803e-b60b-c0dd7adaa361"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="a9bfaf9c-8913-4d69-9895-687d8885a8c1"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3e3005b7-7a70-4412-89fb-c326231b843c" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="14cd6b4d-4372-430c-bf91-d9c60ae60fe7" class="">→ Recipe #15: <a href="R-15 Design Better Forms 2d667ccc6bef80a58694ce629bd1838e.html">Design Better Forms</a><br/>→ Recipe #69: <a href="R-69 Write Better UX Copy 2d867ccc6bef808592b4c0f3341bdd42.html">Write Better UX Copy</a><br/>→ Recipe #46: <a href="R-46 Build a Design System Foundation 2d767ccc6bef80169c93ff15b9a23dff.html">Build a Design System Foundation</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80cf-85ce-c8071f9b7302" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

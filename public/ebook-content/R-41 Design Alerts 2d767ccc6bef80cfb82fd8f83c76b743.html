@@ -1,0 +1,801 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-41: Design Alerts</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-80cf-b82f-d8f83c76b743" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-811f-8c32-f2b465864376" class="">Recipe #41: Design Alerts</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-81b0-83fd-d8d80dcb9fdb" class="">Category: UI &amp; Visuals  |  ⏱️ 25-30 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8128-b1d5-cbf4a4fa7995" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="bf1208ad-dcc7-4604-9ffa-cd7158bd1974"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0e7f2c53-49ea-43ca-948e-3a923f41acda" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="65fbbc76-74c3-4839-86a8-215a595da8e1" class="">You&#x27;re designing alerts patterns that keep users informed without overwhelming them - toast messages, alerts, banners, badges, or notification centers. Current alerts are easy to miss, interrupt workflows, or users ignore them due to notification fatigue.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8187-a878-eb965e45f90a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="bb662ce3-4bfa-4a10-834d-c0c583ba52c1"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="5021f2c3-4dfe-44ce-9b43-851ae36ede8f" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="fda851e3-5404-438d-bb3c-8ce024861fe2" class="">Many applications have poorly designed alerts systems - toasts that disappear too quickly, alerts that block the entire screen, no visual hierarchy between critical and minor alerts, notification badges showing &quot;99+&quot; with no way to clear, alerts appearing in random locations, and no notification history. Users miss important updates, get annoyed by interruptions, or suffer notification fatigue from too many trivial alerts. Critical errors look identical to success messages. You need notification patterns that are noticeable but not disruptive, provide appropriate urgency, and help users stay informed without overwhelming them.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8161-beb9-e7188aad2ca1"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="959961c9-e384-42ca-97d8-f05fe9ff4da0"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="63de9a29-2a36-4ede-94dc-ea44fd3439ed" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="5f4856eb-358a-4e7f-9c6f-950b60c52bf7" class="">The AI will provide notification type recommendations (toasts for confirmations with 4-6s auto-dismiss, banners for persistent alerts, modals for critical errors, badges for unread counts), visual hierarchy using color coding and icons (red critical, amber warning, green success, blue info) that work for colorblind users, positioning and stacking strategy limiting to 3 visible toasts with proper timing rules, notification center design with filtering, grouping, and 30-day history, mobile-optimized patterns with push notifications and swipe-to-dismiss, complete accessibility including ARIA live regions and screen reader support, and user preference controls for Do Not Disturb mode and notification types. Optionally includes notification component specifications.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="d39737ff-d76b-4760-bf0c-c1230b64e99a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="a4abc866-c652-4316-8caf-a866b32b6072"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="76445748-9f3c-40bd-92b0-22fa157d956e" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fc557310-9ed4-4c0f-860a-7889949f7a1f" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Notification UX Designer specializing in alerts, toasts, banners, and notification patterns.
+
+I&#x27;m designing notification systems for a [Product Type] to keep users informed without overwhelming them.
+
+[OPTIONAL: Attach screenshots showing current notification implementations]
+
+Notification requirements:
+- Notification types: [e.g., Success confirmations, Error alerts, System updates, User mentions, Task reminders]
+- Urgency levels: [e.g., Critical errors, Important updates, Informational, Low priority]
+- Frequency: [e.g., Multiple per minute, Few per hour, Rare]
+- User context: [e.g., Focused work, Monitoring dashboard, Casual browsing]
+- Device usage: [e.g., 60% desktop, 40% mobile]
+
+Current notification problems:
+- [Problem 1: e.g., Success toast disappears in 2 seconds - users miss confirmation]
+- [Problem 2: e.g., All notifications look identical - can&#x27;t distinguish critical from minor]
+- [Problem 3: e.g., Notifications block work area - must dismiss to continue]
+- [Problem 4: e.g., Badge shows &quot;99+&quot; - no way to mark all as read]
+- [Problem 5: e.g., No notification history - if user misses toast, info is lost]
+
+User context: [When notifications appear, what users are doing, tolerance for interruption]
+
+Please provide:
+1. Notification type recommendations (toast, banner, modal, badge)
+2. Visual hierarchy (critical vs. info vs. success)
+3. Positioning and stacking strategy
+4. Timing and auto-dismiss rules
+5. Notification center/history design
+6. Badge and counter patterns
+7. Mobile notification patterns
+8. Accessibility and preferences
+
+Consider: [Constraints - e.g., Must work for colorblind users, screen reader support, user notification preferences, undo actions, persistent vs. dismissible]</code></pre></div><div style="display:contents" dir="auto"><p id="f3d3b99c-343b-46fd-abec-21dbfb7ba976" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="ff7979a5-0734-4745-85b7-c6ca9e3ad549" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = Messaging app, Project management, E-commerce, Banking, Social platform</li></ul></div><div style="display:contents" dir="auto"><ul id="5a4aebd5-7461-4916-9457-aab8be44666f" class="bulleted-list"><li style="list-style-type:disc">[Notification types] = What you need to notify users about</li></ul></div><div style="display:contents" dir="auto"><ul id="6e997daf-08c3-4828-8b9f-f231ba012860" class="bulleted-list"><li style="list-style-type:disc">[Urgency levels] = Range from critical to informational</li></ul></div><div style="display:contents" dir="auto"><ul id="880b17d6-6352-45d3-ba1f-331cde92d6fc" class="bulleted-list"><li style="list-style-type:disc">[Frequency] = How often notifications appear</li></ul></div><div style="display:contents" dir="auto"><ul id="e2c4d0cc-943b-4afb-bccf-b8eacadaa3e1" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current notification issues</li></ul></div><div style="display:contents" dir="auto"><ul id="7ff0eb00-8fa6-4077-99da-c731812d34ad" class="bulleted-list"><li style="list-style-type:disc">Upload screenshots showing current notification designs</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-81ac-8a5a-da0fb7724bb5"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-81a7-908c-ce78e2091e3a"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8117-9d5b-ec4ba9af5d81" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-819c-872d-e4950149113b" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Notification UX Designer specializing in alerts, toasts, banners, and notification patterns.
+
+I&#x27;m designing notification systems for a Team Collaboration Platform to keep users informed of activity, mentions, and system events without overwhelming them.
+
+[User would attach notification screenshots here]
+
+Notification requirements:
+- Notification types:
+  - User mentions (@username in comments)
+  - Task assignments (someone assigned you a task)
+  - Task updates (status changed, comment added)
+  - System alerts (storage limit, payment issue, service outage)
+  - Success confirmations (file uploaded, invite sent)
+  - Error messages (upload failed, permission denied)
+  - Activity updates (project completed, deadline approaching)
+- Urgency levels:
+  - Critical: System outages, payment failures, security alerts
+  - High: Direct mentions, task assignments, approaching deadlines
+  - Medium: Task updates, comments on your items
+  - Low: General activity, project updates, tips
+- Frequency:
+  - Active users: 20-50 notifications per day
+  - Power users: 100+ per day
+  - Mentions: 5-10 per day
+  - System alerts: Rare (1-2 per month)
+- User context:
+  - Deep work mode (editing documents, coding)
+  - Monitoring mode (watching for updates)
+  - Casual browsing (checking in periodically)
+  - Mobile users: Quick checks throughout day
+- Device usage: 60% desktop, 40% mobile
+
+Current notification problems:
+- Success toast &quot;File uploaded&quot; disappears in 2 seconds - users uploading multiple files miss confirmation that all succeeded
+- All notifications look identical - critical &quot;Payment failed&quot; uses same blue toast as &quot;Task completed&quot; - no visual urgency hierarchy
+- Error notifications appear as modal blocking entire screen - must click &quot;OK&quot; to dismiss, interrupts workflow
+- Notification badge shows &quot;99+&quot; with no way to bulk mark as read - overwhelming, users ignore badge
+- Toasts stack in bottom-right corner overlapping each other - 5 notifications arrive simultaneously, can only see top one
+- No notification history - if user misses toast message, no way to see what it said
+- Mentions and assignments mixed with low-priority activity - important notifications buried
+- Mobile notifications same as desktop - take up too much screen space
+
+User context: Users in deep work hate interruptions but need critical alerts. Power users get 100+ notifications daily - need filtering. Mobile users glance at app between meetings - need quick scan. Mentions are time-sensitive (someone waiting for response). Payment failures critical but rare. File upload confirmations needed for confidence but not urgent.
+
+Please provide:
+1. Notification type recommendations (toast, banner, modal, badge)
+2. Visual hierarchy (critical vs. info vs. success)
+3. Positioning and stacking strategy
+4. Timing and auto-dismiss rules
+5. Notification center/history design
+6. Badge and counter patterns
+7. Mobile notification patterns
+8. Accessibility and preferences
+
+Consider: Critical alerts need immediate attention. Success messages can auto-dismiss. Users should control notification volume. Colorblind users need icons not just colors. Screen readers must announce notifications. &quot;Do not disturb&quot; mode for focused work. Undo for accidentally dismissed notifications. Group similar notifications (&quot;3 new comments&quot;).</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="3ba22de7-3b1b-4af7-9555-c703338e6474"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="18eb4b6e-4af2-44ef-a311-403aa172bc5e" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="1d0d1497-b47d-4bb2-9800-c9255b17666b" class="">✦ Color + icon, not color alone: Critical red background + alert icon (⚠️) works for colorblind users<br/>✦ Common mistake: All notifications auto-dismiss - errors should persist until acknowledged<br/>✦ Best with: Claude (excellent at notification hierarchy), ChatGPT (good for timing strategies)<br/>✦ Remix it: &quot;Design the notification grouping system - combine similar notifications to reduce noise&quot;<br/>✦ Pro move: Ask &quot;Create notification preferences UI - let users control what they see and when&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-81e1-9415-ecaea85f3498"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="9dc233d3-065a-46a1-8892-bec45f4af368"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6f8529e8-da35-4271-9453-28134eb813b4" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="c4314aa9-c7dd-4283-bd3e-a5ff5cb305bd" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the notification grouping system - how to combine 10 similar notifications into one&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="c8c06809-4f3d-4244-aa0f-04b23f52e23f" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the Do Not Disturb mode - how users temporarily mute notifications during focused work&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="93436958-82cd-4502-8e96-06e71bec6b45" class="bulleted-list"><li style="list-style-type:disc">&quot;How should undo work for dismissed notifications - recover accidentally closed important alerts?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="d9459125-2b7b-44e9-b7a9-317add88bfdf" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the notification digest - daily/weekly email summary of activity for less active users&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-811b-8048-d597df52f835"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8192-81a4-e5f8df10dfb9"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8175-ae45-e4a5ae60f466" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-816d-9ca4-f97c8409d413" class="image"><a href="41_Example_Output.png"><img style="width:643.9921875px" src="41_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-81de-82ad-fb00fa484aad"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="2c3f0dde-315a-4481-9294-b7035171c1eb"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="9447cc7a-1ddd-49cd-ad66-001231f15ad5" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="6a87b1a0-a290-4c09-949c-cddacde4cc9a" class="">→ Recipe #27: <a href="R-27 Design Smooth Interactions 2d767ccc6bef80979ab0f6fc70dc611e.html">Design Smooth Interactions</a><br/>→ Recipe #37: <a href="R-37 Design Better Tooltips 2d767ccc6bef804ea807db188f871c58.html">Design Better Tooltips</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8130-8c15-c40122a9b1bf" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

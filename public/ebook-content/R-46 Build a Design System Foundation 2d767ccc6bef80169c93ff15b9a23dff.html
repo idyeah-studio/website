@@ -1,0 +1,806 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-46: Build a Design System Foundation</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-8016-9c93-ff15b9a23dff" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-8017-b64a-fa0432e5ab91" class="">Recipe #46: Build a Design System Foundation</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80ea-a4c3-d2cd7089c87d" class="">Category: Systems &amp; Components  |  ⏱️ 40-50 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80d2-82c5-fe012ec2db68" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="e7a0caad-c1fd-4c40-a06e-a7b3735b28b9"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="32a58cdc-2b4e-426d-90b6-090560f02fb7" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="236e6add-35e4-4301-9d41-50347fe99121" class="">You&#x27;re building a design system from scratch or formalizing an ad-hoc component collection - your product has grown beyond simple prototypes, multiple designers are creating inconsistent interfaces, developers are duplicating CSS, or you&#x27;re scaling to multiple products/platforms. You need systematic foundations for consistency at scale.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-803e-a44d-d04ead40e25f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="372abb6a-c33b-4eb8-9909-2fcad1696d15"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="971e96c5-60be-40ba-a891-a328de87d931" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="bdedef19-3808-4d03-92f5-6480a52d3d2f" class="">Many teams struggle with design systems - starting with components before foundations (building buttons before defining color tokens), no naming conventions (colors called &quot;blue-ish&quot;, &quot;darker-blue&quot;, &quot;button-blue&quot;), inconsistent spacing (using 12px, 15px, 18px, 22px randomly), documentation that goes stale immediately, or design systems that become rigid and block innovation. Teams build 47 button variants because there&#x27;s no clear system, designers can&#x27;t find existing components, developers hard-code values instead of using tokens, and the &quot;design system&quot; becomes a dumping ground of unused components. You need foundations - design tokens, clear naming, living documentation, and governance that enables speed without chaos.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8079-88f1-c7c45e7a0292"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="5f5ba65a-4b6d-4598-98b2-f4a00ab344ae"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="00f3ab32-1b71-4488-9a73-7bdc868c07ec" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="fa5158db-7aa1-417d-8bed-29f977d368c3" class="">The AI will provide hierarchical design token structure (primitive, semantic, and component tokens for colors, spacing, typography, shadows), systematic naming conventions using consistent formats (color-{purpose}, space-{number}, font-{element}), component hierarchy recommendations (3-tier foundations/components/patterns or Atomic Design), living documentation approach with auto-generated and curated content using tools like Storybook or Zeroheight, governance model covering contribution processes, approval criteria, roles, and semantic versioning, complete tech stack guidance (Figma with tokens plugin, React with Style Dictionary, testing setup), phased adoption strategy starting with quick wins (5 core components in 4-6 weeks proving value before expansion), and prioritized MVP scope deferring complex components to later phases. Optionally includes design system roadmap and maturity model.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2c524c49-78ae-413c-8667-bcf3a8113117"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="e7ac27db-6eef-45da-8c79-ca0de260cfe5"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ec7f0af1-2740-448c-8b57-8056ce3bf21b" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="293007b3-85a8-454a-80ce-780c03fd01a3" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Design Systems Architect specializing in foundations, tokens, naming conventions, and documentation.
+
+I&#x27;m building a design system foundation for a [Product/Company Type] with [Team Size] to enable [Goal: consistency, speed, scalability].
+
+[OPTIONAL: Attach screenshots of current components, style guide, or documentation]
+
+Design system requirements:
+- Product maturity: [e.g., Early startup, Growth stage, Enterprise, Multiple products]
+- Team size: [e.g., 2 designers, 5 designers + 10 developers, 20+ designers across teams]
+- Platform scope: [e.g., Web only, Web + mobile, Web + iOS + Android, Multi-platform]
+- Current state: [e.g., No system, Ad-hoc components, Style guide exists, Legacy system to replace]
+- Goal: [e.g., Consistency across products, Speed up design/dev, Rebrand, Scale to new platforms]
+
+Current problems:
+- [Problem 1: e.g., Colors hard-coded as hex values - no tokens, can&#x27;t update brand colors]
+- [Problem 2: e.g., 15 button variants with no naming system - &quot;primary-blue&quot;, &quot;main-cta&quot;, &quot;submit-btn&quot;]
+- [Problem 3: e.g., Spacing uses random values - 12px, 15px, 18px, 22px, 27px, no scale]
+- [Problem 4: e.g., Documentation is static Figma file - goes stale, hard to find components]
+- [Problem 5: e.g., No governance - anyone adds components, system becomes bloated]
+
+Team context: [Designer/developer ratio, technical skills, tools used, adoption challenges]
+
+Please provide:
+1. Design token structure (colors, spacing, typography, shadows, etc.)
+2. Naming conventions (semantic vs. literal, scales, categories)
+3. Component hierarchy (atoms, molecules, organisms OR alternative)
+4. Documentation approach (format, structure, maintenance)
+5. Governance model (who contributes, approval process, versioning)
+6. Tools and tech stack (Figma, Storybook, code, etc.)
+7. Adoption strategy (getting team buy-in)
+8. Starting scope (what to build first, what to defer)
+
+Consider: [Constraints - e.g., Small team, limited time, need quick wins, legacy code to support, multi-brand products]</code></pre></div><div style="display:contents" dir="auto"><p id="dfd5cf3f-f522-4d81-9d74-f9f386cc967c" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="a1282fff-e39d-472a-9101-4c2c86254660" class="bulleted-list"><li style="list-style-type:disc">[Product/Company Type] = SaaS, E-commerce, Enterprise software, Mobile app, Multi-product company</li></ul></div><div style="display:contents" dir="auto"><ul id="9d2a712b-4a99-4475-a77f-13cf9afd1a26" class="bulleted-list"><li style="list-style-type:disc">[Team Size] = Designers + developers working on system</li></ul></div><div style="display:contents" dir="auto"><ul id="e62fc19f-4180-4cdc-a51b-fe64f764d539" class="bulleted-list"><li style="list-style-type:disc">[Platform scope] = Web, mobile, desktop, all platforms</li></ul></div><div style="display:contents" dir="auto"><ul id="bfc059bc-fff3-4995-9a07-61462e463ee4" class="bulleted-list"><li style="list-style-type:disc">[Current state] = Where you&#x27;re starting from</li></ul></div><div style="display:contents" dir="auto"><ul id="7744ce07-cd42-41ee-a3e9-b74472299e38" class="bulleted-list"><li style="list-style-type:disc">[Goal] = What you&#x27;re trying to achieve</li></ul></div><div style="display:contents" dir="auto"><ul id="4ed9d046-cdb6-4059-96cd-e84e961753cf" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current inconsistencies or pain points</li></ul></div><div style="display:contents" dir="auto"><ul id="eece6963-3931-48ff-a6e4-3950fb120160" class="bulleted-list"><li style="list-style-type:disc">Upload current components or style guide</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8027-8c3a-de163516db8f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7aeca990-9b85-499c-8147-cdc47208561e"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ceeb12b5-7b1a-46dd-a38b-3892942f5595" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="994db414-ff6e-4280-b431-653f3a8906a1" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Design Systems Architect specializing in foundations, tokens, naming conventions, and documentation.
+
+I&#x27;m building a design system foundation for a Growth-Stage SaaS Company (project management tool) with 8 designers and 25 developers to enable consistency across 3 products and speed up development.
+
+[User would attach component screenshots or Figma file here]
+
+Design system requirements:
+- Product maturity: 
+  - Growth stage (Series B)
+  - 3 products: Main app, Mobile app, Marketing site
+  - Rapid feature development (2-week sprints)
+  - Recent rebrand (new colors, typography)
+- Team size:
+  - 8 product designers (2 on each product + 2 on design system)
+  - 25 frontend developers (React web, React Native mobile)
+  - 3 brand designers (marketing)
+  - Distributed team (3 time zones)
+- Platform scope:
+  - Web app (React, primary platform)
+  - Mobile app (React Native, iOS + Android)
+  - Marketing site (Next.js)
+  - Future: Desktop app (Electron)
+- Current state:
+  - Ad-hoc component library in Figma (200+ components, poorly organized)
+  - Shared React components (inconsistent, no documentation)
+  - Style guide PDF (2 years old, outdated after rebrand)
+  - Developers copy-paste components, modify locally
+- Goal:
+  - Consistency across 3 products (currently look like different companies)
+  - Speed up design-to-dev (currently 3 weeks per feature)
+  - Enable rebrand rollout (new colors, typography need systematic update)
+  - Scale to 4th product launching in 6 months
+
+Current problems:
+- Colors hard-coded everywhere - using hex values (#3B82F6, #2563EB, #1D4ED8) for &quot;blue&quot;, no tokens - rebrand requires finding/replacing 500+ instances
+- 47 button variants across products - no naming system or clear purpose: &quot;primary-blue&quot;, &quot;main-action&quot;, &quot;submit-btn&quot;, &quot;cta-button&quot;, &quot;default-primary&quot;, &quot;blue-filled&quot; - which to use when?
+- Spacing completely random - designers use 12px, 15px, 18px, 22px, 27px, 34px with no scale - developers eyeball spacing creating pixel-perfect inconsistencies
+- Documentation is 80-page Figma file &quot;Component Library v3.2&quot; - impossible to navigate, goes stale after 2 weeks, no search, designers give up and create new components
+- No governance - any designer can add components to Figma library, now have 200+ components with 40% unused - bloated and confusing
+
+Team context: 
+- Designers use Figma (expert level)
+- Developers use React/React Native (advanced)
+- No design system experience on team
+- Tried design system 2 years ago, failed (too rigid, no adoption)
+- Skeptical developers: &quot;Design systems slow us down&quot;
+- Need quick wins to prove value
+- Limited dedicated time (2 designers at 50% capacity)
+
+Please provide:
+1. Design token structure (colors, spacing, typography, shadows, etc.)
+2. Naming conventions (semantic vs. literal, scales, categories)
+3. Component hierarchy (atoms, molecules, organisms OR alternative)
+4. Documentation approach (format, structure, maintenance)
+5. Governance model (who contributes, approval process, versioning)
+6. Tools and tech stack (Figma, Storybook, code, etc.)
+7. Adoption strategy (getting team buy-in)
+8. Starting scope (what to build first, what to defer)
+
+Consider: Limited time (2 designers at 50%). Need quick wins (prove value in 1-2 months). Multi-platform (web + mobile). Rebrand rollout urgent (new colors needed everywhere). Skeptical team (previous system failed). Can&#x27;t block feature work (system must accelerate, not slow down).</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="9a1ef1cf-ade8-48b2-93e7-7e107c3f68fa"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="084970cd-b7ce-4d8e-a589-03b4b357dbb2" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="8791f170-daa7-49c6-a851-04b8d9c90bb5" class="">✦ Tokens before components: Define color/spacing tokens first - building buttons before foundations leads to chaos<br/>✦ Common mistake: Starting with 50 components - build 5 well-documented components, prove value, then expand<br/>✦ Best with: Claude (excellent at systematic thinking), ChatGPT (good for naming conventions)<br/>✦ Remix it: &quot;Design the design system governance - contribution process, approval criteria, versioning&quot;<br/>✦ Pro move: Ask &quot;Create the design system adoption metrics - measure usage, track consistency, prove ROI&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80b1-8300-f205cc85973e"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="d995a7f8-0e80-406e-bbdc-47b400c5ee60"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3b29c0aa-c10b-4756-9317-9fa65ce84ea6" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="10d48451-44bd-48fd-b560-451ea4d11eb4" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the token naming system - color scales, semantic naming, component-specific tokens&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="ccedfe70-b4be-4c6b-bb2a-25cde2388bb8" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the design system contribution process - how team members propose and add components&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="9d6f04fe-8d80-44db-af25-05cc67a6aa26" class="bulleted-list"><li style="list-style-type:disc">&quot;How to migrate existing products to design system - phased approach, deprecation strategy&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="25e79c91-4928-4796-aff5-b1f201d70d16" class="bulleted-list"><li style="list-style-type:disc">&quot;Build the design system documentation - structure, templates, maintenance plan&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-809d-83ad-ddb851b1a075"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d7360259-ca9e-4796-85b5-b0d36abbae9b"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="38fff880-a53d-4fc5-8571-5b0ac0bb048f" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8060-9fe3-e9b0331b3eb2" class="image"><a href="46_Example_Output.png"><img style="width:643.9921875px" src="46_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8025-bbe9-e78822aa4a6c"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="29506acd-e3d0-46c7-840f-5fd812b83784"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d9e79580-4a28-41ef-950e-f3ffd5c16459" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="5e9eeaeb-8ba2-4629-87c1-0009a1bca019" class="">→ Recipe #22: <a href="R-22 Check Your Color Contrast 2d667ccc6bef8030822cc761e4959070.html">Check Your Color Contrast</a><br/>→ Recipe #58: <a href="R-58 Build Typography Systems 2d767ccc6bef80a697f8df65451a5b47.html">Build Typography Systems</a><br/>→ Recipe #44: <a href="R-44 Design Status Indicators 2d767ccc6bef804caa1bf81f3a87a5f9.html">Design Status Indicators</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8027-b7bf-cc44c63a6c31" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

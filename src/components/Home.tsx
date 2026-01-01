@@ -21,9 +21,43 @@ export default function Home() {
           position: 'absolute',
           top: '20px',
           right: '24px',
-          zIndex: 10
+          zIndex: 10,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px'
         }}
       >
+        {/* Ebook Button */}
+        <a
+          href="https://idyeah.gumroad.com/l/design-ai-alchemy"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontSize: '14px',
+            fontWeight: 400,
+            color: '#9d5773',
+            textDecoration: 'none',
+            padding: '6px 16px',
+            borderRadius: '9999px',
+            border: '1px solid #c98ba0',
+            backgroundColor: 'rgba(201, 139, 160, 0.06)',
+            transition: 'all 0.2s'
+          }}
+          onMouseEnter={(e) => {
+            const target = e.target as HTMLElement;
+            target.style.backgroundColor = '#9d5773';
+            target.style.color = '#ffffff';
+          }}
+          onMouseLeave={(e) => {
+            const target = e.target as HTMLElement;
+            target.style.backgroundColor = 'rgba(201, 139, 160, 0.06)';
+            target.style.color = '#9d5773';
+          }}
+        >
+          Design AI Alchemy (Ebook)
+        </a>
+
+        {/* Founder Profile Button */}
         <Link
           to="/founderprofile"
           style={{
@@ -32,7 +66,7 @@ export default function Home() {
             color: '#222222',
             textDecoration: 'none',
             padding: '6px 16px',
-            borderRadius: '16px',
+            borderRadius: '9999px',
             border: '1px solid #000000',
             backgroundColor: 'rgba(255, 255, 255, 0.9)',
             transition: 'all 0.2s'

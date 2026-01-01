@@ -1,0 +1,789 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-20: Audit Your Page Balance</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-80a1-b822-db98adf1829c" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-8022-b3f5-ee7bed4bcd50" class="">Recipe #20: Audit Your Page Balance</h1></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-804b-8375-fa92b260afc5" class="">Category: Wireframing &amp; IA  |  ⏱️ 25-30 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8058-ba92-cfb953dcefdf" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="c5df02ae-b0f5-4bff-97a9-8270e605bccd"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d6298ac-9aef-47d5-9e2b-3cb73841fdba" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="f2113f6b-0682-43f1-9718-dc0f54c40230" class="">You&#x27;re redesigning a page that feels &quot;off&quot; - too crowded, too empty, visually unbalanced, or lacks clear hierarchy. Users struggle to know where to look first, important content gets lost, or the page feels overwhelming despite having reasonable amounts of information.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80c9-8708-dd9452186e95"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="9284b054-a308-4f56-977c-a3dd4d7456c5"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="5c9bbdbd-06ca-4c3a-b51f-ad952c25368d" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="0c42d151-6cc8-4c87-918a-a59829f70685" class="">Many applications suffer from poor visual balance - cramming too much into the viewport, leaving awkward empty spaces, inconsistent spacing that creates visual chaos, or treating all content with equal weight so nothing stands out. Designers add elements over time without considering the overall composition, resulting in pages that feel cluttered or aimless. Users can&#x27;t quickly scan for what they need, and the interface lacks professional polish. You need to systematically audit and rebalance the page&#x27;s visual weight, spacing, and hierarchy.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80bd-90af-f513bfcc9f6b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="4b4dd8f8-bf38-4d1c-9faf-d475ab1e8ecb"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="598eecd0-f8fb-46c5-bcbd-70dfb7c52e02" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="b0ede64c-68ab-49af-88a3-797d598b8cb9" class="">The AI will provide a visual weight analysis identifying competing focal points and attention flow patterns, a clear hierarchy system distinguishing primary, secondary, and tertiary content with size, weight, color, and position techniques, spacing recommendations with a consistent scale (8px base unit and multiples) applied at component and section levels including negative space strategy and grid systems, focal point strategy defining where the eye should land first with visual flow paths (F-pattern, Z-pattern) and attention guidance, content grouping recommendations using proximity, visual containers, and whitespace to show relationships, balance techniques covering symmetrical vs. asymmetrical layouts with visual weight distribution and grid alignment principles, density optimization advice on what to remove, hide, expand, or emphasize with progressive disclosure opportunities, and before/after comparison showing the improvements. Optionally includes annotated wireframes showing the rebalanced page composition.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="98c42621-02f4-4e2e-90ba-3da1076af290"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="fe4b120d-98e0-4794-8fa9-9ce8d21bfeca"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b5298522-3052-4833-a330-afc21cb200cd" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="472df163-f89f-4170-b179-4320c663b95d" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Visual Design Expert specializing in layout composition and information hierarchy.
+
+I&#x27;m auditing the visual balance of a [Page Type] that currently feels [Problem Description].
+
+[OPTIONAL: Attach screenshot of current page design]
+
+Page characteristics:
+- Content elements: [e.g., Header, navigation, hero section, 3 content cards, sidebar, footer]
+- Information density: [e.g., Dense with lots of data, Sparse with minimal content]
+- Visual weight issues: [e.g., Everything same size, too much bold text, no clear focal point]
+- Spacing problems: [e.g., Inconsistent margins, cramped sections, awkward gaps]
+- Hierarchy issues: [e.g., Can&#x27;t tell what&#x27;s primary vs secondary vs tertiary]
+
+Current visual problems:
+- [Problem 1: e.g., Header takes 40% of screen, pushing content below fold]
+- [Problem 2: e.g., All text same size - headings blend with body copy]
+- [Problem 3: e.g., Sidebar and main content visually compete for attention]
+- [Problem 4: e.g., Whitespace distributed randomly - some areas cramped, others empty]
+- [Problem 5: e.g., CTAs buried in visual noise]
+
+User feedback: [e.g., &quot;Feels cluttered&quot;, &quot;Can&#x27;t find the main action&quot;, &quot;Looks unprofessional&quot;]
+
+Please provide:
+1. Visual weight distribution analysis (what dominates, what&#x27;s invisible)
+2. Hierarchy recommendations (primary, secondary, tertiary content)
+3. Spacing system (margins, padding, gutters, breathing room)
+4. Focal point strategy (where should eye go first)
+5. Content grouping and relationship
+6. Visual balance techniques (symmetry, asymmetry, grid alignment)
+7. Density optimization (when to add/remove content)
+8. Before/after composition comparison
+
+Consider: [Constraints - e.g., Must fit above fold, responsive design needs, accessibility requirements, brand guidelines]</code></pre></div><div style="display:contents" dir="auto"><p id="5eae52ec-fcec-4a48-ab34-a4cd5ed01f2b" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="b92a2e15-fde4-4d6f-9f04-b9479663f623" class="bulleted-list"><li style="list-style-type:disc">[Page Type] = Dashboard, Landing page, Product page, Settings page, Form page, Content page</li></ul></div><div style="display:contents" dir="auto"><ul id="9614a318-1b28-4109-a88b-24853029d74c" class="bulleted-list"><li style="list-style-type:disc">[Problem Description] = Too cluttered, too sparse, unbalanced, chaotic, boring</li></ul></div><div style="display:contents" dir="auto"><ul id="db87f66f-efd6-4fab-8085-51111990c3ae" class="bulleted-list"><li style="list-style-type:disc">[Content elements] = What&#x27;s actually on the page</li></ul></div><div style="display:contents" dir="auto"><ul id="a5d0554f-bc76-4c1c-94ce-6d2a7c80264c" class="bulleted-list"><li style="list-style-type:disc">[Information density] = How much content you&#x27;re working with</li></ul></div><div style="display:contents" dir="auto"><ul id="f2e2bd2e-9b17-4f10-9274-c0397d2fe537" class="bulleted-list"><li style="list-style-type:disc">[Visual problems 1-5] = Specific balance issues</li></ul></div><div style="display:contents" dir="auto"><ul id="850d72c5-e8a6-4541-a921-d755241e40da" class="bulleted-list"><li style="list-style-type:disc">Upload screenshot of current page for detailed analysis</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80b3-9e85-e9dba3b93f2e"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-80dc-8e8d-fd7ac2a9a4b8"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-807b-928a-ea86e82af0d0" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d667ccc-6bef-804e-bb08-f662983c1645" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Visual Design Expert specializing in layout composition and information hierarchy.
+
+I&#x27;m auditing the visual balance of a SaaS Product Dashboard that currently feels cluttered and overwhelming despite having reasonable amounts of information.
+
+[User would attach screenshot here]
+
+Page characteristics:
+- Content elements:
+  - Fixed header (80px tall) with logo, navigation (7 items), search bar, notifications, profile
+  - Left sidebar (280px wide) with 15 menu items
+  - Main content area with: Page title, 4 stat cards, 2 charts (line chart, pie chart), data table (10 rows), activity feed sidebar (250px)
+  - Footer with links and legal text
+- Information density: High - showing metrics, charts, table, and activity all on one screen
+- Visual weight issues: Everything demands attention - bold stats, colorful charts, red notification badges, flashing &quot;New&quot; labels
+- Spacing problems: Inconsistent - 8px between some elements, 24px between others, 40px in random places, cards touching edges
+- Hierarchy issues: Page title same size as stat card numbers, chart titles compete with data, table headers blend with rows
+
+Current visual problems:
+- Header + sidebar consume 360px of width on 1440px screen, leaving only 1080px for content (cramped)
+- Four stat cards in a row - each screaming for attention with large numbers, icons, and trend arrows
+- Charts placed side-by-side with no breathing room - pie chart colors bleed into line chart
+- Data table has alternating row colors, bold headers, icon columns, and red/green status badges - visual chaos
+- Activity feed sidebar on right creates three-column layout that fragments attention
+- Everything above the fold - nothing &quot;breathes&quot;, no visual rest areas
+- CTA buttons (&quot;Export Data&quot;, &quot;View Details&quot;, &quot;Refresh&quot;) scattered across page with no hierarchy
+
+User feedback: 
+- &quot;I don&#x27;t know where to look first&quot;
+- &quot;Feels like everything is shouting at me&quot;
+- &quot;Can&#x27;t focus on one thing - too overwhelming&quot;
+- &quot;Looks amateurish despite good data&quot;
+
+Please provide:
+1. Visual weight distribution analysis (what dominates, what&#x27;s invisible)
+2. Hierarchy recommendations (primary, secondary, tertiary content)
+3. Spacing system (margins, padding, gutters, breathing room)
+4. Focal point strategy (where should eye go first)
+5. Content grouping and relationship
+6. Visual balance techniques (symmetry, asymmetry, grid alignment)
+7. Density optimization (when to add/remove content)
+8. Before/after composition comparison
+
+Consider: Users primarily check stats and charts - that&#x27;s the main value. Table and activity feed are secondary. Must work on 1440px and 1920px screens. Dashboard is checked 5-10 times per day for quick status - not detailed analysis. Mobile version exists separately, this is desktop-focused.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="b857e0ba-51d0-403f-9bff-3257a1a0336d"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="4cf0891f-e83d-4466-b011-c58fcfb82789" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="f127b587-5951-401d-a07f-62a8fdfb4033" class="">✦ Squint test: Blur your eyes and look at the page - what stands out? That&#x27;s your actual hierarchy<br/>✦ Common mistake: Using bold/color/size equally everywhere - hierarchy needs contrast to work<br/>✦ Best with: Claude (excellent at analyzing complex layouts), ChatGPT (good for visual hierarchy principles)<br/>✦ Remix it: &quot;Audit the mobile version - how does balance change on 375px width?&quot;<br/>✦ Pro move: Ask &quot;Create a visual weight checklist I can use to audit any page design&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8001-8067-c7389a4870cd"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="ad014495-ef1f-49ea-b7d3-e611d22c9cce"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0cbadd6b-ab59-439e-b305-506a6ed0dc2d" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="2caa775a-abf9-46eb-b891-7fd47875b4bb" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the responsive breakpoints - how should this balance shift at 1024px, 768px, and 375px?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="8fd2ac33-3868-4742-a173-31042d107ed6" class="bulleted-list"><li style="list-style-type:disc">&quot;Create a spacing scale system for this design - define the 8px base unit and all multiples&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="0b653f03-af89-434c-b05c-02682442f049" class="bulleted-list"><li style="list-style-type:disc">&quot;What happens when new content is added? Design the &#x27;adding 5th stat card&#x27; scenario&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2afe2bdd-80ae-4612-96ef-47640532cf45" class="bulleted-list"><li style="list-style-type:disc">&quot;Generate accessibility audit - does the visual hierarchy match the semantic/keyboard navigation order?&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-807e-96b4-ca5799e096a4"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-807b-a7af-ed60b6cb5e3a"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80ec-8ea7-d4136d1b191e" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-801b-9754-f4a48d47ddc0" class="image"><a href="20_Example_Output.png"><img style="width:643.9921875px" src="20_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8079-a9a3-f982e78fd45d"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="189f57e7-c889-41d2-864a-ececf02b35de"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="7d2a89f0-3117-417b-8a7b-1a75b088d44d" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="a7f36f26-d9e2-41c2-b27f-843c0eda1939" class="">→ Recipe #01: <a href="R-01 Plan Your Page Layout 2d667ccc6bef8044941beb6a5c872b37.html">Plan Your Page Layout</a><br/>→ Recipe #02: <a href="R-02 Fix Cluttered Data Views 2d667ccc6bef80cb97c4fcafda955f11.html">Fix Cluttered Data Views</a><br/>→ Recipe #05: <a href="R-05 Rank Dashboard Information 2d667ccc6bef80d2ac13f0eb7bcf0b17.html">Rank Dashboard Information</a><br/>→ Recipe #28: <a href="R-28 Remove Visual Clutter 2d767ccc6bef806ea5dbd329ca407ba1.html">Remove Visual Clutter</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80fc-9655-cfe4c7c6e56f" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

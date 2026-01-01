@@ -1,0 +1,1022 @@
+.ebook-container {
+  display: flex;
+  flex-direction: column;
+  /* Use fixed positioning to fill entire viewport and ignore parent padding */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #f7fafc;
+  margin: 0;
+  padding: 0;
+  transition: background 0.3s ease;
+}
+
+/* Dark Theme Variables */
+.ebook-container.dark-theme {
+  background: #0f1419;
+}
+
+.ebook-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 24px;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  color: #4a5568;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-toggle:hover {
+  background: #edf2f7;
+  color: #2d3748;
+}
+
+.ebook-header h1 {
+  margin: 0;
+  font-size: 20px;
+  color: #1a202c;
+  font-weight: 700;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Apple-Style Theme Toggle */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-track {
+  width: 48px;
+  height: 28px;
+  background: #e2e8f0;
+  border-radius: 14px;
+  position: relative;
+  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+}
+
+.toggle-track.active {
+  background: #4a5568;
+}
+
+.toggle-thumb {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 12px;
+  position: absolute;
+  left: 2px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-track.active .toggle-thumb {
+  transform: translateX(20px);
+}
+
+.user-email {
+  color: #718096;
+  font-size: 14px;
+}
+
+.logout-button {
+  padding: 8px 16px;
+  background: #edf2f7;
+  border: none;
+  border-radius: 6px;
+  color: #4a5568;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.logout-button:hover {
+  background: #e2e8f0;
+  color: #2d3748;
+}
+
+.ebook-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.ebook-sidebar {
+  width: 320px;
+  background: white;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.dark-theme .ebook-sidebar {
+  background: #1a1f2e;
+  border-right-color: #2d3748;
+}
+
+.ebook-sidebar.closed {
+  transform: translateX(-100%);
+}
+
+.sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.sidebar-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #1a202c;
+  font-weight: 700;
+}
+
+.recipe-count {
+  color: #718096;
+  font-size: 14px;
+}
+
+.recipe-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.recipe-item {
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: #4a5568;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.recipe-item:hover {
+  background: #f7fafc;
+  color: #2d3748;
+}
+
+.recipe-item.active {
+  background: white;
+  color: #2d3748;
+  border: 2px solid #2d3748;
+  font-weight: 600;
+}
+
+.recipe-section {
+  margin-bottom: 16px;
+}
+
+.section-title-button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px 8px 16px;
+  transition: background 0.2s;
+  border-radius: 6px;
+}
+
+.section-title-button:hover {
+  background: #f7fafc;
+}
+
+.section-chevron {
+  font-size: 10px;
+  color: #718096;
+  transition: transform 0.2s ease;
+  display: inline-block;
+  transform: rotate(0deg);
+}
+
+.section-chevron.expanded {
+  transform: rotate(90deg);
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  text-align: left;
+}
+
+.section-content {
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ebook-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 16px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading p {
+  color: #718096;
+  font-size: 16px;
+}
+
+.html-content {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  background: white;
+  padding: 24px;
+  min-height: 100%;
+}
+
+/* Override Notion's embedded styles */
+.html-content article,
+.html-content body,
+.html-content .page-body {
+  max-width: 100% !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+/* HTML Content Styling */
+.html-content h1 {
+  font-size: 36px;
+  color: #1a202c;
+  margin: 0 0 24px 0;
+  padding-top: 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.html-content h1:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.html-content h2 {
+  font-size: 28px;
+  color: #2d3748;
+  margin: 48px 0 20px 0;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.html-content h3 {
+  font-size: 22px;
+  color: #2d3748;
+  margin: 32px 0 16px 0;
+  font-weight: 600;
+}
+
+.html-content h4 {
+  font-size: 18px;
+  color: #4a5568;
+  margin: 24px 0 12px 0;
+  font-weight: 600;
+}
+
+.html-content p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a5568;
+  margin: 0 0 20px 0;
+}
+
+.html-content ul,
+.html-content ol {
+  margin: 0 0 20px 0;
+  padding-left: 28px;
+}
+
+.html-content li {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a5568;
+  margin-bottom: 8px;
+}
+
+.html-content code {
+  background: #edf2f7;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 14px;
+  color: #e53e3e;
+}
+
+.html-content pre {
+  background: #2d3748;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0 0 20px 0;
+  position: relative;
+}
+
+.html-content pre code {
+  background: none;
+  padding: 0;
+  color: #f7fafc;
+  font-size: 14px;
+}
+
+/* Copy Button Styling - Frosted Glass */
+.copy-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  color: #f7fafc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.copy-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.copy-button:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.copy-button.copied {
+  background: rgba(72, 187, 120, 0.25);
+  border-color: rgba(72, 187, 120, 0.4);
+  color: #9ae6b4;
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.copy-button svg {
+  width: 18px;
+  height: 18px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.html-content blockquote {
+  border-left: 4px solid #667eea;
+  padding-left: 20px;
+  margin: 0 0 20px 0;
+  color: #718096;
+  font-style: italic;
+}
+
+.html-content a {
+  color: #667eea;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.html-content a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+.html-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.html-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.html-content th,
+.html-content td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.html-content th {
+  background: #f7fafc;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.html-content hr {
+  border: none;
+  border-top: 2px solid #e2e8f0;
+  margin: 40px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ebook-sidebar {
+    position: absolute;
+    height: calc(100vh - 57px);
+    z-index: 5;
+  }
+  
+  .ebook-sidebar.closed {
+    transform: translateX(-100%);
+  }
+  
+  .ebook-content {
+    padding: 20px;
+  }
+  
+  .html-content {
+    padding: 30px 20px;
+  }
+  
+  .html-content h1 {
+    font-size: 28px;
+  }
+  
+  .html-content h2 {
+    font-size: 24px;
+  }
+  
+  .user-email {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .ebook-header h1 {
+    font-size: 16px;
+  }
+  
+  .html-content h1 {
+    font-size: 24px;
+  }
+  
+  .html-content h2 {
+    font-size: 20px;
+  }
+}
+
+/* Notion-specific styles */
+.html-content .callout {
+  display: flex;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 20px 0;
+  gap: 12px;
+}
+
+.html-content .callout .icon {
+  font-size: 24px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.html-content figure {
+  margin: 24px 0;
+}
+
+.html-content figure img {
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.html-content figcaption {
+  text-align: center;
+  font-size: 14px;
+  color: #718096;
+  margin-top: 12px;
+  font-style: italic;
+}
+
+/* Search Container */
+.search-container {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 32px 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #2d3748;
+  transition: all 0.2s;
+  background: #f7fafc;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.search-input::placeholder {
+  color: #a0aec0;
+}
+
+.clear-search {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #a0aec0;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.clear-search:hover {
+  color: #4a5568;
+  background: #edf2f7;
+}
+
+/* Filter Tabs */
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.filter-tab {
+  flex: 1;
+  padding: 8px 12px;
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  color: #4a5568;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-tab:hover {
+  background: #f7fafc;
+  border-color: #cbd5e0;
+  color: #2d3748;
+}
+
+.filter-tab.active {
+  background: #2d3748;
+  border-color: #2d3748;
+  color: white;
+}
+
+/* No Results */
+.no-results {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.no-results p {
+  color: #a0aec0;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Remove hamburger menu from mobile */
+@media (max-width: 768px) {
+  .ebook-sidebar {
+    position: relative;
+    transform: none !important;
+  }
+  
+  .menu-toggle {
+    display: none;
+  }
+}
+
+/* ========================================
+   DARK THEME STYLES
+======================================== */
+
+/* Header */
+.dark-theme .ebook-header {
+  background: #1a1f2e;
+  border-bottom-color: #2d3748;
+}
+
+.dark-theme .ebook-header h1 {
+  color: #e2e8f0;
+}
+
+.dark-theme .user-email {
+  color: #a0aec0;
+}
+
+.dark-theme .logout-button {
+  background: #2d3748;
+  color: #e2e8f0;
+}
+
+.dark-theme .logout-button:hover {
+  background: #4a5568;
+  color: #f7fafc;
+}
+
+/* Sidebar */
+.dark-theme .sidebar-header {
+  border-bottom-color: #2d3748;
+}
+
+.dark-theme .sidebar-header h2 {
+  color: #e2e8f0;
+}
+
+.dark-theme .recipe-count {
+  color: #a0aec0;
+}
+
+.dark-theme .recipe-item {
+  color: #cbd5e0;
+}
+
+.dark-theme .recipe-item:hover {
+  background: #2d3748;
+  color: #f7fafc;
+}
+
+.dark-theme .recipe-item.active {
+  background: #2d3748;
+  color: #f7fafc;
+  border-color: #667eea;
+}
+
+.dark-theme .section-title-button:hover {
+  background: #2d3748;
+}
+
+.dark-theme .section-title {
+  color: #a0aec0;
+}
+
+.dark-theme .section-chevron {
+  color: #a0aec0;
+}
+
+/* Search */
+.dark-theme .search-container {
+  border-bottom-color: #2d3748;
+}
+
+.dark-theme .search-input {
+  background: #0f1419;
+  border-color: #2d3748;
+  color: #e2e8f0;
+}
+
+.dark-theme .search-input:focus {
+  background: #1a1f2e;
+  border-color: #667eea;
+}
+
+.dark-theme .search-input::placeholder {
+  color: #718096;
+}
+
+.dark-theme .clear-search {
+  color: #718096;
+}
+
+.dark-theme .clear-search:hover {
+  color: #cbd5e0;
+  background: #2d3748;
+}
+
+/* Filter Tabs */
+.dark-theme .filter-tabs {
+  border-bottom-color: #2d3748;
+}
+
+.dark-theme .filter-tab {
+  border-color: #2d3748;
+  color: #cbd5e0;
+}
+
+.dark-theme .filter-tab:hover {
+  background: #2d3748;
+  border-color: #4a5568;
+  color: #f7fafc;
+}
+
+.dark-theme .filter-tab.active {
+  background: #667eea;
+  border-color: #667eea;
+  color: white;
+}
+
+/* Content */
+.dark-theme .html-content {
+  background: #0f1419;
+  transition: background 0.3s ease;
+  color: #e2e8f0;
+}
+
+.dark-theme .html-content h1 {
+  color: #ffffff;
+}
+
+.dark-theme .html-content h2,
+.dark-theme .html-content h3 {
+  color: #f7fafc;
+}
+
+.dark-theme .html-content h4 {
+  color: #e2e8f0;
+}
+
+.dark-theme .html-content p {
+  color: #d1d5db;
+}
+
+.dark-theme .html-content li {
+  color: #d1d5db;
+}
+
+.dark-theme .html-content strong,
+.dark-theme .html-content b {
+  color: #f7fafc;
+}
+
+.dark-theme .html-content code {
+  background: #1f2937;
+  color: #fca5a5;
+  border: 1px solid #374151;
+}
+
+.dark-theme .html-content pre {
+  background: #1a202c;
+  border: 1px solid #2d3748;
+}
+
+.dark-theme .html-content pre code {
+  color: #e5e7eb;
+  border: none;
+}
+
+.dark-theme .html-content blockquote {
+  border-left-color: #667eea;
+  color: #cbd5e0;
+  background: #1a202c;
+  padding: 16px 20px;
+  border-radius: 4px;
+}
+
+.dark-theme .html-content a {
+  color: #a78bfa;
+}
+
+.dark-theme .html-content a:hover {
+  color: #c4b5fd;
+}
+
+.dark-theme .html-content th,
+.dark-theme .html-content td {
+  border-bottom-color: #374151;
+  color: #e5e7eb;
+}
+
+.dark-theme .html-content th {
+  background: #1f2937;
+  color: #f3f4f6;
+}
+
+.dark-theme .html-content tr:hover {
+  background: #1a202c;
+}
+
+.dark-theme .html-content hr {
+  border-top-color: #374151;
+}
+
+.dark-theme .html-content figcaption {
+  color: #9ca3af;
+}
+
+.dark-theme .html-content img {
+  border: 1px solid #374151;
+}
+
+/* Callouts and content blocks */
+.dark-theme .html-content .callout {
+  background: #1a202c;
+  border: 1px solid #374151;
+}
+
+/* Notion page-body background */
+.dark-theme .html-content .page-body {
+  background: #0f1419 !important;
+  color: #e2e8f0 !important;
+}
+
+/* Lists in dark mode */
+.dark-theme .html-content ul,
+.dark-theme .html-content ol {
+  color: #d1d5db;
+}
+
+/* ========================================
+   NOTION COLOR BACKGROUNDS - DARK MODE
+   Preserve color flavor with dark equivalents
+   Using div and span selectors for broader coverage
+======================================== */
+
+/* All background colors get better text contrast */
+.dark-theme .html-content div[style*="background"],
+.dark-theme .html-content span[style*="background"],
+.dark-theme .html-content p[style*="background"] {
+  color: #e5e7eb !important;
+}
+
+/* Gray backgrounds (Default) - Light gray/beige */
+.dark-theme .html-content div[style*="240, 239, 237"],
+.dark-theme .html-content div[style*="247, 246, 243"],
+.dark-theme .html-content div[style*="206, 205, 202"],
+.dark-theme .html-content span[style*="240, 239, 237"],
+.dark-theme .html-content span[style*="247, 246, 243"],
+.dark-theme .html-content span[style*="206, 205, 202"] {
+  background: rgba(55, 65, 81, 0.3) !important;
+}
+
+/* Brown/Beige backgrounds */
+.dark-theme .html-content div[style*="245, 237, 233"],
+.dark-theme .html-content div[style*="42, 28, 0"],
+.dark-theme .html-content span[style*="245, 237, 233"],
+.dark-theme .html-content span[style*="42, 28, 0"] {
+  background: rgba(120, 53, 15, 0.25) !important;
+}
+
+/* Orange backgrounds */
+.dark-theme .html-content div[style*="251, 235, 222"],
+.dark-theme .html-content div[style*="139, 46, 0"],
+.dark-theme .html-content div[style*="224, 101, 1"],
+.dark-theme .html-content span[style*="251, 235, 222"],
+.dark-theme .html-content span[style*="139, 46, 0"],
+.dark-theme .html-content span[style*="224, 101, 1"] {
+  background: rgba(194, 65, 12, 0.25) !important;
+}
+
+/* Yellow backgrounds */
+.dark-theme .html-content div[style*="249, 243, 220"],
+.dark-theme .html-content div[style*="211, 168, 0"],
+.dark-theme .html-content span[style*="249, 243, 220"],
+.dark-theme .html-content span[style*="211, 168, 0"] {
+  background: rgba(161, 98, 7, 0.25) !important;
+}
+
+/* Green backgrounds - "Use When" sections */
+.dark-theme .html-content div[style*="232, 241, 236"],
+.dark-theme .html-content div[style*="0, 100, 45"],
+.dark-theme .html-content span[style*="232, 241, 236"],
+.dark-theme .html-content span[style*="0, 100, 45"] {
+  background: rgba(5, 80, 40, 0.3) !important;
+}
+
+/* Blue backgrounds */
+.dark-theme .html-content div[style*="229, 242, 252"],
+.dark-theme .html-content div[style*="0, 124, 215"],
+.dark-theme .html-content span[style*="229, 242, 252"],
+.dark-theme .html-content span[style*="0, 124, 215"] {
+  background: rgba(29, 78, 216, 0.25) !important;
+}
+
+/* Purple backgrounds */
+.dark-theme .html-content div[style*="243, 235, 249"],
+.dark-theme .html-content div[style*="102, 0, 178"],
+.dark-theme .html-content span[style*="243, 235, 249"],
+.dark-theme .html-content span[style*="102, 0, 178"] {
+  background: rgba(109, 40, 217, 0.25) !important;
+}
+
+/* Pink/Red backgrounds */
+.dark-theme .html-content div[style*="250, 233, 241"],
+.dark-theme .html-content div[style*="197, 0, 93"],
+.dark-theme .html-content div[style*="223, 22, 0"],
+.dark-theme .html-content span[style*="250, 233, 241"],
+.dark-theme .html-content span[style*="197, 0, 93"],
+.dark-theme .html-content span[style*="223, 22, 0"] {
+  background: rgba(190, 24, 93, 0.25) !important;
+}
+
+/* Loading State */
+.dark-theme .spinner {
+  border-color: #2d3748;
+  border-top-color: #667eea;
+}
+
+.dark-theme .loading p {
+  color: #a0aec0;
+}
+
+/* No Results */
+.dark-theme .no-results p {
+  color: #718096;
+}

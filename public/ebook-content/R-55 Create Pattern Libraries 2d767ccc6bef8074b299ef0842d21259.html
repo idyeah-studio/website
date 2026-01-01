@@ -1,0 +1,807 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-55: Create Pattern Libraries</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-8074-b299-ef0842d21259" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-801a-a1f8-e04ef2b5b9ba" class="">Recipe #55: Create Pattern Libraries</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80b4-994e-c124c7c741ab" class="">Category: Systems &amp; Components  |  ⏱️ 40-45 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8095-ab48-e0ac51d26fc8" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="6e70c334-086c-45d4-8f3a-41d337f2f644"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="e2bf3d49-7173-4e12-bf60-bc52789205f7" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="cc52ab6a-b0d4-449c-87eb-5236eb731909" class="">You&#x27;re building reusable UI patterns - common compositions like login forms, dashboard layouts, settings pages, data tables, card grids, navigation patterns - that solve recurring design problems. Your team rebuilds the same layouts repeatedly, lacks standardized patterns for common features, or needs to speed up design work with pre-built compositions.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8043-8d24-ea3df0bfc9d3"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="74efaff5-7e0d-4e21-8ad7-d8026b9a80cd"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="dfbe892e-6f62-4e29-a25f-62e5eee6eb27" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="2a642f6c-0c39-4d9b-8677-488266f555fd" class="">Many teams lack pattern libraries - designers rebuild login forms from scratch every time (same username/password/remember me layout created 10+ times), no standardized dashboard patterns (every dashboard looks different, inconsistent layouts), missing common patterns like empty states, error pages, onboarding flows, settings pages, or confirmation dialogs. Teams waste time recreating common layouts, create inconsistent experiences (login looks different in web vs. mobile app), struggle with edge cases (forgot password flow, email verification, multi-step forms), and lack guidance on best practices for common features. You need a pattern library - pre-built, well-designed compositions of components (not individual buttons, but complete login forms, dashboard layouts, settings pages) that capture best practices, handle edge cases, maintain consistency, and speed up design from hours to minutes. Patterns are opinionated combinations of components that solve specific problems.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8024-8e65-ceff06a9b340"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="7a54f618-c18f-4c1e-ad3d-1ba897ed1100"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="78bbf9bd-b642-476c-a78f-83bc36017585" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="5a8822e2-995b-4b27-af01-66932a8dbad6" class="">The AI will provide comprehensive pattern categories covering forms (login, signup, multi-step wizards, settings), dashboards (task, analytics, team overview), navigation (header, sidebar, mobile menu, tabs, breadcrumbs), data display (list, grid, table, detail views, activity feeds), state patterns (empty, zero results, error pages, loading, success), settings (account, team, notifications, billing), and onboarding (welcome, product tour, first task flows) with detailed anatomy breakdown showing component structure, spacing, and layouts for each pattern, essential pattern variants for simple vs. complex implementations with customization guidance on when to use which variant, comprehensive edge case handling for empty states, loading states, error states, first-time users, permission denied scenarios, and offline mode with specific designs for each, complete pattern documentation templates covering when to use patterns, anatomy, variants, customization points, best practices, accessibility requirements, and visual examples, clear guidance on pattern vs. component decisions explaining when to create a pattern (used 3+ times, standardized structure) vs. using individual components (unique layouts, high flexibility needs), and pattern maintenance strategies including update processes, semantic versioning, deprecation workflows, and usage tracking. Optionally includes visual examples showing pattern library organization across all categories.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="df6c951a-91e8-41a7-ac1a-00eea2ff3f0f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="ae211f1a-7c9c-47fa-b3f5-a2b1c287f29b"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="70b4c2db-ea5d-4d93-9f7f-e6831a1922a1" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7c563f7c-1c67-4aa7-b7fe-db87fb9da97a" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a UX Pattern Library Specialist focusing on reusable UI compositions, design patterns, and best practice templates.
+
+I&#x27;m creating a pattern library for a [Product Type] to provide pre-built solutions for common design scenarios like [Pattern Types] that speed up design work and maintain consistency.
+
+[OPTIONAL: Attach examples of patterns being recreated repeatedly]
+
+Pattern library requirements:
+- Pattern categories: [e.g., Forms, Dashboards, Navigation, Data display, Empty states, Errors, Settings]
+- Common scenarios: [e.g., Login/signup, User profiles, Task lists, File management, Reports, Settings pages]
+- Complexity level: [e.g., Simple patterns (login form), Medium (dashboard layout), Complex (multi-step wizard)]
+- Team size: [e.g., 5 designers who need ready-made patterns, 15 designers across 3 products]
+- Customization needs: [e.g., Patterns should be 80% ready, allow 20% customization]
+
+Current pattern problems:
+- [Problem 1: e.g., No pattern library - designers rebuild login forms from scratch every time]
+- [Problem 2: e.g., Inconsistent patterns - 5 different dashboard layouts across product]
+- [Problem 3: e.g., Missing edge cases - patterns don&#x27;t show forgot password, empty states, errors]
+- [Problem 4: e.g., Just components, no compositions - have buttons but no complete forms]
+- [Problem 5: e.g., Patterns not documented - no guidance on when to use which pattern]
+
+Team context: [Designer experience levels, common design tasks, speed vs. customization needs]
+
+Please provide:
+1. Pattern categories (forms, dashboards, navigation, data display, states, settings)
+2. Essential patterns per category (login form, task dashboard, empty states, etc.)
+3. Pattern anatomy (what components make up each pattern)
+4. Pattern variants (simple vs. complex forms, grid vs. list layouts)
+5. Edge case handling (errors, empty states, loading, first-time use)
+6. Pattern documentation (when to use, customization points, examples)
+7. Pattern vs. component (when to create pattern vs. use individual components)
+8. Pattern maintenance (updating patterns, versioning, deprecation)
+
+Consider: [Constraints - e.g., Patterns must work across 3 products, Mobile + desktop versions, Accessibility built-in, Allow customization without breaking pattern]</code></pre></div><div style="display:contents" dir="auto"><p id="bd1627f5-9506-452b-b85e-454eae3b74f6" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="51930421-eed1-4725-aae8-c2da08a8c55a" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = SaaS, E-commerce, Mobile app, Dashboard, Enterprise software</li></ul></div><div style="display:contents" dir="auto"><ul id="fcc377b0-1ab8-4705-8d26-709c02784868" class="bulleted-list"><li style="list-style-type:disc">[Pattern Types] = Common design scenarios your team faces</li></ul></div><div style="display:contents" dir="auto"><ul id="54e0b13c-6963-4c81-ac96-160219e772c9" class="bulleted-list"><li style="list-style-type:disc">[Pattern categories] = What types of patterns needed</li></ul></div><div style="display:contents" dir="auto"><ul id="1326236b-e72e-4d48-bbd1-62d4298fef6d" class="bulleted-list"><li style="list-style-type:disc">[Common scenarios] = Specific use cases</li></ul></div><div style="display:contents" dir="auto"><ul id="3b9cd021-3a69-466a-9dae-d36cf43ea64e" class="bulleted-list"><li style="list-style-type:disc">[Complexity level] = Simple to complex patterns</li></ul></div><div style="display:contents" dir="auto"><ul id="f47eac34-5336-48f4-9236-70cc54ba0dbf" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current pattern issues</li></ul></div><div style="display:contents" dir="auto"><ul id="f99b75b0-4a70-436e-bebb-a59d64514da8" class="bulleted-list"><li style="list-style-type:disc">Attach examples of repeated patterns</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80bc-a15f-c4fc4f88a527"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80ff-92be-c66a1e000fcc"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8041-80e6-e3b5b753147c" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-8024-b316-d36ea9031e9e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a UX Pattern Library Specialist focusing on reusable UI compositions, design patterns, and best practice templates.
+
+I&#x27;m creating a pattern library for a SaaS Project Management Tool to provide pre-built solutions for common design scenarios like login/signup flows, task dashboards, settings pages, empty states, and data tables that speed up design work and maintain consistency.
+
+[User would attach examples of patterns being recreated]
+
+Pattern library requirements:
+- Pattern categories:
+  - Forms: Login, signup, forgot password, multi-step forms, settings forms
+  - Dashboards: Task dashboard, project overview, analytics dashboard, team dashboard
+  - Navigation: Header nav, sidebar nav, mobile menu, tabs, breadcrumbs
+  - Data display: Task lists, project cards, data tables, file lists, activity feeds
+  - Empty states: No tasks, no projects, no search results, first-time user
+  - Error states: 404 page, 500 error, permission denied, offline mode
+  - Settings: Account settings, team settings, notification preferences, billing
+  - Onboarding: Welcome flow, product tour, first task, invite team
+- Common scenarios:
+  - User authentication: Login (email/password + social), signup (with email verification), forgot password (email reset flow), 2FA setup
+  - Task management: Create task, edit task, task list (filters, sorting), task details, bulk actions
+  - Project views: Project dashboard (overview, progress, team), project list (grid/list), project settings
+  - Team collaboration: Invite members, assign tasks, comments, @mentions, notifications
+  - Settings &amp; preferences: Profile settings, team settings, notification settings, billing/subscription
+  - Reports &amp; analytics: Charts, metrics cards, date range picker, export options
+- Complexity level:
+  - Simple: Login form (5 elements), empty state (icon + message + CTA)
+  - Medium: Task dashboard (header, filters, task list, pagination), settings page (tabs, forms, save button)
+  - Complex: Multi-step signup (5 steps with progress), onboarding flow (3-5 screens), project creation wizard
+- Team size: 8 designers creating 50+ screens per quarter
+- Customization needs:
+  - Patterns should be 80% complete (ready to use as-is for most cases)
+  - Allow 20% customization (swap content, adjust spacing, add/remove optional elements)
+  - Lock core structure (maintain layout, spacing, component relationships)
+
+Current pattern problems:
+- No pattern library - designers rebuild login form from scratch every time (username input, password input, &quot;Remember me&quot; checkbox, &quot;Forgot password?&quot; link, &quot;Sign in&quot; button) - same layout created 15+ times across features, wastes 30-60 minutes each time
+- Inconsistent patterns across product - 5 different dashboard layouts (some with sidebar filters, some with top filters, some with no filters), 3 different empty state designs (some with illustrations, some text-only, some with CTA buttons), no standardization
+- Missing edge cases in patterns - login form exists but forgot password flow missing, signup form exists but email verification step missing, task list exists but empty state missing, no error state patterns
+- Only individual components, no compositions - have Button, Input, Card components but no complete &quot;Login Form&quot; pattern, no &quot;Task Dashboard&quot; pattern, designers assemble from scratch
+- Patterns not documented - no guidance on when to use grid vs. list layout, when to use modal vs. page for forms, no examples of pattern usage
+- Patterns don&#x27;t handle responsive - desktop patterns exist but mobile versions missing or inconsistent, no guidance on how patterns adapt
+- No pattern for common features - every designer creates their own &quot;Settings Page&quot; layout, &quot;Invite Team Modal&quot;, &quot;Empty Task List&quot;, inconsistent results
+
+Team context:
+- 8 designers, mixed experience (2 junior, 5 mid, 1 senior)
+- Current workflow: Start from blank canvas, assemble components, recreate layouts = 2-3 hours per screen
+- Want pattern workflow: Drag pattern, customize content, minor tweaks = 20-30 minutes per screen
+- Common tasks: Login/signup (done 10+ times), dashboards (20+ variations), settings pages (15+ versions), empty states (50+ instances)
+- Need speed: Shipping features every 2 weeks, can&#x27;t spend hours on layouts
+- Need consistency: 3 products (web app, mobile app, marketing site) should feel cohesive
+
+Please provide:
+1. Pattern categories (forms, dashboards, navigation, data display, states, settings)
+2. Essential patterns per category (login form, task dashboard, empty states, etc.)
+3. Pattern anatomy (what components make up each pattern)
+4. Pattern variants (simple vs. complex forms, grid vs. list layouts)
+5. Edge case handling (errors, empty states, loading, first-time use)
+6. Pattern documentation (when to use, customization points, examples)
+7. Pattern vs. component (when to create pattern vs. use individual components)
+8. Pattern maintenance (updating patterns, versioning, deprecation)
+
+Consider: Patterns must work across web + mobile. Speed up design 10x (hours → minutes). Handle edge cases (empty, error, loading). Allow customization without breaking layout. Maintain consistency across 3 products. Accessibility built-in. Documented with examples and guidance.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="6ae0a76e-24ea-48bd-b83c-fe2cc4127266"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="79034d0f-c3b8-4814-8bfd-e30ea7196501" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="88abeeaa-a1bf-4c09-8e96-f061a5124d4e" class="">✦ Patterns are opinionated compositions: Not just components, but complete solutions with layout, spacing, and best practices built-in<br/>✦ Common mistake: Building pattern for every screen - create patterns for repeated scenarios (login, dashboard), not one-offs<br/>✦ Best with: Claude (excellent at pattern organization), ChatGPT (good for pattern documentation)<br/>✦ Remix it: &quot;Create the onboarding pattern library - welcome screen, product tour, first task, team invite flows&quot;<br/>✦ Pro move: Ask &quot;Audit our designs - find screens created 3+ times that should be patterns&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8061-a6d2-db204b039ba9"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="c9c15c7a-662e-47e7-8011-660fc7c1dea0"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="52c5d309-16c9-43f8-86d6-368cfcc2b0e7" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="5455a2ad-963a-4ec1-ad00-905be0b89fe7" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the form pattern library - login, signup, forgot password, multi-step wizard, settings forms&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d4dcb8f-7826-4b2c-9464-6daedd5f4d4c" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the empty state pattern library - no content, zero results, permission denied, offline mode&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="0906812e-5820-4803-bb2b-30adb56d12d4" class="bulleted-list"><li style="list-style-type:disc">&quot;How to document patterns - when to use, customization points, examples, best practices&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="fc5b681c-eaca-4778-9bf9-a7c6c2b74750" class="bulleted-list"><li style="list-style-type:disc">&quot;Build the dashboard pattern library - task dashboard, analytics, team overview, project view&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8092-abc6-c235ecd44315"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-809a-8930-d91cd73dd908"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80f7-974c-ee5b70897fd6" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-807b-b026-d51053400857" class="image"><a href="55_Example_Output.png"><img style="width:643.9921875px" src="55_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80b2-8889-e525a955dd0d"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="92a423cb-50fb-4fdc-b48b-5f68453e50a0"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="c0482fdf-e58e-4cd2-b06b-2b807c9b9890" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="30a60d04-b3a4-4943-9a66-ab9f5e633fb3" class="">→ Recipe #47: <a href="R-47 Organize Component Libraries in Figma 2d767ccc6bef80d29ce0c95e7a0fbf37.html">Organize Component Libraries in Figma</a><br/>→ Recipe #48: <a href="R-48 Design Smart Defaults 2d767ccc6bef80729793db8459ae5170.html">Design Smart Defaults</a><br/>→ Recipe #53: <a href="R-53 Flexible Data Tables 2d767ccc6bef8020b5e8fea04b8f6efe.html">Design Flexible Data Tables</a><br/>→ Recipe #54: <a href="R-54 Flexible Chart Components 2d767ccc6bef80c5b226e720fef24fa2.html">Create Flexible Chart Components</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80fc-9286-d1ac0e55b334" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

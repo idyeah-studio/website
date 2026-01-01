@@ -1,0 +1,785 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-21: Turn Brand into UI Styles</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-808f-b671-c9d953cc5641" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-8069-aa0b-da98cf682f1d" class="">Recipe #21: Turn Brand into UI Styles</h1></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80d2-a745-c1ccfc5aa3a7" class="">Category: UI &amp; Visuals  |  ⏱️ 30-35 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80f0-8a00-ea3347a0b867" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="02eed182-8e79-4780-ad41-7e4676259287"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6289a12d-621e-4261-b92e-4bf470bab840" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="2cbc1ccb-870e-4117-8ece-4487c7f6cbb1" class="">You&#x27;re redesigning an application&#x27;s visual layer to align with updated brand guidelines, or you&#x27;re creating a new UI design system from existing brand assets. The current interface doesn&#x27;t reflect the brand identity, uses inconsistent colors/fonts, or feels disconnected from marketing materials.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8085-add1-c5b1a4aac65b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="6e74fbc5-96b7-4961-a1ad-5c06a6c97d45"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8b381a68-c1e2-4080-86d9-164e0f64fa0e" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="53f00a43-85cc-4d19-8ade-6b82374b58d1" class="">Many applications have brand guidelines (logo, colors, typography) but struggle to translate them into functional UI components. Brand colors designed for print don&#x27;t work on screens, the brand font isn&#x27;t optimized for interfaces, and tone-of-voice guidelines don&#x27;t translate to button labels. The result: UIs that either ignore the brand entirely or apply brand elements incorrectly (like using the brand accent color for every button). You need to bridge brand identity and UI functionality.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-801e-992f-c5d5d8825f95"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="688e739a-3d33-4815-9a8a-eb47d1ad4140"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="70029a00-a1c0-4996-b34b-ef98a27dd084" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="e2ebae26-7602-49b7-a208-293d8a24b4d2" class="">The AI will provide an adapted color system with accessibility-compliant adjustments (primary/secondary colors, 8-10 neutral shades, semantic colors for success/error/warning/info, and UI state colors for hover/active/disabled/focus), a complete typography system defining when to use brand fonts versus fallbacks with a full type scale (H1-H6, body, captions) and responsive rules, component styling principles for buttons, inputs, cards, and navigation that reflect brand personality, iconography guidelines matching brand aesthetic with usage rules for illustrations versus functional icons, a spacing system with defined base units and scales aligned with brand feel, tone of voice translation showing how brand personality applies to button labels, error messages, and microcopy, and accessibility recommendations including contrast fixes and minimum sizes. Optionally includes visual style guide examples showing branded components.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="8c585de3-7325-42ff-93ce-b38ebf58682c"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="7a175763-de6d-460a-a60d-ddb17de5d5ea"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8e5a38c4-e9d1-40fa-8c62-402780df7cba" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="73204b65-61e5-4b76-9001-41d0beacb94a" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a UI Design System Specialist who bridges brand identity and interface design.
+
+I&#x27;m translating brand guidelines into a UI design system for a [Product Type].
+
+[OPTIONAL: Attach brand guidelines PDF, logo files, or existing brand assets]
+
+Brand assets available:
+- Brand colors: [e.g., Primary blue #0066CC, Secondary coral #FF6B6B, Neutral grays]
+- Typography: [e.g., Headline font: Montserrat Bold, Body: Inter Regular]
+- Logo and iconography: [Description of logo style and any existing icons]
+- Brand voice/tone: [e.g., Professional but approachable, Bold and confident, Friendly and casual]
+- Visual style: [e.g., Rounded corners, Minimal shadows, Illustrated icons]
+
+Current UI problems:
+- [Problem 1: e.g., Brand blue is too vibrant for extended screen use]
+- [Problem 2: e.g., Brand headline font is decorative, unreadable at small sizes]
+- [Problem 3: e.g., No guidance on how to use brand colors for UI states (hover, disabled, error)]
+- [Problem 4: e.g., Marketing uses illustrations, but unclear how to use in product UI]
+- [Problem 5: e.g., Brand voice is &quot;bold&quot; but UI copy feels generic]
+
+Please provide:
+1. Color system adaptation (primary, secondary, neutrals, semantic colors, UI states)
+2. Typography scale for UI (heading sizes, body text, captions, using brand fonts appropriately)
+3. Component styling principles (buttons, inputs, cards reflecting brand)
+4. Iconography direction (style, weight, usage guidelines)
+5. Spacing and layout principles aligned with brand
+6. Tone of voice translation to UI copy
+7. Accessibility considerations (contrast ratios, readability)
+8. Brand application examples (common components styled)
+
+Consider: [Constraints - e.g., Must meet WCAG AA standards, brand colors may need adjustment, some brand fonts not web-optimized]</code></pre></div><div style="display:contents" dir="auto"><p id="4c5f38c0-b848-45e3-8df3-42e112b18d19" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="40fb4156-b3b9-481c-b6c4-168f0c09c65f" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = SaaS platform, Mobile app, E-commerce site, Enterprise software, Consumer app</li></ul></div><div style="display:contents" dir="auto"><ul id="a32a9683-dc68-4e85-b965-3b074f9d2897" class="bulleted-list"><li style="list-style-type:disc">[Brand colors] = Your actual brand color palette</li></ul></div><div style="display:contents" dir="auto"><ul id="1526ddef-1a26-4f62-b032-d73ce225762e" class="bulleted-list"><li style="list-style-type:disc">[Typography] = Your brand fonts</li></ul></div><div style="display:contents" dir="auto"><ul id="7fb211ba-e920-483d-95bd-2b6506eedd50" class="bulleted-list"><li style="list-style-type:disc">[Brand voice/tone] = Your brand personality</li></ul></div><div style="display:contents" dir="auto"><ul id="f405cd7b-ab68-427b-9e48-200a78c04894" class="bulleted-list"><li style="list-style-type:disc">[Visual style] = Your brand&#x27;s visual characteristics</li></ul></div><div style="display:contents" dir="auto"><ul id="a96ce64d-95bf-4209-9b52-0965a3314dcd" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Specific brand-to-UI translation challenges</li></ul></div><div style="display:contents" dir="auto"><ul id="01cb2f13-6570-42bc-b129-22b834ddf56b" class="bulleted-list"><li style="list-style-type:disc">Upload brand guidelines, style guide, or marketing materials for AI to analyze</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80ed-8ece-e9372b12427d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-80f6-b754-d197b9db3b74"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80f3-99c5-fd3acd0ed84a" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d667ccc-6bef-8087-ad5c-cbe48d5fc2e5" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a UI Design System Specialist who bridges brand identity and interface design.
+
+I&#x27;m translating brand guidelines into a UI design system for a Health &amp; Wellness Mobile App.
+
+[User would attach brand guidelines PDF here]
+
+Brand assets available:
+- Brand colors:
+  - Primary: Sage Green #7DAA92 (calming, nature-inspired)
+  - Secondary: Warm Terracotta #E07A5F (energetic accent)
+  - Neutral: Cream #F4F1DE (warm backgrounds)
+  - Dark: Charcoal #3D405B (text)
+- Typography:
+  - Headlines: Playfair Display (serif, elegant, used in marketing)
+  - Body: Poppins (sans-serif, friendly, rounded)
+- Logo and iconography: Hand-drawn style illustrations, organic shapes, soft rounded corners
+- Brand voice/tone: Warm and encouraging, empathetic but not clinical, holistic wellness focus
+- Visual style: Organic, flowing layouts, nature photography, soft shadows, rounded corners (16px), gentle gradients
+
+Current UI problems:
+- Sage green primary color (#7DAA92) fails WCAG contrast on white backgrounds - can&#x27;t use for primary buttons
+- Playfair Display (serif headline font) looks beautiful in marketing but unreadable at small sizes in UI
+- Brand uses hand-drawn illustrations extensively, but unclear how to incorporate into functional UI (buttons, forms, data displays)
+- Cream background (#F4F1DE) creates readability issues for long-form content
+- Brand voice is &quot;warm and encouraging&quot; but current UI button labels are generic (&quot;Submit&quot;, &quot;Click here&quot;, &quot;OK&quot;)
+- No color defined for error states, success states, or interactive states (hover, pressed, disabled)
+- Brand guidelines show 3 colors, but UI needs semantic colors (info, warning, error, success)
+
+User context: Health-conscious individuals (25-45 years old) tracking wellness habits. App used daily for meditation, exercise logging, mood tracking. Users expect calming, stress-free experience that reflects holistic wellness values.
+
+Please provide:
+1. Color system adaptation (primary, secondary, neutrals, semantic colors, UI states)
+2. Typography scale for UI (heading sizes, body text, captions, using brand fonts appropriately)
+3. Component styling principles (buttons, inputs, cards reflecting brand)
+4. Iconography direction (style, weight, usage guidelines)
+5. Spacing and layout principles aligned with brand
+6. Tone of voice translation to UI copy
+7. Accessibility considerations (contrast ratios, readability)
+8. Brand application examples (common components styled)
+
+Consider: Must meet WCAG AA contrast standards. Mobile-first design. Users interact in low-light environments (morning/evening meditation). Performance matters - heavy illustrations could slow app. Need both light and dark mode support.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="6b014208-757a-4552-8164-7297515cc8b9"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a448d201-f00d-49a3-92f4-2ba04da319e9" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="23601751-1e15-41e6-b074-71d2878566ac" class="">✦ Brand colors aren&#x27;t always UI colors: Be ready to adjust saturation/lightness for accessibility<br/>✦ Common mistake: Using decorative brand fonts for body text - reserve them for headlines only<br/>✦ Best with: Claude (excellent at nuanced brand translation), ChatGPT (good for color system generation)<br/>✦ Remix it: &quot;Now create the dark mode version - how do brand colors adapt for dark backgrounds?&quot;<br/>✦ Pro move: Ask &quot;Generate the Figma color styles JSON with all brand colors and UI variants&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8033-9180-cb3af9c37002"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="fbd4e63d-313b-43a2-8c94-7af69aa99b69"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8413da07-a1f1-4742-937c-af8da72573fb" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="2c31fa35-9369-464f-a8d9-844436893920" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the illustration usage guidelines - when to use brand illustrations vs. functional icons&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="873afea2-d524-4b6b-8dbf-dbef9e1ed6bc" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the error state color that doesn&#x27;t exist in brand palette but feels on-brand&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="7719c10c-7555-4668-ab6e-76f41dd7a78b" class="bulleted-list"><li style="list-style-type:disc">&quot;How should brand photography integrate with UI - hero images, backgrounds, or avatars?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="07831e20-fd4e-4fe3-9fa5-11b9727cadaa" class="bulleted-list"><li style="list-style-type:disc">&quot;Generate component naming conventions that reflect brand personality (e.g., &#x27;nurture-button&#x27; vs &#x27;primary-button&#x27;)&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80e4-a4e5-d3c00f8bd188"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-8082-a3f6-e83205be37b1"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-801c-8b29-c75fba747453" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-805b-bc96-e4079a4e99cd" class="image"><a href="21_Example_Output.png"><img style="width:643.9921875px" src="21_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80a9-9cf0-f7515fb9c347"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="861861b3-7de2-4392-bab3-df7c62bb78e8"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="51ead6e5-88ac-4f63-8528-f3d25e04d1b1" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="248b4c5b-3fe7-4354-a110-5538a8d86a91" class="">→ Recipe #22: <a href="R-22 Check Your Color Contrast 2d667ccc6bef8030822cc761e4959070.html">Check Your Color Contrast</a><br/>→ Recipe #26: <a href="R-26 Add Depth and Shadows 2d767ccc6bef8025a4aff26e74f609ab.html">Add Depth and Shadows</a><br/>→ Recipe #29: <a href="R-29 Create Your Unique Hook 2d767ccc6bef8070ab71c1326164ae2f.html">Create Your Unique Hook</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8068-8afe-fb83b51adc05" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
