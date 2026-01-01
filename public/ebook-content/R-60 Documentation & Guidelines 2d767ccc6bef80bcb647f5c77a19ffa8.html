@@ -1,0 +1,802 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-60: Documentation &amp; Guidelines</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-80bc-b647-f5c77a19ffa8" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-80b0-807f-e75265ae06be" class="">Recipe #60: Documentation &amp; Guidelines</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-804b-8b0e-da79b8bd351c" class="">Category: Systems &amp; Components  |  ⏱️ 35-40 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80e0-bb24-ea1d517e9197" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="edccec4f-7243-4653-97d0-f468a8e74908"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6062d511-c582-4d3b-8d65-de45236aa493" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="10fd5438-e6d2-4fb5-8715-5b0bf20b8e79" class="">You&#x27;re documenting components for team adoption - creating usage guidelines, anatomy breakdowns, variant explanations, dos and don&#x27;ts, code examples, and accessibility notes so designers and developers can use your design system correctly and consistently. Your current components lack documentation, teams use components incorrectly, or you need to scale design system adoption across multiple teams.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8097-be31-d5e4b8f97382"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="412b1e25-feed-4585-8e9c-0b8f7b9afa0e"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a235bc9a-fe58-44f0-bb51-d10db2c42f94" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="6b39e636-4758-4f9d-8c58-8599fec62b97" class="">Many teams build comprehensive component libraries but fail to document them - components exist in Figma but no one knows when to use Primary vs Secondary buttons, designers misuse components (wrong variants for wrong contexts), no anatomy documentation (what parts make up a component), missing usage guidelines (when to use, when NOT to use), no dos/don&#x27;ts examples (visual guides showing correct/incorrect usage), developers lack implementation specs (props, states, accessibility), or documentation is scattered across Slack/Notion/Figma comments. Teams waste time asking &quot;which button variant should I use?&quot;, create inconsistent experiences (same component used differently across features), struggle with onboarding (new designers don&#x27;t know component library), or abandon design system entirely (too confusing without docs). You need systematic component documentation - clear structure (anatomy, variants, usage, examples), concrete dos/don&#x27;ts with visuals, accessibility guidelines, code specs for developers, and centralized location (Storybook, Notion, or Figma).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-806b-af30-ecb38af51c70"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="228b2081-77de-4fa3-b043-ae3ed6c242e5"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d978743e-2abf-4928-be50-823994fb1c0c" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="5dc68899-f07e-4207-bf56-806253ef49e2" class="">The AI will deliver complete component documentation structure: component overview and anatomy breakdowns, variant explanations with hierarchy (Primary &gt; Secondary &gt; Tertiary), usage guidelines (when to use/NOT use), visual dos and don&#x27;ts examples with screenshots and explanations, design specifications (sizing, colors, spacing, responsive behavior), code examples with props and accessibility attributes, related component cross-references, and a full Button documentation example showing all sections in practice - transforming undocumented component libraries into well-documented, adoption-ready design systems.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="9765544f-cc6f-4738-a653-78370b40a5d2"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="4036a2ce-af59-4f67-ad0f-e8eddd471f15"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b5578a71-f854-4bf9-a6f4-b98c6f9d141a" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3105a096-82b4-452e-92cd-8c3a1587cff8" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Design System Documentation Specialist focusing on component guidelines, usage patterns, and adoption enablement.
+
+I&#x27;m creating documentation for my [Component Library] with [Component Count] components to enable [Team Size] designers and developers to use the system correctly.
+
+[OPTIONAL: Attach component examples that need documentation]
+
+Documentation requirements:
+- Components to document: [e.g., Buttons, Inputs, Cards, Modals, Navigation, Data tables]
+- Team audience: [e.g., 10 designers + 15 developers, Junior to senior levels, Multiple product teams]
+- Documentation format: [e.g., Storybook, Notion, Figma community file, Google Docs]
+- Detail level: [e.g., Comprehensive for core components, Brief for simple components]
+- Platform: [e.g., Web React, React Native, Multi-platform]
+
+Current documentation problems:
+- [Problem 1: e.g., No documentation exists - components in Figma but zero usage guidelines]
+- [Problem 2: e.g., Teams misuse components - Primary button used for destructive actions]
+- [Problem 3: e.g., No variant explanations - designers don&#x27;t know when to use outlined vs filled]
+- [Problem 4: e.g., Missing dos/don&#x27;ts - no visual examples of correct/incorrect usage]
+- [Problem 5: e.g., Developers lack specs - no props, states, or accessibility guidance]
+
+Team context: [Documentation needs, technical skills, adoption blockers, onboarding frequency]
+
+Please provide:
+1. Documentation structure (what sections to include for each component)
+2. Component anatomy (breaking down parts and their purpose)
+3. Variant documentation (explaining when to use each variant)
+4. Usage guidelines (when to use, when NOT to use - critical!)
+5. Dos and don&#x27;ts (concrete visual examples with explanations)
+6. Code examples (props, implementation, accessibility)
+7. Accessibility guidelines (keyboard navigation, ARIA, screen readers)
+8. Live example: Complete Button documentation (showing all sections in practice)
+
+Consider: [Constraints - e.g., Must be maintainable, Searchable, Accessible to all skill levels, Updated regularly, Clear examples]</code></pre></div><div style="display:contents" dir="auto"><p id="847073c6-8a57-4daa-9d83-2e03eead7c9c" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="ade5178f-ec0c-43e5-9faf-fd8e5f19cd78" class="bulleted-list"><li style="list-style-type:disc">[Component Library] = Your design system name</li></ul></div><div style="display:contents" dir="auto"><ul id="ed4acc2c-3433-4e0c-b0e8-1cd0c3c39b90" class="bulleted-list"><li style="list-style-type:disc">[Component Count] = How many components to document</li></ul></div><div style="display:contents" dir="auto"><ul id="9a80265e-a670-4c95-8a15-6ea874fbf092" class="bulleted-list"><li style="list-style-type:disc">[Team Size] = Designers + developers using system</li></ul></div><div style="display:contents" dir="auto"><ul id="70cf2060-7f07-41d9-b256-224aedbc87f0" class="bulleted-list"><li style="list-style-type:disc">[Components to document] = Which components need docs</li></ul></div><div style="display:contents" dir="auto"><ul id="a671574a-bef2-414c-8212-2bab9ac03ab2" class="bulleted-list"><li style="list-style-type:disc">[Documentation format] = Where docs will live</li></ul></div><div style="display:contents" dir="auto"><ul id="4e00c10a-f7bb-4355-85db-0ee28e64dd38" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current documentation gaps</li></ul></div><div style="display:contents" dir="auto"><ul id="637a3b12-345d-4fe5-b779-4c6cd58b8039" class="bulleted-list"><li style="list-style-type:disc">Attach components needing documentation</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8041-be05-c3cc8cfc92ce"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8062-9ace-eb0c270added"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8099-94e7-d74438dd045c" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-80a5-b01d-e8d22fffab2d" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Design System Documentation Specialist focusing on component guidelines, usage patterns, and adoption enablement.
+
+I&#x27;m creating documentation for my SaaS Design System with 50 components to enable 8 designers and 12 developers across 3 product teams to use the system correctly.
+
+[User would attach Button, Input, Card component examples]
+
+Documentation requirements:
+- Components to document:
+  - Core: Buttons (5 variants), Inputs (8 types), Cards (4 layouts)
+  - Navigation: Header, Sidebar, Tabs, Breadcrumbs
+  - Data: Tables, Charts, Lists, Empty states
+  - Feedback: Modals, Toasts, Alerts, Loading states
+  - Forms: Text inputs, Dropdowns, Checkboxes, Radio buttons
+  - Total: 50 components, prioritize top 10 most-used
+- Team audience:
+  - 8 designers (2 junior, 5 mid, 1 senior)
+  - 12 developers (React, 3 junior, 7 mid, 2 senior)
+  - 3 product teams (Dashboard, Marketing, Mobile web)
+  - High turnover (2-3 new hires per quarter, need good onboarding)
+- Documentation format:
+  - Primary: Storybook (live component playground)
+  - Secondary: Notion (written guidelines, when to use)
+  - Tertiary: Figma (component descriptions, linked from library)
+- Detail level:
+  - Comprehensive: Buttons, Inputs, Cards (most-used, most questions)
+  - Standard: Navigation, Data, Feedback components
+  - Brief: Simple components (Divider, Spacer, Badge)
+- Platform: Web (React + TypeScript)
+
+Current documentation problems:
+- Zero documentation exists - 50 components in Figma library, beautiful and systematic, but ZERO usage guidelines, designers wing it, inconsistent usage everywhere
+- Teams constantly misuse components - Primary button (blue) used for Delete action (should be Danger red), Secondary button used for primary actions, Tertiary button used randomly, no one knows the hierarchy
+- No variant explanations - Button has 5 variants (Primary, Secondary, Tertiary, Danger, Ghost) but no explanation when to use each, designers pick randomly based on &quot;looks nice&quot;
+- Missing dos/don&#x27;ts visual examples - no concrete examples showing &quot;✅ Do this: Use Primary for main action&quot; vs &quot;❌ Don&#x27;t: Use Primary for destructive delete&quot;, people learn by mistakes
+- Developers lack implementation specs - no props documentation (size?, disabled?, loading?, onClick?), no accessibility guidance (aria-label?, keyboard nav?), developers implement inconsistently
+- Questions in Slack constantly - &quot;Which button should I use for submit?&quot; asked 10+ times, &quot;How do I make button full-width?&quot; asked 5+ times, documentation would eliminate 80% of questions
+- New designers take 2 weeks to learn system - no onboarding docs, they explore Figma library randomly, trial and error, slow ramp-up
+
+Team context:
+- Need documentation to scale (can&#x27;t answer same questions repeatedly)
+- Storybook already set up (need to add written docs)
+- Designers prefer visual examples (screenshots, dos/don&#x27;ts)
+- Developers need code examples (props, TypeScript interfaces)
+- Accessibility important (must meet WCAG AA, document it)
+
+Please provide:
+1. Documentation structure (what sections to include for each component)
+2. Component anatomy (breaking down parts and their purpose)
+3. Variant documentation (explaining when to use each variant)
+4. Usage guidelines (when to use, when NOT to use - critical!)
+5. Dos and don&#x27;ts (concrete visual examples with explanations)
+6. Code examples (props, implementation, accessibility)
+7. Accessibility guidelines (keyboard navigation, ARIA, screen readers)
+8. Live example: Complete Button documentation (showing all sections in practice)
+
+Consider: Storybook + Notion format. Visual examples critical (designers learn visually). Clear variant hierarchy (Primary &gt; Secondary &gt; Tertiary). Dos/don&#x27;ts with screenshots. Props documentation for developers. Accessibility specs (keyboard, ARIA). Searchable and maintainable. Updated when components change.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="7487c808-77e7-4cef-aa35-2ccad0f2e33b"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3182db68-a3db-45da-bcb9-b88299bd33d3" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="4f0cc06e-0091-4217-bc89-f953b72513fb" class="">✦ Dos/don&#x27;ts are gold: Visual examples showing ✅ correct vs ❌ incorrect usage eliminate 80% of questions<br/>✦ Common mistake: Documentation without examples - abstract guidelines don&#x27;t help, show concrete screenshots<br/>✦ Best with: Claude (excellent at structured documentation), ChatGPT (good for code examples)<br/>✦ Remix it: &quot;Create complete documentation for Card component - anatomy, variants, usage, dos/don&#x27;ts with examples&quot;<br/>✦ Pro move: Ask &quot;Generate documentation template for all components - reusable structure with sections&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8091-a9ee-fadaca14e08d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="95d59a33-21a6-4043-bab6-7b61147de753"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ddfe74fa-034e-478d-8932-237111d29a73" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="64afe434-6596-46d0-87b8-888c5e1d8490" class="bulleted-list"><li style="list-style-type:disc">&quot;Document Button component completely - anatomy, 5 variants, usage guidelines, dos/don&#x27;ts, code examples, accessibility&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="93f51550-02b2-4418-a2b5-55306dac8ee8" class="bulleted-list"><li style="list-style-type:disc">&quot;Create dos and don&#x27;ts visual guide - 10 examples showing correct vs incorrect component usage&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="5a767845-fd4a-47c7-8de1-dd6b0d78e76c" class="bulleted-list"><li style="list-style-type:disc">&quot;Write usage guidelines - when to use Primary vs Secondary vs Tertiary buttons with real examples&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="778adb88-f706-41d8-869d-73394398b5eb" class="bulleted-list"><li style="list-style-type:disc">&quot;Generate accessibility documentation - keyboard navigation, ARIA attributes, screen reader support for all components&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8020-8c25-f069c35e3bee"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8038-b20b-fc388acd3e59"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8015-84f0-ff600cce2611" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8021-b9a7-c70336912e28" class="image"><a href="60_Example_Output.png"><img style="width:643.9921875px" src="60_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80ea-a9d7-ce9cfd6a2928"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="15a95756-cab3-45d8-b97e-a83eef55de69"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b4cef5f7-fa9e-4915-aade-c1f9dea2622e" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="4cdc3006-d034-46ce-9fbd-138a04093f99" class="">→ Recipe #47: <a href="R-47 Organize Component Libraries in Figma 2d767ccc6bef80d29ce0c95e7a0fbf37.html">Organize Component Libraries in Figma</a><br/>→ Recipe #49: <a href="R-49 Design Component Variants 2d767ccc6bef8061a641c8db579cd3b7.html">Design Component Variants in Figma</a><br/>→ Recipe #55: <a href="R-55 Create Pattern Libraries 2d767ccc6bef8074b299ef0842d21259.html">Create Pattern Libraries</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8095-ad85-d6d5c346f6cf" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

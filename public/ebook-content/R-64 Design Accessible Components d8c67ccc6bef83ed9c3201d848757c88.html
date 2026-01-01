@@ -1,0 +1,812 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-64: Design Accessible Components</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d8c67ccc-6bef-83ed-9c32-01d848757c88" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="31a67ccc-6bef-8258-ad14-816b12e6ab29" class="">Recipe #64: Design Accessible Components</h1></div><div style="display:contents" dir="auto"><p id="be367ccc-6bef-8242-afe1-01d97794c78c" class="">Category: Bonus — Accessibility  |  ⏱️ 35-45 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="4b167ccc-6bef-83d9-9d2e-0158167a5256" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="1bc484ed-8a32-445e-8017-5111eef9c2c9"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="7741fda9-1b33-4e58-a930-8bbab9297230" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="f8d22db2-23b3-41a6-92be-f73823736c08" class="">You&#x27;re designing components that need to be accessible to users with disabilities - ensuring WCAG 2.1 AA compliance, supporting keyboard navigation, optimizing for screen readers, meeting color contrast requirements, or testing with assistive technologies. Your current components fail accessibility audits, exclude users with disabilities, or don&#x27;t work with keyboard-only navigation or screen readers.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="b9b67ccc-6bef-8345-96ec-815c460fe3a4"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="94ef43f6-70d1-4e65-829e-7b315a64caa2"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="785283c1-65bb-4fdd-9109-80687fafc9cb" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="ca2f23b0-9d55-4bef-a0f0-24008c47ffae" class="">Many designers ignore accessibility or treat it as an afterthought - designing components that only work with a mouse (keyboard users can&#x27;t navigate), using insufficient color contrast (text unreadable for low vision users), missing focus indicators (keyboard users lose track of position), relying only on color to convey meaning (colorblind users miss information), forgetting screen reader users (buttons with no labels, images with no alt text), or creating tiny touch targets (motor disability users can&#x27;t tap accurately). Teams ship inaccessible products that exclude 15-20% of users, face legal risks (ADA lawsuits), fail WCAG audits, or require expensive retrofitting. You need systematic accessible design - WCAG 2.1 AA compliance (contrast ratios, text sizes, touch targets), keyboard navigation (tab order, focus management, shortcuts), screen reader optimization (ARIA labels, semantic HTML, live regions), visible focus indicators (3px rings, high contrast), accessible color palettes (colorblind-safe, pattern + color), and testing with assistive tech (VoiceOver, NVDA, JAWS, keyboard-only).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="3fa67ccc-6bef-8310-8ae3-81e219935b26"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="a5eb055b-c21c-4698-876c-1800ee280143"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="e0a9583d-068e-4c6b-a597-c65bff348ed2" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="d069ff62-14e0-4a56-bab6-4ba272409cb6" class="">The AI will provide WCAG 2.1 AA compliance guidelines (contrast ratios, text sizes, touch targets), keyboard navigation patterns (tab order, focus management, shortcuts), screen reader optimization (ARIA labels, roles, live regions), accessible color strategies (colorblind-safe palettes, pattern + color redundancy), component-specific patterns for buttons, forms, modals, tables, and testing methods using VoiceOver, NVDA, keyboard-only, and automated tools. You&#x27;ll get actionable checklists and code examples to make your components fully accessible.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="618fd135-aca3-4301-af2c-cb996a284205"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="1e85dec4-65f9-4b63-9f75-ff17005894de"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="dbbce652-c2da-42c2-b42a-50b4fc3a65a2" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b745913b-1877-4565-8cbb-881241c1b3b6" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Accessibility Specialist focusing on WCAG 2.1 AA compliance, assistive technology compatibility, and inclusive component design.
+
+I&#x27;m designing accessible components for [Product/Component Library] to meet [Accessibility Standards] by ensuring [Key Requirements] work for users with [Disability Types] using assistive technologies.
+
+[OPTIONAL: Attach current components with accessibility issues]
+
+Accessibility requirements:
+- Components to make accessible: [e.g., Buttons, Forms, Modals, Navigation, Data tables, Charts]
+- WCAG level: [e.g., AA required (legal compliance), AAA desired (best practice)]
+- Key user needs: [e.g., Keyboard-only navigation, Screen reader users, Low vision, Colorblind, Motor disabilities]
+- Assistive tech support: [e.g., Screen readers (VoiceOver, NVDA, JAWS), Keyboard only, Voice control, Switch control]
+- Testing capabilities: [e.g., Can test with VoiceOver, Have NVDA, Manual keyboard testing only]
+
+Current accessibility problems:
+- [Problem 1: e.g., No keyboard navigation - can&#x27;t tab through UI, no focus indicators visible]
+- [Problem 2: e.g., Insufficient contrast - text is gray #999 on white, fails 4.5:1 ratio]
+- [Problem 3: e.g., Missing ARIA labels - icon buttons have no text, screen readers announce &quot;button&quot; with no context]
+- [Problem 4: e.g., Color-only meaning - red/green status, colorblind users can&#x27;t distinguish]
+- [Problem 5: e.g., Small touch targets - buttons are 32px, below 44px minimum for motor disabilities]
+
+Team context: [Accessibility knowledge level, legal requirements, budget for testing tools, timeline]
+
+Please provide:
+1. WCAG 2.1 AA requirements (contrast ratios, text sizes, touch targets, semantic HTML)
+2. Keyboard navigation patterns (tab order, focus management, shortcuts, focus traps, skip links)
+3. Screen reader optimization (ARIA labels, roles, live regions, semantic HTML, announcements)
+4. Focus indicator design (visible rings, high contrast, custom styling, states)
+5. Accessible color strategies (contrast ratios, colorblind palettes, pattern + color redundancy)
+6. Touch target sizing (44px minimum, spacing, mobile considerations)
+7. Component-specific patterns (accessible buttons, forms, modals, navigation, tables)
+8. Testing methods (VoiceOver, NVDA, JAWS, keyboard-only, automated tools)
+
+Consider: [Constraints - e.g., Must meet AA compliance, Legal requirement, Limited testing tools, Retrofit existing components]</code></pre></div><div style="display:contents" dir="auto"><p id="8de68008-a0d8-4bc1-ae94-d6bcba3ea855" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="2cd10978-d4c1-47f0-9fd3-e5aa6713b915" class="bulleted-list"><li style="list-style-type:disc">[Product/Component Library] = What you&#x27;re making accessible</li></ul></div><div style="display:contents" dir="auto"><ul id="afd0c768-93b9-46d5-a3cf-7357caf2c430" class="bulleted-list"><li style="list-style-type:disc">[Accessibility Standards] = WCAG AA, AAA, or specific requirements</li></ul></div><div style="display:contents" dir="auto"><ul id="14d45404-0358-423b-92b6-2ed5cbf91a14" class="bulleted-list"><li style="list-style-type:disc">[Key Requirements] = Navigation, screen readers, contrast, etc.</li></ul></div><div style="display:contents" dir="auto"><ul id="cf292482-166e-4e6e-b864-ffb4b9945538" class="bulleted-list"><li style="list-style-type:disc">[Disability Types] = Visual, motor, hearing, cognitive</li></ul></div><div style="display:contents" dir="auto"><ul id="2519c2b9-b0e9-4892-bc5f-2e5ef7545f4b" class="bulleted-list"><li style="list-style-type:disc">[Components to make accessible] = Which components need work</li></ul></div><div style="display:contents" dir="auto"><ul id="ae18ec1e-e34e-49bb-8d80-fcd0d806b4f9" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current accessibility issues</li></ul></div><div style="display:contents" dir="auto"><ul id="b8c6ace8-5b6c-4c61-bfb6-23c79666d3a2" class="bulleted-list"><li style="list-style-type:disc">Attach components with accessibility problems</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="98367ccc-6bef-82aa-8854-81ea0a472b4d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b6f67ccc-6bef-8301-a3b0-01ffda60c17a"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="12e67ccc-6bef-8328-b389-013cc594d813" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="62967ccc-6bef-825c-b1ca-01ebd8e3d931" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Accessibility Specialist focusing on WCAG 2.1 AA compliance, assistive technology compatibility, and inclusive component design.
+
+I&#x27;m designing accessible components for our SaaS Design System (25 components) to meet WCAG 2.1 AA compliance (legal requirement) by ensuring keyboard navigation, screen reader support, color contrast, and touch targets work for users with visual disabilities, motor disabilities, and colorblindness using screen readers (VoiceOver, NVDA), keyboard-only navigation, and mobile touch.
+
+[User would attach current component library with accessibility issues - buttons, forms, modals, data tables]
+
+Accessibility requirements:
+- Components to make accessible:
+  - Buttons (Primary, Secondary, Icon buttons, Button groups)
+  - Form inputs (Text fields, Dropdowns, Checkboxes, Radio buttons, Toggles)
+  - Modals and dialogs (Confirmation modals, Forms in modals, Focus traps)
+  - Navigation (Header nav, Sidebar nav, Breadcrumbs, Tabs)
+  - Data tables (Sortable columns, Row selection, Pagination)
+  - Notifications (Toasts, Alerts, Error messages)
+  - Cards (Clickable cards, Card grids, Interactive elements)
+- WCAG level:
+  - AA required (legal compliance for enterprise customers)
+  - AAA desired where feasible (best practice, competitive advantage)
+- Key user needs:
+  - Keyboard-only navigation (can&#x27;t use mouse - motor disabilities, power users)
+  - Screen reader users (blind or low vision - VoiceOver on Mac/iOS, NVDA/JAWS on Windows)
+  - Low vision users (need high contrast, larger text, zoom to 200%)
+  - Colorblind users (8% of men, 0.5% of women - can&#x27;t distinguish red/green)
+  - Motor disabilities (can&#x27;t click small targets, need 44px minimum, need large click areas)
+  - Mobile users (touch-only, need large tap targets, can&#x27;t hover)
+- Assistive tech support:
+  - Screen readers: VoiceOver (Mac/iOS), NVDA (Windows free), JAWS (Windows enterprise)
+  - Keyboard only: Tab, Shift+Tab, Enter, Space, Arrow keys, Escape
+  - Voice control: Dragon NaturallySpeaking, Voice Control (iOS)
+  - Switch control: Single-button navigation for severe motor disabilities
+- Testing capabilities:
+  - Can test: VoiceOver on Mac (built-in), NVDA on Windows (free download)
+  - Can test: Keyboard-only navigation (unplug mouse)
+  - Tools available: axe DevTools (browser extension, free), Lighthouse (Chrome built-in)
+  - Cannot test: JAWS (expensive $1000+ license), Physical switch devices
+
+Current accessibility problems:
+- No keyboard navigation support - Users can&#x27;t tab through UI, buttons not keyboard-focusable, no visible focus indicators when tabbing, keyboard users completely blocked from using product, received complaint from enterprise customer whose employee uses keyboard-only
+- Insufficient color contrast - Text is #767676 gray on white background (3.2:1 ratio, fails WCAG AA 4.5:1), secondary buttons use #999999 text (even worse contrast), low vision users report &quot;can&#x27;t read the text&quot;, automated accessibility audit flagged 47 contrast violations
+- Missing ARIA labels on icon buttons - Icon-only buttons (Delete, Edit, Download, Close) have no text labels, screen reader announces &quot;button&quot; with no context, blind user in usability test couldn&#x27;t understand what buttons do, had to guess or ask sighted person
+- Color-only status indicators - Success = green, Error = red, Warning = yellow, no icons or patterns, 8% of male users (colorblind) can&#x27;t distinguish red/green status, support tickets &quot;can&#x27;t tell if task succeeded or failed&quot;
+- Small touch targets on mobile - Buttons are 36px tall, checkboxes 20px, below WCAG 44px minimum, mobile users with motor disabilities report &quot;can&#x27;t tap the right button, keep tapping wrong thing&quot;, especially bad for elderly users
+- Modals trap focus incorrectly - When modal opens, focus doesn&#x27;t move to modal, keyboard users stuck behind modal, can tab to elements underneath, Escape key doesn&#x27;t close modal, have to reload page to escape
+- Form validation not announced - Error messages appear visually but screen reader not notified, blind users submit form, errors appear, but they don&#x27;t know because screen reader silent, no ARIA live regions
+- Data tables not keyboard navigable - Can&#x27;t sort columns with keyboard, can&#x27;t select rows, screen readers don&#x27;t announce table structure (headers, row/column counts), totally unusable for blind users
+
+Team context:
+- Accessibility knowledge: Beginner (team knows it&#x27;s important but limited experience, no accessibility expert on team)
+- Legal requirement: WCAG 2.1 AA compliance required for enterprise sales (in contracts)
+- Audit: Failed third-party accessibility audit (enterprise customer requirement), have 3 months to remediate
+- Budget: $5,000 for tools/training (can buy JAWS license if needed, training courses, consulting)
+- Timeline: 3 months to achieve AA compliance (aggressive but necessary for enterprise deal)
+- Testing: Can test with VoiceOver (Mac) and NVDA (Windows), have axe DevTools
+- Team size: 3 designers, 5 developers, all need accessibility training
+
+Please provide:
+1. WCAG 2.1 AA requirements (contrast ratios, text sizes, touch targets, semantic HTML)
+2. Keyboard navigation patterns (tab order, focus management, shortcuts, focus traps, skip links)
+3. Screen reader optimization (ARIA labels, roles, live regions, semantic HTML, announcements)
+4. Focus indicator design (visible rings, high contrast, custom styling, states)
+5. Accessible color strategies (contrast ratios, colorblind palettes, pattern + color redundancy)
+6. Touch target sizing (44px minimum, spacing, mobile considerations)
+7. Component-specific patterns (accessible buttons, forms, modals, navigation, tables)
+8. Testing methods (VoiceOver, NVDA, JAWS, keyboard-only, automated tools)
+
+Consider: WCAG 2.1 AA compliance required (legal). 3-month deadline (enterprise deal). Team has limited accessibility experience (need training). Can test with VoiceOver, NVDA, axe DevTools. 25 components to fix. Must support keyboard-only, screen readers, colorblind users, motor disabilities. Mobile-friendly (44px touch targets).</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="e6a67ccc-6bef-83fa-ab69-81adab6f8292"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="f148ca56-7e6f-4d84-a452-b2ef5cd7d234"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="70a73a42-be9e-4482-b2f4-4bdd28d67a7a" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="86140030-65ef-4d10-a8ef-0cd5b81753a8" class="">✦ Never remove outlines: Removing focus indicators (outline: none) without replacing them is an accessibility violation<br/>✦ Common mistake: Using color alone to convey meaning - always add icons, patterns, or text for colorblind users<br/>✦ Best with: Claude (excellent at WCAG compliance details, ARIA patterns), ChatGPT (good for code examples)<br/>✦ Remix it: &quot;Make this button accessible - keyboard navigation, screen reader label, 44px touch target, visible focus ring&quot;<br/>✦ Pro move: Ask &quot;Audit my component for WCAG 2.1 AA compliance - check contrast, keyboard access, ARIA labels, touch targets&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2fd67ccc-6bef-8353-b8be-811f1dfdd98c"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="23b839b1-66a5-4a6f-9a61-6b9c12ea1458"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="31fd8280-e36b-4420-a2ac-36bce5545e7e" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="d768148b-cf7a-45bc-91b7-3f956b6b1f98" class="bulleted-list"><li style="list-style-type:disc">&quot;Make these buttons accessible - add ARIA labels for icon buttons, 44px height, visible focus indicators, keyboard support&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="db470966-5fdb-43c1-8e4b-fea6e7ba825b" class="bulleted-list"><li style="list-style-type:disc">&quot;Fix form accessibility - associate labels with inputs, add ARIA attributes, error announcements, proper validation&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="8360a2e4-f08e-4afb-85a1-146ffbd06f75" class="bulleted-list"><li style="list-style-type:disc">&quot;Create accessible modal - focus trap, ARIA roles, keyboard navigation, Escape to close, focus management&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="4a3641ce-dd2f-4446-a15f-4c380626aa3b" class="bulleted-list"><li style="list-style-type:disc">&quot;Audit color contrast for WCAG AA - check all text and UI components, provide compliant color alternatives&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="8a667ccc-6bef-82cc-9776-81aeea7f3ef0"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="62267ccc-6bef-83df-9be0-8128291af0fb"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b5267ccc-6bef-83c7-86d9-8108efd3a7b1" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="98c67ccc-6bef-8320-9b3e-010177878c73" class="image"><a href="64_Example_Output.png"><img style="width:643.9921875px" src="64_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="cb567ccc-6bef-837a-829e-810c054c586d"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="91fd48b8-1f53-44c2-9b6f-9670e701e7db"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="66f8dd6c-7ed8-4e05-aaa5-ff2b928ddfed" class=""><strong>RELATED RECIPES</strong><br/>→ Recipe #62: <a href="R-62 Plan and Run Usability Tests 37867ccc6bef83a9aefe011022174a00.html">Plan and Run Usability Tests</a><br/>→ Recipe #07: <a href="R-07 Find Hidden User Dead-Ends 2d667ccc6bef806b890bc2048285b3fa.html">Find Hidden User Dead-Ends</a><br/>→ Recipe #42: <a href="R-42 Improve Onboarding Flows 2d767ccc6bef80f2b6b2c8839d98fe10.html">Improve Onboarding Flows</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="d9667ccc-6bef-83d3-adc0-0110fa2d4f86" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

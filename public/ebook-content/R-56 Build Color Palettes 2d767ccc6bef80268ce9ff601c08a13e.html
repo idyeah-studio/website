@@ -1,0 +1,804 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-56: Build Color Palettes</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-8026-8ce9-ff601c08a13e" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-8039-af87-d78be3d9006d" class="">Recipe #56: Build Color Palettes</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-800d-b759-dc1fa1492c10" class="">Category: Systems &amp; Components  |  ⏱️ 30-35 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80fd-9343-e61d8b7eb45f" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="2c4c3404-9cf2-4ce8-b030-70233a3f3279"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="95a9434b-8d03-4776-b837-6a4e7e2a2188" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="e96e3fc4-1cf2-46c4-8e3e-3bab4b29f524" class="">You&#x27;re building a color system from scratch or extending an existing palette - creating brand colors, typography colors, status colors (success, warning, error, info), and data visualization colors for charts and graphs. You need systematic color token structure, AI-powered palette extensions for charts (8-12 distinct colors), and colorblind-safe options without starting from zero.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8069-a9ca-fdf6d20eb86a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="7b471288-e383-4b70-b45b-77d4ee0ae261"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="f0c95dfe-85af-4584-a3c4-680b519c5124" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="a3b6b1ca-401b-48d7-9d57-1493b7794b2c" class="">Many teams struggle with color systems - starting with 50 random colors with no structure, inconsistent naming (primary-blue, blue-main, button-color-blue all mean the same thing), no semantic tokens (hard-coding hex values everywhere), missing data-viz colors (charts use random colors, not colorblind-safe), or brand colors that don&#x27;t work for charts (2 brand colors, but charts need 8-12 distinct colors). Teams waste time picking colors manually, create inaccessible color combinations, rebuild color systems when rebranding, or have no systematic approach to extending palettes. You need a minimal starting palette (brand, typography, status colors), systematic token structure (primitive vs. semantic), AI-powered extension for data-viz (generate 8-12 chart colors that are distinct and colorblind-safe), and basic accessibility guidelines (contrast ratios, colorblind testing).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80f8-b2c1-faeeb817e447"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="87f001f7-0112-42a9-a8cc-e8acd55e05b6"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="386fd074-5cd4-478a-a313-10ff05fc2e34" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="60658751-c372-4060-ac1e-2cf2f7d43b63" class="">The AI will deliver a complete color system: minimal core palette (1 brand + 4 status + typography colors), 9-shade scales for each color, three-tier token structure (primitive/semantic/component), AI-generated 12-color data-viz palette (colorblind-safe), contrast guidelines (WCAG AA), and systematic naming conventions - transforming ad-hoc color picking into a maintainable, accessible, scalable color system.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="65949121-69ce-41e4-8426-2548f12a56c1"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="5f93405d-f250-4244-96d3-532054aab497"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b3c3eb8d-ec5c-4987-8228-fe0d2bb039f9" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="efed1dec-ae56-4b0f-a807-250f9b25bc5f" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Color System Specialist focusing on systematic color palettes, design tokens, and AI-powered palette extensions for data visualization.
+
+I&#x27;m building a color system for a [Product Type] starting with minimal core colors (brand, typography, status) and extending to data-viz colors using AI.
+
+[OPTIONAL: Attach brand colors or current color palette]
+
+Color system requirements:
+- Core palette needs: [e.g., 1-2 brand colors, typography colors, 4 status colors (success, warning, error, info)]
+- Color scales: [e.g., 9-shade scales (50-900) for each color, 5-shade scales for simplicity]
+- Data-viz needs: [e.g., 8-12 distinct colors for charts, colorblind-safe, works on light backgrounds]
+- Token structure: [e.g., Primitive tokens (blue-500), Semantic tokens (color-primary, color-success)]
+- Platform: [e.g., Web (hex/RGB), Mobile (hex), Design tools (Figma variables)]
+
+Current color problems:
+- [Problem 1: e.g., 50 random colors with no structure - blue-1, blue-2, blue-light, primary-blue]
+- [Problem 2: e.g., No data-viz colors - charts use random colors, not accessible or distinct]
+- [Problem 3: e.g., Hard-coded hex values everywhere - #3B82F6 repeated 100+ times, hard to update]
+- [Problem 4: e.g., Colors not colorblind-safe - red/green charts fail for 8% of users]
+- [Problem 5: e.g., No systematic naming - inconsistent token names across designers]
+
+Team context: [Designer color system knowledge, brand guidelines, accessibility requirements]
+
+Please provide:
+1. Minimal core palette (brand, typography, status colors - structure and naming)
+2. Color token structure (primitive vs. semantic tokens, naming conventions)
+3. Color scales (creating 9-shade scales from single brand color)
+4. AI-powered data-viz palette extension (prompt to generate 8-12 chart colors)
+5. Colorblind-safe strategies (testing and validation)
+6. Basic accessibility guidelines (contrast ratios, text vs. background)
+7. Token naming conventions (consistent, scalable naming)
+8. Color system maintenance (updating, versioning, documentation)
+
+Consider: [Constraints - e.g., Must work with existing brand colors, Need 8-12 chart colors, Colorblind-safe required, Simple token structure for team adoption]</code></pre></div><div style="display:contents" dir="auto"><p id="95a1933c-7ca8-40c0-9026-df35e0b2c59b" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="ad23bf5e-29df-4c6b-b30e-96850ef83cde" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = SaaS, E-commerce, Mobile app, Dashboard, Analytics tool</li></ul></div><div style="display:contents" dir="auto"><ul id="c1e3463f-18cb-45cb-bfa7-ff9cc4629811" class="bulleted-list"><li style="list-style-type:disc">[Core palette needs] = What colors you need</li></ul></div><div style="display:contents" dir="auto"><ul id="870ef307-0199-426b-b184-4eaba62bb125" class="bulleted-list"><li style="list-style-type:disc">[Color scales] = 5-shade or 9-shade scales</li></ul></div><div style="display:contents" dir="auto"><ul id="74889e8d-1948-403a-ba08-fb5c58f0fddd" class="bulleted-list"><li style="list-style-type:disc">[Data-viz needs] = How many chart colors</li></ul></div><div style="display:contents" dir="auto"><ul id="88a2dc50-3bbc-43cb-b8f2-82ac36c010ca" class="bulleted-list"><li style="list-style-type:disc">[Token structure] = Token naming approach</li></ul></div><div style="display:contents" dir="auto"><ul id="8e14b2a1-576f-4656-bec7-1597bfadb2bc" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current color issues</li></ul></div><div style="display:contents" dir="auto"><ul id="988ff99a-82a9-4132-a7a8-676467163625" class="bulleted-list"><li style="list-style-type:disc">Attach existing brand colors</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8068-919f-c4fe3042e870"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80b1-aef6-c7e31e020287"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80ff-a5e7-d06bb132957b" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-8050-91a4-c92419e8b70c" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Color System Specialist focusing on systematic color palettes, design tokens, and AI-powered palette extensions for data visualization.
+
+I&#x27;m building a color system for a SaaS Analytics Dashboard starting with minimal core colors (1 brand color blue, typography grays, 4 status colors) and extending to 12 data-viz colors using AI.
+
+[User would attach brand blue color: #3B82F6]
+
+Color system requirements:
+- Core palette needs:
+  - 1 brand color: Blue #3B82F6 (primary brand color)
+  - Typography colors: Black, dark gray, medium gray, light gray (text hierarchy)
+  - 4 status colors: Success (green), Warning (amber), Error (red), Info (blue)
+  - Neutral grays: 9-shade scale for backgrounds, borders, surfaces
+- Color scales:
+  - 9-shade scales (50, 100, 200, 300, 400, 500, 600, 700, 800, 900)
+  - 500 = base color (brand blue #3B82F6)
+  - Lighter shades (50-400) for backgrounds, hover states
+  - Darker shades (600-900) for text, active states
+- Data-viz needs:
+  - 12 distinct colors for charts (bar charts, line charts, pie charts)
+  - Must be distinguishable from each other
+  - Colorblind-safe (works for deuteranopia, protanopia - red/green colorblindness)
+  - Works on white backgrounds (sufficient contrast)
+  - Avoid red + green adjacent (colorblind issue)
+- Token structure:
+  - Primitive tokens: blue-500, green-600, gray-200 (literal color values)
+  - Semantic tokens: color-primary, color-success, color-text-body (purpose-based)
+  - Component tokens: button-bg-primary, input-border-default (component-specific)
+- Platform: Web (hex values), Figma (Figma variables/styles)
+
+Current color problems:
+- 50+ random colors with no structure - blue-1, blue-2, blue-light, blue-lighter, primary-blue, button-blue, link-blue, brand-blue all similar blues, no systematic scale, impossible to maintain
+- No data-viz colors defined - designers pick random colors for charts (#FF5733, #8B4513, #2E7D32), not distinct enough (similar blues/greens), not colorblind-safe (red/green adjacent in pie charts)
+- Hard-coded hex everywhere - #3B82F6 appears 200+ times in designs, rebranding requires find/replace 200 instances, error-prone, no centralized tokens
+- Colors fail colorblind tests - pie chart with red/green slices indistinguishable for 8% of users (deuteranopia), line chart with 5 lines (3 look identical to colorblind users)
+- Inconsistent token naming - some use &quot;primary&quot;, others use &quot;brand&quot;, others use &quot;main&quot;, some use &quot;blue-500&quot;, designers confused which to use
+- No semantic layer - directly using primitive tokens (blue-500) in designs, changing brand color requires updating 100+ instances manually
+- Status colors inconsistent - success is green-500 in some places, green-600 in others, warning is orange in some, amber in others
+
+Team context:
+- 8 designers building analytics dashboards with 20+ charts
+- Current workflow: Pick colors manually from color picker, no system = inconsistent
+- Want workflow: Use predefined color tokens, extend with AI for data-viz = consistent
+- Brand color: Blue #3B82F6 (cannot change, company branding)
+- Accessibility: Must meet WCAG AA (4.5:1 contrast for text)
+- Charts: Need 12 distinct colors (some dashboards show 12 data series)
+- Colorblind users: 8% of users have red/green colorblindness (deuteranopia/protanopia)
+
+Please provide:
+1. Minimal core palette (brand, typography, status colors - structure and naming)
+2. Color token structure (primitive vs. semantic tokens, naming conventions)
+3. Color scales (creating 9-shade scales from single brand color)
+4. AI-powered data-viz palette extension (prompt to generate 8-12 chart colors)
+5. Colorblind-safe strategies (testing and validation)
+6. Basic accessibility guidelines (contrast ratios, text vs. background)
+7. Token naming conventions (consistent, scalable naming)
+8. Color system maintenance (updating, versioning, documentation)
+
+Consider: Start with 1 brand blue. Generate 9-shade scale. Add 4 status colors (green, amber, red, blue). Use AI to generate 12 distinct data-viz colors (colorblind-safe). Create semantic token layer. Must meet WCAG AA for text. Colorblind-safe charts critical.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="420e357c-ac72-4c04-8198-0dba25e0801f"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="e7369c71-6338-434e-8b7c-6ef9ba9ac9d1" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="74849cd0-5936-4b54-8539-2e32ccd6f590" class="">✦ Start minimal: 1 brand color + 4 status colors + grays is enough - extend with shades and data-viz colors<br/>✦ Common mistake: Creating 50 random colors - use systematic scales (9 shades) and semantic tokens instead<br/>✦ Best with: Claude or ChatGPT (excellent at generating colorblind-safe data-viz palettes)<br/>✦ Remix it: &quot;Generate 12 data-viz colors that are colorblind-safe and work with my brand blue #3B82F6&quot;<br/>✦ Pro move: Ask &quot;Test my color palette for colorblind-safety - simulate deuteranopia and protanopia&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80a1-ac34-c4046b253ca0"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="4d10aa78-e3e4-438c-8bff-841b8cd483d8"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="4f3b2916-13b1-4c56-836a-53b56a463e30" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="94b2b646-61cb-4233-b54c-6dda4ee89596" class="bulleted-list"><li style="list-style-type:disc">&quot;Generate a 9-shade scale from my brand color #3B82F6 - lightest to darkest&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="c6389971-3504-42a8-96b7-6903cf2a9019" class="bulleted-list"><li style="list-style-type:disc">&quot;Create 12 colorblind-safe data-viz colors for charts - avoid red/green adjacent, works on white&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="5a0f9569-d177-4dea-ad62-03cc31bfe5ae" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the semantic token system - map primitive tokens to purpose-based names&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="5ce8735b-420d-4e80-86a9-7e3fbd234158" class="bulleted-list"><li style="list-style-type:disc">&quot;Check my color contrast - which colors meet WCAG AA for text on white backgrounds?&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-805c-9c31-c41fda5f22ad"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80c6-a554-c4c0a0d0f0a5"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-806c-bded-f2f51b94dd32" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8012-b00d-ffee3c50e5e1" class="image"><a href="56_Example_Output.png"><img style="width:643.9921875px" src="56_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8043-87bc-eb905b5b90e6"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="69ab1494-e44f-438a-b2eb-b63bc415a6c6"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="fd1ca35b-0c05-414f-ac1b-bbf497256b80" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="3a8256b4-e9a6-4432-9551-f83bf5faba7a" class="">→ Recipe #46: <a href="R-46 Build a Design System Foundation 2d767ccc6bef80169c93ff15b9a23dff.html">Build a Design System Foundation</a><br/>→ Recipe #47: <a href="R-47 Organize Component Libraries in Figma 2d767ccc6bef80d29ce0c95e7a0fbf37.html">Organize Component Libraries in Figma</a><br/>→ Recipe #54: <a href="R-54 Flexible Chart Components 2d767ccc6bef80c5b226e720fef24fa2.html">Create Flexible Chart Components</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8016-88ea-fd1811699192" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

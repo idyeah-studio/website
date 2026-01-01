@@ -1,0 +1,809 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-50: Properties vs. Variants in Figma</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-80e2-b61b-d3a4a3a760b5" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-806a-9c71-e84a8c82196c" class="">Recipe #50: Properties vs. Variants in Figma</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8005-acc8-d057a24d486c" class="">Category: Systems &amp; Components  |  ⏱️ 25-30 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8054-aa8c-e3feac0e5f74" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="414d6a04-e386-4556-805d-15a30310fbbf"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ccf1ed44-9f01-452b-8be8-7e2fd0680af6" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="6ef31282-b593-43fa-a543-de425b285c36" class="">You&#x27;re creating Figma components and need to decide which property type to use - Boolean (True/False toggle), Variant (multiple options), Instance Swap (nested components), or Text (dynamic content). The wrong choice creates confusing, hard-to-use components, while the right choice makes components intuitive and maintainable.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8090-a644-cb4719147970"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8096-9ad0-fb2500e7bd8e"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80d1-8f1b-eee211b5c27f" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-802e-b96f-e7397060336b" class="">Many designers struggle with property type decisions - using Variant properties for simple True/False choices (creating &quot;Icon: True | False&quot; instead of a clean Boolean toggle), creating separate components when Instance Swap would be better, or using Text properties when variants would provide better consistency. This leads to confusing component libraries where designers don&#x27;t know which property to use, components with 8+ variant options when 3 Booleans would be clearer, or rigid components that can&#x27;t handle needed flexibility. Teams waste time debating property structure, create inconsistent patterns across components, or build unusable components that designers avoid. You need clear decision frameworks for choosing the right property type based on the number of options, how designers will use them, and maintaining scalability.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-807b-b93a-cf43b8d3c407"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="17ce464f-9fa2-4519-a2fd-c5005ce8f492"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="fa63e770-13f9-49d3-8227-8c2f170f6210" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="29e60977-cf53-4317-9772-2d193af55fa9" class="">The AI will provide a clear decision framework based on number of options (2 options = Boolean, 3-6 options = Variant, 7+ or swappable = Instance Swap, dynamic content = Text), detailed use cases for each property type with examples (Boolean for show/hide toggles, Variant for visual styles and states, Instance Swap for swappable icons and nested components avoiding component explosion, Text for user-entered labels and counts), common mistakes to avoid (using Variant for True/False, creating separate components instead of Instance Swap, inconsistent property types across components), effective property combination patterns showing how to use multiple types together, and a visual decision tree flowchart with quick reference table. Optionally includes visual examples showing each property type in use.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="e3cc8197-5018-4427-8d75-21865f114bfb"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8000-a7f7-ef279a598c4f"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8030-b7fa-cbc6c504cda2" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-8049-a3be-c15ac00bf31b" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Figma Component Architecture Specialist focusing on property types, component flexibility, and decision frameworks.
+
+I&#x27;m designing component property structure for a [Product Type] design system to help [Team Size] designers understand when to use Boolean vs. Variant vs. Instance Swap vs. Text properties.
+
+[OPTIONAL: Attach Figma component examples showing current property confusion]
+
+Property decision requirements:
+- Component types: [e.g., Buttons, Inputs, Cards, Icons, Modals]
+- Common variations: [e.g., With/without icon, Multiple styles, Swappable elements, Dynamic text]
+- Team skill level: [e.g., Junior designers unfamiliar with properties, Mixed, Expert Figma users]
+- Complexity tolerance: [e.g., Simple (3 properties max), Moderate (5 properties), Complex (7+ properties)]
+- Use patterns: [e.g., Quick toggles preferred, Dropdown selections, Visual browsing]
+
+Current property confusion:
+- [Problem 1: e.g., Using Variant for True/False - &quot;Icon: True | False&quot; instead of Boolean]
+- [Problem 2: e.g., Can&#x27;t swap icons - need Instance Swap but using variants]
+- [Problem 3: e.g., Text properties missing - designers manually change text on every instance]
+- [Problem 4: e.g., Too many variant options - 8 options when 3 Booleans clearer]
+- [Problem 5: e.g., Inconsistent property types - Button uses Boolean, Input uses Variant for same concept]
+
+Team context: [Designer Figma knowledge, common use cases, component complexity needs]
+
+Please provide:
+1. Decision framework (when to use each property type)
+2. Boolean property use cases (True/False toggles, examples)
+3. Variant property use cases (3+ options, examples)
+4. Instance Swap use cases (nested swappable components, examples)
+5. Text property use cases (dynamic content, examples)
+6. Common mistakes to avoid (wrong property type choices)
+7. Property combinations (when to use multiple types together)
+8. Visual decision tree (flowchart for choosing property type)
+
+Consider: [Constraints - e.g., Keep components simple for junior designers, Performance with many properties, Consistency across component library]</code></pre></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8092-b2e3-efd35146ad94" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8059-9ad3-e4d96511599a" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = SaaS, E-commerce, Mobile app, Dashboard</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8027-b2ab-c77aa30b1266" class="bulleted-list"><li style="list-style-type:disc">[Team Size] = Designers using the system</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80f4-8045-e23cc8b965bd" class="bulleted-list"><li style="list-style-type:disc">[Component types] = What components need properties</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8066-9545-f63f367fe876" class="bulleted-list"><li style="list-style-type:disc">[Common variations] = Types of flexibility needed</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8096-96ee-eda952a5278a" class="bulleted-list"><li style="list-style-type:disc">[Team skill level] = Figma expertise</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8056-ae1b-d02b4e3f2437" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current property confusion</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8041-9128-faf6d9462d1b" class="bulleted-list"><li style="list-style-type:disc">Attach Figma examples of property confusion</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-802e-aeb5-dd5157c0c84b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8063-9519-d5041c1ae965"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-803b-b767-c8814e2169ed" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-80d7-8b34-ef2ea134ce27" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Figma Component Architecture Specialist focusing on property types, component flexibility, and decision frameworks.
+
+I&#x27;m designing component property structure for a SaaS Project Management Tool design system to help 8 designers (mixed skill levels) understand when to use Boolean vs. Variant vs. Instance Swap vs. Text properties.
+
+[User would attach Figma component examples here]
+
+Property decision requirements:
+- Component types:
+  - Buttons (with/without icons, multiple styles)
+  - Inputs (with/without labels, icons, error states)
+  - Cards (task cards, project cards, with/without images)
+  - Badges (status, priority, counts)
+  - Avatars (with/without status indicators)
+  - Icons (swappable, different sizes)
+- Common variations:
+  - With/without icon (Boolean or Variant?)
+  - Multiple visual styles (Primary, Secondary, Tertiary - Variant)
+  - Swappable icons (Instance Swap)
+  - Dynamic labels (Text property)
+  - Optional elements (show/hide badge, avatar, etc.)
+- Team skill level:
+  - 3 junior designers (6 months Figma, basic component knowledge)
+  - 4 mid-level designers (2 years Figma, understand variants)
+  - 1 senior designer (expert, builds components)
+  - Need simple, intuitive components
+- Complexity tolerance:
+  - Simple components: 3 properties max
+  - Medium components: 5 properties max
+  - Complex components: 7 properties absolute max
+  - Designers prefer toggles over dropdowns
+- Use patterns:
+  - Designers prefer visual toggles (Boolean checkboxes)
+  - Dropdown selections okay for 3-5 options (Variant)
+  - Hate typing text (use Text properties sparingly)
+  - Want to swap icons easily (Instance Swap)
+
+Current property confusion:
+- Using Variant property for True/False choices - Button has &quot;Icon: True | False&quot; variant dropdown instead of clean &quot;Has icon ☐&quot; Boolean toggle - confusing and clunky
+- Can&#x27;t swap icons in icon buttons - created IconButtonEdit, IconButtonDelete, IconButtonSave as separate components instead of using Instance Swap to swap any icon
+- No Text properties on badges - designers manually change &quot;3&quot; to &quot;12&quot; on every badge instance, breaking component link - should use Text property
+- Card component has 8 variant options for features - &quot;WithImage: True/False, WithBadge: True/False, WithAvatar: True/False&quot; creating 8 combinations - should use 3 Boolean toggles instead
+- Inconsistent property types across components - Button uses Boolean &quot;Has icon&quot;, Input uses Variant &quot;Icon: None | Left | Right&quot; for same concept - should standardize
+- Avatar has &quot;Status: Online/Offline/Away/Busy&quot; variant but designers want to hide status entirely - need Boolean &quot;Show status&quot; + Variant &quot;Status type&quot;
+- Input label property is Variant &quot;Label: Show | Hide&quot; - should be Boolean
+
+Team context:
+- Junior designers confused by Variant dropdowns with True/False
+- Everyone prefers Boolean checkboxes (more intuitive)
+- Icon swapping is major pain point (many icon buttons)
+- Badge counts need to be dynamic (Text property)
+- Want consistency: same concept = same property type across all components
+
+Please provide:
+1. Decision framework (when to use each property type)
+2. Boolean property use cases (True/False toggles, examples)
+3. Variant property use cases (3+ options, examples)
+4. Instance Swap use cases (nested swappable components, examples)
+5. Text property use cases (dynamic content, examples)
+6. Common mistakes to avoid (wrong property type choices)
+7. Property combinations (when to use multiple types together)
+8. Visual decision tree (flowchart for choosing property type)
+
+Consider: Keep it simple for junior designers. Prefer Boolean over Variant for 2 options. Use Instance Swap for icons. Text properties for dynamic content. Standardize property types across components. Maximum 5 properties per component.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8097-ae6f-c368f62049cf"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-807d-9c8b-f744b7b1dd9e" class=""><strong>CHEF’S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80b1-9f5b-caeab1eadc15" class="">✦ 2 options = Boolean always: If it&#x27;s True/False, Yes/No, Show/Hide → use Boolean, not Variant<br/>✦ Common mistake: Variant dropdown for binary choice - &quot;Icon: True | False&quot; is clunky, use &quot;Has icon: ☐&quot;<br/>✦ Best with: Claude (excellent at decision frameworks), ChatGPT (good for property architecture)<br/>✦ Remix it: &quot;Design the icon swap system - using Instance Swap to handle 200+ icons in one component&quot;<br/>✦ Pro move: Ask &quot;Audit my components - find Variant properties that should be Boolean, calculate simplification&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8079-87f2-f69a7d273f0e"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8058-980d-dd2347192d92"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8025-8a82-ee470c4fc312" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8004-939d-d660de220af5" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the property naming standards - consistent names across all components (Has icon, Show label, etc.)&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80c4-86a0-d178a5a02c86" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the decision flowchart - visual guide for choosing Boolean vs Variant vs Instance Swap&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80fd-828a-d0e18226f238" class="bulleted-list"><li style="list-style-type:disc">&quot;How to convert existing components - migrating from Variant True/False to Boolean properties&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-800b-9af6-d97dc3b52e6a" class="bulleted-list"><li style="list-style-type:disc">&quot;Build the property combination patterns - which property types work well together&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80cf-9054-c42cca9263f8"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80e4-872a-d0ab1bef7525"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8070-a4cb-f3e376292355" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-805b-8fd5-f16086375050" class="image"><a href="50_Example_Output.png"><img style="width:643.9921875px" src="50_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-800a-9adf-c9cefb1592bb"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80ce-a337-f9fa10158550"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80e3-805b-cfaf3fee8a2b" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8039-be89-fe4a28062185" class="">→ Recipe #47: <a href="R-47 Organize Component Libraries in Figma 2d767ccc6bef80d29ce0c95e7a0fbf37.html">Organize Component Libraries in Figma</a><br/>→ Recipe #48: <a href="R-48 Design Smart Defaults 2d767ccc6bef80729793db8459ae5170.html">Design Smart Defaults</a><br/>→ Recipe #49: <a href="R-49 Design Component Variants 2d767ccc6bef8061a641c8db579cd3b7.html">Design Component Variants in Figma</a><br/>→ Recipe #46: <a href="R-46 Build a Design System Foundation 2d767ccc6bef80169c93ff15b9a23dff.html">Build a Design System Foundation</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80ec-abf8-fd6af6b4b3cb" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

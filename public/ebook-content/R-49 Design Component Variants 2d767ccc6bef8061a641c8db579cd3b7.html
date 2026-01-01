@@ -1,0 +1,803 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-49: Design Component Variants</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-8061-a641-c8db579cd3b7" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-8058-89b8-f467e76d481e" class="">Recipe #49: Design Component Variants</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80b5-bd53-d8ec65ab9d69" class="">Category: Systems &amp; Components  |  ⏱️ 30-40 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-808b-a779-dd5a79ff001f" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="35b74e26-89f0-414b-8619-ace35105a4a2"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="81d2826a-3611-4bf6-8e27-f1eb68157edc" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="36e2d737-eb06-4410-9519-83f06aa193f8" class="">You&#x27;re building Figma components that have multiple variations - different styles (primary, secondary), sizes (small, medium, large), or states (default, hover, disabled). Instead of creating 47 separate button components, you need one flexible Button component with variants that handles all cases systematically.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80b8-9675-cc729201a0dc"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8093-b9dc-c228bb40695c"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8088-b4af-f4256ac0c687" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8071-917b-f2ebdbe8677e" class="">Many designers create component chaos - building ButtonPrimary, ButtonSecondary, ButtonPrimaryLarge, ButtonPrimarySmall, ButtonSecondaryLarge, ButtonSecondarySmall as separate components (combinatorial explosion), leading to unmaintainable libraries with hundreds of duplicate components. Or they create components with no variants at all (one rigid button that doesn&#x27;t adapt). Teams waste time searching through 50 button variations, create duplicates when they can&#x27;t find the right one, or struggle to maintain consistency when updating colors (change 47 buttons individually). You need variant properties that let you create one Button component with Type (Primary/Secondary), Size (Small/Medium/Large), and State (Default/Hover/Disabled) properties - reducing 18 components to 1 flexible component.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8039-ab1a-f25187ae37f3"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="bf793670-0702-44aa-acc8-7a7a0a9fa110"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8b2a5db8-2b33-4479-bbda-7de50b215fcd" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="4810b47b-2093-4da4-9299-4cfedcc29ed9" class="">The AI will provide variant property strategy limiting to 3-4 properties (Type for visual styles, Size for dimensions, State for interactions, Icon for content) with clear naming conventions standardized across components, variant structure guidance organizing combinations logically with default variants for most common cases, Boolean versus Variant property recommendations (Boolean for True/False, Variant for 3+ options), complete interactive state setup (Default, Hover, Pressed, Focused, Disabled, Loading) with Figma interaction connections, nested variant patterns using Instance Swap for flexible icon swapping and variants-within-variants, standardized naming conventions (&quot;Type&quot; not &quot;Style&quot; or &quot;Kind&quot;, full words not abbreviations), common variant patterns for Buttons, Inputs, Badges, and Cards with realistic property combinations, and maintenance strategy for adding, deprecating, and versioning variants based on usage analytics. Optionally includes before/after examples showing separate components consolidated into unified variants.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="fb578929-9970-40ee-ad19-2ae35335b6f1"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80dc-943c-eacbbce5986f"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8006-b3c4-e4b330da4668" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-80ac-8947-e71b8d1ad952" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Figma Component Design Specialist focusing on variant properties, component flexibility, and scalable component architecture.
+
+I&#x27;m designing component variants for a [Product Type] design system to create flexible [Component Type] that handle [Number] variations without creating [Problem] separate components.
+
+[OPTIONAL: Attach Figma component examples or current component library]
+
+Variant requirements:
+- Component types: [e.g., Buttons, Inputs, Cards, Icons, Badges]
+- Variation types: [e.g., Visual styles, Sizes, States, Content types]
+- Number of variations: [e.g., 3 styles × 3 sizes = 9 combinations, 5 styles × 3 sizes × 4 states = 60]
+- Platform: [e.g., Web only, Mobile only, Multi-platform]
+- Complexity level: [e.g., Simple (Button), Medium (Input with label), Complex (Form field)]
+
+Current variant problems:
+- [Problem 1: e.g., 47 separate button components - ButtonPrimaryLarge, ButtonSecondarySmall, etc.]
+- [Problem 2: e.g., No variant properties - can&#x27;t switch between primary/secondary]
+- [Problem 3: e.g., Interactive states missing - no hover, pressed, disabled variants]
+- [Problem 4: e.g., Inconsistent variant naming - some use &quot;type&quot;, others &quot;style&quot;, others &quot;variant&quot;]
+- [Problem 5: e.g., Too many variant properties - 8 properties creating 256 combinations]
+
+Team context: [Designer Figma skill level, component usage patterns, maintenance needs]
+
+Please provide:
+1. Variant property strategy (which properties to create, types, naming)
+2. Variant structure (organizing variant combinations logically)
+3. Boolean vs. Variant properties (when to use each)
+4. Interactive states (hover, pressed, focused, disabled)
+5. Nested variants (variants within variants, instance swap)
+6. Variant naming conventions (property names, option names)
+7. Common variant patterns (Button, Input, Card examples)
+8. Maintenance strategy (adding variants, deprecating, versioning)
+
+Consider: [Constraints - e.g., Keep under 5 variant properties, Must work on mobile, Accessibility states required, Dark mode support]</code></pre></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8058-bf77-d9339a7b0483" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-801a-8cb4-f099a67388af" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = SaaS, E-commerce, Mobile app, Dashboard</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80a9-8863-f67a7613e0c1" class="bulleted-list"><li style="list-style-type:disc">[Component Type] = What components need variants</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80e3-b1a0-c1069200817b" class="bulleted-list"><li style="list-style-type:disc">[Number] = How many variations exist</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80e3-8f96-d410461fdf66" class="bulleted-list"><li style="list-style-type:disc">[Problem] = Component explosion issue (e.g., 47 buttons)</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80cb-97a1-e302a9775d42" class="bulleted-list"><li style="list-style-type:disc">[Variation types] = What varies (style, size, state)</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8058-99b9-c6869675474b" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current variant issues</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8047-b01a-cd20504ddbee" class="bulleted-list"><li style="list-style-type:disc">Attach Figma component examples</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80ef-a3f6-e95ef5911678"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80fb-bacb-f4bc6742968e"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-800a-8f29-c24a8a874011" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-80a0-a2ed-d22a02e6d277" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Figma Component Design Specialist focusing on variant properties, component flexibility, and scalable component architecture.
+
+I&#x27;m designing component variants for a SaaS Project Management Tool design system to create flexible Button, Input, and Badge components that handle 60+ variations without creating 200+ separate components.
+
+[User would attach Figma component library here]
+
+Variant requirements:
+- Component types:
+  - Buttons (primary, secondary, tertiary, danger, icon-only)
+  - Inputs (text, email, password, textarea, search, with icons)
+  - Badges (status pills, priority indicators, counts)
+  - Cards (task cards, project cards, user cards)
+  - Icons (with multiple sizes and colors)
+- Variation types:
+  - Visual styles: Primary, Secondary, Tertiary, Danger
+  - Sizes: Small (32px), Medium (44px), Large (52px)
+  - States: Default, Hover, Pressed, Focused, Disabled, Loading
+  - Content: With icon, Icon-only, With badge
+  - Themes: Light mode, Dark mode
+- Number of variations:
+  - Button: 4 styles × 3 sizes × 6 states = 72 potential combinations
+  - Input: 5 types × 3 sizes × 4 states = 60 combinations
+  - Badge: 5 types × 2 sizes = 10 combinations
+- Platform: Web (React-based)
+- Complexity level:
+  - Simple: Badge (2 properties)
+  - Medium: Button (4 properties)
+  - Complex: Input with label, icon, error message (6 properties)
+
+Current variant problems:
+- 47 separate button components - ButtonPrimary, ButtonPrimaryLarge, ButtonPrimarySmall, ButtonSecondary, ButtonSecondaryLarge, ButtonIcon, ButtonDanger, etc. - unmaintainable, impossible to update colors consistently
+- No variant properties on inputs - created InputText, InputEmail, InputPassword, InputTextLarge, InputEmailSmall as separate components instead of using variants
+- Interactive states completely missing - no hover, pressed, or disabled states - designers create static mockups, developers implement states differently (inconsistent)
+- Variant naming inconsistent across components - Button uses &quot;Type&quot; property, Input uses &quot;Style&quot;, Badge uses &quot;Variant&quot;, Card uses &quot;Kind&quot; - should standardize on one term
+- Too many variant properties on Card - 8 properties (Type, Size, Image, Header, Footer, Shadow, Border, Padding) creating 256 combinations - overwhelming, most unused
+- Boolean properties misused - &quot;HasIcon&quot; as variant property with True/False options instead of using boolean property type
+- Nested variants missing - can&#x27;t swap icons inside icon buttons, can&#x27;t change badge inside cards
+
+Team context:
+- 8 designers, mixed skill levels (3 junior, 4 mid, 1 senior)
+- Updating 47 button components takes 2 hours when brand colors change
+- Designers don&#x27;t understand variant properties - avoid using them
+- Need simpler system - max 4 variant properties per component
+- Interactive prototypes need hover/pressed states
+- Dark mode launching in 3 months (need theme support)
+
+Please provide:
+1. Variant property strategy (which properties to create, types, naming)
+2. Variant structure (organizing variant combinations logically)
+3. Boolean vs. Variant properties (when to use each)
+4. Interactive states (hover, pressed, focused, disabled)
+5. Nested variants (variants within variants, instance swap)
+6. Variant naming conventions (property names, option names)
+7. Common variant patterns (Button, Input, Card examples)
+8. Maintenance strategy (adding variants, deprecating, versioning)
+
+Consider: Limit to 4 variant properties max. Standardize property naming. Must support interactive prototypes (hover, pressed states). Dark mode coming soon. Keep it simple for junior designers. Reduce 47 button components to 1.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8040-b0fc-cdc4c609f4d1"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80f5-8394-d6db35845192" class=""><strong>CHEF’S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-801f-b714-c35c0ec895e3" class="">✦ 4 properties max: More than 4 variant properties creates combinatorial chaos - keep it simple<br/>✦ Common mistake: Creating ButtonPrimaryLarge, ButtonPrimarySmall as separate components - use 1 Button with Type + Size variants<br/>✦ Best with: Claude (excellent at variant architecture), ChatGPT (good for naming conventions)<br/>✦ Remix it: &quot;Design the interactive component states - connecting hover, pressed, focused with Figma interactions&quot;<br/>✦ Pro move: Ask &quot;Audit my component library - find components that should be variants, calculate reduction&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8099-ab6b-cd85e08dcd64"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80f8-a22a-dc96b215f529"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-801f-b78f-c40862c2cb1a" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8019-a1e4-e91b082a9416" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the Button variant structure - Type, Size, State, Icon properties with all combinations&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80b5-97f2-cd16619e198f" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the variant naming system - standardize property and option names across all components&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-809b-8fa3-fe1373d2f2f4" class="bulleted-list"><li style="list-style-type:disc">&quot;How to convert 47 button components into 1 component with variants - migration strategy&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8045-bfd0-c6187ce18173" class="bulleted-list"><li style="list-style-type:disc">&quot;Build the interactive component prototype - connecting Default, Hover, Pressed states with interactions&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-804f-8d4f-fc92ff12caa3"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-809a-8eb6-c93b17fc7ce9"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80c9-9d7d-f411f345f914" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80bc-8c4f-fcd4644b1973" class="image"><a href="49_Example_Output.png"><img style="width:643.9921875px" src="49_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80fb-86ce-fe29bfc25aaa"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8007-989b-ca402e9355a3"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8010-83c3-e242f9ca5606" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80e1-aad2-d72611251ce6" class="">→ Recipe #46: <a href="R-46 Build a Design System Foundation 2d767ccc6bef80169c93ff15b9a23dff.html">Build a Design System Foundation</a><br/>→ Recipe #47: <a href="R-47 Organize Component Libraries in Figma 2d767ccc6bef80d29ce0c95e7a0fbf37.html">Organize Component Libraries in Figma</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-806d-98bf-e3eb414efc68" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

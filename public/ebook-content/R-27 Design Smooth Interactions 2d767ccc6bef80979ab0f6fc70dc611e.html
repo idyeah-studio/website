@@ -1,0 +1,797 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-27: Design Smooth Interactions</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-8097-9ab0-f6fc70dc611e" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-80e8-907c-c6c05c59c7d3" class="">Recipe #27: Design Smooth Interactions</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8088-a189-ff7893ca6fba" class="">Category: UI &amp; Visuals  |  ⏱️ 25-35 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8097-8491-f97b0bf74300" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="34de6a44-5b76-4a33-a3b3-ab4cb022cad4"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b97aa96f-a44a-43f5-823d-fe85cfc1de01" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="ad95c4b0-b3a5-4923-8cfe-d986926e174f" class="">You&#x27;re redesigning an interface that feels janky, abrupt, or unresponsive - elements appear/disappear instantly, state changes are jarring, hover effects are missing, or users get no feedback when they interact. The interface lacks polish and feels robotic.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8028-8349-d971899a51f5"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="c8b063b9-3c92-4dc7-bdf1-07b3571a2a96"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="46e8e27c-2901-4bdb-9af9-2af5ae7bb507" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="fb97c7b4-e292-4036-b545-e8acf36b2992" class="">Many applications have zero or inconsistent micro-interactions - buttons change instantly without transitions, modals pop in abruptly, loading states appear without warning, and hover effects are either missing or over-animated. Elements teleport instead of transitioning smoothly. Users click buttons and wonder if anything happened. Animations are either too slow (annoying) or too fast (jarring). The interface feels unpolished and cheap despite good visual design. You need smooth, purposeful interactions that provide feedback, guide attention, and create a premium feel.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8088-9eb7-da5a666cb17f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="9938d644-775e-4100-a6da-d8acf477336d"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="004c5b1e-658b-42f5-8eea-ddfcd18c4602" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="786aac2b-5a03-49ab-9b92-a2c7382cda39" class="">You&#x27;ll get motion principles (easing curves, duration scales), interaction patterns (hover, click, drag animations), transition recommendations (page changes, component states), microinteraction design (button feedback, loading states), performance guidelines (frame rates, reduced motion support), and implementation specs. Output includes motion style guide with timing values and examples.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="22a828c1-581f-440e-a403-063cc7800bba"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1d4ed868-0689-48e7-bf5d-6fba87ee3943" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="394ef20e-b6c1-4942-be39-39dc5cdbb790" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Interaction Design Specialist focusing on micro-interactions, transitions, and animation.
+
+I&#x27;m designing interaction patterns for a [Product Type] to make the interface feel smooth and responsive.
+
+[OPTIONAL: Attach videos or screenshots showing current abrupt or missing interactions]
+
+Interaction requirements:
+- Key interactions: [e.g., Button clicks, Modal open/close, Menu expand/collapse, Form validation, Loading states]
+- User expectations: [e.g., Instant feedback, Smooth transitions, Clear state changes]
+- Performance constraints: [e.g., 60fps requirement, Mobile performance, Low-end devices]
+- Brand personality: [e.g., Playful and bouncy, Professional and subtle, Fast and efficient]
+
+Current interaction problems:
+- [Problem 1: e.g., Buttons have no hover state - users don&#x27;t know they&#x27;re interactive]
+- [Problem 2: e.g., Modals appear instantly with no transition - jarring and disorienting]
+- [Problem 3: e.g., Loading spinners appear after 2 seconds - feels broken before that]
+- [Problem 4: e.g., Form errors flash in suddenly - startling users]
+- [Problem 5: e.g., Menu animations are 800ms - too slow, users frustrated]
+
+User context: [Platform, device types, user patience level, accessibility needs]
+
+Please provide:
+1. Transition duration guidelines (how long should animations take)
+2. Easing curves recommendations (linear, ease-in-out, spring, etc.)
+3. Micro-interaction patterns (hover, click, focus, drag, etc.)
+4. Loading and feedback states
+5. Page transitions and navigation
+6. Error and validation feedback
+7. Accessibility considerations (prefers-reduced-motion)
+8. Performance optimization
+
+Consider: [Constraints - e.g., Must work on low-end devices, support reduced motion preference, maintain 60fps, not distract from content]</code></pre></div><div style="display:contents" dir="auto"><p id="a43d38e6-9e9e-4e70-a925-b0906315ce38" class="">💡 <mark class="highlight-gray"><strong>What to customize:</strong></mark></p></div><div style="display:contents" dir="auto"><ul id="c35e68a8-bb90-460f-8982-3dc4d800c453" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[Product Type] = Web app, Mobile app, Dashboard, E-commerce, Design tool</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="9240144e-171f-498e-a08c-73baaec4c897" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[Key interactions] = Main interaction points in your interface</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="c7fa7580-0302-4677-8e51-bda835c578fa" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[User expectations] = What users expect from interactions</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="7e61587d-5447-4038-8840-26399cf03109" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[Performance constraints] = Technical limitations</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="26503153-2fc4-4ee6-88bb-c560708a00f8" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[Brand personality] = Animation style matching brand</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="8fd03628-f059-425b-9a9b-d5a90bf89799" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[Problems 1-5] = Current interaction issues</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="a9113b24-faa5-4136-9866-a657c5edf036" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">Upload videos/recordings showing current interaction problems</mark></li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-806b-b5fa-d147e5cc9680"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80e8-a2b0-eff7977602d1"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-807e-b9b0-eb01287e94d2" class=""><mark class="highlight-default"><strong>LIVE EXAMPLE</strong></mark></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-80d4-9dc3-d547ac4bcc87" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Interaction Design Specialist focusing on micro-interactions, transitions, and animation.
+
+I&#x27;m designing interaction patterns for a Task Management Web App to make the interface feel smooth, responsive, and professional.
+
+[User would attach interaction videos here]
+
+Interaction requirements:
+- Key interactions:
+  - Creating new tasks (button click → form appears)
+  - Checking off completed tasks (checkbox → strikethrough animation)
+  - Dragging tasks between columns (drag and drop with visual feedback)
+  - Opening task detail modal (card click → modal slides up)
+  - Deleting tasks (swipe gesture → confirmation → fade out)
+  - Loading more tasks (infinite scroll with skeleton screens)
+  - Form validation (real-time error feedback)
+  - Filtering tasks (instant filtering with smooth transitions)
+- User expectations: 
+  - Instant feedback (&lt; 100ms perceived response)
+  - Smooth 60fps animations
+  - Clear cause-and-effect (action → result connection obvious)
+  - Not too playful (professional tool, not a game)
+- Performance constraints:
+  - Must work smoothly with 500+ tasks on screen
+  - 60fps on mid-range laptops (not just high-end)
+  - Mobile performance critical (40% of users)
+  - Animations shouldn&#x27;t block interaction
+- Brand personality: Professional and efficient, modern but not flashy, subtle sophistication, productivity-focused
+
+Current interaction problems:
+- Task cards have zero hover state - users don&#x27;t know they&#x27;re clickable until they click
+- Task detail modal appears instantly (0ms) - jarring, disorienting, no sense of where it came from
+- Checking off a task instantly crosses it out and moves it - too abrupt, no satisfaction
+- Loading spinner appears immediately when loading more tasks - causes layout jank
+- Form validation errors appear instantly as you type - feels aggressive and annoying
+- Drag and drop has no visual feedback until you drop - unclear if dragging is working
+- Page transitions between views are instant cuts - disorienting navigation
+- Delete animation is 1200ms fade - way too slow, users get impatient
+- Hover effects are inconsistent - some elements have them, most don&#x27;t
+
+User context: Knowledge workers using app 2-4 hours daily. Desktop primary (60%), mobile secondary. Users drag 20-50 tasks per session. Need responsive feel for productivity. Some users have vestibular disorders (motion sensitivity). Low-end laptops common in some markets.
+
+Please provide:
+1. Transition duration guidelines (how long should animations take)
+2. Easing curves recommendations (linear, ease-in-out, spring, etc.)
+3. Micro-interaction patterns (hover, click, focus, drag, etc.)
+4. Loading and feedback states
+5. Page transitions and navigation
+6. Error and validation feedback
+7. Accessibility considerations (prefers-reduced-motion)
+8. Performance optimization
+
+Consider: Animations should feel professional, not playful. Must respect prefers-reduced-motion for accessibility. Dragging 50+ items shouldn&#x27;t cause performance issues. Mobile touch interactions need different timing than desktop hover. Some animations should be skippable (users in a hurry).</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-800a-bc73-fb7e279a0278"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="8e62e250-21f8-4600-ba1e-6b22fd431b1e"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6c92a72e-9eda-47c4-8487-aac6144bb6d7" class=""><strong>CHEF’S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="895a5d06-167c-405f-97e5-97e57f56d849" class="">✦ Fast beats slow: When in doubt, make animations faster (150ms) not slower (400ms)<br/>✦ Common mistake: Over-animating everything - reserve motion for meaningful moments<br/>✦ Best with: Claude (excellent at timing and easing recommendations), ChatGPT (good for animation patterns)<br/>✦ Remix it: &quot;Design the spring animation system - playful bouncy interactions for consumer apps&quot;<br/>✦ Pro move: Ask &quot;Create the animation audit checklist - which interactions need animation, which don&#x27;t&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80da-ad79-e7da59477e14"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="bca0053c-b9fc-4d8e-bc27-4b519a482955"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="84557a6a-41ab-45e3-b89c-b23ca379cde1" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="635ba1e8-51e4-431c-a290-c2cab031ebbd" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the loading state strategy - skeleton screens vs. spinners vs. optimistic UI for different scenarios&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="b65b7581-54c1-4170-89e2-add21e7a4fc0" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the gesture interaction patterns - swipe, pinch, long-press with proper feedback&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="839795a7-f036-4e1d-b0db-739cb04d58ec" class="bulleted-list"><li style="list-style-type:disc">&quot;How should animations adapt for prefers-reduced-motion accessibility setting?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="4a7afa06-2e69-4192-8516-97e5a3e05398" class="bulleted-list"><li style="list-style-type:disc">&quot;Generate the CSS animation library - reusable keyframes and transitions for all common interactions&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-802c-8ccc-c945c729b304"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-803f-9550-e2af9d797c77"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8018-8818-e977dcb28432" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8005-92f4-eec83c6e039c" class="image"><a href="27_Example_Output.png"><img style="width:643.9921875px" src="27_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-805c-952f-e65762c2a56b"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="70f92845-dc4a-43c5-b78a-0b165377d09d"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="64b50b10-26ec-4497-92f0-2174970b2003" class=""><strong>RELATED RECIPES</strong><div class="indented"><div style="display:contents" dir="auto"><p id="32e5e1d4-a440-46dc-a61f-345527a2089a" class="">→ Recipe #26: <a href="R-26 Add Depth and Shadows 2d767ccc6bef8025a4aff26e74f609ab.html">Add Depth and Shadows</a><br/>→ Recipe #28: <a href="R-28 Remove Visual Clutter 2d767ccc6bef806ea5dbd329ca407ba1.html">Remove Visual Clutter</a><br/>→ Recipe #34: <a href="R-34 Polish Your Input Fields 2d767ccc6bef806aa554c4a058472a9b.html">Polish Your Input Fields</a></p></div></div></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80b5-8593-d7dd6a690a42" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

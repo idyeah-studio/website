@@ -1,0 +1,807 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-61: Conduct User Interviews</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="58d67ccc-6bef-8373-bbd4-0159926507e4" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="08167ccc-6bef-837b-88c2-81baa60b4fb4" class="">Recipe #61: Conduct User Interviews</h1></div><div style="display:contents" dir="auto"><p id="68b67ccc-6bef-822c-a2d0-81cca7ab9a9c" class="">Category: Bonus — User Research  |  ⏱️ 40-50 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="55767ccc-6bef-8369-b3f8-815eecb50fc3" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="3c4eb89f-0ff0-4e65-ad48-2047847157dd"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="7ddae6b0-8801-4ff0-80a5-68cb5adcb7d8" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="2d142ae8-4bb7-470c-9951-6392742d05da" class="">You need to understand user needs, behaviors, motivations, and pain points through one-on-one conversations - planning research studies, recruiting participants, creating interview guides, conducting interviews, or analyzing qualitative data. Your team is making design decisions without user input, assumptions are untested, or you need deep insights that surveys and analytics can&#x27;t provide.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="9e667ccc-6bef-8208-ba9e-0147b0c5447d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="1a3d6130-be1b-4c69-b90f-4881e2edf657"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d46cad19-5a5a-4c6c-be70-9a4610753295" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="257b4dc5-a949-42aa-a87c-dcdba9ea1c19" class="">Many designers skip user research or do it poorly - designing based on assumptions (what they think users need, not what users actually need), conducting interviews without clear goals (asking random questions, no structured approach), asking leading questions (biasing responses, confirming existing beliefs), talking too much instead of listening (selling ideas instead of learning), recruiting wrong participants (not representative of target users), or failing to analyze findings systematically (anecdotal insights, cherry-picking quotes). Teams build features users don&#x27;t want, miss critical pain points, make decisions based on opinions not evidence, or conduct interviews that waste participants&#x27; time without yielding actionable insights. You need systematic interview research - clear research goals (what you want to learn), proper participant recruitment (screeners, representative sample), structured interview guides (open-ended questions, probes, timing), effective moderation (active listening, digging deeper, staying neutral), thorough documentation (notes, recordings, transcripts), and rigorous analysis (themes, patterns, actionable insights).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="e3367ccc-6bef-820b-8b17-81b610191d5b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="e57e3e28-079d-4370-ac4e-679d9865a753"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="407ef14a-d650-4c5f-aff2-d4e6a323f829" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="bb9f62f0-40f5-442e-9704-521d0490aea3" class="">The AI will deliver a complete interview research framework: research planning with clear goals and success criteria, participant recruitment with screener questions and incentive guidelines, structured 60-minute interview guide with open-ended questions and probes, interview techniques (active listening, follow-ups, avoiding bias), documentation methods (recording, transcripts, note-taking), analysis approaches (coding themes, affinity mapping, pattern identification), and presentation formats (research reports with quotes, highlight reels, actionable recommendations) - transforming ad-hoc conversations into systematic, rigorous qualitative research that generates evidence-based insights.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="c8f44967-92cb-4627-a91d-03d7e836cb05"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="08463f7a-52a9-4191-bb7d-fb6554c9b737"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b768a830-83f8-4c2a-ad59-36061acf32c6" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17700689-b1b0-47c7-a389-c6830a76d2b8" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a User Research Specialist focusing on qualitative research methods, interview techniques, and insight generation from user conversations.
+
+I&#x27;m planning user interviews for [Product/Feature] to understand [Research Goals] by talking to [Target Users] and uncovering insights about [Focus Areas].
+
+[OPTIONAL: Attach current product, research questions, or previous research]
+
+Interview research requirements:
+- Research goals: [e.g., Understand pain points in current workflow, Validate feature concept, Explore user needs]
+- Target users: [e.g., Project managers in tech companies, E-commerce shoppers, Mobile app users]
+- Number of interviews: [e.g., 5-8 participants, 10-12 participants for comprehensive study]
+- Interview format: [e.g., 45-60 min remote video calls, 30 min in-person, 20 min quick calls]
+- Focus areas: [e.g., Current tools and workflows, Pain points and frustrations, Goals and motivations]
+
+Current research problems:
+- [Problem 1: e.g., No research done - team designs based on assumptions, not user input]
+- [Problem 2: e.g., Leading questions - &quot;Don&#x27;t you think this feature would be useful?&quot; biases responses]
+- [Problem 3: e.g., Wrong participants - interviewing anyone available, not target users]
+- [Problem 4: e.g., Poor notes - relying on memory, missing key insights, no recordings]
+- [Problem 5: e.g., No analysis - anecdotal insights, cherry-picking quotes, no systematic themes]
+
+Team context: [Research experience level, timeline, budget, stakeholder buy-in]
+
+Please provide:
+1. Research planning (defining goals, research questions, success criteria)
+2. Participant recruitment (screener questions, recruitment channels, incentives)
+3. Interview guide creation (question types, structure, timing, probes)
+4. Interview techniques (active listening, asking follow-ups, avoiding bias, building rapport)
+5. Remote vs in-person considerations (tools, recording, technical setup)
+6. Documentation methods (note-taking, recording, transcripts, organizing data)
+7. Analysis approaches (coding, themes, affinity mapping, patterns)
+8. Presenting findings (research reports, highlight reels, actionable insights for stakeholders)
+
+Consider: [Constraints - e.g., Limited time/budget, Remote only, Need quick insights, Stakeholder skepticism]</code></pre></div><div style="display:contents" dir="auto"><p id="bb71a36b-7f51-4efb-bede-f29fbbacf2bd" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="5d2b38e7-7e6b-40e2-abf8-da80ea7cbaf8" class="bulleted-list"><li style="list-style-type:disc">[Product/Feature] = What you&#x27;re researching</li></ul></div><div style="display:contents" dir="auto"><ul id="8b4a3ec3-3002-497e-8888-b853619f1519" class="bulleted-list"><li style="list-style-type:disc">[Research Goals] = What you want to learn</li></ul></div><div style="display:contents" dir="auto"><ul id="63cd37c6-fd8d-4456-be5e-c6bd365fc89f" class="bulleted-list"><li style="list-style-type:disc">[Target Users] = Who you need to interview</li></ul></div><div style="display:contents" dir="auto"><ul id="0b68810c-1e23-4319-9538-4ed1d047d0ba" class="bulleted-list"><li style="list-style-type:disc">[Focus Areas] = What to explore</li></ul></div><div style="display:contents" dir="auto"><ul id="628419a4-2162-4cae-87a5-33946fbf3791" class="bulleted-list"><li style="list-style-type:disc">[Number of interviews] = How many participants</li></ul></div><div style="display:contents" dir="auto"><ul id="97430578-2b62-4ea3-a06a-31b2040f1511" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current research issues</li></ul></div><div style="display:contents" dir="auto"><ul id="d15adb6d-8564-4d5e-a8bc-4c9d4f791a3f" class="bulleted-list"><li style="list-style-type:disc">Attach product/feature being researched</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="c0e67ccc-6bef-8335-98af-01da8f74a894"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="15667ccc-6bef-8200-9d3d-01e2f3148860"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1b867ccc-6bef-8347-abd9-811f5155fed6" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12567ccc-6bef-828a-8b8f-01b04a5c8d37" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a User Research Specialist focusing on qualitative research methods, interview techniques, and insight generation from user conversations.
+
+I&#x27;m planning user interviews for a SaaS Project Management Tool&#x27;s new &quot;AI Task Assistant&quot; feature to understand current task management pain points and validate the AI assistant concept by talking to project managers and team leads and uncovering insights about their workflows, frustrations, and AI expectations.
+
+[User would attach current product screenshots, AI assistant concept mockups]
+
+Interview research requirements:
+- Research goals:
+  - Understand current task management workflows (what tools, what steps, what&#x27;s manual)
+  - Identify pain points and frustrations (where do things break down, what takes too long)
+  - Validate AI assistant concept (does it solve real problems, would they use it, concerns)
+  - Explore AI expectations and concerns (what AI should/shouldn&#x27;t do, trust issues, accuracy needs)
+  - Discover feature priorities (what features most valuable, what&#x27;s nice-to-have)
+- Target users:
+  - Project managers (manage 2-5 projects, 5-20 team members)
+  - Team leads (technical leads, design leads, manage smaller teams)
+  - Industry: Tech companies, agencies, startups (B2B SaaS users)
+  - Experience: Currently using project management tools (Asana, Jira, Monday, ClickUp)
+  - Not: Individual contributors, executives (different needs)
+- Number of interviews:
+  - 8-10 participants (enough for pattern saturation)
+  - Mix: 5-6 project managers, 3-4 team leads
+  - Diverse: Different company sizes, industries within tech
+- Interview format:
+  - 60 minutes remote video calls (Zoom)
+  - Screen sharing: Show current tools and workflows
+  - Concept validation: Show AI assistant mockup (last 15 min)
+  - Recorded: With consent for later analysis
+- Focus areas:
+  - Current workflows: How they manage tasks today (tools, processes, pain points)
+  - Task creation: How tasks are created, assigned, prioritized, tracked
+  - Communication: How task updates are communicated (Slack, email, comments)
+  - Time spent: What takes the most time, what&#x27;s repetitive/manual
+  - AI perceptions: What AI could help with, concerns about AI accuracy/control
+
+Current research problems:
+- No user research done previously - Team designed AI assistant based on assumptions about what users want, haven&#x27;t validated with actual users, high risk of building wrong thing
+- Stakeholders want leading questions - &quot;Wouldn&#x27;t an AI assistant save you time?&quot; confirms bias instead of discovering truth, need neutral questions that uncover real needs
+- Unclear who to interview - Team wants to &quot;interview anyone who manages tasks&quot; too broad, need specific screener for project managers actively using PM tools
+- No interview structure - Previous attempts were unstructured conversations, went off-topic, missed key questions, ran out of time, inconsistent across participants
+- Poor documentation - Previous interviews relied on memory and quick notes, missed important quotes, couldn&#x27;t remember details later, no recordings (consent issues)
+- Anecdotal analysis - After previous research, team cherry-picked quotes that confirmed their ideas, ignored contrary evidence, no systematic theme identification
+
+Team context:
+- Research experience: Limited (1 designer has done interviews before, others new to research)
+- Timeline: 3 weeks (recruit week 1, interview week 2-3, analyze/present week 3)
+- Budget: $500 for incentives ($50-75 per participant)
+- Stakeholders: Product manager skeptical of research (&quot;we already know what users want&quot;), need compelling findings
+- Goal: Validate AI assistant concept OR identify different direction if concept doesn&#x27;t resonate
+
+Please provide:
+1. Research planning (defining goals, research questions, success criteria)
+2. Participant recruitment (screener questions, recruitment channels, incentives)
+3. Interview guide creation (question types, structure, timing, probes)
+4. Interview techniques (active listening, asking follow-ups, avoiding bias, building rapport)
+5. Remote vs in-person considerations (tools, recording, technical setup)
+6. Documentation methods (note-taking, recording, transcripts, organizing data)
+7. Analysis approaches (coding, themes, affinity mapping, patterns)
+8. Presenting findings (research reports, highlight reels, actionable insights for stakeholders)
+
+Consider: Limited research experience on team. Skeptical stakeholders (need strong evidence). Remote interviews (Zoom). 60-min sessions. 8-10 participants. $50-75 incentives. Need actionable insights in 3 weeks. Validate concept OR pivot direction.</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="d9b67ccc-6bef-82cc-be5c-811e35798626"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="f8264aca-c8f2-4cc5-94a9-cee0e1c0a87b"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="5b76bca5-64b1-4be0-84f0-42974570deb6" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="e36dfc6e-da33-4c44-93cb-9eb6786cf621" class="">✦ Listen 80%, talk 20%: Your job is to learn, not to sell or explain - let participants do most of the talking<br/>✦ Common mistake: Leading questions like &quot;Don&#x27;t you think X would be useful?&quot; - instead ask open &quot;How would you use X?&quot;<br/>✦ Best with: Claude (excellent at creating interview guides, screeners, analysis frameworks), ChatGPT (good for follow-up probes)<br/>✦ Remix it: &quot;Create interview guide for [product] targeting [users] to understand [pain points/workflows/needs]&quot;<br/>✦ Pro move: Ask &quot;Analyze my interview transcripts - identify themes, patterns, and actionable insights&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="a4567ccc-6bef-832a-8c05-01fafebdedd7"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="700136bc-b5e2-4274-9be0-094eb28f036c"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="be57110f-24c7-43a2-8e8b-807b273228ae" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="4965c3bc-9d99-4317-8976-da5cc40af998" class="bulleted-list"><li style="list-style-type:disc">&quot;Create screener questions to recruit project managers who use Asana/Jira with 5+ team members&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="685e87e5-19e0-4270-9248-a74cd757b8f0" class="bulleted-list"><li style="list-style-type:disc">&quot;Write 60-minute interview guide to understand task management workflows and pain points&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="7fe5e55a-db7e-41a6-821f-cfe4ebc912bb" class="bulleted-list"><li style="list-style-type:disc">&quot;Analyze these 8 interview transcripts - identify themes, patterns, top pain points, and recommendations&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3c07f792-66af-49c6-b171-fbbfb4196471" class="bulleted-list"><li style="list-style-type:disc">&quot;Create research report presenting findings from user interviews with executive summary and quotes&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="9e967ccc-6bef-82a9-9944-01cdba6eb56f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="5ab67ccc-6bef-83dc-9a7d-81d38df66f35"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ac867ccc-6bef-83a0-b99f-815d01e8a552" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="18c67ccc-6bef-8233-a2be-813062142721" class="image"><a href="61_Example_Output.png"><img style="width:643.9921875px" src="61_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="c7a67ccc-6bef-827f-9f23-81d2b09467e3"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="e68d6ec3-b230-4ecc-a784-b63bce98dce2"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="9a842b12-3a7e-4900-8b6c-b5afa645f5b8" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="e80b9ccc-4f48-417e-a8f2-15666f098f5f" class="">→ Recipe #62: <a href="R-62 Plan and Run Usability Tests 37867ccc6bef83a9aefe011022174a00.html">Plan and Run Usability Tests</a><br/>→ Recipe #63: <a href="R-63 Research Surveys and Screeners 75767ccc6bef8338adab01eca04d1e57.html">Research Surveys and Screeners</a><br/>→ Recipe #07: <a href="R-07 Find Hidden User Dead-Ends 2d667ccc6bef806b890bc2048285b3fa.html">Find Hidden User Dead-Ends</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="f7a67ccc-6bef-82b0-a8b6-81d9c8f27021" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

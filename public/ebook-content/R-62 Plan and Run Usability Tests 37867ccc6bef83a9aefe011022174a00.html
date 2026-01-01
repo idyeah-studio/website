@@ -1,0 +1,805 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-62: Plan and Run Usability Tests</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="37867ccc-6bef-83a9-aefe-011022174a00" class="page sans"><div class="page-body"><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="f500e530-04fa-4dde-9137-f4eb8888d793"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ee21c63e-4a55-4cd4-8857-10503581d1ac" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><p id="2bf5ecc5-7ebd-4ed5-abc8-726364aa9785" class="">Good objectives:</p></div><div style="display:contents" dir="auto"><ul id="0e289647-03c6-4b95-800a-711e68225caf" class="bulleted-list"><li style="list-style-type:disc">&quot;Measure whether users can complete account setup without errors&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="4076e369-6761-4a20-a0a5-8e9595563a9c" class="bulleted-list"><li style="list-style-type:disc">&quot;Identify points of confusion in the project creation flow&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="242c5254-0ef9-4c8e-ae0b-cfa82d07d054" class="bulleted-list"><li style="list-style-type:disc">&quot;Validate that users understand role selection when inviting team members&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="0a2b90c7-ab2b-4eaa-b9bf-e21d670f284a" class="bulleted-list"><li style="list-style-type:disc">&quot;Measure time to complete full onboarding (goal: under 10 minutes)&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="feffd06c-4ff8-4a55-bacd-2d959d3578c1" class="">Bad objectives (too vague):</p></div><div style="display:contents" dir="auto"><ul id="d5a8fdee-7a36-497b-87ad-4d0cd779904c" class="bulleted-list"><li style="list-style-type:disc">&quot;See if users like the new design&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="e2762675-0e24-423d-8d51-b43428af32bc" class="bulleted-list"><li style="list-style-type:disc">&quot;Test the onboarding&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="5d9fbf7d-82b9-46a1-96d8-fff4f6f44882" class="bulleted-list"><li style="list-style-type:disc">&quot;Get feedback on the flow&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="dd416c10-723b-481e-b6ca-9ad61f301157" class=""><strong>What to test:</strong></p></div><div style="display:contents" dir="auto"><p id="6e6d6a16-44ae-44a7-a224-fc8d800742b8" class="">Options:</p></div><div style="display:contents" dir="auto"><ul id="6931db3a-001c-41b5-bed8-c952fd8d1db9" class="bulleted-list"><li style="list-style-type:disc">Figma prototype: High-fidelity, interactive, pre-development</li></ul></div><div style="display:contents" dir="auto"><ul id="d8371843-fc20-4863-9f01-d6b545432858" class="bulleted-list"><li style="list-style-type:disc">Live product: Real product, real data, post-launch validation</li></ul></div><div style="display:contents" dir="auto"><ul id="b638d07d-b989-4776-b1f0-8c67b11a92e8" class="bulleted-list"><li style="list-style-type:disc">Paper prototypes: Low-fidelity, early concept testing</li></ul></div><div style="display:contents" dir="auto"><ul id="4ab6f980-b07a-4eb2-a62d-52726ebc9c13" class="bulleted-list"><li style="list-style-type:disc">Competitor product: Benchmark testing, inspiration</li></ul></div><div style="display:contents" dir="auto"><p id="4878441a-b6ad-4b0b-b907-8f2acf45b530" class="">For this scenario: Figma prototype (validating before development)</p></div><div style="display:contents" dir="auto"><p id="a1fc55f7-94b6-4071-8179-59a4dfc8be58" class="">Prototype requirements:</p></div><div style="display:contents" dir="auto"><ul id="bab7f1b9-b33b-4713-971c-4dd8660f592a" class="bulleted-list"><li style="list-style-type:disc">High-fidelity (looks real, realistic interactions)</li></ul></div><div style="display:contents" dir="auto"><ul id="d6942dd7-22bb-492a-b9e1-1fc9e2428b02" class="bulleted-list"><li style="list-style-type:disc">Interactive (clickable, not static screens)</li></ul></div><div style="display:contents" dir="auto"><ul id="73400c45-d730-4c0e-b4f4-a4d5cc3faf58" class="bulleted-list"><li style="list-style-type:disc">Realistic data (use real project names, not &quot;Project 1&quot;, &quot;Project 2&quot;)</li></ul></div><div style="display:contents" dir="auto"><ul id="0d739d6a-cc8a-4065-93e5-5f0dbe7954cb" class="bulleted-list"><li style="list-style-type:disc">Complete flows (all steps included, no dead ends)</li></ul></div><div style="display:contents" dir="auto"><ul id="ad9adbaa-55a3-4218-9a0d-b2c1adc4aa07" class="bulleted-list"><li style="list-style-type:disc">Error states (show what happens if user makes mistake)</li></ul></div><div style="display:contents" dir="auto"><p id="7bb3d534-686f-4442-a92c-7adf487caf05" class=""><strong>Tasks to test:</strong></p></div><div style="display:contents" dir="auto"><p id="0cab77ef-e4f3-429e-9fad-9589a4b0baa7" class="">Identify critical user journeys:</p></div><div style="display:contents" dir="auto"><ul id="ceef4f64-5fb1-430b-914d-b7348e6c25b7" class="bulleted-list"><li style="list-style-type:disc">Task 1: Account setup (first impression, sets tone)</li></ul></div><div style="display:contents" dir="auto"><ul id="f30186c3-68ff-4662-b8d5-e1ac17d264f9" class="bulleted-list"><li style="list-style-type:disc">Task 2: Create first project (core value, must be easy)</li></ul></div><div style="display:contents" dir="auto"><ul id="7d1442a0-edbc-4564-ab2d-41299d60880b" class="bulleted-list"><li style="list-style-type:disc">Task 3: Invite team (collaboration feature, common task)</li></ul></div><div style="display:contents" dir="auto"><ul id="03822817-846b-4433-b296-939c12e0b99c" class="bulleted-list"><li style="list-style-type:disc">Task 4: Find key feature (navigation, discoverability)</li></ul></div><div style="display:contents" dir="auto"><p id="ebf58a6b-eb51-4495-ae0c-8916c4d397ca" class=""><strong>Success metrics:</strong></p></div><div style="display:contents" dir="auto"><p id="b15bb4a6-bd05-4936-b8d1-5e197f242331" class="">Quantitative metrics:</p></div><div style="display:contents" dir="auto"><ul id="3748d256-aabc-46d0-879e-a85219180a6f" class="bulleted-list"><li style="list-style-type:disc">Task completion rate: % who complete task successfully (goal: 90%+)</li></ul></div><div style="display:contents" dir="auto"><ul id="b19e82bc-7d23-4f16-ba49-fda3e06d479e" class="bulleted-list"><li style="list-style-type:disc">Time on task: Average time to complete (goal: under 10 min total)</li></ul></div><div style="display:contents" dir="auto"><ul id="0690f732-6234-4326-9ef9-06b363b86032" class="bulleted-list"><li style="list-style-type:disc">Error rate: Number of errors per task (goal: 0-1 errors)</li></ul></div><div style="display:contents" dir="auto"><ul id="70813d9d-8631-4540-b419-5a314cb7ecef" class="bulleted-list"><li style="list-style-type:disc">Clicks to completion: Number of clicks needed (efficiency)</li></ul></div><div style="display:contents" dir="auto"><p id="23034cf7-3440-491e-b912-777961d1c9c2" class="">Qualitative metrics:</p></div><div style="display:contents" dir="auto"><ul id="7d98ad2e-9abb-4bdb-a0b1-5a59c56ea8cf" class="bulleted-list"><li style="list-style-type:disc">Confidence: Do users feel confident they succeeded?</li></ul></div><div style="display:contents" dir="auto"><ul id="43d06490-ac65-43d6-a912-687deb776332" class="bulleted-list"><li style="list-style-type:disc">Satisfaction: Post-task rating (1-5 scale)</li></ul></div><div style="display:contents" dir="auto"><ul id="b4d04b28-a265-4b60-8ec5-57e3d790df4b" class="bulleted-list"><li style="list-style-type:disc">Confusion points: Where did users pause or struggle?</li></ul></div><div style="display:contents" dir="auto"><ul id="797a8fe7-d00f-4b97-ac92-a60d5fd15909" class="bulleted-list"><li style="list-style-type:disc">Critical incidents: Moments of frustration or delight</li></ul></div><div style="display:contents" dir="auto"><ul id="04404784-e75f-469e-9b33-d445d429c28a" class="bulleted-list"><li style="list-style-type:disc">Task scenario creation:<div style="display:contents" dir="auto"><p id="b944a293-fd6b-452a-860c-a2a65b104b0f" class=""><strong>Writing realistic task scenarios:</strong></p></div><div style="display:contents" dir="auto"><p id="ad842252-a0af-4dd7-b59c-482fec8b7f8b" class="">Task scenario formula:<br/>[Context] + [Goal] + [Success criteria]</p></div><div style="display:contents" dir="auto"><p id="10959d7f-34af-43d7-9ab9-63e10ba00461" class=""><strong>Task 1: Create account</strong></p></div><div style="display:contents" dir="auto"><p id="7318c3ed-929f-4e46-b90c-891490f2a057" class="">Bad task (too simple):</p></div><div style="display:contents" dir="auto"><ul id="3f7e1907-0846-444c-85c2-596d4252ecfa" class="bulleted-list"><li style="list-style-type:circle">&quot;Create an account&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="5f23c5d8-5b29-4121-80bf-09a41532fab7" class="">Good task (realistic scenario):</p></div><div style="display:contents" dir="auto"><ul id="ae9af093-f021-43c6-8153-792ed24f6e0b" class="bulleted-list"><li style="list-style-type:circle">&quot;Imagine you&#x27;re a project manager at a design agency. Your team is looking for a new project management tool. You&#x27;ve decided to try [Product]. Create an account to get started.&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="aadf381b-856c-4e89-b22d-9b478879782b" class="bulleted-list"><li style="list-style-type:circle">Success: Account created with name, email, password, company name</li></ul></div><div style="display:contents" dir="auto"><p id="ecff38f0-0bab-4e05-a3c4-be3bb8ac8ee3" class=""><strong>Task 2: Create first project</strong></p></div><div style="display:contents" dir="auto"><p id="bcd482c3-26f1-43c3-be9d-1ff0b320c01d" class="">Good task:</p></div><div style="display:contents" dir="auto"><ul id="e09bbacd-4b1d-440a-abb2-2ff9a5e26b5a" class="bulleted-list"><li style="list-style-type:circle">&quot;You&#x27;re managing a website redesign project for a client called &#x27;Acme Corp.&#x27; The project deadline is March 31st. Create a project for this website redesign.&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="23cc6533-ef0a-44e1-a92e-c22f5fca74ff" class="bulleted-list"><li style="list-style-type:circle">Success: Project created with name &quot;Acme Corp Website Redesign&quot;, due date set</li></ul></div><div style="display:contents" dir="auto"><p id="8074e93a-28af-4bee-bf25-e245b991621f" class=""><strong>Task 3: Invite team members</strong></p></div><div style="display:contents" dir="auto"><p id="067d246e-df5c-48b7-9be0-dbf8cb1361ae" class="">Good task:</p></div><div style="display:contents" dir="auto"><ul id="39f96c9b-15f4-45ac-aba0-fa6c89dc37bc" class="bulleted-list"><li style="list-style-type:circle">&quot;You want to invite two designers from your team to collaborate on this project: <a href="mailto:sarah@email.com">sarah@email.com</a> (Designer role) and <a href="mailto:mike@email.com">mike@email.com</a> (Designer role). Invite them to the project.&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="120ea239-537b-45a9-9b2d-bc5e435c9c3e" class="bulleted-list"><li style="list-style-type:circle">Success: Both email addresses entered, Designer role selected, invitations sent</li></ul></div><div style="display:contents" dir="auto"><p id="472267cd-20ba-46da-b3c6-0e9d54421ee3" class=""><strong>Task 4: Find create task button</strong></p></div><div style="display:contents" dir="auto"><p id="b91b4ab1-9a6b-4ee2-be24-751c07d1132f" class="">Good task:</p></div><div style="display:contents" dir="auto"><ul id="7250b356-b594-4596-bd7a-077dafaf1980" class="bulleted-list"><li style="list-style-type:circle">&quot;You&#x27;re now ready to start adding tasks to your project. Find where you would create your first task.&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="86bf511a-3422-4aac-8972-3f4c51daab58" class="bulleted-list"><li style="list-style-type:circle">Success: Located &quot;Create task&quot; button on dashboard</li></ul></div><div style="display:contents" dir="auto"><p id="7d96fb50-e006-4d60-8ce6-da079e07fd48" class=""><strong>Task wording best practices:</strong></p></div><div style="display:contents" dir="auto"><p id="9ec48842-45c4-433e-8fc9-9610c68e4121" class="">Do:</p></div><div style="display:contents" dir="auto"><ul id="13385ee5-d887-4552-acdb-3853570e5766" class="bulleted-list"><li style="list-style-type:circle">Provide context (why they&#x27;re doing this)</li></ul></div><div style="display:contents" dir="auto"><ul id="8f9fda4e-7655-4130-ac4d-90d71fb3de3c" class="bulleted-list"><li style="list-style-type:circle">Make it realistic (use real company names, dates)</li></ul></div><div style="display:contents" dir="auto"><ul id="135bf3df-6c24-48d4-b2d6-1344e8c8f2c3" class="bulleted-list"><li style="list-style-type:circle">Be specific about goal (what they need to accomplish)</li></ul></div><div style="display:contents" dir="auto"><ul id="2b721910-2183-4b56-ba62-0f4a2c823795" class="bulleted-list"><li style="list-style-type:circle">Avoid mentioning UI elements (don&#x27;t say &quot;Click the button&quot;)</li></ul></div><div style="display:contents" dir="auto"><p id="0d9e233c-4f4b-48aa-9bb8-23cf8dc13cbb" class="">Don&#x27;t:</p></div><div style="display:contents" dir="auto"><ul id="ea210788-26fd-41df-87f9-1db77aacbcee" class="bulleted-list"><li style="list-style-type:circle">Give away the answer (&quot;Click &#x27;Create Project&#x27; button&quot;)</li></ul></div><div style="display:contents" dir="auto"><ul id="4b1bd2c4-1331-4dda-8f28-bbe3b4e06a9c" class="bulleted-list"><li style="list-style-type:circle">Be too vague (&quot;Explore the dashboard&quot;)</li></ul></div><div style="display:contents" dir="auto"><ul id="9087cd2b-509e-49a5-9cc3-2522468fe366" class="bulleted-list"><li style="list-style-type:circle">Use product jargon (if users wouldn&#x27;t know the term)</li></ul></div><div style="display:contents" dir="auto"><ul id="299febe6-b35c-4ab2-8612-09233a9cde98" class="bulleted-list"><li style="list-style-type:circle">Make it hypothetical (&quot;Pretend you want to...&quot;)</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="c15825c8-8807-4a0f-80d3-dc3e504aa261" class="bulleted-list"><li style="list-style-type:disc">Participant recruitment:<div style="display:contents" dir="auto"><p id="e2636949-3e91-4b76-9754-69789e4c7e46" class=""><strong>Screener for new users:</strong></p></div><div style="display:contents" dir="auto"><p id="ca3d51e0-6e59-412e-ad95-b7e98ef7d13d" class="">Q1: Have you ever used [Your Product] before?</p></div><div style="display:contents" dir="auto"><ul id="898f2fcf-3179-4ae4-bc3d-29a39b86b5a2" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Yes → DISQUALIFY (need new users)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="fcd29ad1-c1ba-4054-84c3-13821b84733c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">No → QUALIFY</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><p id="b02f9c0f-ffb8-4271-9b8c-d59eb7c3bc16" class="">Q2: What is your current role?</p></div><div style="display:contents" dir="auto"><ul id="49f21edb-108a-44dd-b543-3535c014b4e7" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Project Manager → QUALIFY</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="526a47cf-b035-438a-adde-0d66d6bdd541" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Team Lead → QUALIFY</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="9badcf56-a06b-47f1-9cd2-4842fddb5718" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Designer/Developer → QUALIFY (if manages projects)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="8030247e-9f3e-4a31-87c4-88bb89232807" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Student/Intern → DISQUALIFY</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><p id="a33507cb-d517-4ae6-bb2d-563d7b283e78" class="">Q3: Do you currently use project management software?</p></div><div style="display:contents" dir="auto"><ul id="1b221253-b2f9-40e8-a501-af22bde917d8" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Yes (Asana, Monday, Trello, Jira, etc.) → QUALIFY (preferred)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="57fe0f1b-fe7b-45b0-ae6b-d52ee22f59b8" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">No, use spreadsheets/email → QUALIFY</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="cc2de29e-3e3c-4ea8-8b39-a424bcc24319" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">No, don&#x27;t manage projects → DISQUALIFY</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><p id="9ea12d85-c6e4-4c69-8d57-37df8af849b8" class="">Q4: How comfortable are you with learning new software?</p></div><div style="display:contents" dir="auto"><ul id="3e8f1fc3-9f2b-4abe-a8df-736ba1f7ef84" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Very comfortable → QUALIFY</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="44afede8-1831-4bd6-b524-e42fcbe27c58" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Somewhat comfortable → QUALIFY</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="506f0157-eceb-414a-97dd-f2855219c286" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Not comfortable → DISQUALIFY (may struggle with testing)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><p id="1dfaacf3-6072-4b9b-a75c-3726920ec821" class="">Q5: Do you have reliable internet and can join a Zoom call?</p></div><div style="display:contents" dir="auto"><ul id="9cc849ae-7243-4c08-832f-26fc29fdc4b1" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Yes → QUALIFY</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2250bda4-944e-4963-8271-3f472863a436" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">No → DISQUALIFY (remote testing requirement)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><p id="018f77ab-ecb6-4f01-a78b-aaed7715c70f" class=""><strong>How many participants:</strong></p></div><div style="display:contents" dir="auto"><p id="73928c54-5ed0-405e-bda9-f712cb4b9ae1" class="">Jakob Nielsen&#x27;s research:</p></div><div style="display:contents" dir="auto"><ul id="eca47cb3-f0c0-4704-99d2-00ce3a8f8925" class="bulleted-list"><li style="list-style-type:circle">5 participants: Identify 85% of usability problems</li></ul></div><div style="display:contents" dir="auto"><ul id="8f208e19-2636-445b-ac24-af89a23178af" class="bulleted-list"><li style="list-style-type:circle">8 participants: Identify 90%+ of usability problems</li></ul></div><div style="display:contents" dir="auto"><ul id="1a4c1d8c-a3ab-4cc3-b9f8-4816742e9cff" class="bulleted-list"><li style="list-style-type:circle">Diminishing returns after 8 participants</li></ul></div><div style="display:contents" dir="auto"><p id="40dddcb3-e5f2-4595-9d3b-dc19272a397f" class="">Recommendation:</p></div><div style="display:contents" dir="auto"><ul id="93b85816-5f20-4c7e-a063-25e7ce47c39b" class="bulleted-list"><li style="list-style-type:circle">First round: 6-8 participants</li></ul></div><div style="display:contents" dir="auto"><ul id="fda63889-12e3-4ba0-8836-16fca1e736ad" class="bulleted-list"><li style="list-style-type:circle">If major issues found: Fix and test again with 5 more (iteration)</li></ul></div><div style="display:contents" dir="auto"><ul id="cd0dfcf5-07e8-40f0-8818-1b5558f7ff88" class="bulleted-list"><li style="list-style-type:circle">If minor issues only: Proceed with fixes</li></ul></div><div style="display:contents" dir="auto"><p id="7cdd0ac7-f78d-4bf4-9f39-bea7008ed4de" class=""><strong>Recruitment timeline:</strong></p></div><div style="display:contents" dir="auto"><p id="960dfebc-1d22-441d-897f-9e8bc3e9f13a" class="">Week 1: Recruit</p></div><div style="display:contents" dir="auto"><ul id="83b3c6cf-3da5-444a-9ec8-d1899f14dc97" class="bulleted-list"><li style="list-style-type:circle">Day 1-2: Post screener (UserTesting, LinkedIn, your email list)</li></ul></div><div style="display:contents" dir="auto"><ul id="de0ca4b4-6a84-4df1-b112-02dcf479136d" class="bulleted-list"><li style="list-style-type:circle">Day 3-5: Review responses, select participants</li></ul></div><div style="display:contents" dir="auto"><ul id="6de4c951-013f-4a2f-9d5b-15c179f4854a" class="bulleted-list"><li style="list-style-type:circle">Day 6-7: Schedule sessions, send confirmations</li></ul></div><div style="display:contents" dir="auto"><p id="ff4e6850-1c2b-4d1e-8a20-5d29355e7185" class="">Week 2: Test</p></div><div style="display:contents" dir="auto"><ul id="6680d85e-26b9-401c-a2b6-b5456fcdf297" class="bulleted-list"><li style="list-style-type:circle">Day 1-3: Conduct 6-8 sessions</li></ul></div><div style="display:contents" dir="auto"><ul id="f6aef5ef-d871-4f0f-be8f-967e5d64d34a" class="bulleted-list"><li style="list-style-type:circle">Day 4: Review notes, identify patterns</li></ul></div><div style="display:contents" dir="auto"><ul id="627b06b6-b295-4a26-b1c5-f501dc2f7448" class="bulleted-list"><li style="list-style-type:circle">Day 5: Analyze, create report</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="95756eda-eb91-4dfb-bbb8-acb0d4d046d7" class="bulleted-list"><li style="list-style-type:disc">Test script and moderation:<div style="display:contents" dir="auto"><p id="f52f4979-52e2-4827-ae7d-06253e0e3a4e" class=""><strong>Test script structure (30-45 min session):</strong></p></div><div style="display:contents" dir="auto"><p id="08bbbf7a-7b90-4ead-82dd-36ce324b5a3c" class=""><strong>Introduction (5 min):</strong></p></div><div style="display:contents" dir="auto"><p id="fe615b6d-f242-4462-a00f-0b7ba25c24eb" class="">Script:<br/>&quot;Hi [Name], thanks for joining today! I&#x27;m [Your Name], and I&#x27;ll be guiding you through this session.</p></div><div style="display:contents" dir="auto"><p id="2d053a98-4d82-4c31-baa6-67906f9bba79" class="">Today we&#x27;re testing a new onboarding experience for a project management tool. I want to emphasize: we&#x27;re testing the design, not you. There are no wrong answers, and if you have trouble with anything, that&#x27;s valuable feedback for us.</p></div><div style="display:contents" dir="auto"><p id="7698ffc2-458e-4bbb-b5a2-a7f060f021c7" class="">I&#x27;m going to ask you to complete a few tasks while sharing your screen. As you work, please think out loud - tell me what you&#x27;re looking for, what you&#x27;re thinking, what&#x27;s confusing. This helps me understand your experience.</p></div><div style="display:contents" dir="auto"><p id="f7f627dd-d7cc-438b-88d1-1aee6a69f242" class="">I&#x27;ll be taking notes, and with your permission, I&#x27;d like to record the session for my notes only. Is that okay?</p></div><div style="display:contents" dir="auto"><p id="92c43928-e58d-4bc6-a8d9-392cec227881" class="">[Get consent]</p></div><div style="display:contents" dir="auto"><p id="b483101b-b8f6-46ec-b4d7-5218206eb590" class="">Do you have any questions before we start?&quot;</p></div><div style="display:contents" dir="auto"><p id="262a361b-ccca-4da9-923e-232aa8a20324" class=""><strong>Screen sharing setup (3 min):</strong></p></div><div style="display:contents" dir="auto"><p id="38c19881-1a77-45b8-a2fb-52a68e0210b1" class="">&quot;Great! Let&#x27;s get you set up. Can you share your screen?</p></div><div style="display:contents" dir="auto"><p id="80d06f04-0a9c-45f2-8f24-928680f5871a" class="">[Wait for screen share]</p></div><div style="display:contents" dir="auto"><p id="670d39b1-f095-4074-9859-a7611621b61a" class="">Perfect, I can see your screen. I&#x27;m going to paste a link in the Zoom chat - this is the prototype you&#x27;ll be using. Go ahead and open that link.</p></div><div style="display:contents" dir="auto"><p id="da2ace56-272b-4bc9-85a6-1041f53e6b59" class="">[Send Figma prototype link]</p></div><div style="display:contents" dir="auto"><p id="3a6f3413-ebb0-42bc-abfa-a26b4b1c4352" class="">You should see a welcome screen. Can you see that?&quot;</p></div><div style="display:contents" dir="auto"><p id="10e08fbb-6d50-41d6-b5dc-56a95e2ef802" class=""><strong>Think-aloud protocol explanation (2 min):</strong></p></div><div style="display:contents" dir="auto"><p id="805a78f1-cbcd-4625-b2e8-eabffe9f9a79" class="">&quot;Before we start, let me explain &#x27;thinking aloud.&#x27; As you work through the tasks, I&#x27;d like you to say out loud what you&#x27;re thinking, what you&#x27;re looking for, what you expect to happen. For example, if you&#x27;re looking for a button, say &#x27;I&#x27;m looking for a way to create a project.&#x27;</p></div><div style="display:contents" dir="auto"><p id="5b603035-c2c6-43a8-b77d-36c601bafaab" class="">This feels a bit unnatural at first, but it really helps me understand your thought process. I&#x27;ll remind you if you go quiet.</p></div><div style="display:contents" dir="auto"><p id="fe02fe11-01a2-45e7-b66f-b76bace940fc" class="">Let&#x27;s do a quick practice: Look at this screen and tell me what you think you can do here.&quot;</p></div><div style="display:contents" dir="auto"><p id="7cca2d31-5629-4603-b7d4-23f9563fc7f6" class="">[Participant practices thinking aloud]</p></div><div style="display:contents" dir="auto"><p id="8e83df90-17e3-4b39-8526-a7c8d9c62865" class=""><strong>Task 1 (5-8 min):</strong></p></div><div style="display:contents" dir="auto"><p id="c6d50fbb-1352-45d4-8523-7336dde41583" class="">&quot;Okay, here&#x27;s your first task:</p></div><div style="display:contents" dir="auto"><p id="1afeeaef-da5f-4312-896d-09cf5b3722d7" class="">[Read task scenario]</p></div><div style="display:contents" dir="auto"><p id="7d603212-ed73-4c07-af00-4c0f795fd060" class="">&#x27;Imagine you&#x27;re a project manager at a design agency. Your team is looking for a new project management tool. You&#x27;ve decided to try this product. Create an account to get started.&#x27;</p></div><div style="display:contents" dir="auto"><p id="cd1ac74a-748e-4516-97df-1df1a54f7ec5" class="">Go ahead and begin. Remember to think aloud as you work.&quot;</p></div><div style="display:contents" dir="auto"><p id="dc450856-d3e0-4426-9deb-483480e64e1f" class="">[Observe silently, take notes]<br/>[Only prompt if user goes quiet: &quot;What are you thinking?&quot;]<br/>[If stuck for 2+ min: &quot;What would you expect to happen here?&quot;]</p></div><div style="display:contents" dir="auto"><p id="b545c3c7-0aef-48b4-83fb-5d3d0509f183" class="">When task complete:<br/>&quot;Great. On a scale of 1 to 5, where 1 is very difficult and 5 is very easy, how easy was that task?&quot;</p></div><div style="display:contents" dir="auto"><p id="b395289c-d8d8-468a-9297-a259296aa565" class="">[Note rating]</p></div><div style="display:contents" dir="auto"><p id="9d96ea2a-1424-4596-ad98-70786ca4f220" class=""><strong>Tasks 2-4 (5-8 min each):</strong></p></div><div style="display:contents" dir="auto"><p id="523e643f-1cb5-4879-b7a9-d46206aa75ca" class="">[Repeat for each task]</p></div><div style="display:contents" dir="auto"><p id="6c7718a8-c6a4-476d-90cd-37185bacb896" class=""><strong>Post-test questions (5 min):</strong></p></div><div style="display:contents" dir="auto"><p id="6dfa5d90-aecf-41c9-b80b-8be705ec3394" class="">&quot;Thanks for working through those tasks. I have a few final questions:</p></div><div style="display:contents" dir="auto"><ol type="1" id="8046783b-ff9b-4bfe-a0d0-795501b7b9b4" class="numbered-list" start="1"><li>Overall, how would you rate your experience? (1-5 scale: Very difficult to Very easy)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="c1cc6f21-78df-4cc5-b0b0-09a7eea414f3" class="numbered-list" start="2"><li>What was the most confusing or frustrating part?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="087853a3-68c4-4e78-a7d7-53f16578eb74" class="numbered-list" start="3"><li>What did you like about the experience?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="549a980b-5f45-4c59-bc2e-b62c82b719d3" class="numbered-list" start="4"><li>Is there anything you expected to see that wasn&#x27;t there?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="b9fc2053-1e10-4a6d-b04c-d4b4619bd481" class="numbered-list" start="5"><li>Any other thoughts or feedback?&quot;</li></ol></div><div style="display:contents" dir="auto"><p id="6602c1e3-6428-4af1-ad4d-06ebd847ae1a" class=""><strong>Wrap-up (2 min):</strong></p></div><div style="display:contents" dir="auto"><p id="0c29932b-f526-4b10-9adf-3f073f1e1bc7" class="">&quot;That&#x27;s all the tasks I have for you. Thank you so much for your time and feedback - this is incredibly helpful for improving the product.</p></div><div style="display:contents" dir="auto"><p id="9799b399-f785-4d24-a60e-f76be9599d07" class="">You&#x27;ll receive your $50 Amazon gift card via email within 24 hours.</p></div><div style="display:contents" dir="auto"><p id="9291c793-7b21-4703-a42c-bdaada970b38" class="">Do you have any questions for me?&quot;</p></div><div style="display:contents" dir="auto"><p id="4f736a77-5493-4b3a-b77d-32ef52c29ee7" class=""><strong>Moderation techniques:</strong></p></div><div style="display:contents" dir="auto"><p id="d0be3ceb-cccc-45c2-be42-082df8559734" class=""><strong>Neutral prompting (don&#x27;t lead):</strong></p></div><div style="display:contents" dir="auto"><p id="f7ece607-b12d-4ddf-9a51-fe6fe0939f0f" class="">Good prompts:</p></div><div style="display:contents" dir="auto"><ul id="588a5f19-5287-4c6d-bf6e-3c2dae20e02e" class="bulleted-list"><li style="list-style-type:circle">&quot;What are you thinking?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="b5761832-016b-4f58-9f1e-b3950c2bc9c1" class="bulleted-list"><li style="list-style-type:circle">&quot;What are you looking for?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="b3d533d4-6e77-4b68-a445-239468aa4b51" class="bulleted-list"><li style="list-style-type:circle">&quot;What do you expect to happen?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="1483447e-fcd2-488a-a48c-443a23184421" class="bulleted-list"><li style="list-style-type:circle">&quot;Tell me more about that&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="c837678a-6f5b-471c-8682-fabec2dce4a1" class="">Bad prompts (leading):</p></div><div style="display:contents" dir="auto"><ul id="d70e8cb2-8fe0-43f9-9486-a90385e776ec" class="bulleted-list"><li style="list-style-type:circle">&quot;Would you click the blue button?&quot; (tells them what to do)</li></ul></div><div style="display:contents" dir="auto"><ul id="7b1f5766-a23f-4ab8-9dea-19b1287db896" class="bulleted-list"><li style="list-style-type:circle">&quot;Isn&#x27;t that easy?&quot; (leading question)</li></ul></div><div style="display:contents" dir="auto"><ul id="41ee83ed-f918-47f4-b8d8-6e2eb199b184" class="bulleted-list"><li style="list-style-type:circle">&quot;Try clicking on the top menu&quot; (guiding them)</li></ul></div><div style="display:contents" dir="auto"><p id="4ac4530a-07a0-478e-8e9b-f4cdc7663db3" class=""><strong>When participant gets stuck:</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="c89dd5e9-3f7f-450d-8edb-a0a4a0e79c2f" class="numbered-list" start="1"><li>Wait 30 seconds (don&#x27;t jump in immediately)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="a99a221a-7522-4a32-931e-b7c2703c28ce" class="numbered-list" start="2"><li>Ask: &quot;What are you thinking?&quot; (understand their thought process)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="58199225-993c-4748-86d0-bfba22a33ff9" class="numbered-list" start="3"><li>If still stuck after 2 min: &quot;What would you expect to see/happen here?&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2a85972d-c75b-4064-8ce6-e30dba767908" class="numbered-list" start="4"><li>If still stuck after 3 min: &quot;Let&#x27;s move to the next task&quot; (mark as failure, note the issue)</li></ol></div><div style="display:contents" dir="auto"><p id="b0f599b9-3f76-45e7-b3c8-add2766faa9c" class="">Don&#x27;t: Give them the answer or guide them to success</p></div><div style="display:contents" dir="auto"><p id="ea33ff96-63a7-4f79-8814-24f01bf9fae3" class=""><strong>When participant goes quiet:</strong></p></div><div style="display:contents" dir="auto"><ul id="585cc51a-b4d2-494f-a4cb-ba2a7fa8574a" class="bulleted-list"><li style="list-style-type:circle">Gentle reminder: &quot;Remember to think aloud - what are you looking for?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="31da33b9-ae73-448a-ae65-260725bf503b" class="bulleted-list"><li style="list-style-type:circle">Ask: &quot;What are you thinking right now?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="0e956c79-7f01-4fe2-982f-b9070e1e09ea" class="bulleted-list"><li style="list-style-type:circle">Don&#x27;t: Let them work in silence (lose insights)</li></ul></div><div style="display:contents" dir="auto"><p id="33a07fe8-d083-4e5d-8860-75f63be70dd8" class=""><strong>When participant asks you questions:</strong></p></div><div style="display:contents" dir="auto"><p id="7fbdf698-494f-4375-8dd8-d2f44bf0e111" class="">Participant: &quot;Should I click here?&quot;<br/>Bad response: &quot;Yes&quot; or &quot;No&quot;<br/>Good response: &quot;What do you think will happen if you click there?&quot;</p></div><div style="display:contents" dir="auto"><p id="d817d765-621d-4eff-9cb7-807c804259e2" class="">Participant: &quot;Is this right?&quot;<br/>Bad response: &quot;Yes, that&#x27;s correct&quot;<br/>Good response: &quot;What makes you think that&#x27;s right?&quot; or &quot;Go ahead and try it&quot;</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="06cf474e-3614-4532-8bbc-feb022384925" class="bulleted-list"><li style="list-style-type:disc">Remote usability testing:<div style="display:contents" dir="auto"><p id="9a3c78c1-c39e-48d4-bce7-c59ae0a6dfb9" class=""><strong>Tools and setup:</strong></p></div><div style="display:contents" dir="auto"><p id="2551ad89-225d-4b26-846c-e7ecdce7bc93" class=""><strong>Zoom (or Google Meet, Teams):</strong></p></div><div style="display:contents" dir="auto"><ul id="35033f47-fe9e-41f5-886c-839d0655f92a" class="bulleted-list"><li style="list-style-type:circle">Schedule meeting, send calendar invite</li></ul></div><div style="display:contents" dir="auto"><ul id="7d49bb31-4793-49c4-87fa-1b433619851f" class="bulleted-list"><li style="list-style-type:circle">Enable screen sharing (participant shares their screen)</li></ul></div><div style="display:contents" dir="auto"><ul id="5d0f9d34-26b1-445e-870c-c67632e59008" class="bulleted-list"><li style="list-style-type:circle">Record session (cloud or local recording)</li></ul></div><div style="display:contents" dir="auto"><ul id="a14ac28d-a515-433b-bbbf-b33f3288ea08" class="bulleted-list"><li style="list-style-type:circle">Use chat (send prototype link, paste task scenarios if needed)</li></ul></div><div style="display:contents" dir="auto"><p id="6ca4263f-75d5-4d07-a4c9-241da3eda52c" class=""><strong>Screen recording:</strong></p></div><div style="display:contents" dir="auto"><ul id="ac5099cd-04a5-4b07-ad09-906b0c8ee722" class="bulleted-list"><li style="list-style-type:circle">Zoom: &quot;Record&quot; button → &quot;Record to this Computer&quot; or &quot;Cloud&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="5dd19ff0-fcba-4728-90f0-000bb8f5e150" class="bulleted-list"><li style="list-style-type:circle">Ensure participant&#x27;s screen is being recorded (not yours)</li></ul></div><div style="display:contents" dir="auto"><ul id="61f888b7-bdd2-4639-b992-a4fa0d9a3f9b" class="bulleted-list"><li style="list-style-type:circle">Test recording before first session (confirm it&#x27;s working)</li></ul></div><div style="display:contents" dir="auto"><p id="32aad590-3ccc-4844-b417-ca7359ba6bca" class=""><strong>Prototype link:</strong></p></div><div style="display:contents" dir="auto"><ul id="60ff8bd3-2b88-4c7c-b55b-3cebae86420f" class="bulleted-list"><li style="list-style-type:circle">Figma: Share prototype link (Presentation mode)</li></ul></div><div style="display:contents" dir="auto"><ul id="11a73ffb-87e8-4f78-89c6-2a854a11705a" class="bulleted-list"><li style="list-style-type:circle">Set to &quot;Can view prototype&quot; (not edit)</li></ul></div><div style="display:contents" dir="auto"><ul id="6cdbbbe2-9201-4942-a141-8d6cef65e0fb" class="bulleted-list"><li style="list-style-type:circle">Test link yourself (ensure it works, loads properly)</li></ul></div><div style="display:contents" dir="auto"><p id="093375f5-8616-43da-91a0-33df2cf25ec9" class=""><strong>Technical setup checklist:</strong></p></div><div style="display:contents" dir="auto"><p id="0080dcba-9c21-4062-a9f4-37d39d7b189e" class="">Before session:</p></div><div style="display:contents" dir="auto"><ul id="a24965d0-8adc-4c45-8aa6-e2f380edcc82" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Test your camera, microphone (participant can see/hear you)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="c5de58ee-0ad8-44bc-aadc-08e49a4d28ad" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Test Zoom recording (know how to start/stop)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="6e19d70d-fc40-4def-a1b7-32d2a6113526" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Have prototype link ready (copy-pasted in Slack or note)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="9d221b42-fc95-47ce-992e-acbdb5b5209f" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Have task scenarios ready (printed or in separate doc)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="91ab33ed-9026-43b4-a291-34d8aaca3b84" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Quiet space (no background noise)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="054c5052-ed0f-46e7-8558-f39b036d7a9f" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">&quot;Do not disturb&quot; mode (no notifications interrupting)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><p id="ef57e1b2-860b-4821-b409-292b87306f2d" class="">At start of session:</p></div><div style="display:contents" dir="auto"><ul id="aace2c22-a4e0-404f-9edb-bbc5a674147e" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Get recording consent (verbal or written)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="d7629d68-f6d6-4339-90dd-8a5dfa244de3" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Start recording (Zoom &quot;Record&quot; button)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="12ec9c8a-b944-4e3b-8141-d2fa554c459c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Ask participant to share screen</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="ca4fac43-db74-45fb-a9c4-bca089939998" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Send prototype link in chat</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="b8e4562f-acb5-4510-bbac-50efea61dc2a" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Confirm you can see their screen clearly</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><p id="4eb31b13-b118-4c30-9e52-ff4a83f637ce" class=""><strong>Handling technical issues:</strong></p></div><div style="display:contents" dir="auto"><p id="cfce21f8-1eb5-4fb5-b632-964478d5284b" class="">Screen share not working:</p></div><div style="display:contents" dir="auto"><ul id="853401d2-5fa8-490e-892f-aa974dc0de08" class="bulleted-list"><li style="list-style-type:circle">&quot;Can you click the green &#x27;Share Screen&#x27; button at the bottom?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="48662cd2-579b-4a2e-9577-cc13f36c36ab" class="bulleted-list"><li style="list-style-type:circle">If still not working: &quot;Let&#x27;s try this - click &#x27;Stop Video&#x27; then &#x27;Share Screen&#x27;&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="318434e0-1c42-4c4c-8259-863ad1e1b7b0" class="bulleted-list"><li style="list-style-type:circle">Last resort: Reschedule (don&#x27;t waste time troubleshooting)</li></ul></div><div style="display:contents" dir="auto"><p id="8723267d-8e8a-4e39-b392-9437e7b5982a" class="">Prototype won&#x27;t load:</p></div><div style="display:contents" dir="auto"><ul id="f6244672-9399-4227-9d28-e16e28dfe26f" class="bulleted-list"><li style="list-style-type:circle">&quot;Try refreshing the page&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="c93ce4e4-b7d1-4f4f-8e5b-4016472b4203" class="bulleted-list"><li style="list-style-type:circle">Send backup link (have second link ready)</li></ul></div><div style="display:contents" dir="auto"><ul id="0c1146fa-a829-4e4e-838b-23aeb2573250" class="bulleted-list"><li style="list-style-type:circle">If still fails: Reschedule</li></ul></div><div style="display:contents" dir="auto"><p id="26f1361f-a36a-4d86-ae55-0f8931a737a0" class="">Audio/video issues:</p></div><div style="display:contents" dir="auto"><ul id="e1a831bc-b37a-4160-a843-450cf414c9cb" class="bulleted-list"><li style="list-style-type:circle">&quot;Can you try reconnecting your headphones?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="cc30bc6e-f37d-42f6-a864-fb6bb664ccf9" class="bulleted-list"><li style="list-style-type:circle">&quot;Let&#x27;s both hang up and rejoin the call&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3b5038c4-a829-4237-a6f0-73e9864cf64d" class="bulleted-list"><li style="list-style-type:circle">As backup: Continue audio-only (not ideal but workable)</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="fe8865b1-4f42-4bd0-8dca-40256bc74e2a" class="bulleted-list"><li style="list-style-type:disc">Observation and note-taking:<div style="display:contents" dir="auto"><p id="b2bbb028-057a-4af2-a77e-140a44a0be78" class=""><strong>What to capture:</strong></p></div><div style="display:contents" dir="auto"><p id="d79157fb-0462-4e60-870f-0df4b24b34e8" class=""><strong>For each task:</strong></p></div><div style="display:contents" dir="auto"><p id="3a1994de-19d3-4cb8-90a1-67ef66417e4f" class="">Task: Create account</p></div><div style="display:contents" dir="auto"><p id="9fa795b1-abe8-442a-b1e9-3addc0f16175" class="">Success: ✓ Yes / ✗ No (binary)<br/>Time: 2:15 (minutes:seconds)<br/>Errors: 1 (clicked &quot;Skip&quot; thinking it was &quot;Next&quot;)<br/>Clicks: 8 clicks<br/>Path: Welcome → Clicked &quot;Get Started&quot; → Form → Tried to skip company name → Went back → Filled company name → Submit → Success</p></div><div style="display:contents" dir="auto"><p id="87d0c053-9b1c-43c2-9eaf-a0b4b04f20de" class="">Confusion points:</p></div><div style="display:contents" dir="auto"><ul id="588dcd9f-0c78-471b-ab92-c21db0125cdf" class="bulleted-list"><li style="list-style-type:circle">[1:30] Paused at company name field, said &quot;Is this required?&quot; (no indicator)</li></ul></div><div style="display:contents" dir="auto"><ul id="75f1d212-1f04-45b7-b4b7-eb7d2b14bf6d" class="bulleted-list"><li style="list-style-type:circle">[2:00] Clicked &quot;Skip&quot; button, confused it with &quot;Next&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="cc61559f-75e0-4bd1-8afb-e8fa378ed93c" class="">Quotes:</p></div><div style="display:contents" dir="auto"><ul id="8360fd67-9e2f-453f-ba60-b02f1b814cd0" class="bulleted-list"><li style="list-style-type:circle">&quot;I&#x27;m not sure if company name is required - there&#x27;s no asterisk&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="9c84b40c-8810-4532-b6d7-7cbab4d7c889" class="bulleted-list"><li style="list-style-type:circle">&quot;Oh, &#x27;Skip&#x27; means skip this whole setup? I thought it meant next&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="0122a01c-a795-4361-9c47-3850c4fb4f5a" class="">Severity: Medium (error recoverable, but caused confusion)</p></div><div style="display:contents" dir="auto"><p id="71443561-8e5b-4797-aafa-4e54a18163eb" class=""><strong>Note-taking template:</strong></p></div><div style="display:contents" dir="auto"><p id="ea738a4b-9645-45cf-9cc9-4ffcfc1a0f44" class="">Participant: P1<br/>Date: Dec 15, 2024<br/>Duration: 38 minutes</p></div><div style="display:contents" dir="auto"><ul id="99696ab3-d785-4226-a07a-f5d160fe4335" class="bulleted-list"><li style="list-style-type:circle">-- TASK 1: Create account ---<br/>Success: ✓<br/>Time: 2:15<br/>Errors: 1 (clicked Skip instead of Next)<br/>Severity: Medium<br/>Notes:</li></ul></div><div style="display:contents" dir="auto"><ul id="5d6eced3-e8c4-4f67-b655-f62bdd131137" class="bulleted-list"><li style="list-style-type:circle">Confused by &quot;Skip&quot; button placement</li></ul></div><div style="display:contents" dir="auto"><ul id="4f2461a5-3a79-4f65-9d9e-0ec0553d8193" class="bulleted-list"><li style="list-style-type:circle">No required field indicators (*)</li></ul></div><div style="display:contents" dir="auto"><ul id="28f3dc96-c0f0-4209-9d29-045b2e6b2def" class="bulleted-list"><li style="list-style-type:circle">&quot;Is company name required?&quot; [1:30]</li></ul></div><div style="display:contents" dir="auto"><ul id="028c377c-c7e1-4707-98fd-a72ba30dbd3a" class="bulleted-list"><li style="list-style-type:circle">-- TASK 2: Create project ---<br/>Success: ✗<br/>Time: 5:45 (abandoned)<br/>Errors: 3 (couldn&#x27;t find template selector, clicked wrong areas)<br/>Severity: High (task failure)<br/>Notes:</li></ul></div><div style="display:contents" dir="auto"><ul id="000c4b59-55bd-401a-a870-531e9e336482" class="bulleted-list"><li style="list-style-type:circle">Looked for &quot;New Project&quot; button, couldn&#x27;t find (actually in top nav)</li></ul></div><div style="display:contents" dir="auto"><ul id="668a1bf1-a8ba-46da-81af-c59adbcc3260" class="bulleted-list"><li style="list-style-type:circle">&quot;Where do I create a project?&quot; [0:45]</li></ul></div><div style="display:contents" dir="auto"><ul id="69bc4e46-d536-4127-bb6d-c55dc7da554d" class="bulleted-list"><li style="list-style-type:circle">Clicked &quot;Dashboard&quot; thinking it would show project creation</li></ul></div><div style="display:contents" dir="auto"><ul id="963f37b5-8a22-4415-a6a8-2992863cffa2" class="bulleted-list"><li style="list-style-type:circle">Gave up after 5 minutes</li></ul></div><div style="display:contents" dir="auto"><p id="dfcaeee2-e5fa-4043-8690-1f92b59ecb73" class=""><strong>Time tracking:</strong></p></div><div style="display:contents" dir="auto"><p id="98588a41-da80-4eda-b631-10994b08def8" class="">Start stopwatch when task begins:</p></div><div style="display:contents" dir="auto"><ul id="634b1a4b-aded-4e38-9ef1-126017eff970" class="bulleted-list"><li style="list-style-type:circle">&quot;Go ahead and begin&quot; → START timer</li></ul></div><div style="display:contents" dir="auto"><ul id="fd41aedd-45e8-4239-a210-8d653829cdd3" class="bulleted-list"><li style="list-style-type:circle">Task completed or abandoned → STOP timer</li></ul></div><div style="display:contents" dir="auto"><p id="3b1ea26e-f601-4499-9861-5493933b34f6" class="">Tools:</p></div><div style="display:contents" dir="auto"><ul id="a8f385d1-a5a9-4e6a-8b07-1eac4f447ddf" class="bulleted-list"><li style="list-style-type:circle">Stopwatch app on phone</li></ul></div><div style="display:contents" dir="auto"><ul id="ab29bace-deb1-4a2d-97ab-2330137b0a62" class="bulleted-list"><li style="list-style-type:circle">Zoom&#x27;s recording timestamp (note timestamp in notes)</li></ul></div><div style="display:contents" dir="auto"><ul id="f4641df6-c983-4be4-9f43-5be1c9d79758" class="bulleted-list"><li style="list-style-type:circle">Spreadsheet with start/end times</li></ul></div><div style="display:contents" dir="auto"><p id="960b6b32-1246-49ae-bdac-e471e8e27ce0" class=""><strong>Critical incidents:</strong></p></div><div style="display:contents" dir="auto"><p id="650ecad3-2743-41d9-9acc-9af95853d2c9" class="">Moments to flag:</p></div><div style="display:contents" dir="auto"><ul id="b59c24e5-0f3f-4257-be14-64e9ee1748fd" class="bulleted-list"><li style="list-style-type:circle">Errors: Participant clicks wrong thing, goes down wrong path</li></ul></div><div style="display:contents" dir="auto"><ul id="eb67d7ce-b69c-4ea6-98c4-438f744a6ba4" class="bulleted-list"><li style="list-style-type:circle">Frustration: Verbal frustration, sighing, &quot;This is confusing&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="f0f8ef7c-0c86-403a-8f97-eff3c9488476" class="bulleted-list"><li style="list-style-type:circle">Delight: &quot;Oh, that&#x27;s nice!&quot; or positive reactions</li></ul></div><div style="display:contents" dir="auto"><ul id="3e3008a5-28fc-4521-b49d-393991061304" class="bulleted-list"><li style="list-style-type:circle">Stuck: Participant stops, silent for 30+ seconds</li></ul></div><div style="display:contents" dir="auto"><ul id="30ae2243-b712-4c89-b432-bf4ca005ef42" class="bulleted-list"><li style="list-style-type:circle">Workarounds: Participant finds unexpected way to complete task</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="3b7d6770-cd4f-4f12-a528-a060b66f0201" class="bulleted-list"><li style="list-style-type:disc">Analysis methods:<div style="display:contents" dir="auto"><p id="db1f3a25-8d9c-4452-b1a0-b4475bcadcaf" class=""><strong>Quantitative analysis:</strong></p></div><div style="display:contents" dir="auto"><p id="e80c872d-8986-4988-9d51-8f074e2422a8" class=""><strong>Task completion rates:</strong></p></div><div style="display:contents" dir="auto"><p id="4f19f2bc-19fb-4f7b-a2f5-82d80266e9d6" class="">Formula: (Participants who completed task / Total participants) × 100</p></div><div style="display:contents" dir="auto"><p id="c53d70e2-2768-481e-9620-a98b64b98179" class="">Example:</p></div><div style="display:contents" dir="auto"><ul id="b3b66c1d-e3bf-4a6d-a665-5f6ed77d2ec8" class="bulleted-list"><li style="list-style-type:circle">Task 1 (Create account): 8 out of 8 completed = 100% success rate ✓</li></ul></div><div style="display:contents" dir="auto"><ul id="4a55f273-052f-4ea0-9537-4451627756ee" class="bulleted-list"><li style="list-style-type:circle">Task 2 (Create project): 5 out of 8 completed = 62.5% success rate ✗ (Problem!)</li></ul></div><div style="display:contents" dir="auto"><ul id="266196d8-084b-47ba-b641-08e5d33433b2" class="bulleted-list"><li style="list-style-type:circle">Task 3 (Invite team): 6 out of 8 completed = 75% success rate ⚠️</li></ul></div><div style="display:contents" dir="auto"><ul id="a4e839e3-fca2-47e7-87a0-0a718841d880" class="bulleted-list"><li style="list-style-type:circle">Task 4 (Find create task): 7 out of 8 completed = 87.5% success rate ✓</li></ul></div><div style="display:contents" dir="auto"><p id="45987392-e54b-4250-867d-6f3daf32d2a9" class="">Benchmark:</p></div><div style="display:contents" dir="auto"><ul id="cccc6c41-6634-489b-b954-0337c5829b42" class="bulleted-list"><li style="list-style-type:circle">90-100%: Excellent (task is usable)</li></ul></div><div style="display:contents" dir="auto"><ul id="93478bd3-37ee-4209-bac7-090ce2e98bbe" class="bulleted-list"><li style="list-style-type:circle">70-89%: Acceptable (minor improvements needed)</li></ul></div><div style="display:contents" dir="auto"><ul id="94566cbc-eb97-49e6-a21f-184e7b7398ef" class="bulleted-list"><li style="list-style-type:circle">Below 70%: Problem (major redesign needed)</li></ul></div><div style="display:contents" dir="auto"><p id="9a9a1b06-a9c9-4192-a6c1-aca77656ad06" class=""><strong>Average time on task:</strong></p></div><div style="display:contents" dir="auto"><p id="f99c2e0a-4118-403d-8ded-801c4730eb0b" class="">Calculate average:</p></div><div style="display:contents" dir="auto"><ul id="f7c11657-1c7b-48bd-b685-5643f602570b" class="bulleted-list"><li style="list-style-type:circle">Task 1 times: 2:15, 1:45, 2:30, 2:00, 1:50, 2:20, 2:10, 2:05</li></ul></div><div style="display:contents" dir="auto"><ul id="c7b19c8d-983c-4047-bc24-aa52a5c1b83a" class="bulleted-list"><li style="list-style-type:circle">Average: 2:07 (sum all times, divide by 8)</li></ul></div><div style="display:contents" dir="auto"><p id="e4231c51-250c-40e9-8e7f-c2755e950a20" class="">Identify outliers:</p></div><div style="display:contents" dir="auto"><ul id="39939ba5-cf3d-4074-8d4d-1df79f8c3f20" class="bulleted-list"><li style="list-style-type:circle">P3 took 5:45 (abandoned) - why? (note this)</li></ul></div><div style="display:contents" dir="auto"><p id="6ea2277f-4ba3-48db-8180-e78101eb847a" class=""><strong>Error rates:</strong></p></div><div style="display:contents" dir="auto"><p id="560ef91c-dc67-4708-a366-dc7abd5d9067" class="">Count errors per task:</p></div><div style="display:contents" dir="auto"><ul id="d260a454-cac8-4b1d-973c-3aa39c5721f4" class="bulleted-list"><li style="list-style-type:circle">Task 1: 6 total errors across 8 participants = 0.75 errors per participant</li></ul></div><div style="display:contents" dir="auto"><ul id="5582aaa6-4f0b-496b-8403-109c0a814f54" class="bulleted-list"><li style="list-style-type:circle">Task 2: 18 total errors across 8 participants = 2.25 errors per participant (High!)</li></ul></div><div style="display:contents" dir="auto"><p id="44708d1e-8a54-4476-92ea-41b502c92e8c" class="">Common errors:</p></div><div style="display:contents" dir="auto"><ul id="9b6eaf88-7d62-4567-b503-4a9367afe091" class="bulleted-list"><li style="list-style-type:circle">&quot;Clicked &#x27;Skip&#x27; instead of &#x27;Next&#x27;&quot; - 5 out of 8 participants (pattern!)</li></ul></div><div style="display:contents" dir="auto"><p id="41e8387e-6f11-4c2b-8e83-cc2dcc1710db" class=""><strong>Qualitative analysis:</strong></p></div><div style="display:contents" dir="auto"><p id="566e1443-b65e-4998-81c5-336cbdead764" class=""><strong>Identifying usability issues:</strong></p></div><div style="display:contents" dir="auto"><p id="35323c9d-9099-4fc0-839c-d62e7d9a02c4" class="">Issue identification framework:</p></div><div style="display:contents" dir="auto"><p id="5015d657-ac3d-422f-9633-97b9b8e86cb4" class="">Issue #1: &quot;Skip&quot; button confused with &quot;Next&quot;</p></div><div style="display:contents" dir="auto"><ul id="40839af3-e519-4ec9-97e2-cd9b8af885c8" class="bulleted-list"><li style="list-style-type:circle">Frequency: 5 out of 8 participants (62.5%)</li></ul></div><div style="display:contents" dir="auto"><ul id="9c848d35-d45c-4b7d-9993-ed93f0f7d70a" class="bulleted-list"><li style="list-style-type:circle">Impact: Caused errors, slowed task completion</li></ul></div><div style="display:contents" dir="auto"><ul id="09551915-49b6-4105-ba0b-d6ece14a978f" class="bulleted-list"><li style="list-style-type:circle">Severity: Medium (recoverable but frustrating)</li></ul></div><div style="display:contents" dir="auto"><ul id="d56a614c-14de-4d2b-9e5f-78d0093e41fb" class="bulleted-list"><li style="list-style-type:circle">Location: Account setup screen, bottom-right</li></ul></div><div style="display:contents" dir="auto"><ul id="569ff2da-37dd-48f0-b71f-e92d47ad997c" class="bulleted-list"><li style="list-style-type:circle">Evidence:<div style="display:contents" dir="auto"><ul id="957348b4-913f-4bf2-9acb-95625ca302a2" class="bulleted-list"><li style="list-style-type:square">&quot;I thought Skip meant next step&quot; - P1</li></ul></div><div style="display:contents" dir="auto"><ul id="be403831-26f7-4c02-b2b6-8af210ad64a6" class="bulleted-list"><li style="list-style-type:square">&quot;Skip or next? Not sure which to click&quot; - P4</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="be85ea63-7aa3-4d46-b4af-5711dd60d9fd" class="bulleted-list"><li style="list-style-type:circle">Recommendation: Rename &quot;Skip&quot; to &quot;Skip this step&quot; or remove entirely</li></ul></div><div style="display:contents" dir="auto"><p id="06d8fc28-ac6a-4602-b5f7-1813d8cfd53a" class="">Issue #2: &quot;Create Project&quot; button not discoverable</p></div><div style="display:contents" dir="auto"><ul id="789c2142-b44d-4d7e-9bcd-3fd9f48a9db2" class="bulleted-list"><li style="list-style-type:circle">Frequency: 3 out of 8 participants couldn&#x27;t find it</li></ul></div><div style="display:contents" dir="auto"><ul id="c98e2d65-9dba-43b4-82d5-895a1a48e998" class="bulleted-list"><li style="list-style-type:circle">Impact: Task failure for 37.5% of users</li></ul></div><div style="display:contents" dir="auto"><ul id="74e00ef4-e06c-4b4c-a381-4f42ae1dccf2" class="bulleted-list"><li style="list-style-type:circle">Severity: High (critical task failure)</li></ul></div><div style="display:contents" dir="auto"><ul id="c3907f7e-17f2-4cc6-b72f-547e43afee26" class="bulleted-list"><li style="list-style-type:circle">Location: Hidden in top navigation</li></ul></div><div style="display:contents" dir="auto"><ul id="eccb8548-b20b-4830-a84e-068fff289b63" class="bulleted-list"><li style="list-style-type:circle">Evidence:<div style="display:contents" dir="auto"><ul id="c1a2ad6d-9253-4c5e-8f70-8719410cfe05" class="bulleted-list"><li style="list-style-type:square">&quot;Where do I create a project?&quot; - P2, P5, P7</li></ul></div><div style="display:contents" dir="auto"><ul id="1e00da89-856a-4fd9-8ff1-f971a896c8f9" class="bulleted-list"><li style="list-style-type:square">All 3 looked in Dashboard area, not top nav</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2bcfb256-9969-4787-9d6d-c25713cfc38c" class="bulleted-list"><li style="list-style-type:circle">Recommendation: Add prominent &quot;Create Project&quot; button on Dashboard</li></ul></div><div style="display:contents" dir="auto"><p id="578ecb4d-bedc-46ae-b71e-66852c183967" class=""><strong>Severity ratings:</strong></p></div><div style="display:contents" dir="auto"><p id="94b772e8-345e-4047-bb2d-a75f56ee7058" class="">Severity scale:</p></div><div style="display:contents" dir="auto"><ul id="307accc6-9a8d-4a7a-b7ad-4ed71ed923b1" class="bulleted-list"><li style="list-style-type:circle">Critical: Prevents task completion, affects all users (fix immediately)</li></ul></div><div style="display:contents" dir="auto"><ul id="f973c0e8-9f1b-4779-8317-3bff942fa8dc" class="bulleted-list"><li style="list-style-type:circle">High: Causes task failure for some users (fix before launch)</li></ul></div><div style="display:contents" dir="auto"><ul id="5fb4a9bf-f705-4ec8-96a3-0d419d55e736" class="bulleted-list"><li style="list-style-type:circle">Medium: Causes errors but recoverable (fix soon)</li></ul></div><div style="display:contents" dir="auto"><ul id="c16d1c1f-435d-4450-a738-59dd042cee94" class="bulleted-list"><li style="list-style-type:circle">Low: Minor annoyance, cosmetic (fix if time permits)</li></ul></div><div style="display:contents" dir="auto"><p id="40ade49d-8c99-4289-b0f2-5a9dbecea1ec" class="">Prioritization:</p></div><div style="display:contents" dir="auto"><ol type="1" id="c113070b-80e4-4ab7-a6e5-5ab6b7ded3a1" class="numbered-list" start="1"><li>Critical issues first (task blockers)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="5619969c-24ec-464a-afcd-405900a306b3" class="numbered-list" start="2"><li>High issues second (major usability problems)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="28933f7b-5b26-40c5-9590-cef872c0d62b" class="numbered-list" start="3"><li>Medium issues third (frustrations, errors)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="4ce96886-b83c-4fec-86df-af9a3e89a85e" class="numbered-list" start="4"><li>Low issues last (nice-to-haves)</li></ol></div></li></ul></div><div style="display:contents" dir="auto"><ul id="fce94e87-9db8-4aba-b9e7-ff8ba38687d2" class="bulleted-list"><li style="list-style-type:disc">Reporting findings:<div style="display:contents" dir="auto"><p id="2f755507-9534-4dff-b7d6-0a9c3e73ce4b" class=""><strong>Usability test report structure:</strong></p></div><div style="display:contents" dir="auto"><p id="3c907ae0-09c3-4ac2-b8ca-48ff9c3510c4" class=""><strong>Executive Summary (1 page):</strong></p></div><div style="display:contents" dir="auto"><p id="c117d15d-3a5f-43a6-8e85-eeab2dc47b78" class="">Test Overview:</p></div><div style="display:contents" dir="auto"><ul id="f2d5da25-220a-45f1-8edb-ce2f11b0b647" class="bulleted-list"><li style="list-style-type:circle">Tested: New onboarding flow (Figma prototype)</li></ul></div><div style="display:contents" dir="auto"><ul id="e9767b76-ea5d-4485-b960-099a8c83fbfd" class="bulleted-list"><li style="list-style-type:circle">Participants: 8 new users (project managers, team leads)</li></ul></div><div style="display:contents" dir="auto"><ul id="4b0bf69e-332e-4f6a-bfe0-9b090e905619" class="bulleted-list"><li style="list-style-type:circle">Method: Remote moderated usability tests, 30-45 min sessions</li></ul></div><div style="display:contents" dir="auto"><ul id="133b4528-0415-421d-b578-eb4445c877a2" class="bulleted-list"><li style="list-style-type:circle">Date: December 15-17, 2024</li></ul></div><div style="display:contents" dir="auto"><p id="eb9e87d6-5e12-482a-8b6b-532e0b7cd8b5" class="">Key Findings:</p></div><div style="display:contents" dir="auto"><ul id="27cb9b9b-c250-454c-9ab2-744d2337f2dc" class="bulleted-list"><li style="list-style-type:circle">Overall completion rate: 75% (goal was 90%)</li></ul></div><div style="display:contents" dir="auto"><ul id="5e5c502b-9491-40c0-8ca3-dce800e91100" class="bulleted-list"><li style="list-style-type:circle">Critical issue: &quot;Create Project&quot; button not discoverable (3 task failures)</li></ul></div><div style="display:contents" dir="auto"><ul id="c1352782-aa3f-4403-8552-eb951cb959b6" class="bulleted-list"><li style="list-style-type:circle">High issue: &quot;Skip&quot; button confused with &quot;Next&quot; (5 errors)</li></ul></div><div style="display:contents" dir="auto"><ul id="3aecc6ea-e785-46f5-b1db-f2d9a5c9f6dc" class="bulleted-list"><li style="list-style-type:circle">Positive: Account creation and team invitation flows worked well</li></ul></div><div style="display:contents" dir="auto"><p id="1ec08b5d-9089-4102-bf65-16254b9fac71" class="">Recommendations:</p></div><div style="display:contents" dir="auto"><ol type="1" id="a2311aa2-c520-4bde-8a7f-84cf50c84f6e" class="numbered-list" start="1"><li>Add prominent &quot;Create Project&quot; CTA on Dashboard (Critical)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="6dce7a9a-f830-4fa6-80ca-2a2f7d5d02a2" class="numbered-list" start="2"><li>Rename &quot;Skip&quot; to &quot;Skip this step&quot; or remove (High)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="a559d7f4-a395-4d6d-a4d2-5557934761e6" class="numbered-list" start="3"><li>Add required field indicators (*) to forms (Medium)</li></ol></div><div style="display:contents" dir="auto"><p id="8ff2697d-517a-4c50-807a-fd75a71bca06" class=""><strong>Methodology (1 page):</strong></p></div><div style="display:contents" dir="auto"><p id="285de327-2024-47e4-973c-be24309267c9" class="">Participants:</p></div><div style="display:contents" dir="auto"><ul id="25c6d408-4a85-4a73-a2a9-57f3202fd1dc" class="bulleted-list"><li style="list-style-type:circle">8 participants: 5 project managers, 3 team leads</li></ul></div><div style="display:contents" dir="auto"><ul id="368df3a6-aa87-484a-87f6-a1edd5859d36" class="bulleted-list"><li style="list-style-type:circle">Recruited via <a href="http://UserTesting.com">UserTesting.com</a></li></ul></div><div style="display:contents" dir="auto"><ul id="505127a6-9b6a-4264-956e-c22e2780dd88" class="bulleted-list"><li style="list-style-type:circle">All new users (never used product before)</li></ul></div><div style="display:contents" dir="auto"><ul id="89b1275a-c95c-4db8-91db-ce9c2d5ea89e" class="bulleted-list"><li style="list-style-type:circle">Currently using Asana, Monday, or Trello</li></ul></div><div style="display:contents" dir="auto"><p id="ed7eb3c8-dd95-4513-a7e2-592b726fc964" class="">Tasks Tested:</p></div><div style="display:contents" dir="auto"><ol type="1" id="2b43b941-8224-4eb0-ad9c-cb89ff3fb5d5" class="numbered-list" start="1"><li>Create account</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="0e867f25-3eb2-48e8-8e01-69a441a19268" class="numbered-list" start="2"><li>Create first project</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="7d733cb1-93f8-4b79-a3b4-00dfe6069f3e" class="numbered-list" start="3"><li>Invite team members</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="89ba57f9-d5fd-4c92-8e69-7c13852df259" class="numbered-list" start="4"><li>Find &quot;Create task&quot; button</li></ol></div><div style="display:contents" dir="auto"><p id="9335ed95-b097-4273-829e-944ee84be3ae" class="">Metrics:</p></div><div style="display:contents" dir="auto"><ul id="58c17ef0-cefc-4ca0-9043-88023a38e49f" class="bulleted-list"><li style="list-style-type:circle">Task completion rate (success/failure)</li></ul></div><div style="display:contents" dir="auto"><ul id="b92899a3-8df2-41df-840a-21dc8261ba93" class="bulleted-list"><li style="list-style-type:circle">Time on task (minutes:seconds)</li></ul></div><div style="display:contents" dir="auto"><ul id="444bf529-3027-4880-b2dc-c7593dc448d3" class="bulleted-list"><li style="list-style-type:circle">Error rate (number of errors)</li></ul></div><div style="display:contents" dir="auto"><ul id="e1a2ee9d-3258-458a-97fc-418e978a4224" class="bulleted-list"><li style="list-style-type:circle">Satisfaction rating (1-5 scale)</li></ul></div><div style="display:contents" dir="auto"><p id="3ecd788e-3d1b-45d4-b53f-9b6e3107875b" class=""><strong>Detailed Findings (3-5 pages):</strong></p></div><div style="display:contents" dir="auto"><p id="a0836dba-fd58-4acd-9e3a-c77108582e45" class=""><strong>Finding #1: &quot;Create Project&quot; button not discoverable (Critical)</strong></p></div><div style="display:contents" dir="auto"><p id="d01518b3-c0cc-4847-b7be-d3352342af47" class="">Severity: Critical<br/>Frequency: 3 out of 8 participants (37.5%)<br/>Impact: Task failure</p></div><div style="display:contents" dir="auto"><p id="1f4123da-288e-4dda-8729-38c1a2d8e56c" class="">Description:<br/>The &quot;Create Project&quot; button is located in the top navigation bar, but 3 participants couldn&#x27;t find it. All 3 looked in the Dashboard main area, expecting a prominent button or empty state.</p></div><div style="display:contents" dir="auto"><p id="8c8f7cd8-37a5-4da8-ab3c-0396f5f0d42e" class="">Evidence:</p></div><div style="display:contents" dir="auto"><ul id="4d826260-0b4a-4f3f-bd7b-eaa266499edd" class="bulleted-list"><li style="list-style-type:circle">P2: &quot;I don&#x27;t see where to create a project... I keep looking at the dashboard&quot; [gave up after 5 min]</li></ul></div><div style="display:contents" dir="auto"><ul id="72faba61-f8d5-464f-adb2-c2bd411381ee" class="bulleted-list"><li style="list-style-type:circle">P5: &quot;There should be a big &#x27;Create Project&#x27; button here [pointing to Dashboard]&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3ccf8500-b3f0-45e8-81e0-b1def8c2ceab" class="bulleted-list"><li style="list-style-type:circle">P7: &quot;Is it in settings? Where would I... oh, I give up&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="bb440161-1d3c-4713-8b8e-e3e25efb70b6" class="">Recommendation:<br/>Add a prominent &quot;Create your first project&quot; button on the empty Dashboard state. Keep the top nav button as well (secondary access point).</p></div><div style="display:contents" dir="auto"><p id="67901596-55da-475f-97fe-4c544315c5e9" class="">[Screenshot showing current design and suggested fix]</p></div><div style="display:contents" dir="auto"><p id="6c8aeb7c-eead-49ff-a7f1-c97377ce3690" class=""><strong>Finding #2: &quot;Skip&quot; button confused with &quot;Next&quot; (High)</strong></p></div><div style="display:contents" dir="auto"><p id="f71778a9-5929-4f9b-8bdd-fe7cf01d30f8" class="">Severity: High<br/>Frequency: 5 out of 8 participants (62.5%)<br/>Impact: Errors, confusion, backtracking</p></div><div style="display:contents" dir="auto"><p id="c6d07821-970d-4e96-8239-841dff9718cf" class="">Description:<br/>The account setup flow has a &quot;Skip&quot; button (to skip company name field) positioned where users expect a &quot;Next&quot; button. 5 participants clicked &quot;Skip&quot; thinking it advanced to the next step.</p></div><div style="display:contents" dir="auto"><p id="a58dfe68-7c41-43e7-b398-d7f1829587dd" class="">Evidence:</p></div><div style="display:contents" dir="auto"><ul id="89221154-4e38-4cfc-8265-64b46284b580" class="bulleted-list"><li style="list-style-type:circle">P1: &quot;Skip... does that mean next or skip the whole thing?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="6ecb83d8-0e17-433c-a6f2-8460ca28b904" class="bulleted-list"><li style="list-style-type:circle">P4: &quot;I&#x27;ll click Skip... oh wait, that skipped the setup entirely!&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="0d579f0a-3ee0-400c-8208-c5f71017bfb1" class="">Recommendation:<br/>Rename &quot;Skip&quot; to &quot;Skip this step&quot; for clarity, or remove entirely if company name is important.</p></div><div style="display:contents" dir="auto"><p id="4f5eaa77-5395-4568-93ae-d70288357833" class="">[Screenshot and proposed redesign]</p></div><div style="display:contents" dir="auto"><p id="97593953-35d5-4997-8392-1fbbbced0f41" class=""><strong>Quantitative Summary Table:</strong></p></div><div style="display:contents" dir="ltr"><table id="2bb3b3d1-af29-42a4-bab8-0c5e4aa4b1b5" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="31af3a6d-4b8d-4cdd-afac-ef43dd940762"><th id="Raw}" class="simple-table-header-color simple-table-header">Task</th><th id="_hTy" class="simple-table-header-color simple-table-header">Completion Rate</th><th id="qTRZ" class="simple-table-header-color simple-table-header">Avg Time</th><th id="]vUv" class="simple-table-header-color simple-table-header">Errors</th><th id="iLqa" class="simple-table-header-color simple-table-header">Satisfaction</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="81b9c38c-c152-44f3-87b5-8bd495a30f5b"><td id="Raw}" class="">Create account</td><td id="_hTy" class="">100% (8/8)</td><td id="qTRZ" class="">2:07</td><td id="]vUv" class="">0.75</td><td id="iLqa" class="">4.2/5</td></tr></div><div style="display:contents" dir="ltr"><tr id="a0ef0741-13de-4b7f-ab51-5b9c0a97edf0"><td id="Raw}" class="">Create project</td><td id="_hTy" class="">62.5% (5/8)</td><td id="qTRZ" class="">4:23</td><td id="]vUv" class="">2.25</td><td id="iLqa" class="">2.8/5</td></tr></div><div style="display:contents" dir="ltr"><tr id="65288a0d-cd80-4f08-a34e-21dc1622265d"><td id="Raw}" class="">Invite team</td><td id="_hTy" class="">75% (6/8)</td><td id="qTRZ" class="">3:15</td><td id="]vUv" class="">1.5</td><td id="iLqa" class="">3.5/5</td></tr></div><div style="display:contents" dir="ltr"><tr id="a15da7ad-afcb-4ddd-9d70-203fa71b263b"><td id="Raw}" class="">Find create task</td><td id="_hTy" class="">87.5% (7/8)</td><td id="qTRZ" class="">1:45</td><td id="]vUv" class="">0.5</td><td id="iLqa" class="">4.0/5</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="091e5f6f-632d-4b45-a5ef-8bca23209efc" class=""><strong>Prioritized Recommendations:</strong></p></div><div style="display:contents" dir="auto"><p id="6da415c1-d8b6-412e-8bff-f3021a899bdc" class="">Critical (Fix before launch):</p></div><div style="display:contents" dir="auto"><ol type="1" id="f3a26562-a43a-4d40-9a56-905f4b81931f" class="numbered-list" start="1"><li>Add &quot;Create Project&quot; button to Dashboard empty state</li></ol></div><div style="display:contents" dir="auto"><p id="e08af3fd-e5f3-474d-b95e-c80907d91207" class="">High (Fix before launch):<br/>2. Rename &quot;Skip&quot; to &quot;Skip this step&quot; or remove<br/>3. Add required field indicators (*) to all forms</p></div><div style="display:contents" dir="auto"><p id="1773970b-7567-468f-994d-e4007194be3a" class="">Medium (Fix if time):<br/>4. Improve role selection labels (some confusion)<br/>5. Add tooltips to explain optional fields</p></div><div style="display:contents" dir="auto"><p id="31fec31b-fd88-4fb1-9920-8ad8c8634551" class="">Low (Future improvements):<br/>6. Consider animated onboarding tooltips<br/>7. Add progress indicator for multi-step flows</p></div><div style="display:contents" dir="auto"><p id="f69d4d49-d349-469a-b55e-d9d2f1d76046" class=""><strong>Appendix:</strong></p></div><div style="display:contents" dir="auto"><ul id="25d3edd8-bb67-4e62-bd96-f4102e2e78a9" class="bulleted-list"><li style="list-style-type:circle">Individual participant summaries</li></ul></div><div style="display:contents" dir="auto"><ul id="c221e44a-6ce5-4fe1-9f37-5635750484d9" class="bulleted-list"><li style="list-style-type:circle">Full task completion data</li></ul></div><div style="display:contents" dir="auto"><ul id="207ec052-1ed8-4719-a78e-a94e90e4d45a" class="bulleted-list"><li style="list-style-type:circle">Screenshots of all issues</li></ul></div><div style="display:contents" dir="auto"><ul id="d6f57a22-d47f-4b29-b23e-67e9f4fb22fe" class="bulleted-list"><li style="list-style-type:circle">Video clips (highlight reel)</li></ul></div></li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="62b37fe1-f266-4b2f-ab90-dd54c3ef2583"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b4c866c2-e25a-44f7-b777-0cc587e23f7a" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="83dcfacb-986e-4b2c-9a4a-a65dc20796ce" class="">✦ 5 participants is enough: Jakob Nielsen&#x27;s research shows 5 users find 85% of usability problems - diminishing returns after 8<br/>✦ Common mistake: Helping participants succeed - your job is to observe struggles, not guide them to success<br/>✦ Best with: Claude (excellent at creating test scripts, task scenarios, analysis frameworks), ChatGPT (good for moderation techniques)<br/>✦ Remix it: &quot;Create usability test plan for [feature] - test objectives, task scenarios, success metrics, moderation script&quot;<br/>✦ Pro move: Ask &quot;Analyze my usability test results - calculate completion rates, identify patterns, prioritize issues by severity&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="6418e1b2-95ff-4484-bc22-58fb2742ff9b"/></div><div style="display:contents" dir="auto"><h1 id="10e67ccc-6bef-837b-9f75-01ee6d03ca8c" class="">Recipe #62: Plan and Run Usability Tests</h1></div><div style="display:contents" dir="auto"><p id="a2067ccc-6bef-837b-bce8-01469f8bd294" class="">Category: Bonus — User Research  |  ⏱️ 40-50 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="c6c67ccc-6bef-83c8-9f61-0131fb1b5bc3" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="6bd2a036-c73d-40d9-848f-0de956b3f87c"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0fe226cc-bcc0-4a7d-8c13-490438977bed" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="83079226-c009-453c-b07e-0655bc4c0e25" class="">You need to test whether users can successfully complete tasks in your product - validating designs before development, identifying usability issues, testing prototypes or live products, or measuring task success rates and time-on-task. Your team is launching features without testing, users struggle with the interface, or you need evidence-based insights about specific usability problems.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="74667ccc-6bef-8328-999d-01aaa30e5a46"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="5c3c22ed-323d-4512-98e4-af4b54a3d987"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b9839139-b66f-4f16-a1bc-c419e5c3ef16" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="a20514da-356f-4bca-b997-c33688fef184" class="">Many designers skip usability testing or do it poorly - launching designs without validation (assuming users will understand, finding issues only after release), testing with team members instead of real users (internal testing misses real problems), giving participants too much help (guiding them through tasks instead of observing struggles), testing without clear tasks or metrics (vague &quot;use the product&quot; instead of specific scenarios), or analyzing subjectively (relying on opinions instead of observed behaviors). Teams ship products with critical usability flaws, users can&#x27;t complete basic tasks, support tickets spike after launch, or redesigns are needed post-release. You need systematic usability testing - clear test objectives (what to validate, what tasks to test), realistic task scenarios (specific, measurable goals), proper moderation (think-aloud protocol, minimal interference, neutral prompting), quantitative metrics (success rate, time-on-task, errors), and rigorous analysis (severity ratings, actionable recommendations, prioritized fixes).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="58d67ccc-6bef-82b5-928d-01cbe36dca32"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="905d4237-ab68-4705-af65-d61d36f71de6"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ccdfc3e7-4d44-4388-b502-399b5e7cc1eb" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="9aae90a0-781e-4caa-8741-f8c55edc81a4" class="">The AI will provide end-to-end usability testing guidance: test planning (objectives, task scenarios, success metrics), execution (recruitment screeners, moderation scripts with think-aloud protocols, observation methods), and analysis (completion rates, error identification, severity ratings, prioritized findings reports with evidence and recommendations).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="21da7440-21e5-4b44-b87a-00fe9099db1a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="13b86854-a014-4214-a5dc-b3f933c05a4d"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a04db146-cf96-4044-8336-20ba839a6851" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="734d1567-47bc-4e2a-86e6-d87ed67ea53d" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Usability Testing Specialist focusing on task-based testing, observational research, and identifying interface usability problems.
+
+I&#x27;m planning usability tests for [Product/Feature] to validate [Design/Prototype] by testing [Key Tasks] with [Target Users] to identify usability issues and measure task success.
+
+[OPTIONAL: Attach prototype, current product, or designs to test]
+
+Usability testing requirements:
+- Test objectives: [e.g., Validate new checkout flow, Test onboarding usability, Find navigation problems]
+- What to test: [e.g., High-fidelity Figma prototype, Live beta product, Low-fidelity wireframes]
+- Key tasks: [e.g., Create account, Complete purchase, Find settings, Add team member]
+- Target users: [e.g., E-commerce shoppers, First-time users, Project managers]
+- Number of participants: [e.g., 5-8 participants per round, Multiple rounds for iteration]
+
+Current testing problems:
+- [Problem 1: e.g., No testing done - designs go straight to development, issues found post-launch]
+- [Problem 2: e.g., Testing with team - colleagues complete tasks easily, miss real user struggles]
+- [Problem 3: e.g., Too much help - moderator guides participants, doesn&#x27;t observe true behavior]
+- [Problem 4: e.g., No clear tasks - vague &quot;explore the product&quot; instead of specific scenarios]
+- [Problem 5: e.g., Subjective analysis - &quot;I think users liked it&quot; instead of measured success rates]
+
+Team context: [Testing experience, timeline, budget, remote vs in-person, iteration cycles]
+
+Please provide:
+1. Test planning (objectives, what to test, tasks to validate, success metrics)
+2. Task scenario creation (realistic scenarios, measurable goals, task wording)
+3. Participant recruitment (screeners, number needed, representative users)
+4. Test script and moderation (introduction, think-aloud protocol, prompting techniques)
+5. Remote usability testing (tools, screen recording, technical setup)
+6. Observation and note-taking (what to capture, critical incidents, time tracking)
+7. Analysis methods (success rates, error identification, severity ratings)
+8. Reporting findings (usability issues, recommendations, prioritization)
+
+Consider: [Constraints - e.g., Limited budget, Remote testing only, Quick validation needed, Prototype vs live product]</code></pre></div><div style="display:contents" dir="auto"><p id="07570ddd-8acb-4d0e-8a0b-55ed292f6a67" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="239be7ec-85ec-4666-8136-16c5577a2fef" class="bulleted-list"><li style="list-style-type:disc">[Product/Feature] = What you&#x27;re testing</li></ul></div><div style="display:contents" dir="auto"><ul id="d3520dd4-e265-431b-bc7f-07b6bc8d7236" class="bulleted-list"><li style="list-style-type:disc">[Design/Prototype] = Prototype or live product</li></ul></div><div style="display:contents" dir="auto"><ul id="b58ec0fc-10c7-4e7c-861c-0bf9e631c8a5" class="bulleted-list"><li style="list-style-type:disc">[Key Tasks] = Critical user tasks to validate</li></ul></div><div style="display:contents" dir="auto"><ul id="bba17ae5-1ca0-42b1-b045-90909d53963c" class="bulleted-list"><li style="list-style-type:disc">[Target Users] = Who should test it</li></ul></div><div style="display:contents" dir="auto"><ul id="3d71b09a-5af1-481b-8e02-d8cd5610cfbc" class="bulleted-list"><li style="list-style-type:disc">[Test objectives] = What you want to learn</li></ul></div><div style="display:contents" dir="auto"><ul id="dd75b8d7-4446-4fea-b229-2cf82aa29973" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current testing issues</li></ul></div><div style="display:contents" dir="auto"><ul id="4a030138-73d0-4199-bd31-eed6c1144a82" class="bulleted-list"><li style="list-style-type:disc">Attach prototype or product to test</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="c1367ccc-6bef-8301-91f0-013ffe5b6b11"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="85467ccc-6bef-82ef-906b-0193f5d4aa2a"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="48b67ccc-6bef-821b-ad50-811244236e08" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0dc67ccc-6bef-83c1-b070-813ddfa73a95" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Usability Testing Specialist focusing on task-based testing, observational research, and identifying interface usability problems.
+
+I&#x27;m planning usability tests for our SaaS Project Management Tool&#x27;s new onboarding flow to validate the redesigned first-time user experience by testing account setup, first project creation, and team invitation tasks with new users (never used our product) to identify usability issues and measure whether users can successfully complete onboarding.
+
+[User would attach Figma prototype of new onboarding flow]
+
+Usability testing requirements:
+- Test objectives:
+  - Validate new onboarding flow (redesigned to reduce time-to-value)
+  - Identify points of confusion or friction (where users get stuck)
+  - Measure task completion rates (can users complete onboarding independently?)
+  - Test specific interactions (dropdowns, multi-step forms, tooltips)
+  - Compare to current onboarding (baseline: 60% completion rate, want 80%+)
+- What to test:
+  - High-fidelity Figma prototype (interactive, realistic data, full flows)
+  - 5 screens: Welcome → Create account → Create first project → Invite team → Dashboard
+  - Not live product (pre-development validation)
+- Key tasks:
+  - Task 1: Create account (name, email, password, company name)
+  - Task 2: Create first project (project name, description, due date, template selection)
+  - Task 3: Invite team members (email addresses, assign roles)
+  - Task 4: Navigate to dashboard and find &quot;Create task&quot; button
+  - Success criteria: Complete all 4 tasks in under 10 minutes with no critical errors
+- Target users:
+  - New users (never used our product before)
+  - Project managers or team leads (target persona)
+  - Currently using competitor tools (Asana, Monday, Trello)
+  - Not: Existing users (familiar with product, biased)
+- Number of participants:
+  - 6-8 participants (enough to identify 85% of usability issues per Jakob Nielsen)
+  - Mix: 3-4 project managers, 2-3 team leads
+  - Diverse: Different industries, company sizes
+
+Current testing problems:
+- No usability testing done previously - Previous onboarding launched without testing, 60% abandon during onboarding, major usability issues discovered post-launch (too late)
+- Only internal testing - Team members tested new flow, all completed successfully, gave false confidence, missed that internal users have product knowledge new users lack
+- Too much moderator help - Previous tests: moderator said &quot;Click here to continue&quot; when users paused, invalidated findings (users can&#x27;t succeed without help in real world)
+- Vague tasks - Previous tests: &quot;Try to set up your account&quot; too broad, didn&#x27;t reveal specific issues, couldn&#x27;t measure success objectively
+- No metrics or analysis - Previous tests: &quot;Users seemed to like it&quot; subjective, no completion rates, no time measurements, no severity ratings for issues found
+
+Team context:
+- Testing experience: Limited (designer has done 2 usability tests before, others new)
+- Timeline: 2 weeks (recruit week 1, test week 2, analyze and present week 2)
+- Budget: $400 for incentives ($50 per participant)
+- Remote testing: All remote via Zoom (participants across US)
+- Iteration: Results will inform prototype revisions before development
+- Stakeholders: Product manager needs evidence for go/no-go decision
+
+Please provide:
+1. Test planning (objectives, what to test, tasks to validate, success metrics)
+2. Task scenario creation (realistic scenarios, measurable goals, task wording)
+3. Participant recruitment (screeners, number needed, representative users)
+4. Test script and moderation (introduction, think-aloud protocol, prompting techniques)
+5. Remote usability testing (tools, screen recording, technical setup)
+6. Observation and note-taking (what to capture, critical incidents, time tracking)
+7. Analysis methods (success rates, error identification, severity ratings)
+8. Reporting findings (usability issues, recommendations, prioritization)
+
+Consider: Remote Zoom testing. Figma prototype (not live product). 6-8 participants. 30-45 min sessions. Need completion rates and time metrics. Testing with new users (never seen product). Findings need to inform go/no-go decision. Must identify critical issues before development starts.</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="8a067ccc-6bef-83f6-ae2e-0152c2f0f7a0"/></div><div style="display:contents" dir="auto"><ul id="73a9988c-9f07-4ea0-a78f-78c9d1a8a72c" class="bulleted-list"><li style="list-style-type:disc">&quot;Create usability test script for onboarding flow - introduction, 4 task scenarios, think-aloud protocol, post-test questions&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="07fa4d1a-0109-4686-be47-a43ff609abaf" class="bulleted-list"><li style="list-style-type:disc">&quot;Write task scenarios for testing checkout flow - realistic scenarios with context, measurable success criteria&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="6ab967f1-9654-4b4b-88a7-c42561d8a728" class="bulleted-list"><li style="list-style-type:disc">&quot;Analyze usability test data from 8 participants - calculate completion rates, identify top issues, severity ratings&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="49e721e1-f535-4d98-b095-1e4271d73353" class="bulleted-list"><li style="list-style-type:disc">&quot;Create usability findings report - executive summary, detailed findings with evidence, prioritized recommendations&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="6f95846d-0edc-46fb-9d80-4e8614ac9be2" class="">&lt;/callout&gt;</p></div><div style="display:contents" dir="auto"><hr id="add67ccc-6bef-8383-a6dc-8168bcacfb7e"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="aca67ccc-6bef-831b-8ccb-812b9cb4ef8c"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="66067ccc-6bef-82c8-af5e-0129a649a697" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="64f67ccc-6bef-8398-85b4-81fd7eb69415" class="image"><a href="62_Example_Output.png"><img style="width:643.9921875px" src="62_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="e3267ccc-6bef-8202-a61e-8119535ff5e1"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="7e8cdfb4-a0c5-4641-98cf-bc9699eb8d92"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="c8d95ff1-b9fd-48fb-acaa-1f70e2941f79" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="0e7bd1a0-2bdd-417a-a6fc-30e93481a673" class="">→ Recipe #61: <a href="R-61 Conduct User Interviews 58d67ccc6bef8373bbd40159926507e4.html">Conduct User Interviews</a><br/>→ Recipe #63: <a href="R-63 Research Surveys and Screeners 75767ccc6bef8338adab01eca04d1e57.html">Research Surveys and Screeners</a><br/>→ Recipe #15: <a href="R-15 Design Better Forms 2d667ccc6bef80a58694ce629bd1838e.html">Design Better Forms</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="1c067ccc-6bef-8244-88c2-8175bdb73a3f" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

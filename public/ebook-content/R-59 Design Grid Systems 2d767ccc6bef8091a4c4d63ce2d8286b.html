@@ -1,0 +1,802 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-59: Design Grid Systems</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-8091-a4c4-d63ce2d8286b" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-8071-b482-d68efbb827a9" class="">Recipe #59: Design Grid Systems</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8030-85c7-c6e3af9380b4" class="">Category: Systems &amp; Components  |  ⏱️ 20-25 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80dd-9c6e-ed91f565490f" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="ec378222-6cca-4ad3-95e7-d92158047c43"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8edbcf78-15f3-4517-824d-2df24b0fc689" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="664c5492-ae86-4dce-a77e-e6b2e6d7f654" class="">You&#x27;re setting up layout grids for consistent spacing and alignment - establishing column grids (12-column, 8-column, 4-column), defining gutters and margins, creating responsive grids that adapt from mobile to desktop, or organizing content in systematic layouts. Your current layouts lack consistency, spacing is arbitrary, or you need a foundation for responsive design.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8088-bd66-c79c863c7d40"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="6e16c607-b7a3-40c2-87cd-c443522e341a"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="5e89575b-fde0-4472-9adb-f46bb4880ed9" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="b15502eb-dbb1-4f8f-aa2a-efe12c68457b" class="">Many designers struggle with grid systems - creating layouts with no grid structure (elements placed arbitrarily, inconsistent spacing), inconsistent column counts (some screens 12-column, others 10-column, others freeform), random gutters (16px here, 20px there, 24px somewhere else), no responsive grid strategy (desktop grid doesn&#x27;t adapt to mobile), or rebuilding grids manually for each screen. Teams waste time aligning elements pixel-by-pixel, create inconsistent spacing across screens, struggle with responsive layouts (how does 12-column desktop become mobile?), or have no systematic approach to layout structure. You need a grid system - standard column grids (12-column for desktop, 4-column for mobile), consistent gutters (20-24px standard), proper margins (page padding), responsive grid behavior (columns collapse predictably), and Figma layout grid setup (reusable grid styles).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-806f-8a08-cc6f456e5af0"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="66aca33d-c552-46d6-85c8-0967fe398973"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0e1c2403-af67-4489-af32-cc1cab633869" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="07e1418e-5153-4fbc-8b1d-a6eab905b67d" class="">The AI will deliver a complete grid system: 12-column desktop, 8-column tablet, 4-column mobile with gutter specifications (24px/20px/16px), margin sizing (48px/32px/16px), responsive collapse strategy showing how layouts adapt across breakpoints, common grid patterns (full-width, centered, sidebar layouts), Figma layout grid setup with reusable styles, column spanning and alignment guidelines, and best practices for when to follow or break the grid - transforming arbitrary layouts into systematic, aligned, responsive grid-based designs.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="7e40e6b9-d7f4-4a26-aa33-4394b757f933"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="f801ed58-36c9-49c0-8cdc-1219e0b92ca3"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="e529277d-e269-4d2b-82dc-6aee93dfa943" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e64a4536-5ad9-4fad-b9f0-abbfb562034d" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Layout Grid Specialist focusing on column grids, spacing systems, responsive grid behavior, and systematic layout foundations.
+
+I&#x27;m building a grid system for a [Product Type] that works from [Mobile Size] to [Desktop Size] with consistent columns, gutters, and margins.
+
+[OPTIONAL: Attach current layouts showing grid inconsistencies]
+
+Grid system requirements:
+- Grid types: [e.g., 12-column desktop, 8-column tablet, 4-column mobile]
+- Gutter size: [e.g., 20px, 24px, 32px - spacing between columns]
+- Margin size: [e.g., 16px mobile, 24px tablet, 48px desktop - page edges]
+- Container width: [e.g., Max 1280px centered, Full-width, Constrained]
+- Responsive needs: [e.g., How grid adapts from 320px mobile to 1920px desktop]
+
+Current grid problems:
+- [Problem 1: e.g., No grid system - elements placed arbitrarily, inconsistent alignment]
+- [Problem 2: e.g., Random column counts - 12-col, 10-col, 8-col mixed across screens]
+- [Problem 3: e.g., Inconsistent gutters - 16px, 20px, 24px, 32px randomly mixed]
+- [Problem 4: e.g., No responsive grid - don&#x27;t know how 12-col desktop becomes mobile]
+- [Problem 5: e.g., Manual alignment - spending hours pixel-nudging elements]
+
+Team context: [Designer grid knowledge, responsive design needs, platform constraints]
+
+Please provide:
+1. Grid system overview (12-column, 8-column, 4-column - when to use each)
+2. Column and gutter specifications (column width calculations, gutter sizing)
+3. Margin and padding (page margins, container padding, edge spacing)
+4. Responsive grid strategy (how columns collapse from desktop to mobile)
+5. Common grid patterns (12-col desktop, 8-col tablet, 4-col mobile)
+6. Grid setup in Figma (layout grids, column settings, reusable styles)
+7. Using grids for layout (spanning columns, offset, alignment)
+8. Grid best practices (when to follow grid, when to break it)
+
+Consider: [Constraints - e.g., Must work 320px-1920px, Consistent with design system, Accessibility (readable line lengths), Industry standards]</code></pre></div><div style="display:contents" dir="auto"><p id="dc34509b-99cc-4219-8d22-eec8b71d66ac" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="714c819c-dd52-498c-a128-54bdde200da8" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = SaaS, E-commerce, Mobile app, Dashboard, Marketing site</li></ul></div><div style="display:contents" dir="auto"><ul id="31e3a385-cec3-46d4-84a5-7c4169330a1a" class="bulleted-list"><li style="list-style-type:disc">[Mobile Size] = Smallest screen (e.g., 320px)</li></ul></div><div style="display:contents" dir="auto"><ul id="3de64b12-126a-49cf-8e19-c75e3b061bf3" class="bulleted-list"><li style="list-style-type:disc">[Desktop Size] = Largest screen (e.g., 1920px)</li></ul></div><div style="display:contents" dir="auto"><ul id="a62074c2-81b0-4ddb-8ef9-bdefb6c82924" class="bulleted-list"><li style="list-style-type:disc">[Grid types] = Column counts needed</li></ul></div><div style="display:contents" dir="auto"><ul id="9c5c8ec5-95ad-49e7-9d77-1f2a8c5335fb" class="bulleted-list"><li style="list-style-type:disc">[Gutter size] = Spacing between columns</li></ul></div><div style="display:contents" dir="auto"><ul id="6a72a775-8372-4abc-8aa2-4ae7c5b45c4b" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current grid issues</li></ul></div><div style="display:contents" dir="auto"><ul id="a56a52d0-c5eb-46f0-831f-55327a8c9a05" class="bulleted-list"><li style="list-style-type:disc">Attach layouts with grid problems</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80f8-b405-e51097ac41f2"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-806d-adff-c2b89076d58c"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80ef-ba64-ea2bbd93d99b" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-80be-bae2-d2798248911b" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Layout Grid Specialist focusing on column grids, spacing systems, responsive grid behavior, and systematic layout foundations.
+
+I&#x27;m building a grid system for a SaaS Dashboard that works from 320px mobile to 1920px desktop with consistent columns, gutters, and margins.
+
+[User would attach layouts showing inconsistent spacing/alignment]
+
+Grid system requirements:
+- Grid types:
+  - Desktop (1024px+): 12-column grid (most flexible, industry standard)
+  - Tablet (768-1023px): 8-column grid (middle ground)
+  - Mobile (320-767px): 4-column grid (simple, touch-friendly)
+- Gutter size:
+  - Desktop: 24px (generous spacing)
+  - Tablet: 20px (moderate spacing)
+  - Mobile: 16px (compact but readable)
+- Margin size (page edge padding):
+  - Desktop: 48px (generous page margins)
+  - Tablet: 32px (moderate margins)
+  - Mobile: 16px (minimal margins, maximize space)
+- Container width:
+  - Max width: 1280px (optimal reading width, centered)
+  - Full-width option: For dashboards, no max-width
+  - Fluid: Scales between min and max
+- Responsive needs:
+  - How 12-column desktop (content spans 6 columns) becomes 4-column mobile (spans 4 columns = full width)
+  - Predictable column collapse (2-column → 1-column, 3-column → 1-column)
+  - Content reflow (multi-column → single column stack)
+
+Current grid problems:
+- No grid system at all - designers place elements by eye, spacing inconsistent (some elements 18px apart, others 23px, others 31px), alignment off by 1-2px everywhere, looks messy
+- Random column counts - Dashboard uses 12-column grid, Settings page uses 10-column, Project page freeform (no grid), inconsistent across product
+- Inconsistent gutters - Some screens 16px gutters, others 20px, others 24px, some 32px, no standard, spacing feels random
+- No responsive strategy - Desktop layout is 12-column, mobile is... guessed? Designers don&#x27;t know how to adapt grid, rebuild layouts from scratch for mobile
+- Manual pixel alignment hell - Spending 30-60 minutes per screen nudging elements 1px left/right to align, no grid to snap to, tedious and error-prone
+- Content doesn&#x27;t span columns systematically - Card randomly sized 287px wide (not aligned to grid), sidebar 243px (arbitrary), should span 3 columns, 4 columns, etc.
+- No Figma grid setup - Every designer sets up custom grid per file, settings inconsistent, some 12-col with 20px gutters, some 12-col with 24px gutters
+
+Team context:
+- 8 designers need consistent grid foundation
+- Designing for web (responsive, 320px-1920px)
+- Current workflow: No grid, manual alignment = slow, inconsistent
+- Want workflow: Snap to grid, content spans columns = fast, consistent
+- Industry standard: 12-column grid (Bootstrap, Material, Tailwind all use 12-col)
+- Accessibility: Max-width 1280px for readable line lengths
+
+Please provide:
+1. Grid system overview (12-column, 8-column, 4-column - when to use each)
+2. Column and gutter specifications (column width calculations, gutter sizing)
+3. Margin and padding (page margins, container padding, edge spacing)
+4. Responsive grid strategy (how columns collapse from desktop to mobile)
+5. Common grid patterns (12-col desktop, 8-col tablet, 4-col mobile)
+6. Grid setup in Figma (layout grids, column settings, reusable styles)
+7. Using grids for layout (spanning columns, offset, alignment)
+8. Grid best practices (when to follow grid, when to break it)
+
+Consider: 12-column desktop (industry standard). 8-column tablet. 4-column mobile. 24px desktop gutters, 16px mobile. 48px desktop margins, 16px mobile. Max-width 1280px centered. Responsive collapse (12-col → 8-col → 4-col). Figma layout grids. Content spans columns (not arbitrary widths).</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="2984dbd1-540a-4213-a8fa-544548552edb"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3fbc1193-4273-4d9e-8118-d410fee1de75" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="d07f4d38-7397-40b5-9771-8a4b7e93135b" class="">✦ 12-column is standard: Industry default (Bootstrap, Material, Tailwind) - most flexible for layouts<br/>✦ Common mistake: Random column counts (10-col, 14-col) - stick to 12, 8, 4 for consistency<br/>✦ Best with: Claude or ChatGPT (excellent at grid calculations and responsive strategies)<br/>✦ Remix it: &quot;Calculate column widths for 12-column grid at 1280px with 24px gutters and 48px margins&quot;<br/>✦ Pro move: Ask &quot;Design responsive grid system - 12-col desktop, 8-col tablet, 4-col mobile with collapse patterns&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8007-bf77-eb9cbbb59133"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="de3f7521-d6ce-46b4-8f45-6bafaa9e0716"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="dbf816e0-fd41-4639-b9b1-83848994a750" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="180c9bba-e37f-4591-bf2f-5680e64fe8d0" class="bulleted-list"><li style="list-style-type:disc">&quot;Set up Figma layout grids - 12-column desktop, 8-column tablet, 4-column mobile with specs&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="e51b63bc-8bb6-4a8f-995b-618374058d37" class="bulleted-list"><li style="list-style-type:disc">&quot;Calculate column widths for my container size and gutter/margin settings&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="7b6c3eab-6057-4619-a898-7e99d1bb0bae" class="bulleted-list"><li style="list-style-type:disc">&quot;Design responsive collapse strategy - how 3-column desktop becomes 1-column mobile&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="a3b88271-ed81-4854-94ff-f4007c13d658" class="bulleted-list"><li style="list-style-type:disc">&quot;Create grid documentation for developers - column count, gutters, margins, breakpoints&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8066-b079-c7ca8207ac9f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8073-ae5a-c189891b1d45"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8049-bc15-fea4066dc823" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80f9-9bdd-f18a69eadbfc" class="image"><a href="59_Example_Output.png"><img style="width:643.9921875px" src="59_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80d4-868a-d86fb5791df0"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="b967ec9f-169e-4048-ae1b-ab0757a14c80"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6db8fef7-06c5-44b8-aa1b-65fea21176e7" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="81069b7c-3fdd-43d5-af0f-0513238e8c8e" class="">→ Recipe #51: <a href="R-51 Build Responsive Components 2d767ccc6bef8015b2effc042a7b2cbe.html">Build Responsive Components in Figma</a><br/>→ Recipe #58: <a href="R-58 Build Typography Systems 2d767ccc6bef80a697f8df65451a5b47.html">Build Typography Systems</a><br/>→ Recipe #36: <a href="R-36 Update Your Card Designs 2d767ccc6bef8066ac75cd49763ffa25.html">Update Your Card Designs</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-808f-ab77-c72cc2463b71" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

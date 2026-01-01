@@ -1,0 +1,806 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-65: Design for Cognitive Accessibility</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d867ccc-6bef-800e-8746-f314fba73e87" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d867ccc-6bef-80b6-ba43-fe0828a617a3" class="">Recipe #65: Design for Cognitive Accessibility</h1></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8017-9e12-e06c981e6fd5" class="">Category: Bonus — Accessibility  |  ⏱️ 30-40 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8047-929a-dc0e632898da" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="143f4ecd-9d3b-475f-9702-cacfedb07a32"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3bdaa48e-5199-4f5b-899c-f63c52996477" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="b4d89564-c6a2-4af3-ac02-4ccd75d1393f" class="">You&#x27;re designing interfaces that need to be easy to understand and use for people with cognitive disabilities, learning differences, ADHD, anxiety, or anyone experiencing stress or cognitive overload - reducing mental load, simplifying language, maintaining consistency, preventing errors, or supporting memory and attention. Your current interface overwhelms users, uses complex jargon, has inconsistent patterns, or requires too much mental effort to complete tasks.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-809b-9823-ca918e91e164"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="1cace947-9d33-4f06-82f3-e11f07c2a7e3"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0680d806-037d-4aed-b1ed-f9b5119596d2" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="0a6dc9a6-4fd8-47a8-b060-5131329a3fe8" class="">Many designers create cognitively demanding interfaces - overwhelming users with too much information at once (dense screens, no chunking), using complex jargon or technical language (confusing instructions, unclear labels), creating inconsistent patterns (same action works differently in different places), poor error prevention (mistakes are easy, recovery is hard), requiring strong memory (multi-step processes with no progress indicators, complex passwords with strict rules), or demanding sustained attention (time limits, distractions, interruptions). Teams create products that exclude users with cognitive disabilities (dyslexia, ADHD, autism, brain injury), frustrate elderly users, stress anxious users, or simply exhaust everyone. You need cognitively accessible design - reduced cognitive load (chunking, progressive disclosure, clear hierarchy), plain language (simple words, short sentences, conversational tone), consistent patterns (predictable UI, familiar metaphors, reusable mental models), error prevention (confirmations, constraints, auto-save, undo), memory aids (breadcrumbs, recently used, visible state, helpful defaults), and attention support (no time limits, minimal distractions, clear focus, one task at a time).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80c1-a353-fccfde0c6ed6"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="4d6e78df-7a01-4c00-9333-4e2118083478"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ca12cbf3-d5c2-4a79-a55b-bf1cd0d89c9d" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="7503535a-69b4-423b-a252-77541e8b6784" class="">The AI will provide strategies to reduce cognitive load (chunking information, progressive disclosure, clear hierarchy), plain language principles (simple words, short sentences, avoiding jargon), consistent patterns (predictable UI, reusable mental models), error prevention and recovery (confirmations, undo, auto-save, helpful errors), memory aids (progress indicators, breadcrumbs, save states, smart defaults), attention support (no aggressive timeouts, minimal distractions), reading and comprehension techniques (scannable content, whitespace, visual hierarchy), and testing methods with users who have cognitive disabilities. You&#x27;ll get actionable guidelines to simplify complex interfaces and reduce mental effort.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="593d0786-3a09-4495-991f-0fd65306cced"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="2594866e-4b4f-4ee8-8584-5fe480cc8053"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="c10e3ce6-886f-4409-bab6-e797bb94682e" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="15d8e459-0318-4735-91f5-7b99eae458df" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Cognitive Accessibility Specialist focusing on reducing cognitive load, simplifying interfaces, and designing for users with cognitive disabilities, ADHD, anxiety, or stress.
+
+I&#x27;m designing cognitively accessible interfaces for [Product Type] to reduce mental effort by [Key Strategies] for users with [Cognitive Needs] who struggle with [Current Problems].
+
+[OPTIONAL: Attach current interface with cognitive accessibility issues]
+
+Cognitive accessibility requirements:
+- User needs: [e.g., Cognitive disabilities (dyslexia, ADHD, autism), Anxiety/stress, Elderly users, Non-native speakers]
+- Current problems: [e.g., Information overload, Complex language, Inconsistent patterns, Easy to make errors, Memory-intensive]
+- Key tasks: [e.g., Complete multi-step form, Navigate complex dashboard, Understand instructions, Recover from errors]
+- Cognitive challenges: [e.g., Reading comprehension, Working memory, Sustained attention, Executive function]
+
+Current cognitive accessibility problems:
+- [Problem 1: e.g., Information overload - dashboard shows 50 metrics at once, overwhelming, can&#x27;t focus]
+- [Problem 2: e.g., Complex jargon - &quot;Synchronize bidirectional API endpoints&quot; unclear to non-technical users]
+- [Problem 3: e.g., Inconsistent patterns - Delete sometimes asks confirmation, sometimes doesn&#x27;t, unpredictable]
+- [Problem 4: e.g., No error prevention - Easy to delete important data, no undo, permanent mistakes]
+- [Problem 5: e.g., Memory-intensive - 10-step checkout with no progress indicator, users forget where they are]
+
+Team context: [Cognitive accessibility awareness, user research, timeline, testing with users]
+
+Please provide:
+1. Reducing cognitive load (chunking information, progressive disclosure, clear hierarchy, one thing at a time)
+2. Plain language principles (simple words, short sentences, active voice, conversational, avoid jargon)
+3. Consistent patterns (predictable UI, familiar metaphors, reusable mental models, don&#x27;t reinvent)
+4. Error prevention and recovery (confirmations, constraints, undo, auto-save, helpful errors)
+5. Memory aids (breadcrumbs, recently used, save states, visible progress, defaults)
+6. Attention support (no time limits, minimize distractions, clear focus, interrupt-friendly)
+7. Reading and comprehension (scannable, whitespace, formatting, visual hierarchy, illustrations)
+8. Testing with cognitive disabilities (user testing, comprehension testing, task completion)
+
+Consider: [Constraints - e.g., Complex product (must simplify), Non-technical users, Mobile-heavy, Elderly users, Global audience]</code></pre></div><div style="display:contents" dir="auto"><p id="b7d7536e-2b6c-4f3e-b852-d35e94b85521" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="80380c05-8755-430f-9a84-e8d89526ae25" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = What you&#x27;re designing</li></ul></div><div style="display:contents" dir="auto"><ul id="a3cd7ba5-3171-45c5-865d-e711e1205524" class="bulleted-list"><li style="list-style-type:disc">[Key Strategies] = How you&#x27;ll reduce cognitive load</li></ul></div><div style="display:contents" dir="auto"><ul id="0522fe54-3966-44ff-92b4-8a593aba7c9a" class="bulleted-list"><li style="list-style-type:disc">[Cognitive Needs] = User cognitive challenges</li></ul></div><div style="display:contents" dir="auto"><ul id="f735c95b-5516-4223-9f7f-79314e05afb3" class="bulleted-list"><li style="list-style-type:disc">[Current Problems] = Cognitive accessibility issues</li></ul></div><div style="display:contents" dir="auto"><ul id="6b03fa2c-8d0e-4b5c-b9d7-0b60a4c739d2" class="bulleted-list"><li style="list-style-type:disc">[User needs] = Who needs cognitive accessibility</li></ul></div><div style="display:contents" dir="auto"><ul id="8b1649ce-0899-43d1-9588-937f36c53129" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Specific cognitive issues</li></ul></div><div style="display:contents" dir="auto"><ul id="dd3b66b2-6c47-42b3-9c37-0b8133fcc9d8" class="bulleted-list"><li style="list-style-type:disc">Attach interface with cognitive problems</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80ce-9c4b-e5017f4246b7"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-8080-860c-efe963ad981d"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80c7-96a6-e2961048104d" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d867ccc-6bef-808e-b7f0-e539a837a634" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Cognitive Accessibility Specialist focusing on reducing cognitive load, simplifying interfaces, and designing for users with cognitive disabilities, ADHD, anxiety, or stress.
+
+I&#x27;m designing cognitively accessible interfaces for a Healthcare Patient Portal (scheduling appointments, viewing test results, messaging doctors) to reduce mental effort by simplifying language, chunking information, providing clear guidance, preventing errors, and reducing memory load for users with elderly patients (60+ years old), users with anxiety about health issues, users with limited health literacy, and non-native English speakers who struggle with medical jargon, complex multi-step processes, dense information displays, and fear of making mistakes.
+
+[User would attach current patient portal with cognitive accessibility issues]
+
+Cognitive accessibility requirements:
+- User needs:
+  - Elderly users (60-80+ years old, may have mild cognitive decline, lower tech literacy)
+  - Users with health anxiety (stressed, worried, need reassurance and clarity)
+  - Limited health literacy (don&#x27;t understand medical terms, need plain language)
+  - Non-native English speakers (simpler language, avoid idioms and jargon)
+  - Users with ADHD or attention difficulties (easily distracted, need focus)
+- Current problems:
+  - Medical jargon everywhere (&quot;Schedule ambulatory consultation&quot;, &quot;Review lipid panel results&quot;)
+  - Dense information (test results show 30 data points at once, overwhelming)
+  - Complex multi-step processes (scheduling requires 7 steps, no clear progress)
+  - Inconsistent patterns (sometimes Save is automatic, sometimes manual, unpredictable)
+  - Easy to make errors (clicked wrong appointment time, no confirmation, permanent)
+  - No memory aids (multi-page forms don&#x27;t save progress, start over if interrupted)
+  - Time limits (session timeout after 10 minutes of inactivity, lose all work)
+- Key tasks:
+  - Schedule doctor appointment (currently 7 steps, lots of medical terminology)
+  - View test results (currently shows raw lab data with no explanation)
+  - Send message to doctor (currently complex form with required fields unclear)
+  - Refill prescription (currently buried in menus, hard to find)
+- Cognitive challenges:
+  - Reading comprehension (medical jargon, complex sentences, dense text)
+  - Working memory (multi-step processes, remembering where you are)
+  - Sustained attention (long forms, dense dashboards, easy to lose focus)
+  - Executive function (decision-making, task completion, dealing with errors)
+  - Anxiety (health-related stress, fear of mistakes, need for reassurance)
+
+Current cognitive accessibility problems:
+- Information overload on dashboard - Landing page shows: Upcoming appointments (5 cards), Recent test results (8 items with medical terms), Messages (12 unread), Prescriptions (6 medications with dosages), Billing (4 outstanding charges), Health summary (10 vitals/metrics). Total 45+ pieces of information on first screen. Elderly users report &quot;too much, don&#x27;t know where to look&quot;, users with ADHD &quot;can&#x27;t focus on what&#x27;s important&quot;, anxious users &quot;overwhelmed, makes health anxiety worse&quot;
+- Complex medical jargon everywhere - Appointment types: &quot;Ambulatory consultation&quot;, &quot;Annual wellness visit&quot;, &quot;Diagnostic imaging procedure&quot;, Test results: &quot;Lipid panel&quot;, &quot;Hemoglobin A1C&quot;, &quot;Glomerular filtration rate (eGFR)&quot;, Actions: &quot;Schedule telehealth encounter&quot;, &quot;Review diagnostic findings&quot;. Elderly users don&#x27;t understand terms, non-native speakers can&#x27;t comprehend, users with limited health literacy confused, have to Google medical terms while using portal
+- Inconsistent save behavior - Form A: Auto-saves every field (messaging doctor), Form B: Manual &quot;Save&quot; button (updating profile), Form C: Auto-saves on exit (appointment preferences), Form D: Asks &quot;Save changes?&quot; on exit (notification settings). Users never know if changes saved, accidentally lose work, anxiety about losing important health information, have to re-enter data multiple times
+- No error prevention or recovery - Clicked wrong appointment date (Jan 15 instead of Jan 25), no confirmation dialog, appointment immediately scheduled, now have to call office to cancel/reschedule, can&#x27;t undo in portal. Deleted important message from doctor, no &quot;Are you sure?&quot;, permanent deletion, can&#x27;t recover. Sent message to wrong doctor, no confirmation, can&#x27;t unsend, embarrassing. Easy to make permanent mistakes, no safety net
+- Memory-intensive appointment scheduling - 7-step process: Step 1 Select appointment type (15 options with medical terms), Step 2 Select doctor (8 doctors with specialties), Step 3 Select location (4 locations with addresses), Step 4 Select date (calendar, 30 days out), Step 5 Select time (12 time slots), Step 6 Select reason (dropdown + text field), Step 7 Review and confirm (all info shown, hard to remember what you selected 6 steps ago). No progress indicator, no ability to go back and change earlier steps without starting over, no saved state if interrupted, 10-minute timeout loses everything
+- No progress indicators or breadcrumbs - Multi-step forms show &quot;Complete your appointment request&quot; at top, no indication of which step (Step 3 of 7?), no progress bar, no breadcrumbs showing path, users don&#x27;t know how much longer, feel lost, abandon midway through
+- Aggressive session timeout - 10 minutes of inactivity = session expires, lose all unsaved work, have to start over. Elderly users who read slowly or take breaks to understand medical terms get timed out frequently, users with ADHD who get distracted get logged out, anxious users who pause to think about health decisions lose progress. Support tickets: &quot;Keeps logging me out&quot;, &quot;Lost my appointment request twice&quot;
+
+Team context:
+- User base: 60% users over 60 years old, 40% have limited health literacy, 25% non-native English speakers
+- Feedback: High support call volume (30% of calls are &quot;can&#x27;t figure out how to use portal&quot;), low adoption (only 35% of patients use portal despite promotion)
+- Research: User testing with elderly users showed confusion, anxiety, and frustration
+- Goals: Increase portal adoption to 60%, reduce support calls by 50%, improve task completion rates
+- Timeline: 4 months to redesign for cognitive accessibility
+- Constraints: Can&#x27;t remove medical terms entirely (legal/regulatory), must maintain HIPAA compliance
+
+Please provide:
+1. Reducing cognitive load (chunking information, progressive disclosure, clear hierarchy, one thing at a time)
+2. Plain language principles (simple words, short sentences, active voice, conversational, avoid jargon)
+3. Consistent patterns (predictable UI, familiar metaphors, reusable mental models, don&#x27;t reinvent)
+4. Error prevention and recovery (confirmations, constraints, undo, auto-save, helpful errors)
+5. Memory aids (breadcrumbs, recently used, save states, visible progress, defaults)
+6. Attention support (no time limits, minimize distractions, clear focus, interrupt-friendly)
+7. Reading and comprehension (scannable, whitespace, formatting, visual hierarchy, illustrations)
+8. Testing with cognitive disabilities (user testing, comprehension testing, task completion)
+
+Consider: Elderly users (60+). Limited health literacy. Non-native speakers. Health anxiety (need reassurance). Medical jargon required (but needs plain language explanations). Multi-step processes (need progress indicators). Easy errors (need confirmations). 10-min timeout too aggressive. HIPAA compliance required.</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-805f-983f-c1b1fea6af66"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="2cd888fe-fde1-41f7-9959-abad04d4717c"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="dcbb7496-f0bc-46a8-b7f3-10888e0a96c1" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="27fe55f9-a884-4dcd-9c2c-b9579cb71158" class="">✦ Chunk everything: Show 3-5 items at once, not 30 - reduces cognitive overload dramatically<br/>✦ Common mistake: Using medical/technical jargon without plain language explanations - always translate for users<br/>✦ Best with: Claude (excellent at simplifying language, reducing complexity), ChatGPo (good at plain language rewrites)<br/>✦ Remix it: &quot;Simplify this interface for elderly users - reduce cognitive load, plain language, clear guidance, error prevention&quot;<br/>✦ Pro move: Ask &quot;Audit my interface for cognitive accessibility - identify overwhelming sections, complex language, inconsistent patterns&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8098-b543-d1fb2f4c95b3"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="5d772e7d-f292-4dfb-afdc-3c281d0bf7f4"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0143c4fe-f259-41a3-8cef-25413c6b8655" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="289649e8-ade8-4217-8ac1-58bf7b5b86f4" class="bulleted-list"><li style="list-style-type:disc">&quot;Simplify this dashboard for elderly users - reduce information overload, chunk content, clear hierarchy, plain language&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="b727cb98-dd64-4526-a9d4-2e7e9f70f5b1" class="bulleted-list"><li style="list-style-type:disc">&quot;Rewrite this medical jargon in plain language - 5th grade reading level, short sentences, explain technical terms&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="da8b2131-4fbd-4acd-9c93-bb47aaa3cb7f" class="bulleted-list"><li style="list-style-type:disc">&quot;Design error prevention for this form - confirmations for destructive actions, undo, constraints, auto-save&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="aa49b80c-98ad-4c11-9d21-42f7df0bacae" class="bulleted-list"><li style="list-style-type:disc">&quot;Create progress indicator for multi-step process - step numbers, progress bar, breadcrumbs, save state&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80ee-95a1-f965e7c707a9"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-80e1-ad85-def771512d6c"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80e9-bd39-f9fbed3af2e2" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-80d1-83b4-de7dcc97ea1e" class="image"><a href="65_Example_Output.png"><img style="width:643.9921875px" src="65_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80e5-b220-ef37bf02f002"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="a6b2c6a5-195c-413a-939d-f345bd3eeb17"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="981f9b72-1cce-4005-b035-67c113429346" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="22d5181f-bdae-4326-baf7-a8dbe795155b" class="">→ Recipe #64: <a href="R-64 Design Accessible Components d8c67ccc6bef83ed9c3201d848757c88.html">Design Accessible Components</a><br/>→ Recipe #15: <a href="R-15 Design Better Forms 2d667ccc6bef80a58694ce629bd1838e.html">Design Better Forms</a><br/>→ Recipe #30: <a href="R-30 Design Empty States 2d767ccc6bef80bf8926fcdc9c1d4e5a.html">Design Empty States</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8084-b949-ff1c764094d5" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

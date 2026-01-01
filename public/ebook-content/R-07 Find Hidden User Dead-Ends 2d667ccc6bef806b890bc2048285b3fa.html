@@ -1,0 +1,770 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-07: Find Hidden User Dead-Ends</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-806b-890b-c2048285b3fa" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-805c-99c1-faadbbf3bf63" class="">Recipe #7: Find Hidden User Dead-Ends</h1></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8092-bec4-ee70d9395c14" class="">Category: Wireframing &amp; IA  |  ⏱️ 30-35 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80db-afd4-d78e76d098ff" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="c9e93fb0-fd71-4a5a-a29c-5a160d4fea4d"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="c1ba2eb8-9a39-4f57-b0ce-6cf226a5ca95" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="6c17136d-7f98-4040-afa1-a40f4eb21acc" class="">You&#x27;re redesigning an application where users frequently get stuck, confused, or abandon tasks mid-flow. Analytics show high exit rates on certain screens, or support tickets reveal common &quot;how do I...?&quot; questions. You need to identify and fix the dead-ends users are hitting.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-802f-af36-d638fdbf975b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="d4729af1-581d-4357-9060-4ea026b6d216"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="5406943d-72d5-4ce5-898b-076abd463d5e" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="03029644-558a-4af6-9691-a7b5a4429082" class="">Legacy applications accumulate dead-ends over time - missing back buttons, unclear next steps after completing an action, features that lead nowhere, or critical actions buried where users can&#x27;t find them. Users hit these walls, get frustrated, and either contact support or abandon the task entirely. Your job is to systematically identify these friction points and redesign the paths to be clear and complete.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8015-b240-c2449d8c82a0"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="da074103-35e0-43db-8b06-4606066f315f"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8b88d973-5ee4-4ea9-a36b-fa4e16aecc2c" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="bed70bad-0244-4a87-b3b6-6fad8a39350c" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a UX Auditor specializing in user flow analysis.
+
+I&#x27;m auditing a [Product Type] to find and fix user dead-ends where people get stuck or confused.
+
+[OPTIONAL: Attach screenshots of problem areas, analytics data, or user flow diagrams]
+
+Evidence of dead-ends:
+- Analytics: [e.g., &quot;65% exit rate on confirmation screen&quot;, &quot;High bounce on settings page&quot;]
+- Support tickets: [e.g., &quot;Users ask &#x27;how do I cancel?&#x27; daily&quot;]
+- User feedback: [e.g., &quot;I completed the form but nothing happened&quot;]
+
+Specific areas of concern:
+- [Area 1: e.g., After completing onboarding, users don&#x27;t know what to do next]
+- [Area 2: e.g., Delete button exists but no undo/confirmation]
+- [Area 3: e.g., Search returns no results with no alternative suggestions]
+
+User context: [Who encounters these issues and what they&#x27;re trying to accomplish]
+
+Please analyze and suggest:
+1. Complete list of likely dead-ends based on the evidence
+2. For each dead-end: what&#x27;s missing and why users get stuck
+3. Specific UX patterns to fix each issue
+4. Priority ranking (which dead-ends cause most harm)
+5. Prevention strategy for future features
+
+Consider: [Constraints - e.g., Can&#x27;t remove features, must maintain existing workflows]</code></pre></div><div style="display:contents" dir="auto"><p id="32a294e1-b85d-4ce8-b2df-47a85ea7efa3" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="66a63f29-6eb4-4959-bd4d-aaee73faf4dc" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = Mobile app, SaaS platform, E-commerce site, Admin dashboard</li></ul></div><div style="display:contents" dir="auto"><ul id="e3390636-eacc-488f-a789-ddfafc8eac6d" class="bulleted-list"><li style="list-style-type:disc">[Analytics] = Your actual exit rates, bounce rates, drop-off points</li></ul></div><div style="display:contents" dir="auto"><ul id="9f448b53-3af1-4016-b3e5-20c95a287efe" class="bulleted-list"><li style="list-style-type:disc">[Support tickets] = Real common questions or complaints</li></ul></div><div style="display:contents" dir="auto"><ul id="85f22d8a-88cc-4973-9998-3c991706d746" class="bulleted-list"><li style="list-style-type:disc">[User feedback] = Actual quotes from user research</li></ul></div><div style="display:contents" dir="auto"><ul id="b82edafb-7b68-431f-9d97-380055e7ee5c" class="bulleted-list"><li style="list-style-type:disc">[Areas of concern] = Specific screens or flows you suspect are problematic</li></ul></div><div style="display:contents" dir="auto"><ul id="7d275ac8-0cd0-43a8-a88f-82e665f7245d" class="bulleted-list"><li style="list-style-type:disc">Upload screenshots showing problem areas for targeted analysis</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80f5-a75d-d653b13e265c"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-80ba-bef9-e0f47a611145"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80ba-a889-e06fbebcbd31" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d667ccc-6bef-8043-a6af-d47b4259a683" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a UX Auditor specializing in user flow analysis.
+
+I&#x27;m auditing a Project Collaboration Platform to find and fix user dead-ends where people get stuck or confused.
+
+[User would attach screenshots here]
+
+Evidence of dead-ends:
+- Analytics: 58% of users who create a project never invite team members (stuck after project creation)
+- Analytics: Settings page has 73% bounce rate - users land there but leave immediately
+- Support tickets: &quot;How do I delete a task?&quot; asked 40+ times per month
+- Support tickets: &quot;I shared a file but my client says they can&#x27;t access it&quot; - weekly complaint
+- User feedback: &quot;I archived a project and now I can&#x27;t find it anywhere&quot;
+- User feedback: &quot;Clicked &#x27;upgrade&#x27; button but nothing loaded - is it broken?&quot;
+
+Specific areas of concern:
+- After creating a project, success message appears but no clear &quot;invite team&quot; CTA
+- Task deletion requires going to settings → advanced → danger zone (buried 3 levels deep)
+- Shared file links generate but no confirmation that sharing worked
+- Archived projects disappear from view with no way to access archive
+- Upgrade flow redirects to external payment page that looks different, users think it&#x27;s broken
+
+User context: Small teams (3-10 people) setting up project workspaces. Most are non-technical. They expect smooth, guided experiences. Mobile users represent 40% of traffic.
+
+Please analyze and suggest:
+1. Complete list of likely dead-ends based on the evidence
+2. For each dead-end: what&#x27;s missing and why users get stuck
+3. Specific UX patterns to fix each issue
+4. Priority ranking (which dead-ends cause most harm)
+5. Prevention strategy for future features
+
+Consider: Can&#x27;t remove any features, but can reorganize and add guidance. Must work on both desktop and mobile. Payment flow is handled by third-party (Stripe) so can&#x27;t fully redesign, only improve handoff.</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80be-9ce8-d45851e0b1a4"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="b12e3597-4ee0-4c69-a9bb-15eb8fef5612"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b2254033-5bc9-48b4-b09e-f86df7974e39" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="531e2ffe-3c6b-494e-88e2-aaa86fefb307" class="">The AI will provide:</p></div><div style="display:contents" dir="auto"><ul id="b8579cb8-2160-42be-8b8a-f5b929b51749" class="bulleted-list"><li style="list-style-type:disc">Comprehensive dead-end inventory (categorized by severity)</li></ul></div><div style="display:contents" dir="auto"><ul id="9e443d95-e220-422a-acd3-16346fad84a3" class="bulleted-list"><li style="list-style-type:disc">Root cause analysis for each dead-end</li></ul></div><div style="display:contents" dir="auto"><ul id="53a97469-c1f2-4069-a037-046f1f71df29" class="bulleted-list"><li style="list-style-type:disc">Specific fix recommendations:<div style="display:contents" dir="auto"><ul id="f4bbb89d-6cbc-4517-b8a6-5d71d2242823" class="bulleted-list"><li style="list-style-type:circle">Missing CTAs and next steps</li></ul></div><div style="display:contents" dir="auto"><ul id="aa8cbb4d-2d82-4197-a518-b233a03b8fad" class="bulleted-list"><li style="list-style-type:circle">Confirmation and feedback patterns</li></ul></div><div style="display:contents" dir="auto"><ul id="ab20f7db-f61b-4925-b106-6c8222f3d3eb" class="bulleted-list"><li style="list-style-type:circle">Rescue flows for error states</li></ul></div><div style="display:contents" dir="auto"><ul id="2ec6f069-a108-45e1-b8f9-bc06e457093a" class="bulleted-list"><li style="list-style-type:circle">Breadcrumb trails and navigation</li></ul></div><div style="display:contents" dir="auto"><ul id="5ddc1fbf-64bf-4cf8-8628-984344210673" class="bulleted-list"><li style="list-style-type:circle">Progressive disclosure improvements</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="f6284ab2-0a02-43e2-82be-b365f3227b3f" class="bulleted-list"><li style="list-style-type:disc">Before/after flow descriptions</li></ul></div><div style="display:contents" dir="auto"><ul id="e3b64b91-7ac6-4c44-b334-4e688b4d5c4e" class="bulleted-list"><li style="list-style-type:disc">Priority matrix (quick wins vs. high-impact fixes)</li></ul></div><div style="display:contents" dir="auto"><ul id="b2e1e51a-db57-45d2-9054-82f76adf31f4" class="bulleted-list"><li style="list-style-type:disc">Prevention checklist for new features</li></ul></div><div style="display:contents" dir="auto"><ul id="b3ca5f25-cbe3-461a-8256-14d6f1bbe9ef" class="bulleted-list"><li style="list-style-type:disc">Optional: Annotated user flow diagram showing fixes</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80a2-adfd-e38478f79644"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="addc7880-5d98-4ae4-b65f-6d13b367d262"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="9c653681-3fd3-457f-ab60-f85d20f80ded" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="ac1dcb00-3ac2-4f8d-95a4-6140f4371336" class="">✦ Combine data sources: Analytics + support tickets + user feedback = complete picture of where users struggle<br/>✦ Common mistake: Only looking at high-traffic pages - dead-ends often hide in edge cases and secondary flows<br/>✦ Best with: Claude (excellent at analyzing complex flows and root causes), ChatGPT o1 (for systematic audits)<br/>✦ Remix it: &quot;Now audit the mobile experience specifically - where do touch interactions create new dead-ends?&quot;<br/>✦ Pro move: Ask &quot;Create a dead-end prevention checklist I can use for every new feature we ship&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8065-b26a-d4fab8a46f05"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="82de8347-6bfa-49f4-a7c6-236ce783b4cc"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="7fe319d9-e5f1-40b0-ace7-8836fa4d9074" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="f9185db3-f89f-40c3-a4dd-a056fe99de83" class="bulleted-list"><li style="list-style-type:disc">&quot;For the top 3 dead-ends, write the micro-copy for success messages and next-step CTAs&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="26398223-b29a-4f94-9202-7e63d67c9896" class="bulleted-list"><li style="list-style-type:disc">&quot;Design empty states for when users hit these dead-ends (no search results, no archived projects, etc.)&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="e76bb87f-2efb-41f0-ad6e-d1fb1a2664df" class="bulleted-list"><li style="list-style-type:disc">&quot;Create an error prevention strategy: what warnings should we show before users hit these walls?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="7e128ccd-36cc-4c60-9531-1e61a57983b9" class="bulleted-list"><li style="list-style-type:disc">&quot;Map the complete &#x27;undo/recover&#x27; flow for destructive actions like delete and archive&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-805e-8a48-f63af12b6963"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-80a8-8560-fabf63356e7c"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8019-b6bc-d7d293b6d9d8" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-8016-85b9-f2e72d3afc78" class="image"><a href="7_Example_Output.png"><img style="width:643.9921875px" src="7_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80ed-82f9-d7adcc30d786"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="9e5380e9-6f22-432a-a1f7-6afa7c0e73db"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="4b7e5297-8a57-4d3e-976a-3a9a9f46c722" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="8f2f78ac-6e3c-4fac-8611-d7bd894da1a6" class="">→ Recipe #04: <a href="R-04 Design Multi-Step Flows 2d667ccc6bef806f9f3be9cdaefa9a9e.html">Design Multi-Step Flows</a><br/>→ Recipe #08: <a href="R-08 Create Clear Path Finding 2d667ccc6bef80f7a748e543ab0cfc40.html">Create Clear Path-Finding</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80be-a23e-d2e0e337f9e1" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

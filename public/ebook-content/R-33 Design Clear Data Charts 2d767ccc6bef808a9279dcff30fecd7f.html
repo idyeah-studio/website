@@ -1,0 +1,798 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-33: Design Clear Data Charts</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-808a-9279-dcff30fecd7f" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-802f-b17f-f8848ffb40b0" class="">Recipe #33: Design Clear Data Charts</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80d1-8d15-c61ac9c7d816" class="">Category: UI &amp; Visuals  |  ⏱️ 30-40 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80b8-b76e-d0814817f93e" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="4c54c5e5-bef7-4a7e-a463-8dab904c7e1e"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a853111d-5de4-431e-a782-073142edfa41" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="92c79331-c7ba-45b7-81f1-33a668b0820c" class="">You&#x27;re redesigning data visualizations that are confusing, cluttered, or misleading - charts with too much information, unclear axes, missing context, or poor color choices that make insights impossible to extract. Users struggle to understand the data story.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80e2-886a-c4abda4e1428"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="a9ffd214-2454-4e6f-84d4-b4ac88a66d5e"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="43cedda8-2ba3-445a-9bb7-77850a63bb91" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="860ef227-1a55-4d45-a825-3b231350c457" class="">Many applications have poorly designed charts - cramming too much data into one visualization, using rainbow color schemes that add no meaning, cluttered legends, tiny labels, misleading scales, or chart types that don&#x27;t match the data story. Users see a wall of lines, bars, or pie slices but can&#x27;t extract meaningful insights. Charts look impressive but communicate nothing. What should take 3 seconds to understand requires 3 minutes of study. You need to design charts that communicate insights instantly, guide attention to what matters, and help users make decisions.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8027-b7e1-eff878859d60"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="7d43158a-06e8-4ea1-993f-0fe5a8259262"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="dfba6143-f625-489b-a04d-44310117a7e8" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="5d784c87-e56c-4ac2-9199-7d8928bebf5f" class="">The AI will provide chart type selection guidance matching data types to appropriate visualizations (line charts for trends, bar charts for comparisons, avoiding pie charts with many slices), data simplification strategies limiting to 5-7 key items with progressive disclosure, colorblind-safe color usage with semantic meaning (3-5 colors maximum, highlighting what matters), direct labels and annotations providing context and explaining anomalies, axis and scale best practices (Y-axis starting at 0, consistent scales, readable intervals), legend design preferring direct labels over separate legends, interactive features (tooltips, drill-downs, zoom, toggle series), and comprehensive accessibility guidance (color plus pattern, alt text, keyboard navigation, table alternatives). Optionally includes before/after chart examples showing improvements.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="efa00c92-92e1-4b15-a1ab-71ade483eb7d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="f67e425c-e3c9-4be2-ad8f-79d3c0914da2"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="7f1c8ca9-e999-4bcb-98ad-e7e014e0bc0c" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fdf066ac-9c30-4a31-8681-e447c1e0088e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Data Visualization Specialist focusing on clear, actionable charts and dashboards.
+
+I&#x27;m designing data visualizations for a [Product Type] that need to communicate insights clearly.
+
+[OPTIONAL: Attach screenshots of current charts or examples of data being visualized]
+
+Data visualization requirements:
+- Data types: [e.g., Time series, Comparisons, Distributions, Relationships, Parts of whole]
+- Chart contexts: [e.g., Dashboard overview, Detailed analytics, Reports, Real-time monitoring]
+- User goals: [e.g., Spot trends, Compare metrics, Find anomalies, Make decisions]
+- Data complexity: [e.g., Single metric over time, Multi-series comparisons, Complex relationships]
+- User expertise: [e.g., Data analysts, Business users, Executives, General consumers]
+
+Current chart problems:
+- [Problem 1: e.g., Line chart with 12 different colored lines - impossible to distinguish]
+- [Problem 2: e.g., Pie chart with 15 slices - can&#x27;t compare small differences]
+- [Problem 3: e.g., Y-axis starts at 50 instead of 0 - exaggerates differences]
+- [Problem 4: e.g., No labels on data points - users must hover to see values]
+- [Problem 5: e.g., Rainbow colors with no meaning - red doesn&#x27;t indicate bad, just decoration]
+
+User context: [How users consume charts, time available, decision-making needs]
+
+Please provide:
+1. Chart type selection (when to use line, bar, scatter, etc.)
+2. Data simplification strategies (what to show, what to hide)
+3. Color usage guidelines (meaningful vs. decorative)
+4. Labels and annotations
+5. Axis and scale best practices
+6. Legend and key design
+7. Interactive vs. static approaches
+8. Accessibility for data visualization
+
+Consider: [Constraints - e.g., Must work in grayscale for printing, colorblind users, mobile screens, real-time updating data]</code></pre></div><div style="display:contents" dir="auto"><p id="1519cd9c-2bed-470a-948a-80c9a9c8eddc" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="46def496-7771-459b-b83e-5540c92d1e53" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = Analytics dashboard, Business intelligence tool, Financial app, Health tracker, Sales CRM</li></ul></div><div style="display:contents" dir="auto"><ul id="eff802a3-5b7c-4ca5-9e49-0fe5aa058028" class="bulleted-list"><li style="list-style-type:disc">[Data types] = What kind of data you&#x27;re visualizing</li></ul></div><div style="display:contents" dir="auto"><ul id="9f0c286b-4d58-428b-b124-e34852567dc3" class="bulleted-list"><li style="list-style-type:disc">[Chart contexts] = Where charts appear</li></ul></div><div style="display:contents" dir="auto"><ul id="54c71b61-d04d-4723-b72b-6114bf34e53e" class="bulleted-list"><li style="list-style-type:disc">[User goals] = What insights users need</li></ul></div><div style="display:contents" dir="auto"><ul id="97988866-a02f-46b8-8d18-9eccee5c7e68" class="bulleted-list"><li style="list-style-type:disc">[Data complexity] = Simple to complex datasets</li></ul></div><div style="display:contents" dir="auto"><ul id="67332275-50c7-4c87-8cac-0000cf48a63c" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current chart design issues</li></ul></div><div style="display:contents" dir="auto"><ul id="2ccbd7a5-428c-49d8-b043-11e786c58a4d" class="bulleted-list"><li style="list-style-type:disc">Upload current chart screenshots or data examples</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8062-9834-d4a986a72fcc"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8056-a9d5-d545969f871d"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8050-bb76-f85991a6a009" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-802a-99ce-d1111fb57965" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Data Visualization Specialist focusing on clear, actionable charts and dashboards.
+
+I&#x27;m designing data visualizations for a SaaS Analytics Dashboard that need to help business users make quick decisions about product performance.
+
+[User would attach chart screenshots here]
+
+Data visualization requirements:
+- Data types:
+  - Time series (revenue, user growth over months/years)
+  - Comparisons (plan conversions, feature usage across segments)
+  - Distributions (session duration, user cohorts)
+  - Relationships (marketing spend vs. customer acquisition)
+  - Parts of whole (traffic sources, device types)
+- Chart contexts:
+  - Executive dashboard (high-level overview, 6 key metrics)
+  - Detailed analytics pages (deep dive into specific metrics)
+  - Automated reports (PDF exports, email summaries)
+  - Real-time monitoring (live user activity, server status)
+- User goals:
+  - Executives: Spot trends, identify problems quickly, make strategic decisions
+  - Product managers: Compare feature performance, understand user behavior
+  - Marketing: Track campaign effectiveness, ROI analysis
+  - Support: Monitor system health, identify issues
+- Data complexity: 
+  - Simple: Single metric over time (revenue last 30 days)
+  - Moderate: Comparing 3-4 metrics (Free vs. Pro vs. Enterprise conversions)
+  - Complex: Multi-dimensional (user segments × features × time periods)
+- User expertise: Business users, not data analysts - need charts they can understand in 5 seconds
+
+Current chart problems:
+- Revenue line chart shows 12 different product lines in 12 different colors - rainbow nightmare, can&#x27;t distinguish which line is which without constantly checking legend
+- User growth pie chart has 15 tiny slices for different traffic sources - can&#x27;t compare 3% vs. 4% slices visually
+- Conversion rate chart Y-axis goes from 2% to 5% (not 0%) - makes 0.5% increase look like 3x improvement (misleading)
+- Charts have no data labels - users must hover over every point to see actual values (tedious, doesn&#x27;t work on mobile)
+- Using red/green to show good/bad performance - 8% of male users are colorblind, can&#x27;t distinguish
+- Legend at bottom with 12 color swatches and technical names (&quot;organic_search_non_branded&quot;) - confusing
+- No annotations or context - chart shows spike but doesn&#x27;t explain it was from Black Friday sale
+- Same chart type (line graph) for everything - even when bar or table would be clearer
+
+User context: Executives check dashboard daily for 30 seconds - need to spot problems instantly. Product managers spend 10-15 minutes analyzing trends. Marketing reviews weekly reports. 40% view on mobile/tablet. Users make business decisions based on these charts - clarity is critical. Colorblind users (8% of males) must be considered. Charts often exported to PDF or screenshots for presentations.
+
+Please provide:
+1. Chart type selection (when to use line, bar, scatter, etc.)
+2. Data simplification strategies (what to show, what to hide)
+3. Color usage guidelines (meaningful vs. decorative)
+4. Labels and annotations
+5. Axis and scale best practices
+6. Legend and key design
+7. Interactive vs. static approaches
+8. Accessibility for data visualization
+
+Consider: Must work for colorblind users. Mobile viewing common. Charts exported to PDF (need to work in grayscale). Real-time data updates. Some users want to drill down, others just want summary. Executive dashboard needs instant clarity, detailed analytics can have more complexity.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="f6d14b70-0e80-46fc-923a-3dcf35506d2c"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="909fcec7-b695-441b-a6ee-0895724f0e9b" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="4c5f98bb-a95b-4990-bbe7-759e29ee281d" class="">✦ Less is more: Show 5 key data points clearly beats showing 50 points unclearly<br/>✦ Common mistake: Using pie charts with 10+ slices - bar chart is almost always better<br/>✦ Best with: Claude (excellent at data storytelling and clarity), ChatGPT (good for chart type selection)<br/>✦ Remix it: &quot;Design the animated chart - how data transitions when filtering or time range changes&quot;<br/>✦ Pro move: Ask &quot;Create the chart audit checklist - evaluate every chart for clarity and purpose&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80f9-8a17-c631c1403e1c"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="682c952c-2430-4a8d-84cc-93a6660548d0"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0e6255ef-b21b-4ec2-be23-9ec3e8db0075" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><p id="774f11c2-6783-4470-be6f-7666e79f4b69" class="">Try these next:</p></div><div style="display:contents" dir="auto"><ul id="f7fab8d2-28a3-4422-b1e4-e32d3515db9b" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the mobile data visualization strategy - how complex charts adapt for 375px screens&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="0cd70f5a-d045-40dd-8e89-0b50d12a57c2" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the color palette system for data viz - colorblind-safe, meaningful, consistent&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="f3f7d565-9e06-46f5-9744-94394c94e989" class="bulleted-list"><li style="list-style-type:disc">&quot;How should real-time charts update - smooth transitions vs. instant updates?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="a22724f8-e56d-4320-a52f-02bd7ac1a9be" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the chart export feature - PDF, PNG, CSV with proper formatting&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80b6-982e-cc71506d9b56"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8068-a4ba-f0db467e37af"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-804d-b974-c4f66f275466" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80c5-905e-e1abff941e94" class="image"><a href="33_Example_Output.png"><img style="width:643.9921875px" src="33_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8027-a126-e1eabd78c06e"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="615e49df-d366-4454-a8eb-c25a442c3f19"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="5b9467a4-ddfe-4617-879d-0d7c2c0a7f84" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="dc073d3e-0e0e-4742-8688-5404ec61f1b9" class="">→ Recipe #02: <a href="R-02 Fix Cluttered Data Views 2d667ccc6bef80cb97c4fcafda955f11.html">Fix Cluttered Data Views</a><br/>→ Recipe #05: <a href="R-05 Rank Dashboard Information 2d667ccc6bef80d2ac13f0eb7bcf0b17.html">Rank Dashboard Information</a><br/>→ Recipe #28: <a href="R-28 Remove Visual Clutter 2d767ccc6bef806ea5dbd329ca407ba1.html">Remove Visual Clutter</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8006-b6f2-ec550ba4fb65" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,805 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-66: Design for Dark Mode</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d867ccc-6bef-8007-aa94-f48df654ee97" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d867ccc-6bef-8021-a109-e246b9033e9c" class="">Recipe #66: Design for Dark Mode</h1></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80ef-beda-e3963e1ee025" class="">Category: Bonus — Theming  |  ⏱️ 30-40 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8064-ae16-dc6dbaae322b" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="ebe5d56a-0de6-4cdd-8498-8d608907ef8f"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="cc44916d-cb27-4321-91f4-614bdaf89add" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="521196aa-0f1e-41e6-b1e4-fc4f1ca439bb" class="">You&#x27;re adding dark mode to your product or designing components that work in both light and dark themes - converting colors from light to dark, creating semantic color tokens, handling elevation and shadows, managing imagery and illustrations, or ensuring accessibility in both modes. Your current dark mode looks washed out, has poor contrast, doesn&#x27;t feel intentional, or components break when switching themes.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8012-95a5-c84c6fd1849b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="b785e817-8c3d-4995-8465-ecd46a45ac1b"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d4eec3db-a190-4050-acb7-67be51048199" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="8bb96fcf-b524-4b94-91b7-cc1f2e1cd19c" class="">Many designers implement dark mode poorly - simply inverting colors (resulting in harsh whites on pure black, eye strain), using pure black backgrounds (#000000 causes smearing on OLED, too high contrast), inconsistent color conversions (some screens dark mode, others don&#x27;t), broken elevation (shadows invisible on dark backgrounds), poor imagery handling (photos look wrong, illustrations don&#x27;t adapt), insufficient contrast (text too dim, fails WCAG), or no semantic tokens (hardcoded colors, can&#x27;t theme). Teams create dark modes that feel like afterthoughts, cause accessibility issues, look inconsistent across the product, or require maintaining two separate design files. You need systematic dark mode design - semantic color tokens (variables that work in both themes), elevation-based surfaces (lighter = higher in dark mode), proper color conversions (desaturate colors, adjust contrast), dark mode specific components (different shadows, borders), image handling (separate dark assets, photo treatments), and accessibility testing (contrast in both modes).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80b8-88af-f5eb35a40595"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="3dcb8aa4-58ca-47eb-a7af-6eaf8d1a9680"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2ad750d4-05c7-4adf-b017-79f0e11292f3" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="eea35733-270b-4621-a062-7d7ebbd04946" class="">The AI will provide color conversion strategies (proper dark backgrounds, desaturated accent colors, not simple inversion), semantic color token systems (bg-primary, text-primary that work in both themes), elevation and depth techniques (lighter surfaces = higher in dark mode, borders instead of shadows), dark mode specific adjustments (focus rings, disabled states, input fields), imagery handling (separate dark assets, photo treatments, icon adaptations), accessibility guidelines (WCAG contrast in dark mode), component adaptations for buttons, cards, modals, forms, tables, and charts, plus implementation guidance for theme toggles and testing. You&#x27;ll get a systematic approach to create professional, accessible dark mode that feels intentional.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="4e77badc-a861-48f2-9cfe-c7b7bf9436ce"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="aae7d8c0-2ae8-43d8-971e-078c88461f5d"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d849240c-0057-48a5-807f-b1e935b8e84e" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d06b6f2d-48c3-4220-aad7-8c7c495313da" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Dark Mode Design Specialist focusing on color systems, semantic tokens, elevation strategies, and creating accessible themes.
+
+I&#x27;m designing dark mode for [Product/Component Library] to support [User Preferences] by converting [Light Mode Design] to dark mode, ensuring [Key Requirements] work in both themes.
+
+[OPTIONAL: Attach current light mode design or dark mode with issues]
+
+Dark mode requirements:
+- Product type: [e.g., Mobile app, Web app, Dashboard, Marketing site]
+- User needs: [e.g., Reduce eye strain, Battery saving (OLED), User preference toggle, System theme matching]
+- Current state: [e.g., Light mode only, Dark mode exists but broken, Need to add dark mode]
+- Color system: [e.g., Hardcoded colors, Some variables, Full design token system]
+- Components: [e.g., Buttons, Cards, Modals, Forms, Data tables, Charts, Navigation]
+
+Current dark mode problems:
+- [Problem 1: e.g., Simple color inversion - harsh white on pure black, eye strain, looks bad]
+- [Problem 2: e.g., No elevation system - cards, modals, menus all same gray, no depth]
+- [Problem 3: e.g., Broken shadows - shadows invisible on dark backgrounds, can&#x27;t see elevation]
+- [Problem 4: e.g., Inconsistent colors - some components adapted, others still light mode]
+- [Problem 5: e.g., Poor contrast - text too dim #666 on #333 background, fails WCAG]
+
+Team context: [Dark mode priority, design system maturity, platform (iOS/Android/Web), timeline]
+
+Please provide:
+1. Color conversion strategies (light to dark, not simple inversion, desaturation, contrast)
+2. Semantic color tokens (variables that work both themes, bg-primary, text-primary)
+3. Elevation and depth (surface colors, lighter = higher in dark mode, shadows to highlights)
+4. Dark mode specific adjustments (borders, shadows, focus rings, different treatments)
+5. Imagery and illustrations (separate dark assets, photo handling, icon treatments)
+6. Accessibility in dark mode (contrast ratios, WCAG compliance, readability)
+7. Component adaptations (buttons, cards, modals, forms, tables, charts in dark mode)
+8. Implementation and testing (theme toggle, system preference, testing both modes)
+
+Consider: [Constraints - e.g., Must support both modes, OLED optimization, System theme sync, Limited design resources]</code></pre></div><div style="display:contents" dir="auto"><p id="59b68710-4747-497f-82d4-faceecf63de5" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="9be8d803-cb1b-4156-b491-03c2a84f8923" class="bulleted-list"><li style="list-style-type:disc">[Product/Component Library] = What you&#x27;re adding dark mode to</li></ul></div><div style="display:contents" dir="auto"><ul id="344899a5-3caf-443c-a9a7-eb277118e7c4" class="bulleted-list"><li style="list-style-type:disc">[User Preferences] = Why users need dark mode</li></ul></div><div style="display:contents" dir="auto"><ul id="c1bf9199-f259-4541-8581-d3c814e3e3c8" class="bulleted-list"><li style="list-style-type:disc">[Light Mode Design] = Current light mode design</li></ul></div><div style="display:contents" dir="auto"><ul id="7144562c-621d-491b-a30d-d022809734d9" class="bulleted-list"><li style="list-style-type:disc">[Key Requirements] = What must work in dark mode</li></ul></div><div style="display:contents" dir="auto"><ul id="7c98601e-b15b-44f4-8648-7377ee35947c" class="bulleted-list"><li style="list-style-type:disc">[Product type] = Mobile, web, dashboard</li></ul></div><div style="display:contents" dir="auto"><ul id="d44cb90d-c1be-43a1-85f9-e02660b982e9" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current dark mode issues</li></ul></div><div style="display:contents" dir="auto"><ul id="f741941c-ac45-4a07-b05a-f0e85a68e1f7" class="bulleted-list"><li style="list-style-type:disc">Attach light mode design or broken dark mode</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80be-8ec9-fddf37651aa3"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-8051-be36-c4007f011fb2"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80ae-a3f5-c1ef074e529c" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d867ccc-6bef-80aa-abe5-d96e4cb83e0e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Dark Mode Design Specialist focusing on color systems, semantic tokens, elevation strategies, and creating accessible themes.
+
+I&#x27;m designing dark mode for a SaaS Project Management Dashboard (web app, desktop-focused) to support user preference for reduced eye strain during long work sessions, OLED battery saving on laptops, and matching system dark mode by converting our light mode design (white backgrounds, blue primary, gray surfaces) to dark mode, ensuring buttons, cards, modals, forms, data tables, and charts work seamlessly in both themes.
+
+[User would attach current light mode design - white backgrounds, blue accents, gray cards, shadows for elevation]
+
+Dark mode requirements:
+- Product type: Web app dashboard (desktop-focused, some mobile usage)
+- User needs:
+  - Reduce eye strain (users work 8+ hours, bright white screens cause fatigue)
+  - Battery saving (OLED laptops benefit from dark backgrounds)
+  - User preference (50% of users prefer dark mode for focused work)
+  - System theme sync (match macOS/Windows dark mode setting)
+  - Late night work (many users work evenings, dark mode less disruptive)
+- Current state:
+  - Light mode only (white #FFFFFF backgrounds, blue #3B82F6 primary)
+  - No dark mode exists (high user demand, top feature request)
+  - Colors hardcoded (not using design tokens, will need refactor)
+- Color system:
+  - Currently: Hardcoded hex values (#FFFFFF, #F3F4F6, #3B82F6)
+  - Need: Semantic tokens (bg-primary, bg-secondary, text-primary work both modes)
+  - Palette: Blue primary, Gray neutrals, Green success, Red error, Yellow warning
+- Components:
+  - Buttons (Primary, Secondary, Tertiary, Danger)
+  - Cards (project cards, task cards, dashboard widgets)
+  - Modals (confirmation dialogs, forms in modals)
+  - Forms (inputs, dropdowns, checkboxes, toggles)
+  - Data tables (sortable, selectable rows, pagination)
+  - Charts (bar charts, line graphs, pie charts with colors)
+  - Navigation (sidebar nav, header nav, breadcrumbs)
+
+Current dark mode problems (from initial prototype attempt):
+- Simple color inversion - Designer inverted colors (white → black, black → white), result: harsh pure white #FFFFFF text on pure black #000000 background, extreme contrast causes eye strain, text edges &quot;smear&quot; on OLED screens, looks amateurish not professional, too stark not subtle
+- No elevation system - All surfaces same dark gray #1F1F1F (cards, modals, page background all identical), can&#x27;t distinguish layers, cards don&#x27;t &quot;pop&quot; from background, modals don&#x27;t feel elevated, everything flat and monotonous, users report &quot;can&#x27;t tell what&#x27;s clickable&quot;
+- Broken shadows - Light mode uses shadows for depth (cards have box-shadow: 0 2px 8px rgba(0,0,0,0.1)), dark mode kept same shadows, shadows invisible on dark backgrounds (black shadow on dark gray = can&#x27;t see), elevation cues lost, interface feels flat
+- Inconsistent color conversions - Blue primary #3B82F6 kept same in dark mode (too saturated, vibrates against dark background), Green success #10B981 too bright (eye-searing on dark), Yellow warning #F59E0B overwhelming, colors need desaturation for dark mode not same hex values
+- Poor text contrast - Body text gray #9CA3AF on dark background #1F1F1F = 3.8:1 contrast ratio (fails WCAG AA 4.5:1), secondary text #6B7280 even worse 2.5:1 (very hard to read), users complain &quot;text too dim, hard to read&quot;, especially bad for long-form reading
+- Imagery doesn&#x27;t adapt - Product screenshots (light mode apps) look wrong in dark interface, photos too bright and jarring, logos designed for light backgrounds invisible on dark (white logos on white cards were fine, white on dark cards invisible), icons all black (invisible on dark backgrounds)
+- Hardcoded colors everywhere - 150+ hardcoded hex values in Figma, no variables/tokens, converting to dark mode requires changing every hex value manually, impossible to maintain two separate files, need semantic token system
+
+Team context:
+- Priority: High (top user request, 50% of users want dark mode)
+- Design system: Minimal (colors hardcoded, need to build token system)
+- Platform: Web app (desktop Chrome, Firefox, Safari, some mobile)
+- Timeline: 2 months (refactor to tokens + design dark mode + implement)
+- Resources: 2 designers, 3 frontend developers, can invest time in token system
+- Testing: Can test on macOS (built-in dark mode), Windows 11 (dark mode), OLED screens
+- User research: Surveyed users, 50% prefer dark mode, 30% use system preference
+
+Please provide:
+1. Color conversion strategies (light to dark, not simple inversion, desaturation, contrast)
+2. Semantic color tokens (variables that work both themes, bg-primary, text-primary)
+3. Elevation and depth (surface colors, lighter = higher in dark mode, shadows to highlights)
+4. Dark mode specific adjustments (borders, shadows, focus rings, different treatments)
+5. Imagery and illustrations (separate dark assets, photo handling, icon treatments)
+6. Accessibility in dark mode (contrast ratios, WCAG compliance, readability)
+7. Component adaptations (buttons, cards, modals, forms, tables, charts in dark mode)
+8. Implementation and testing (theme toggle, system preference, testing both modes)
+
+Consider: Web app (desktop-focused). User preference + system sync. OLED optimization (true blacks vs dark gray debate). Must maintain WCAG AA contrast. Need semantic token system (refactor from hardcoded). 150+ color values to systematize. Blue/gray/green/red/yellow palette. Cards, modals, tables, charts all need dark versions.</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80e1-8a5d-e23dd6792a01"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="c83b0cd2-cc5e-4e7c-8ac9-2fe5027b96c3"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8b635be5-2094-401e-9268-f361028fd600" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="6a149c01-17ef-48ba-900e-dfb5c92516ba" class="">✦ Never pure black: Use #121212 instead of #000000 - reduces OLED smearing and eye strain<br/>✦ Common mistake: Keeping same saturated colors in dark mode - always desaturate blues, greens, reds by 20-30%<br/>✦ Best with: Claude (excellent at color token systems, systematic conversions), ChatGPT (good for color calculations)<br/>✦ Remix it: &quot;Convert this light mode design to dark mode - desaturate colors, elevation surfaces, semantic tokens, WCAG contrast&quot;<br/>✦ Pro move: Ask &quot;Audit my dark mode for accessibility - check all text contrast, surface elevation, color vibration issues&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80c6-9853-cfff485e66f5"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="fd8d993a-6819-48cd-aef6-5b8b57d1c869"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="11a58b09-04be-448c-a461-8bae92505140" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="d240a362-7e83-4a6a-9bd2-99b2f59ee6f0" class="bulleted-list"><li style="list-style-type:disc">&quot;Create dark mode color palette - convert light mode white/blue/gray to dark mode with elevation levels&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="db634423-bc92-4e03-8f36-55d9820be2c5" class="bulleted-list"><li style="list-style-type:disc">&quot;Design semantic color tokens - bg-primary, text-primary, border-primary that work in light and dark modes&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="f69b6270-5d5c-4994-acae-8f7f921e2bb0" class="bulleted-list"><li style="list-style-type:disc">&quot;Convert this button component to dark mode - adjust colors, borders, focus states, maintain accessibility&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d4f2198-b6d1-4179-8f0b-2c19131a5c50" class="bulleted-list"><li style="list-style-type:disc">&quot;Test dark mode contrast - check all text and UI components meet WCAG AA in dark mode&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80da-b2cb-c3352935820d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-803e-88aa-fa433f4ff96d"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8051-9101-d3fc40b4037a" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-80ac-92ff-ea1fab8ac470" class="image"><a href="66_Exampl_Output.png"><img style="width:643.9921875px" src="66_Exampl_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80ee-9e4a-e4f0a96dc1e7"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="a0f75c71-f81c-4b0b-b85d-00068ddbfef1"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="caa7d315-ab93-4828-86de-9f2cb41a8673" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="34ecdfc5-0ef7-4757-902c-c4166ecc0780" class="">→ Recipe #64: <a href="R-64 Design Accessible Components d8c67ccc6bef83ed9c3201d848757c88.html">Design Accessible Components</a><br/>→ Recipe #21: <a href="R-21 Turn Brand into UI Styles 2d667ccc6bef808fb671c9d953cc5641.html">Turn Brand Into UI Styles</a></p></div></div></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
