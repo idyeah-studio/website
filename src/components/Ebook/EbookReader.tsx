@@ -193,32 +193,32 @@ export const EbookReader: React.FC = () => {
           
           // Replace all background colors in CSS rules - BRIGHTER colors for visibility
           // Gray backgrounds
-          html = html.replace(/background:\s*rgba\(240,\s*239,\s*237,\s*1\)/gi, (match) => { replacementCount++; return 'background: rgba(75, 85, 99, 0.4)'; });
-          html = html.replace(/background:\s*rgb\(247,\s*246,\s*243\)/gi, (match) => { replacementCount++; return 'background: rgba(75, 85, 99, 0.4)'; });
-          html = html.replace(/background:\s*rgba\(206,\s*205,\s*202,\s*0\.5\)/gi, (match) => { replacementCount++; return 'background: rgba(75, 85, 99, 0.4)'; });
+          html = html.replace(/background:\s*rgba\(240,\s*239,\s*237,\s*1\)/gi, () => { replacementCount++; return 'background: rgba(75, 85, 99, 0.4)'; });
+          html = html.replace(/background:\s*rgb\(247,\s*246,\s*243\)/gi, () => { replacementCount++; return 'background: rgba(75, 85, 99, 0.4)'; });
+          html = html.replace(/background:\s*rgba\(206,\s*205,\s*202,\s*0\.5\)/gi, () => { replacementCount++; return 'background: rgba(75, 85, 99, 0.4)'; });
           // Brown backgrounds - warmer, more visible
-          html = html.replace(/background:\s*rgba\(245,\s*237,\s*233,\s*1\)/gi, (match) => { replacementCount++; return 'background: rgba(180, 83, 9, 0.3)'; });
-          html = html.replace(/background:\s*rgba\(42,\s*28,\s*0,\s*0\.07\)/gi, (match) => { replacementCount++; return 'background: rgba(180, 83, 9, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(245,\s*237,\s*233,\s*1\)/gi, () => { replacementCount++; return 'background: rgba(180, 83, 9, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(42,\s*28,\s*0,\s*0\.07\)/gi, () => { replacementCount++; return 'background: rgba(180, 83, 9, 0.3)'; });
           // Orange backgrounds - brighter
-          html = html.replace(/background:\s*rgba\(251,\s*235,\s*222,\s*1\)/gi, (match) => { replacementCount++; return 'background: rgba(234, 88, 12, 0.3)'; });
-          html = html.replace(/background:\s*rgba\(139,\s*46,\s*0,\s*0\.086\)/gi, (match) => { replacementCount++; return 'background: rgba(234, 88, 12, 0.3)'; });
-          html = html.replace(/background:\s*rgba\(224,\s*101,\s*1,\s*0\.129\)/gi, (match) => { replacementCount++; return 'background: rgba(234, 88, 12, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(251,\s*235,\s*222,\s*1\)/gi, () => { replacementCount++; return 'background: rgba(234, 88, 12, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(139,\s*46,\s*0,\s*0\.086\)/gi, () => { replacementCount++; return 'background: rgba(234, 88, 12, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(224,\s*101,\s*1,\s*0\.129\)/gi, () => { replacementCount++; return 'background: rgba(234, 88, 12, 0.3)'; });
           // Yellow backgrounds - more saturated
-          html = html.replace(/background:\s*rgba\(249,\s*243,\s*220,\s*1\)/gi, (match) => { replacementCount++; return 'background: rgba(202, 138, 4, 0.3)'; });
-          html = html.replace(/background:\s*rgba\(211,\s*168,\s*0,\s*0\.137\)/gi, (match) => { replacementCount++; return 'background: rgba(202, 138, 4, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(249,\s*243,\s*220,\s*1\)/gi, () => { replacementCount++; return 'background: rgba(202, 138, 4, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(211,\s*168,\s*0,\s*0\.137\)/gi, () => { replacementCount++; return 'background: rgba(202, 138, 4, 0.3)'; });
           // Green backgrounds - MUCH brighter and more visible
-          html = html.replace(/background:\s*rgba\(232,\s*241,\s*236,\s*1\)/gi, (match) => { replacementCount++; return 'background: rgba(21, 128, 61, 0.35)'; });
-          html = html.replace(/background:\s*rgba\(0,\s*100,\s*45,\s*0\.09\)/gi, (match) => { replacementCount++; return 'background: rgba(21, 128, 61, 0.35)'; });
+          html = html.replace(/background:\s*rgba\(232,\s*241,\s*236,\s*1\)/gi, () => { replacementCount++; return 'background: rgba(21, 128, 61, 0.35)'; });
+          html = html.replace(/background:\s*rgba\(0,\s*100,\s*45,\s*0\.09\)/gi, () => { replacementCount++; return 'background: rgba(21, 128, 61, 0.35)'; });
           // Blue backgrounds - brighter
-          html = html.replace(/background:\s*rgba\(229,\s*242,\s*252,\s*1\)/gi, (match) => { replacementCount++; return 'background: rgba(37, 99, 235, 0.3)'; });
-          html = html.replace(/background:\s*rgba\(0,\s*124,\s*215,\s*0\.094\)/gi, (match) => { replacementCount++; return 'background: rgba(37, 99, 235, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(229,\s*242,\s*252,\s*1\)/gi, () => { replacementCount++; return 'background: rgba(37, 99, 235, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(0,\s*124,\s*215,\s*0\.094\)/gi, () => { replacementCount++; return 'background: rgba(37, 99, 235, 0.3)'; });
           // Purple backgrounds - more saturated
-          html = html.replace(/background:\s*rgba\(243,\s*235,\s*249,\s*1\)/gi, (match) => { replacementCount++; return 'background: rgba(126, 34, 206, 0.3)'; });
-          html = html.replace(/background:\s*rgba\(102,\s*0,\s*178,\s*0\.078\)/gi, (match) => { replacementCount++; return 'background: rgba(126, 34, 206, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(243,\s*235,\s*249,\s*1\)/gi, () => { replacementCount++; return 'background: rgba(126, 34, 206, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(102,\s*0,\s*178,\s*0\.078\)/gi, () => { replacementCount++; return 'background: rgba(126, 34, 206, 0.3)'; });
           // Pink/Red backgrounds - brighter
-          html = html.replace(/background:\s*rgba\(250,\s*233,\s*241,\s*1\)/gi, (match) => { replacementCount++; return 'background: rgba(219, 39, 119, 0.3)'; });
-          html = html.replace(/background:\s*rgba\(197,\s*0,\s*93,\s*0\.086\)/gi, (match) => { replacementCount++; return 'background: rgba(219, 39, 119, 0.3)'; });
-          html = html.replace(/background:\s*rgba\(223,\s*22,\s*0,\s*0\.094\)/gi, (match) => { replacementCount++; return 'background: rgba(220, 38, 38, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(250,\s*233,\s*241,\s*1\)/gi, () => { replacementCount++; return 'background: rgba(219, 39, 119, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(197,\s*0,\s*93,\s*0\.086\)/gi, () => { replacementCount++; return 'background: rgba(219, 39, 119, 0.3)'; });
+          html = html.replace(/background:\s*rgba\(223,\s*22,\s*0,\s*0\.094\)/gi, () => { replacementCount++; return 'background: rgba(220, 38, 38, 0.3)'; });
           
           console.log(`Made ${replacementCount} color replacements`);
           console.log('HTML length changed from', originalLength, 'to', html.length);
