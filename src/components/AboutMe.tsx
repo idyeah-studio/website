@@ -724,7 +724,15 @@ import { Link } from 'react-router-dom';
 
 export default function AboutMe() {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif' }}>
+    <div style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      minHeight: '100vh',
+      backgroundColor: '#ffffff',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif'
+    }}>
       {/* Header */}
       <div
         style={{
@@ -767,7 +775,7 @@ export default function AboutMe() {
           width: '100%',
           maxWidth: '720px',
           margin: '0 auto',
-          padding: '0 16px'
+          padding: '64px 16px 0'
         }}
       >
         <style dangerouslySetInnerHTML={{ __html: css }} />
