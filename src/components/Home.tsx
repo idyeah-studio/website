@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/logo-symbol.png';
+import { useTheme } from '../contexts/ThemeContext';
+import logoLight from '../assets/logo-symbol.png';
+import logoDark from '../assets/logo-symbol-dark.png';
 import profilePhoto from '../assets/profile-photo.jpg';
 
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const { isDarkMode, toggleTheme, theme } = useTheme();
 
   return (
     <div
       style={{
         minHeight: '100vh',
-        backgroundColor: '#ffffff',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif'
+        backgroundColor: theme.bg,
+        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
+        transition: 'background-color 0.3s ease'
       }}
     >
       {/* Header */}
@@ -20,70 +24,118 @@ export default function Home() {
         style={{
           position: 'absolute',
           top: '20px',
+          left: '24px',
           right: '24px',
           zIndex: 10,
           display: 'flex',
           alignItems: 'center',
-          gap: '12px'
+          justifyContent: 'space-between'
         }}
       >
-        {/* Ebook Button */}
-        <a
-          href="https://idyeah.gumroad.com/l/design-ai-alchemy"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* Theme Toggle - Left Side */}
+        <button
+          onClick={toggleTheme}
           style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '6px 12px',
+            borderRadius: '9999px',
+            border: `1px solid ${theme.borderStrong}`,
+            backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
             fontSize: '14px',
             fontWeight: 400,
-            color: '#9d5773',
-            textDecoration: 'none',
-            padding: '6px 16px',
-            borderRadius: '9999px',
-            border: '1px solid #c98ba0',
-            backgroundColor: 'rgba(201, 139, 160, 0.06)',
-            transition: 'all 0.2s'
+            color: theme.text
           }}
           onMouseEnter={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = '#9d5773';
-            target.style.color = '#ffffff';
+            e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)';
           }}
           onMouseLeave={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'rgba(201, 139, 160, 0.06)';
-            target.style.color = '#9d5773';
+            e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
           }}
         >
-          Design AI Alchemy (Ebook)
-        </a>
+          {isDarkMode ? (
+            // Moon icon for dark mode
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14.5 8.5C14.5 11.8137 11.8137 14.5 8.5 14.5C5.18629 14.5 2.5 11.8137 2.5 8.5C2.5 5.18629 5.18629 2.5 8.5 2.5C8.67742 2.5 8.85323 2.50806 9.02694 2.52387C7.91935 3.28226 7.21774 4.56452 7.21774 6C7.21774 8.34032 9.08871 10.2113 11.429 10.2113C12.8645 10.2113 14.1468 9.50968 14.9052 8.40209C14.921 8.57581 14.929 8.75161 14.929 8.92903C14.929 8.95242 14.9145 8.97581 14.9145 8.99919L14.5 8.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          ) : (
+            // Sun icon for light mode
+            <svg width="16" height="16" viewBox="0 0 19.6875 19.3457" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.66797 2.03125C10.2246 2.03125 10.6836 1.58203 10.6836 1.01562C10.6836 0.449219 10.2246 0 9.66797 0C9.10156 0 8.65234 0.449219 8.65234 1.01562C8.65234 1.58203 9.10156 2.03125 9.66797 2.03125ZM15.791 4.56055C16.3477 4.56055 16.7969 4.11133 16.7969 3.54492C16.7969 2.97852 16.3477 2.5293 15.791 2.5293C15.2246 2.5293 14.7754 2.97852 14.7754 3.54492C14.7754 4.11133 15.2246 4.56055 15.791 4.56055ZM18.3203 10.6836C18.877 10.6836 19.3262 10.2344 19.3262 9.66797C19.3262 9.10156 18.877 8.65234 18.3203 8.65234C17.7539 8.65234 17.3047 9.10156 17.3047 9.66797C17.3047 10.2344 17.7539 10.6836 18.3203 10.6836ZM15.791 16.8066C16.3477 16.8066 16.7969 16.3574 16.7969 15.791C16.7969 15.2246 16.3477 14.7754 15.791 14.7754C15.2246 14.7754 14.7754 15.2246 14.7754 15.791C14.7754 16.3574 15.2246 16.8066 15.791 16.8066ZM9.66797 19.3359C10.2246 19.3359 10.6836 18.8867 10.6836 18.3203C10.6836 17.7539 10.2246 17.3047 9.66797 17.3047C9.10156 17.3047 8.65234 17.7539 8.65234 18.3203C8.65234 18.8867 9.10156 19.3359 9.66797 19.3359ZM3.54492 16.8066C4.11133 16.8066 4.56055 16.3574 4.56055 15.791C4.56055 15.2246 4.11133 14.7754 3.54492 14.7754C2.97852 14.7754 2.5293 15.2246 2.5293 15.791C2.5293 16.3574 2.97852 16.8066 3.54492 16.8066ZM1.01562 10.6836C1.58203 10.6836 2.03125 10.2344 2.03125 9.66797C2.03125 9.10156 1.58203 8.65234 1.01562 8.65234C0.449219 8.65234 0 9.10156 0 9.66797C0 10.2344 0.449219 10.6836 1.01562 10.6836ZM3.54492 4.56055C4.11133 4.56055 4.56055 4.11133 4.56055 3.54492C4.56055 2.97852 4.11133 2.5293 3.54492 2.5293C2.97852 2.5293 2.5293 2.97852 2.5293 3.54492C2.5293 4.11133 2.97852 4.56055 3.54492 4.56055Z" fill="currentColor" fillOpacity="0.85"/>
+              <path d="M9.66797 14.6387C12.4121 14.6387 14.6387 12.4121 14.6387 9.66797C14.6387 6.92383 12.4121 4.6875 9.66797 4.6875C6.92383 4.6875 4.6875 6.92383 4.6875 9.66797C4.6875 12.4121 6.92383 14.6387 9.66797 14.6387ZM9.66797 13.1543C7.73438 13.1543 6.17188 11.6016 6.17188 9.66797C6.17188 7.73438 7.73438 6.17188 9.66797 6.17188C11.6016 6.17188 13.1543 7.73438 13.1543 9.66797C13.1543 11.6016 11.6016 13.1543 9.66797 13.1543Z" fill="currentColor" fillOpacity="0.85"/>
+            </svg>
+          )}
+        </button>
 
-        {/* Founder Profile Button */}
-        <Link
-          to="/founderprofile"
+        {/* Right Side Buttons */}
+        <div
           style={{
-            fontSize: '14px',
-            fontWeight: 400,
-            color: '#222222',
-            textDecoration: 'none',
-            padding: '6px 16px',
-            borderRadius: '9999px',
-            border: '1px solid #000000',
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            transition: 'all 0.2s'
-          }}
-          onMouseEnter={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = '#000000';
-            target.style.color = '#ffffff';
-          }}
-          onMouseLeave={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-            target.style.color = '#222222';
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
           }}
         >
-          Founder Profile
-        </Link>
+          {/* Ebook Button */}
+          <a
+            href="https://idyeah.gumroad.com/l/design-ai-alchemy"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontSize: '14px',
+              fontWeight: 400,
+              color: '#9d5773',
+              textDecoration: 'none',
+              padding: '6px 16px',
+              borderRadius: '9999px',
+              border: '1px solid #c98ba0',
+              backgroundColor: 'rgba(201, 139, 160, 0.06)',
+              transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              const target = e.target as HTMLElement;
+              target.style.backgroundColor = '#9d5773';
+              target.style.color = '#ffffff';
+            }}
+            onMouseLeave={(e) => {
+              const target = e.target as HTMLElement;
+              target.style.backgroundColor = 'rgba(201, 139, 160, 0.06)';
+              target.style.color = '#9d5773';
+            }}
+          >
+            Design AI Alchemy (Ebook)
+          </a>
+
+          {/* Founder Profile Button */}
+          <Link
+            to="/founderprofile"
+            style={{
+              fontSize: '14px',
+              fontWeight: 400,
+              color: theme.text,
+              textDecoration: 'none',
+              padding: '6px 16px',
+              borderRadius: '9999px',
+              border: `1px solid ${theme.borderStrong}`,
+              backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.9)',
+              transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              const target = e.target as HTMLElement;
+              target.style.backgroundColor = theme.buttonBg;
+              target.style.color = theme.buttonText;
+            }}
+            onMouseLeave={(e) => {
+              const target = e.target as HTMLElement;
+              target.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.9)';
+              target.style.color = theme.text;
+            }}
+          >
+            Founder Profile
+          </Link>
+        </div>
       </div>
 
       <div
@@ -111,13 +163,13 @@ export default function Home() {
             }}
           >
             <img
-              src={logo}
+              src={isDarkMode ? logoDark : logoLight}
               alt="IDYeah Studio"
               style={{
                 width: 'clamp(240px, 60vw, 320px)',
                 height: 'auto',
                 animation: 'float 5s ease-in-out infinite alternate',
-                filter: 'drop-shadow(0 8px 24px rgba(0, 0, 0, 0.06))'
+                filter: isDarkMode ? 'drop-shadow(0 8px 24px rgba(255, 255, 255, 0.1))' : 'drop-shadow(0 8px 24px rgba(0, 0, 0, 0.06))'
               }}
             />
           </div>
@@ -127,7 +179,7 @@ export default function Home() {
               fontSize: 'clamp(32px, 8vw, 40px)',
               fontWeight: 600,
               lineHeight: 1.15,
-              color: '#222222',
+              color: theme.text,
               letterSpacing: '-0.02em',
               marginBottom: 'clamp(24px, 5vw, 40px)',
               padding: '0 16px'
@@ -141,7 +193,7 @@ export default function Home() {
               fontSize: 'clamp(16px, 4vw, 18px)',
               fontWeight: 400,
               lineHeight: 1.6,
-              color: '#505050',
+              color: theme.textSecondary,
               maxWidth: '600px',
               margin: '0 auto 32px',
               padding: '0 16px'
@@ -155,7 +207,7 @@ export default function Home() {
             style={{
               fontSize: 'clamp(13px, 3vw, 14px)',
               fontWeight: 400,
-              color: '#8A8A8A',
+              color: theme.textTertiary,
               letterSpacing: '0.02em'
             }}
           >
@@ -178,7 +230,7 @@ export default function Home() {
               transform: 'translateX(-50%)',
               width: '48px',
               height: '1px',
-              backgroundColor: '#E5E5E5'
+              backgroundColor: theme.divider
             }}
           />
 
@@ -187,7 +239,7 @@ export default function Home() {
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
-              color: '#222222',
+              color: theme.text,
               letterSpacing: '-0.01em',
               textAlign: 'center',
               marginBottom: 'clamp(64px, 15vw, 96px)',
@@ -202,8 +254,8 @@ export default function Home() {
               style={{
                 padding: 'clamp(24px, 6vw, 32px)',
                 borderRadius: '16px',
-                background: 'rgba(0, 0, 0, 0.01)',
-                border: '1px solid rgba(0, 0, 0, 0.04)',
+                background: theme.cardBg,
+                border: `1px solid ${theme.border}`,
                 transition: 'all 0.3s'
               }}
             >
@@ -212,7 +264,7 @@ export default function Home() {
                   fontSize: 'clamp(18px, 4.5vw, 20px)',
                   fontWeight: 600,
                   lineHeight: 1.3,
-                  color: '#222222',
+                  color: theme.text,
                   marginBottom: 'clamp(12px, 3vw, 16px)'
                 }}
               >
@@ -223,7 +275,7 @@ export default function Home() {
                   fontSize: 'clamp(15px, 3.5vw, 16px)',
                   fontWeight: 400,
                   lineHeight: 1.7,
-                  color: '#505050'
+                  color: theme.textSecondary
                 }}
               >
                 One focused session. What's working, what's broken, what to fix first. You leave with a written summary and a prioritized roadmap.
@@ -234,8 +286,8 @@ export default function Home() {
               style={{
                 padding: 'clamp(24px, 6vw, 32px)',
                 borderRadius: '16px',
-                background: 'rgba(0, 0, 0, 0.01)',
-                border: '1px solid rgba(0, 0, 0, 0.04)',
+                background: theme.cardBg,
+                border: `1px solid ${theme.border}`,
                 transition: 'all 0.3s'
               }}
             >
@@ -244,7 +296,7 @@ export default function Home() {
                   fontSize: 'clamp(18px, 4.5vw, 20px)',
                   fontWeight: 600,
                   lineHeight: 1.3,
-                  color: '#222222',
+                  color: theme.text,
                   marginBottom: 'clamp(12px, 3vw, 16px)'
                 }}
               >
@@ -255,7 +307,7 @@ export default function Home() {
                   fontSize: 'clamp(15px, 3.5vw, 16px)',
                   fontWeight: 400,
                   lineHeight: 1.7,
-                  color: '#505050'
+                  color: theme.textSecondary
                 }}
               >
                 Sharp, credible positioning that cuts through noise. Messaging that connects with your audience and differentiates you from everyone else.
@@ -266,8 +318,8 @@ export default function Home() {
               style={{
                 padding: 'clamp(24px, 6vw, 32px)',
                 borderRadius: '16px',
-                background: 'rgba(0, 0, 0, 0.01)',
-                border: '1px solid rgba(0, 0, 0, 0.04)',
+                background: theme.cardBg,
+                border: `1px solid ${theme.border}`,
                 transition: 'all 0.3s'
               }}
             >
@@ -276,7 +328,7 @@ export default function Home() {
                   fontSize: 'clamp(18px, 4.5vw, 20px)',
                   fontWeight: 600,
                   lineHeight: 1.3,
-                  color: '#222222',
+                  color: theme.text,
                   marginBottom: 'clamp(12px, 3vw, 16px)'
                 }}
               >
@@ -287,7 +339,7 @@ export default function Home() {
                   fontSize: 'clamp(15px, 3.5vw, 16px)',
                   fontWeight: 400,
                   lineHeight: 1.7,
-                  color: '#505050'
+                  color: theme.textSecondary
                 }}
               >
                 Interfaces that feel intentional. Clean, usable, trustworthy. Designed with a modern workflow that balances craft and speed.
@@ -311,7 +363,7 @@ export default function Home() {
               transform: 'translateX(-50%)',
               width: '48px',
               height: '1px',
-              backgroundColor: '#E5E5E5'
+              backgroundColor: theme.divider
             }}
           />
 
@@ -320,7 +372,7 @@ export default function Home() {
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
-              color: '#222222',
+              color: theme.text,
               letterSpacing: '-0.01em',
               textAlign: 'center',
               marginBottom: 'clamp(64px, 15vw, 96px)',
@@ -344,7 +396,7 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050',
+                color: theme.textSecondary,
                 marginTop: 0,
                 marginBottom: 0
               }}
@@ -357,7 +409,7 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050',
+                color: theme.textSecondary,
                 marginTop: 0,
                 marginBottom: 0
               }}
@@ -370,7 +422,7 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050',
+                color: theme.textSecondary,
                 marginTop: 0,
                 marginBottom: 0
               }}
@@ -384,8 +436,8 @@ export default function Home() {
                 marginTop: '32px',
                 padding: 'clamp(24px, 6vw, 32px)',
                 borderRadius: '16px',
-                background: 'rgba(0, 0, 0, 0.01)',
-                border: '1px solid rgba(0, 0, 0, 0.04)'
+                background: theme.cardBg,
+                border: `1px solid ${theme.border}`
               }}
             >
               <h3
@@ -393,7 +445,7 @@ export default function Home() {
                   fontSize: 'clamp(16px, 4vw, 18px)',
                   fontWeight: 600,
                   lineHeight: 1.3,
-                  color: '#222222',
+                  color: theme.text,
                   marginBottom: '16px'
                 }}
               >
@@ -404,7 +456,7 @@ export default function Home() {
                   fontSize: 'clamp(15px, 3.5vw, 16px)',
                   fontWeight: 400,
                   lineHeight: 1.8,
-                  color: '#505050'
+                  color: theme.textSecondary
                 }}
               >
                 <div style={{ marginBottom: '8px' }}>→ Written summary in Notion or Figma</div>
@@ -431,7 +483,7 @@ export default function Home() {
               transform: 'translateX(-50%)',
               width: '48px',
               height: '1px',
-              backgroundColor: '#E5E5E5'
+              backgroundColor: theme.divider
             }}
           />
 
@@ -440,7 +492,7 @@ export default function Home() {
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
-              color: '#222222',
+              color: theme.text,
               letterSpacing: '-0.01em',
               textAlign: 'center',
               marginBottom: 'clamp(64px, 15vw, 96px)',
@@ -464,7 +516,7 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050',
+                color: theme.textSecondary,
                 marginTop: 0,
                 marginBottom: 0
               }}
@@ -477,7 +529,7 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050',
+                color: theme.textSecondary,
                 marginTop: 0,
                 marginBottom: 0
               }}
@@ -490,7 +542,7 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050',
+                color: theme.textSecondary,
                 marginTop: 0,
                 marginBottom: 0
               }}
@@ -515,7 +567,7 @@ export default function Home() {
               transform: 'translateX(-50%)',
               width: '48px',
               height: '1px',
-              backgroundColor: '#E5E5E5'
+              backgroundColor: theme.divider
             }}
           />
 
@@ -524,7 +576,7 @@ export default function Home() {
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
-              color: '#222222',
+              color: theme.text,
               letterSpacing: '-0.01em',
               textAlign: 'center',
               marginBottom: 'clamp(64px, 15vw, 96px)',
@@ -567,8 +619,8 @@ export default function Home() {
                   padding: '8px 24px',
                   borderRadius: '16px',
                   cursor: 'pointer',
-                  background: expandedFaq === index ? 'rgba(0, 0, 0, 0.02)' : 'rgba(0, 0, 0, 0.01)',
-                  border: '1px solid rgba(0, 0, 0, 0.04)',
+                  background: expandedFaq === index ? theme.cardBgHover : theme.cardBg,
+                  border: `1px solid ${theme.border}`,
                   transition: 'all 0.3s'
                 }}
                 onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
@@ -586,7 +638,7 @@ export default function Home() {
                       fontSize: 'clamp(15px, 3.5vw, 16px)',
                       fontWeight: 600,
                       lineHeight: 1.4,
-                      color: '#222222'
+                      color: theme.text
                     }}
                   >
                     {faq.q}
@@ -594,7 +646,7 @@ export default function Home() {
                   <span
                     style={{
                       fontSize: '20px',
-                      color: '#8A8A8A',
+                      color: theme.textTertiary,
                       transition: 'transform 0.3s',
                       transform: expandedFaq === index ? 'rotate(45deg)' : 'rotate(0)',
                       marginLeft: '16px',
@@ -610,7 +662,7 @@ export default function Home() {
                       fontSize: 'clamp(14px, 3.5vw, 15px)',
                       fontWeight: 400,
                       lineHeight: 1.7,
-                      color: '#505050'
+                      color: theme.textSecondary
                     }}
                   >
                     {faq.a}
@@ -636,7 +688,7 @@ export default function Home() {
               transform: 'translateX(-50%)',
               width: '48px',
               height: '1px',
-              backgroundColor: '#E5E5E5'
+              backgroundColor: theme.divider
             }}
           />
 
@@ -645,7 +697,7 @@ export default function Home() {
               fontSize: 'clamp(24px, 6vw, 28px)',
               fontWeight: 600,
               lineHeight: 1.2,
-              color: '#222222',
+              color: theme.text,
               letterSpacing: '-0.01em',
               textAlign: 'center',
               marginBottom: 'clamp(64px, 15vw, 96px)',
@@ -669,7 +721,7 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050',
+                color: theme.textSecondary,
                 marginTop: 0,
                 marginBottom: 0
               }}
@@ -682,7 +734,7 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050',
+                color: theme.textSecondary,
                 marginTop: 0,
                 marginBottom: 0
               }}
@@ -695,7 +747,7 @@ export default function Home() {
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050',
+                color: theme.textSecondary,
                 marginTop: 0,
                 marginBottom: 0
               }}
@@ -718,8 +770,8 @@ export default function Home() {
               padding: 'clamp(32px, 8vw, 40px)',
               borderRadius: '24px',
               marginBottom: '32px',
-              background: 'rgba(0, 0, 0, 0.015)',
-              border: '1px solid rgba(0, 0, 0, 0.05)',
+              background: isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.015)',
+              border: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)'}`,
               maxWidth: '100%'
             }}
           >
@@ -728,7 +780,7 @@ export default function Home() {
                 fontSize: 'clamp(16px, 4vw, 18px)',
                 fontWeight: 500,
                 lineHeight: 1.6,
-                color: '#222222',
+                color: theme.text,
                 marginBottom: 'clamp(24px, 6vw, 32px)'
               }}
             >
@@ -743,8 +795,8 @@ export default function Home() {
               onMouseLeave={() => setIsHovered(false)}
               style={{
                 display: 'inline-block',
-                backgroundColor: isHovered ? '#111111' : '#000000',
-                color: '#ffffff',
+                backgroundColor: isHovered ? theme.buttonBgHover : theme.buttonBg,
+                color: theme.buttonText,
                 padding: '12px 28px',
                 borderRadius: '9999px',
                 fontSize: 'clamp(15px, 3.5vw, 16px)',
@@ -752,7 +804,7 @@ export default function Home() {
                 textDecoration: 'none',
                 cursor: 'pointer',
                 transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
-                boxShadow: isHovered ? '0 4px 12px rgba(0, 0, 0, 0.15)' : 'none',
+                boxShadow: isHovered ? (isDarkMode ? '0 4px 12px rgba(255, 255, 255, 0.2)' : '0 4px 12px rgba(0, 0, 0, 0.15)') : 'none',
                 transition: 'all 0.2s ease-in-out'
               }}
             >
@@ -764,7 +816,7 @@ export default function Home() {
                 fontSize: 'clamp(13px, 3vw, 14px)',
                 fontWeight: 400,
                 lineHeight: 1.6,
-                color: '#8A8A8A',
+                color: theme.textTertiary,
                 maxWidth: '480px',
                 margin: '24px auto 0',
                 padding: '0 16px'
@@ -780,7 +832,7 @@ export default function Home() {
           style={{
             textAlign: 'center',
             padding: 'clamp(64px, 15vw, 80px) 0',
-            borderTop: '1px solid #E5E5E5'
+            borderTop: `1px solid ${theme.divider}`
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '32px' }}>
@@ -794,7 +846,7 @@ export default function Home() {
                 objectFit: 'cover',
                 marginBottom: '16px',
                 filter: 'grayscale(100%)',
-                border: '2px solid rgba(0, 0, 0, 0.06)'
+                border: `2px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.06)'}`
               }}
             />
             <p
@@ -802,7 +854,7 @@ export default function Home() {
                 fontSize: 'clamp(14px, 3.5vw, 15px)',
                 fontWeight: 400,
                 lineHeight: 1.7,
-                color: '#505050',
+                color: theme.textSecondary,
                 maxWidth: '480px',
                 margin: '0 auto 24px'
               }}
@@ -815,7 +867,7 @@ export default function Home() {
             style={{
               fontSize: 'clamp(13px, 3vw, 14px)',
               fontWeight: 400,
-              color: '#8A8A8A',
+              color: theme.textTertiary,
               marginBottom: '8px'
             }}
           >
@@ -825,28 +877,28 @@ export default function Home() {
             style={{
               fontSize: 'clamp(13px, 3vw, 14px)',
               fontWeight: 400,
-              color: '#AFAFAF',
+              color: isDarkMode ? '#606060' : '#AFAFAF',
               marginBottom: '16px'
             }}
           >
-            © 2025. IDYeah Studio
+            © 2026. IDYeah Studio
           </p>
           <p
             style={{
               fontSize: 'clamp(12px, 3vw, 13px)',
               fontWeight: 400,
-              color: '#AFAFAF'
+              color: isDarkMode ? '#606060' : '#AFAFAF'
             }}
           >
             <a
               href="mailto:vishal@idyeah.studio"
               style={{
-                color: '#8A8A8A',
+                color: theme.textTertiary,
                 textDecoration: 'none',
                 transition: 'color 0.2s'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.color = '#222222'}
-              onMouseLeave={(e) => e.currentTarget.style.color = '#8A8A8A'}
+              onMouseEnter={(e) => e.currentTarget.style.color = theme.text}
+              onMouseLeave={(e) => e.currentTarget.style.color = theme.textTertiary}
             >
               vishal@idyeah.studio
             </a>
