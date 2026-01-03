@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
-import logoLight from '../assets/logo-symbol.png';
-import logoDark from '../assets/logo-symbol-dark.png';
 
 export default function AboutMe() {
   const { isDarkMode, toggleTheme, theme } = useTheme();
