@@ -1,0 +1,799 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-31: Polish Your Loading States</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-806d-9294-c17a339f61c3" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-808d-8946-c33b7bf53f62" class="">Recipe #31: Polish Your Loading States</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80c0-b4cc-f7a7d37dcc1f" class="">Category: UI &amp; Visuals  |  ⏱️ 20-25 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8041-8420-e1032f0c5dc2" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="91333146-be7b-4e94-8ace-c2101fd5350b"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="bd4ab512-7232-4a35-978a-750659483d98" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="31aad344-3421-4600-8407-6d5068b10f35" class="">You&#x27;re redesigning loading experiences that feel slow, unresponsive, or frustrating - generic spinners appear instantly, content pops in abruptly, or users stare at blank screens wondering if the app is broken. The interface needs smoother, more informative loading feedback.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8034-b715-c7a726ce408e"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="2962d37e-0470-41ba-bb8f-9b0413d7d689"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6a91b195-eb14-4312-b061-b93eac13c693" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="3d0d3b78-4f08-41ff-a044-88aa60d08271" class="">Many applications handle loading poorly - showing generic spinners immediately (causing layout jank), displaying blank screens for 3+ seconds with no feedback, or having content pop in abruptly without transitions. Users don&#x27;t know if the app is working, how long to wait, or if they should refresh. Loading spinners appear for fast operations (creating visual noise) and disappear for slow ones (leaving users confused). You need a sophisticated loading strategy with skeleton screens, optimistic UI, progressive loading, and clear feedback that makes waiting feel faster and builds confidence.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8027-915e-c791a050f7b0"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="76678728-0e6f-42ae-8e44-f14cbae31c4b"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b192232d-4260-4f4b-88e4-955464ae477c" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="ba0f0f43-8c93-463f-9cc3-482326c0a97b" class="">The AI will provide a comprehensive loading strategy framework with timing thresholds (no indicator for &lt;100ms, delayed spinner for 100-500ms, skeleton screens for 500ms-2s, progress indicators for longer waits), skeleton screen design matching actual content layouts with pulse animations and smooth fade transitions, progressive loading approach prioritizing critical above-fold content with lazy loading and streaming data, optimistic UI patterns for immediate feedback with background syncing and error rollback strategies, progress indication systems for both determinate operations (file uploads with percentages and time estimates) and indeterminate operations (spinners with messages), loading delay thresholds to prevent visual flicker, transition and animation timing specifications for smooth content appearance, and error handling with timeouts, retry logic, and offline detection. Optionally includes loading state flowcharts and visual examples.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="d07575de-0de0-4c0d-a11b-ebdac3811bad"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="e28dd214-e609-408c-98d4-90537157abd1"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0cf69475-5c0f-4a89-b0c3-ae48edf6f41e" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4e3adfb9-711a-43d1-a807-a42fe42e5736" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Interaction Designer specializing in loading states, perceived performance, and skeleton screens.
+
+I&#x27;m designing loading experiences for a [Product Type] to make waiting feel faster and build user confidence.
+
+[OPTIONAL: Attach videos showing current loading behavior or screenshots of loading states]
+
+Loading contexts:
+- Common loading scenarios: [e.g., Page load, Infinite scroll, Form submission, Search results, File upload, Data refresh]
+- Typical load times: [e.g., &lt;100ms instant, 100ms-1s fast, 1-3s moderate, 3-10s slow, 10s+ very slow]
+- Network conditions: [e.g., Fast wifi, Mobile 4G, Slow 3G, Offline]
+- Content types: [e.g., Text, Images, Videos, Data tables, Charts]
+
+Current loading problems:
+- [Problem 1: e.g., Generic spinner appears instantly - even for 200ms loads, creating visual noise]
+- [Problem 2: e.g., Blank white screen for 3 seconds - users think app is broken]
+- [Problem 3: e.g., No progress indication - users don&#x27;t know how long to wait]
+- [Problem 4: e.g., Content pops in abruptly - jarring layout shifts]
+- [Problem 5: e.g., Same loading treatment for 500ms and 5-second loads]
+
+User context: [Platform, typical connection speeds, user patience level, task importance]
+
+Please provide:
+1. Loading strategy framework (when to show what type of loading indicator)
+2. Skeleton screen design (content placeholders)
+3. Progressive loading approach (load critical content first)
+4. Optimistic UI patterns (show result immediately, sync in background)
+5. Progress indication (determinate vs. indeterminate)
+6. Loading delay thresholds (when to show indicators)
+7. Transition and animation timing
+8. Error and timeout handling
+
+Consider: [Constraints - e.g., Variable network speeds, must work offline, different content types load at different speeds, accessibility for screen readers]</code></pre></div><div style="display:contents" dir="auto"><p id="5ccae29a-5b90-432d-9c0a-90190b5ffaab" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="87447200-c3a2-4f62-99b8-eaee533b1cd8" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = News site, Dashboard, E-commerce, Social feed, File manager, Data app</li></ul></div><div style="display:contents" dir="auto"><ul id="094c0aed-3aa5-44cb-a9f9-714c8f18f629" class="bulleted-list"><li style="list-style-type:disc">[Loading scenarios] = When loading happens in your app</li></ul></div><div style="display:contents" dir="auto"><ul id="fd5e0451-aad0-43a1-84ea-c3217cda7682" class="bulleted-list"><li style="list-style-type:disc">[Load times] = Typical duration for different operations</li></ul></div><div style="display:contents" dir="auto"><ul id="e82c7578-aeb4-4aa5-988a-0040d1d7ec92" class="bulleted-list"><li style="list-style-type:disc">[Content types] = What&#x27;s being loaded</li></ul></div><div style="display:contents" dir="auto"><ul id="79abbf97-3d4d-4738-b65c-86eacef2a94e" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current loading experience issues</li></ul></div><div style="display:contents" dir="auto"><ul id="20474313-23ec-4403-93a0-bf979b1c06b4" class="bulleted-list"><li style="list-style-type:disc">Upload videos or recordings showing current loading behavior</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80a5-8b6a-f22680e9be16"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80b8-ab52-e49ca971e8d9"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8087-bf79-c63e632f7902" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-80e3-8bf0-eb91c25b88be" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Interaction Designer specializing in loading states, perceived performance, and skeleton screens.
+
+I&#x27;m designing loading experiences for a Content Dashboard and Feed Application to make waiting feel faster and build user confidence.
+
+[User would attach loading behavior videos here]
+
+Loading contexts:
+- Common loading scenarios:
+  - Initial page load (dashboard with 6 widget cards)
+  - Infinite scroll (loading more feed items)
+  - Search results (querying database)
+  - Refreshing data (pull-to-refresh on mobile)
+  - Uploading files (with progress)
+  - Filtering/sorting large datasets
+  - Opening detail views (modal with async data)
+- Typical load times:
+  - Fast (&lt; 500ms): Single card refresh, simple searches
+  - Moderate (500ms-2s): Initial page load, complex queries
+  - Slow (2-5s): Large dataset filters, image uploads
+  - Very slow (5-15s): Video processing, batch operations
+- Network conditions:
+  - Office wifi (fast): 90% of desktop users
+  - Mobile 4G (variable): 60% of mobile users
+  - Slow 3G (slow): 10% of users in poor coverage
+  - Offline: Must handle gracefully
+- Content types:
+  - Text and data (loads fast)
+  - Thumbnails and icons (moderate)
+  - Full-size images (slow)
+  - Charts and visualizations (moderate, data-dependent)
+
+Current loading problems:
+- Generic spinner appears immediately for all loads - even 200ms card refreshes show spinner briefly, creating visual flicker and noise
+- Initial page load shows blank white screen for 2-3 seconds with just a centered spinner - users think app crashed or is frozen
+- No progress indication for file uploads - users upload 50MB video and have no idea if it&#x27;s 10% or 90% complete
+- Feed items pop in abruptly when scrolling - causes layout shift, content jumps around, hard to read
+- Same loading spinner for 500ms search and 5-second data export - no sense of expected wait time
+- Refresh button shows no feedback - users click multiple times thinking it didn&#x27;t work
+- Modal dialogs open instantly but then show spinner inside - jarring to see empty modal then loading state
+- When network is slow, entire interface freezes - no indication that anything is happening
+
+User context: Knowledge workers checking dashboard 10-20 times per day. Mobile users on commutes with variable connectivity. File uploads critical for workflows but often large (20-100MB). Users are impatient - if page takes &gt; 3 seconds with no feedback, they refresh or give up. Accessibility important - screen reader users need loading announcements.
+
+Please provide:
+1. Loading strategy framework (when to show what type of loading indicator)
+2. Skeleton screen design (content placeholders)
+3. Progressive loading approach (load critical content first)
+4. Optimistic UI patterns (show result immediately, sync in background)
+5. Progress indication (determinate vs. indeterminate)
+6. Loading delay thresholds (when to show indicators)
+7. Transition and animation timing
+8. Error and timeout handling
+
+Consider: Must handle variable network speeds gracefully. Mobile users on 3G need different experience than desktop on wifi. Large files need clear progress. Skeleton screens must match actual content layout (avoid layout shift). Screen readers need loading state announcements. Some operations can be optimistic (like/favorite), others can&#x27;t (delete).</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="26d572a0-e510-49b5-9c19-bcf4c6cfa26e"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="56fad105-d30e-461a-ac38-8277315fea4f" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="2acc7282-3f48-4a03-801a-424ea9d1413d" class="">✦ Delay showing spinners: Don&#x27;t show loading indicator if operation completes in &lt; 200ms - prevents flicker<br/>✦ Common mistake: Same loading treatment for all durations - 500ms needs skeleton, 5s needs progress bar<br/>✦ Best with: Claude (excellent at timing strategies and edge cases), ChatGPT (good for skeleton screen patterns)<br/>✦ Remix it: &quot;Design the offline-first experience - how to handle loading when network is unavailable&quot;<br/>✦ Pro move: Ask &quot;Create the loading performance budget - maximum wait times before showing fallbacks&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8067-a943-f9e55579724d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="ca0363bd-16d3-4378-9031-7cdd835ca969"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="84f76e1d-0433-4dd4-934b-67559a6cfacc" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="9cce5516-fca2-4c6b-9ebb-e58f15e4cd7e" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the skeleton screen system - create placeholders for all common content patterns&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="a340f433-f776-4c1e-a0fb-fa5cf4def428" class="bulleted-list"><li style="list-style-type:disc">&quot;How should infinite scroll loading work - when to trigger, how to indicate more content loading?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="b0f7bb86-bde1-4c43-b855-0da6197acc0a" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the optimistic UI decision tree - which actions can be optimistic, which need confirmation?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="648d32b2-7b4b-42d9-817e-9ba62f973721" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the slow connection experience - what happens when load takes 30+ seconds on 3G?&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8088-8e8d-ed1c7b89d7db"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80b8-93a4-d85fb4386aa9"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80c3-bac9-d0e3f031d8a2" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8059-a0d9-fd3dda6174c4" class="image"><a href="31_Example_Output.png"><img style="width:643.9921875px" src="31_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8032-881f-e0df8b2da481"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="01bec5eb-9692-47af-babb-9c56ebec817e"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d1b1e895-29bb-4744-be1d-910b9045dfd0" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="a4b0b204-d2d6-4e47-8a20-ce8b65b98ec4" class="">→ Recipe #27: <a href="R-27 Design Smooth Interactions 2d767ccc6bef80979ab0f6fc70dc611e.html">Design Smooth Interactions</a><br/>→ Recipe #30: <a href="R-30 Design Empty States 2d767ccc6bef80bf8926fcdc9c1d4e5a.html">Design Empty States</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80e7-bad0-d3f0f749ab32" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

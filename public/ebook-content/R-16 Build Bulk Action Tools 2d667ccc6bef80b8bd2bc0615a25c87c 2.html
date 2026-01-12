@@ -1,0 +1,789 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-16: Build Bulk Action Tools</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-80b8-bd2b-c0615a25c87c" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">☑️</span></div><h1 class="page-title" dir="auto">R-16: Build Bulk Action Tools</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-80bd-9d71-fea4beb988b0" class="">Recipe #16: Build Bulk Action Tools</h1></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-803a-8012-f358808a26de" class="">Category: Wireframing &amp; IA  |  ⏱️ 20-30 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8051-aab3-ce0e76820871" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="c70c1562-2644-46a3-b018-8f7cbc49dd21"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a54fa0e4-c6b3-4289-bdcf-343d05c9713e" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="d49e024c-e634-4c7c-ab50-7117251ed51f" class="">You&#x27;re redesigning an interface where users need to perform actions on multiple items (emails, files, contacts, tasks, products) but currently must act on items one-by-one. Users complain about tedious repetitive actions and ask for &quot;select all&quot; functionality.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8010-b10c-e7d95243cf83"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="91016bce-0245-4e0c-a320-2b43e40d35e7"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8a34fa4c-be72-4dd8-a9ce-9d7f2a92e824" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="878cc584-c31f-4ad0-9e4d-348ecd3982b9" class="">Many applications often lack bulk action capabilities, forcing users to repeat the same action dozens or hundreds of times. Even when bulk actions exist, they&#x27;re poorly designed - unclear selection states, hidden bulk action menus, no undo for destructive actions, or confusing &quot;select all&quot; that only selects the current page. Power users waste hours on repetitive tasks that should take seconds. You need to design intuitive, powerful bulk action patterns that feel safe and efficient.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-808d-8f1a-f9b01385bd86"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="7be29f30-7822-48db-b541-af5d8c00068c"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="e72731d7-f3c3-466d-a11e-9cca8b7062c1" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="6e6d8ce0-20ec-4ae6-b91e-03db2541d11f" class="">The AI will provide selection mechanisms including individual checkboxes, select all with current page versus all items distinction, shift-click range selection, and smart selection by criteria, selection feedback with visual highlighting and count indicators, bulk action UI patterns such as floating action bars, toolbars, dropdown menus, and context menus, destructive action safeguards featuring confirmation dialogs, preview, and undo capabilities, performance strategies with progress indicators and batch processing for large operations, selection persistence across pagination and filter changes, keyboard shortcuts for power users including select all and range selection, and mobile adaptation with long-press selection mode and bottom sheet actions. Optional wireframe showing bulk action UI states.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="abef7013-203e-4f63-88c2-b2c769adcd4f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="9181f12f-3d0f-4e27-b3ad-a95bf4baf2c8"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="fe8b05e5-c7ff-4b2d-973f-cc5455e53004" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="649c2e78-4f79-4a28-9daa-d326125e345e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a UX Designer specializing in data-heavy interfaces and bulk operations.
+
+I&#x27;m designing bulk action functionality for a [Interface Type] where users need to perform actions on multiple [Item Type] at once.
+
+[OPTIONAL: Attach screenshot of current interface showing item list]
+
+Bulk action requirements:
+- Items users work with: [e.g., Files, Contacts, Emails, Tasks, Products, Orders]
+- Available bulk actions: [e.g., Delete, Archive, Tag, Move to folder, Assign to user, Export, Change status]
+- Typical use cases: [e.g., &quot;Delete 50 spam emails&quot;, &quot;Tag 200 contacts as &#x27;Conference leads&#x27;&quot;, &quot;Move 30 files to archive folder&quot;]
+- Item count range: [e.g., Users typically have 100-10,000 items, act on 10-500 at once]
+
+Current problems:
+- [Problem 1: e.g., No bulk actions exist - users must click each item individually]
+- [Problem 2: e.g., Select all only selects current page (20 items), not all 500 matching items]
+- [Problem 3: e.g., Bulk delete has no confirmation - users accidentally delete important items]
+- [Problem 4: e.g., Can&#x27;t see which items are selected when scrolling long lists]
+
+User context: [Who performs bulk actions, how often, what workflows]
+
+Please provide:
+1. Selection mechanism (checkboxes, shift-click, select all, smart selection)
+2. Selection feedback (how to show what&#x27;s selected, count indicator)
+3. Bulk action UI pattern (toolbar, dropdown, context menu, floating action bar)
+4. Destructive action safeguards (confirmation, undo, preview)
+5. Performance considerations (handling large selections)
+6. Selection persistence (across pages, filters, searches)
+7. Keyboard shortcuts for power users
+8. Mobile bulk action adaptation
+
+Consider: [Constraints - e.g., Must handle selections of 1000+ items, some actions take time to process, mixed item types with different available actions]</code></pre></div><div style="display:contents" dir="auto"><p id="71fb7795-7458-441a-a7b6-4a02beb96f7c" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="e8fc3ef8-9b11-4549-ba3e-9e54868ca519" class="bulleted-list"><li style="list-style-type:disc">[Interface Type] = Email client, File manager, CRM, E-commerce admin, Task manager, Content management system</li></ul></div><div style="display:contents" dir="auto"><ul id="d39cbde4-322b-441d-8d28-b16caba67ff7" class="bulleted-list"><li style="list-style-type:disc">[Item Type] = What users are selecting (files, emails, contacts, etc.)</li></ul></div><div style="display:contents" dir="auto"><ul id="ed428728-bf40-43f0-92ef-0e47d2fc0c0d" class="bulleted-list"><li style="list-style-type:disc">[Available bulk actions] = List all possible bulk actions</li></ul></div><div style="display:contents" dir="auto"><ul id="02a2fa29-18c8-467a-93e6-3c83ed1db5ff" class="bulleted-list"><li style="list-style-type:disc">[Typical use cases] = Real user workflows requiring bulk actions</li></ul></div><div style="display:contents" dir="auto"><ul id="f6c93148-1dc6-47f6-ac3a-162266ae34d6" class="bulleted-list"><li style="list-style-type:disc">[Item count range] = Scale of data users work with</li></ul></div><div style="display:contents" dir="auto"><ul id="df5fa66e-7200-4b3a-ad73-81be6179d4c2" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-4] = Current bulk action pain points</li></ul></div><div style="display:contents" dir="auto"><ul id="2d0122b2-72a7-48b6-af74-3150f800868c" class="bulleted-list"><li style="list-style-type:disc">Upload screenshot of current interface for specific recommendations</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8070-b62d-f0020a12d57f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-801f-9197-ce2203cecd5c"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8098-a21e-cf5851792d9b" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d667ccc-6bef-8001-85dc-fe2cfb503d73" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a UX Designer specializing in data-heavy interfaces and bulk operations.
+
+I&#x27;m designing bulk action functionality for a Customer Support Ticket System where agents need to perform actions on multiple support tickets at once.
+
+[User would attach screenshot here]
+
+Bulk action requirements:
+- Items users work with: Support tickets (each with ID, subject, customer, status, priority, assigned agent, tags)
+- Available bulk actions: 
+  - Assign to agent (dropdown with team member list)
+  - Change status (Open, In Progress, Waiting, Resolved, Closed)
+  - Change priority (Low, Normal, High, Urgent)
+  - Add tags (multi-select from tag library)
+  - Merge tickets (combine related tickets)
+  - Export to CSV
+  - Archive
+  - Delete (destructive - admin only)
+- Typical use cases:
+  - &quot;Assign all 25 urgent tickets from VIP customers to senior agent&quot;
+  - &quot;Archive 200+ resolved tickets from last month&quot;
+  - &quot;Tag 50 billing-related tickets for reporting&quot;
+  - &quot;Change status of 15 tickets to &#x27;Waiting on Customer&#x27;&quot;
+- Item count range: Agents see 50-500 tickets daily, frequently act on 10-100 at once
+
+Current problems:
+- No bulk actions at all - agents must open each ticket individually, change status, save, go back, repeat 50 times
+- Users try to use checkboxes (which exist) but can&#x27;t find bulk action menu afterward
+- &quot;Select all&quot; checkbox in header is unclear - does it select all 500 tickets or just the 25 on current page?
+- When users apply filters (&quot;show only urgent tickets&quot;), select all, then change filter, they lose their selection
+- No visual feedback when items are selected - checkbox checked but no highlight or count
+- Destructive actions (delete, archive) have no confirmation - accidents happen frequently
+
+User context: Support agents handle 20-50 tickets per day. They frequently need to triage batches of tickets (assign to team, update status). Senior agents clean up old tickets weekly (bulk archive). Power users want keyboard shortcuts. 30% of agents use tablets for ticket triage.
+
+Please provide:
+1. Selection mechanism (checkboxes, shift-click, select all, smart selection)
+2. Selection feedback (how to show what&#x27;s selected, count indicator)
+3. Bulk action UI pattern (toolbar, dropdown, context menu, floating action bar)
+4. Destructive action safeguards (confirmation, undo, preview)
+5. Performance considerations (handling large selections)
+6. Selection persistence (across pages, filters, searches)
+7. Keyboard shortcuts for power users
+8. Mobile bulk action adaptation
+
+Consider: Some actions are role-restricted (only managers can delete). Agents often work across multiple pages/filters while maintaining selection. Bulk assign needs agent availability info. Large bulk operations (archiving 500 tickets) may take 10+ seconds. Undo is critical for accidental bulk actions.</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-808e-8d90-dda2f81fc74d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="9a18c9ef-e29f-4527-9811-8b843e0f41ad"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="7fec73b4-f497-4063-93d2-911e9ebf665e" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="ffac9ae2-01f7-4aaa-b6f2-0903559edf0a" class="">✦ Make selection obvious: Highlight selected rows, show count, make it impossible to miss what&#x27;s selected<br/>✦ Common mistake: &quot;Select all&quot; that only selects current page - clarify with &quot;Select all 500 items&quot; option<br/>✦ Best with: Claude (excellent at complex selection logic and edge cases), ChatGPT (good for UI patterns)<br/>✦ Remix it: &quot;Design the smart selection: &#x27;Select all urgent tickets from VIP customers assigned to me&#x27;&quot;<br/>✦ Pro move: Ask &quot;Create the undo system - how do we safely reverse bulk delete of 200 items?&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80bd-a702-e45dd06a38b5"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="bd119ade-5bc9-4563-a28a-84e6b257adab"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="00323772-4dde-481c-8091-e129cecdb26f" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="b49785e0-20e4-4bf6-935e-52d7076798a7" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the confirmation dialog for bulk delete - what info to show to prevent accidents?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="907fbb1d-798a-49cb-9e79-dd51c32de3c0" class="bulleted-list"><li style="list-style-type:disc">&quot;How should bulk actions work when user has mixed permissions (can edit some items, not others)?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2daae17f-20f0-4066-87d8-52eafbfa2a32" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the progress indicator for slow bulk operations - how to show which items are processed?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="0ec10a3a-91e6-4682-a24c-286810198de0" class="bulleted-list"><li style="list-style-type:disc">&quot;What happens if bulk action fails on some items but succeeds on others? Design the error handling.&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80b9-bfad-fd91314b7890"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-808d-91fa-d235831c02f3"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8020-bc1d-f21f41be5771" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-8020-b371-e25f815913ef" class="image"><a href="16_Example_Output.png"><img style="width:643.9921875px" src="16_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8090-95f2-c50a4e14f707"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="5468f8df-16f5-4be0-a87b-3b22d616f1ff"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="03c2cc10-9917-418a-b613-ba1162d6c409" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="fcce9e10-2f39-46d4-93b6-e6d39c8d27de" class="">→ Recipe #02: <a href="R-02 Fix Cluttered Data Views 2d667ccc6bef80cb97c4fcafda955f11.html">Fix Cluttered Data Views</a><br/>→ Recipe #06: <a href="R-06 Design Search & Filters 2d667ccc6bef805ca459de3061219cd3.html">Design Search &amp; Filters</a><br/>→ Recipe #11: <a href="R-11 Right-Click Menus 2d667ccc6bef80cb98c8cde92785b136.html">Right-Click Menus</a><br/>→ Recipe #17: <a href="R-17 Design Comparison Tables 2d667ccc6bef80b2b6b4d90575a87d67.html">Design Comparison Tables</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8090-9e66-cc49521fe9cb" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

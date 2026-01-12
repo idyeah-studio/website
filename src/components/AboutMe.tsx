@@ -16,13 +16,14 @@ html {
 
 html,
 body {
-	margin: 0;
-	padding: 0;
+	margin: 0 !important;
+	padding: 0 !important;
 }
 @media only screen {
 	body {
-		margin: 2em auto;
-		max-width: 900px;
+		margin: 0 !important;
+		padding: 0 !important;
+		max-width: none !important;
 		color: ${isDarkMode ? 'rgb(230, 230, 230)' : 'rgb(55, 53, 47)'};
 	}
 }
@@ -727,6 +728,11 @@ blockquote.quote-large {
 </p></div><div style="display:contents" dir="auto"><h2 id="2c267ccc-6bef-8048-894e-fc03f6b080dd" class=""><strong>Let's Connect</strong></h2></div><div style="display:contents" dir="auto"><p id="2c267ccc-6bef-806d-867a-f2f6c9a775e9" class=""><strong>Vishal Mehta</strong></p></div><div style="display:contents" dir="auto"><p id="2c267ccc-6bef-80e1-8112-d99b969162bf" class="">Founder, IDYeah Studio</p></div><div style="display:contents" dir="auto"><p id="2c267ccc-6bef-8080-b7be-fcfed8870cf8" class=""><a href="mailto:vishal@idyeah.studio">vishal@idyeah.studio</a> • <a href="https://www.linkedin.com/in/vishalme">LinkedIn</a></p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span>`;
 
   return (
+    <>
+      <style>{`
+        body { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; }
+        #root { max-width: none !important; padding: 0 !important; margin: 0 !important; }
+      `}</style>
     <div style={{
       position: 'absolute',
       top: 0,
@@ -741,7 +747,7 @@ blockquote.quote-large {
       <div
         style={{
           position: 'absolute',
-          top: '20px',
+          top: '24px',
           left: '24px',
           right: '24px',
           zIndex: 10,
@@ -751,30 +757,31 @@ blockquote.quote-large {
         }}
       >
         {/* Theme Toggle - Left Side */}
-        <button
-          onClick={toggleTheme}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '6px 12px',
-            borderRadius: '9999px',
-            border: `1px solid ${theme.borderStrong}`,
-            backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)',
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-            fontSize: '14px',
-            fontWeight: 400,
-            color: theme.text
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
-          }}
-        >
-          {isDarkMode ? (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <button
+            onClick={toggleTheme}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '6px 12px',
+              borderRadius: '9999px',
+              border: `1px solid ${theme.borderStrong}`,
+              backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              fontSize: '14px',
+              fontWeight: 400,
+              color: theme.text
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+            }}
+          >
+            {isDarkMode ? (
             // Moon icon for dark mode
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14.5 8.5C14.5 11.8137 11.8137 14.5 8.5 14.5C5.18629 14.5 2.5 11.8137 2.5 8.5C2.5 5.18629 5.18629 2.5 8.5 2.5C8.67742 2.5 8.85323 2.50806 9.02694 2.52387C7.91935 3.28226 7.21774 4.56452 7.21774 6C7.21774 8.34032 9.08871 10.2113 11.429 10.2113C12.8645 10.2113 14.1468 9.50968 14.9052 8.40209C14.921 8.57581 14.929 8.75161 14.929 8.92903C14.929 8.95242 14.9145 8.97581 14.9145 8.99919L14.5 8.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -786,35 +793,46 @@ blockquote.quote-large {
               <path d="M9.66797 14.6387C12.4121 14.6387 14.6387 12.4121 14.6387 9.66797C14.6387 6.92383 12.4121 4.6875 9.66797 4.6875C6.92383 4.6875 4.6875 6.92383 4.6875 9.66797C4.6875 12.4121 6.92383 14.6387 9.66797 14.6387ZM9.66797 13.1543C7.73438 13.1543 6.17188 11.6016 6.17188 9.66797C6.17188 7.73438 7.73438 6.17188 9.66797 6.17188C11.6016 6.17188 13.1543 7.73438 13.1543 9.66797C13.1543 11.6016 11.6016 13.1543 9.66797 13.1543Z" fill="currentColor" fillOpacity="0.85"/>
             </svg>
           )}
-        </button>
+          </button>
+        </div>
 
-        {/* Home Link - Right Side */}
-        <Link
-          to="/"
+        {/* Right Side Buttons */}
+        <div
           style={{
-            fontSize: '14px',
-            fontWeight: 400,
-            color: theme.text,
-            textDecoration: 'none',
-            padding: '6px 16px',
-            borderRadius: '9999px',
-            border: `1px solid ${theme.borderStrong}`,
-            backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.9)',
-            transition: 'all 0.2s'
-          }}
-          onMouseEnter={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = theme.buttonBg;
-            target.style.color = theme.buttonText;
-          }}
-          onMouseLeave={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.9)';
-            target.style.color = theme.text;
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
           }}
         >
-          IDYeah.Studio
-        </Link>
+          {/* Home Link */}
+          <Link
+            to="/"
+            style={{
+              display: 'inline-block',
+              fontSize: '14px',
+              fontWeight: 400,
+              color: theme.text,
+              textDecoration: 'none',
+              padding: '6px 16px',
+              borderRadius: '9999px',
+              border: `1px solid ${theme.borderStrong}`,
+              backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.9)',
+              transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              const target = e.target as HTMLElement;
+              target.style.backgroundColor = theme.buttonBg;
+              target.style.color = theme.buttonText;
+            }}
+            onMouseLeave={(e) => {
+              const target = e.target as HTMLElement;
+              target.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.9)';
+              target.style.color = theme.text;
+            }}
+          >
+            IDYeah.Studio
+          </Link>
+        </div>
       </div>
 
       <div
@@ -822,7 +840,7 @@ blockquote.quote-large {
           width: '100%',
           maxWidth: '720px',
           margin: '0 auto',
-          padding: '64px 16px 0'
+          padding: '112px 16px 0'
         }}
       >
         <style dangerouslySetInnerHTML={{ __html: css }} />
@@ -897,5 +915,6 @@ blockquote.quote-large {
 
       </div>
     </div>
+    </>
   );
 }

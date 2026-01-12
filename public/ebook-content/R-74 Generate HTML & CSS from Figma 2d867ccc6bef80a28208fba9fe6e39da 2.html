@@ -1,0 +1,802 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-74: Generate HTML &amp; CSS from Figma</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d867ccc-6bef-80a2-8208-fba9fe6e39da" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d867ccc-6bef-809a-8b50-f93765c50eba" class="">Recipe #74: Generate HTML &amp; CSS from Figma</h1></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8061-9fcd-df8627dcc932" class="">Category: Bonus — Hand-off  |  ⏱️ 35-45 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-807d-a260-f45438c9e37c" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="c318fff0-d38c-4ac0-b349-b3b10a23d7a6"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="12975a9b-4c99-4ed8-a8b8-4031f80ca723" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="4c306cb3-cb03-4d46-b35f-b96f7497131f" class="">You&#x27;re exporting HTML/CSS code from Figma designs, using Figma&#x27;s Dev Mode code generation, preparing designs for front-end implementation, converting static mockups to responsive code, or optimizing Figma files for clean code output. Your current Figma exports produce messy code, absolute positioning everywhere, inline styles instead of classes, or unusable HTML that requires complete rewriting.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8056-8bd5-f8f3a56e46ca"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="a9e215ec-0bfb-4c50-9634-394fa9a28bdb"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b5a1040d-dada-4b6b-a61c-b501d928bfc6" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="9ab6f3b8-c222-478e-844b-8ae6698d1928" class="">Many designers create Figma designs that export terrible code - absolute positioned divs everywhere (not responsive, breaks on different screen sizes), inline styles with hardcoded hex values (can&#x27;t theme, no CSS variables), messy nested divs (div soup, unclear structure), no semantic HTML (all divs, no header/nav/main/section tags), inconsistent spacing (random pixel values not from design tokens), or missing responsive behavior (fixed widths, doesn&#x27;t adapt). Teams export Figma code that developers immediately delete and rewrite from scratch, wasting hours translating designs to proper semantic HTML/CSS, or shipping non-responsive layouts that break on mobile. You need Figma files optimized for code generation - proper Auto Layout (converts to flexbox/grid naturally), design token usage (exports as CSS variables), semantic naming (components named after HTML elements), responsive constraints (fill container, hug contents), clean component structure (logical hierarchy, minimal nesting), and developer-friendly output (readable code, proper classes, semantic HTML hints).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80f4-a17a-dac54d1f2bf0"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="b991b9c1-4250-4204-a477-a72bed9c43a1"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8f9aeb3f-9990-4ef4-9320-2f91954e8e02" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="3051a3be-aa59-4cb0-8b61-e8195872888b" class="">The AI will provide Figma Auto Layout optimization (flexbox/grid output, direction, spacing, hug/fill constraints for responsive code), design token integration (Figma Variables → CSS custom properties, spacing tokens → rem units), semantic component naming (hints for &lt;button&gt;, &lt;header&gt;, &lt;nav&gt; tags), responsive design techniques (constraints, min/max widths, breakpoint variants), Dev Mode code generation guidance (inspect, copy CSS, HTML structure), plugin recommendations (Anima, Locofy, <a href="http://Builder.io">Builder.io</a> for full exports), code optimization strategies (reduce nesting, reusable classes, avoid absolute positioning), and export best practices (prepare files, test outputs, iterative refinement). You&#x27;ll get systematic approaches to create Figma designs that export clean, semantic, responsive HTML/CSS code.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="ab9f44fa-bb0d-421f-8b8f-8b151280e6e9"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="c14d3352-2d48-4e80-8a81-ed7b856b7e0e"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6bbf91e0-7dec-4746-b932-7abb30addd8a" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0bd163df-192c-4cd1-9241-364e8ee4ed2c" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Figma-to-Code Specialist focusing on HTML/CSS generation, Dev Mode code export, Auto Layout optimization, and creating developer-ready Figma files.
+
+I&#x27;m generating HTML/CSS code from Figma designs for [Project Type] to export [Components/Screens] using [Code Generation Method] while optimizing for [Code Quality Goals] and avoiding [Common Code Export Problems].
+
+[OPTIONAL: Attach Figma files with code export issues or examples of messy generated code]
+
+HTML/CSS generation requirements:
+- Project type: [e.g., Landing page, Component library, Marketing site, Web app, Email template]
+- Code output: [e.g., Vanilla HTML/CSS, Tailwind CSS, CSS-in-JS, React components, Vue components]
+- Figma structure: [e.g., Auto Layout components, Variants, Design tokens, Component library]
+- Responsive needs: [e.g., Mobile-first, Desktop-first, Fluid responsive, Fixed breakpoints]
+- Developer handoff: [e.g., Copy code from Dev Mode, Export with plugins, Figma-to-code API]
+
+Current code export problems:
+- [Problem 1: e.g., Absolute positioning - exports position:absolute everywhere, not responsive, breaks layout]
+- [Problem 2: e.g., Inline styles - hardcoded #3B82F6, no CSS classes, can&#x27;t reuse or theme]
+- [Problem 3: e.g., Div soup - 20 nested divs for simple button, messy HTML, hard to read]
+- [Problem 4: e.g., No semantic HTML - all divs, no &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;section&gt; tags]
+- [Problem 5: e.g., Fixed widths - width:1440px hardcoded, doesn&#x27;t adapt to screen sizes, not responsive]
+
+Team context: [Developer skill level, CSS framework (Tailwind/Bootstrap), code standards, handoff workflow]
+
+Please provide:
+1. Figma Auto Layout for clean code (flexbox/grid output, direction, alignment, spacing, hug/fill)
+2. Design tokens to CSS variables (color tokens → CSS vars, spacing tokens → rem units)
+3. Component naming for semantic HTML (Button → &lt;button&gt;, Card → &lt;article&gt;, semantic hints)
+4. Responsive design in Figma (constraints, min/max widths, fill container, breakpoint frames)
+5. Dev Mode code generation (inspect, copy CSS, HTML structure, code snippets)
+6. Plugins for code export (Anima, Locofy, Builder.io, HTML Generator, use cases)
+7. Clean code optimization (reduce nesting, reusable classes, avoid absolute positioning)
+8. Code export best practices (prepare Figma files, test outputs, refine for developers)
+
+Consider: [Constraints - e.g., Tailwind CSS output needed, Mobile-first responsive, Email HTML (limited CSS), Semantic HTML critical]</code></pre></div><div style="display:contents" dir="auto"><p id="3bb6c553-f99f-4d39-88a4-818baf9414f1" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="d272c555-e452-4392-82bc-be9d347e6510" class="bulleted-list"><li style="list-style-type:disc">[Project Type] = Landing page, components, etc.</li></ul></div><div style="display:contents" dir="auto"><ul id="8aba25f9-f082-46fe-9edb-903ff4bd6ea5" class="bulleted-list"><li style="list-style-type:disc">[Components/Screens] = What you&#x27;re exporting</li></ul></div><div style="display:contents" dir="auto"><ul id="211b7a6b-2cf2-4ac0-878e-7c2ab4c1aa26" class="bulleted-list"><li style="list-style-type:disc">[Code Generation Method] = Dev Mode, plugins, API</li></ul></div><div style="display:contents" dir="auto"><ul id="4de1f5d8-2f99-4d22-a14a-fbfec171c031" class="bulleted-list"><li style="list-style-type:disc">[Code Quality Goals] = Clean, semantic, responsive</li></ul></div><div style="display:contents" dir="auto"><ul id="4f590861-4087-4d24-bca8-b36348045d9e" class="bulleted-list"><li style="list-style-type:disc">[Common Code Export Problems] = Current issues</li></ul></div><div style="display:contents" dir="auto"><ul id="8c7a58f6-702a-46e2-a3a4-879118110272" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Specific code export problems</li></ul></div><div style="display:contents" dir="auto"><ul id="2ba02e04-0d0a-4a51-9433-8fcd3c0d56d6" class="bulleted-list"><li style="list-style-type:disc">Attach Figma files with code issues</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-802a-ae0b-d0fa51542e40"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-8092-aa96-cda509a5332b"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-806b-a3f3-e085e73daf5d" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d867ccc-6bef-8078-8d4c-c5d37fb25371" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Figma-to-Code Specialist focusing on HTML/CSS generation, Dev Mode code export, Auto Layout optimization, and creating developer-ready Figma files.
+
+I&#x27;m generating HTML/CSS code from Figma designs for a Marketing Website (landing pages, product pages, pricing page, 15+ pages total) to export hero sections, feature cards, pricing tables, testimonials, and CTAs using Figma Dev Mode (primary method) and Anima plugin (for full page exports) while optimizing for clean semantic HTML, Tailwind CSS classes, mobile-first responsive design, minimal nesting (max 3 levels deep), and CSS variables from design tokens and avoiding absolute positioning, inline styles with hardcoded values, excessive div nesting, non-responsive fixed widths, and div-only HTML (need semantic tags).
+
+[User would attach Figma marketing site designs - components with poor Auto Layout, hardcoded values, messy structure]
+
+HTML/CSS generation requirements:
+- Project type: Marketing website (15+ landing pages, component-heavy, conversion-focused)
+- Code output:
+  - Tailwind CSS (primary framework, utility-first)
+  - Semantic HTML5 (&lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;section&gt;, &lt;article&gt;)
+  - CSS variables for theming (light/dark mode support)
+  - Mobile-first responsive (375px → 1440px)
+- Figma structure:
+  - Component library (50+ components with variants)
+  - Auto Layout extensively (all components use Auto Layout)
+  - Design tokens (colors, spacing, typography as Figma Variables)
+  - Variants for responsive (Desktop, Tablet, Mobile versions)
+- Responsive needs:
+  - Mobile-first (design mobile, scale up)
+  - Breakpoints: 375px (mobile), 768px (tablet), 1024px (desktop), 1440px (large)
+  - Fluid typography (clamp() for smooth scaling)
+  - Images responsive (srcset, object-fit)
+- Developer handoff:
+  - Developers copy code from Figma Dev Mode (primary workflow)
+  - Anima plugin for rapid prototyping (full page HTML exports for stakeholder demos)
+  - Tailwind config synced with Figma tokens
+
+Current code export problems:
+- Absolute positioning everywhere - Figma exports components with position:absolute, top:120px, left:450px (breaks when screen size changes), not responsive at all, developers have to rewrite with flexbox/grid from scratch, wastes 2-3 hours per component converting to proper layout, defeats purpose of code export
+- Inline styles with hardcoded hex - Exports background:#3B82F6; color:#FFFFFF; instead of using design tokens/CSS variables, can&#x27;t theme (light/dark mode impossible), can&#x27;t change brand color globally, hardcoded values scattered everywhere, no Tailwind classes (exports inline styles even though using Tailwind), developers manually convert to utilities
+- Excessive div nesting - Simple card component exports as 8 nested divs (div &gt; div &gt; div &gt; div &gt; div...), hard to read HTML, unnecessary wrapper divs everywhere, bloated code (300 lines for what should be 50), developers spend time cleaning up div soup, prefer semantic clean HTML
+- No semantic HTML tags - Everything exported as &lt;div&gt;, no &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;section&gt;, &lt;article&gt;, &lt;button&gt; tags, bad for SEO (search engines can&#x27;t understand structure), bad for accessibility (screen readers confused), have to manually convert divs to semantic tags post-export
+- Fixed widths not responsive - Components export with width:1440px; hardcoded (desktop width), doesn&#x27;t shrink on mobile (overflows, horizontal scroll), no media queries generated, no responsive classes (Tailwind&#x27;s sm:, md:, lg:), developers have to add responsive behavior manually, exports ignore Figma constraints (fill container doesn&#x27;t convert properly)
+- Poor Auto Layout translation - Figma Auto Layout (Vertical, Gap 16px, Padding 24px) should export as clean flexbox, instead exports nested absolute positioned divs with magic numbers (margin-top:16px, margin-top:32px, margin-top:48px random), doesn&#x27;t respect Auto Layout structure, gap doesn&#x27;t convert to CSS gap property
+- Inconsistent spacing values - Exports margin:23px, padding:17px, gap:14px (random values not from design tokens), should use Spacing-4 (16px), Spacing-5 (20px), Spacing-6 (24px) from token system, exported code doesn&#x27;t reference CSS variables, hardcoded everywhere
+
+Team context:
+- Developer skill level: Mid-level (can clean up exported code, but prefer cleaner starting point)
+- CSS framework: Tailwind CSS (all components should use Tailwind utilities where possible)
+- Code standards: Semantic HTML required (not all divs), BEM naming for custom CSS, max 3 levels nesting
+- Handoff workflow: Designers share Figma Dev Mode links, developers inspect and copy code snippets
+- Pain points: &quot;Exported code is a starting point but needs 70% rewrite&quot;, &quot;Absolute positioning makes it unusable&quot;
+- Goal: Reduce developer cleanup time from 3 hours to 30 minutes per component
+
+Please provide:
+1. Figma Auto Layout for clean code (flexbox/grid output, direction, alignment, spacing, hug/fill)
+2. Design tokens to CSS variables (color tokens → CSS vars, spacing tokens → rem units)
+3. Component naming for semantic HTML (Button → &lt;button&gt;, Card → &lt;article&gt;, semantic hints)
+4. Responsive design in Figma (constraints, min/max widths, fill container, breakpoint frames)
+5. Dev Mode code generation (inspect, copy CSS, HTML structure, code snippets)
+6. Plugins for code export (Anima, Locofy, Builder.io, HTML Generator, use cases)
+7. Clean code optimization (reduce nesting, reusable classes, avoid absolute positioning)
+8. Code export best practices (prepare Figma files, test outputs, refine for developers)
+
+Consider: Tailwind CSS output (utility classes preferred). Mobile-first responsive (375px start). Semantic HTML critical (SEO, accessibility). Design tokens → CSS variables. Auto Layout → flexbox (not absolute). Component library (50+ components, consistency critical). Marketing site (conversion-focused, performance matters).</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8036-ba22-e63f34d31237"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-804e-8f50-dfe3331b3f4e"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80a3-a1f6-f3249e1309a1" class=""><strong>CHEF’S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80a9-bf6e-cb2bf0f1ecb6" class="">✦ Auto Layout is key: Use Auto Layout on every component - it exports as clean flexbox, not absolute positioning<br/>✦ Common mistake: Dragging frames freely creates position:absolute - always use Auto Layout for responsive code<br/>✦ Best with: Claude (excellent at Figma optimization strategies, code quality), ChatGPT (good for CSS examples)<br/>✦ Remix it: &quot;Optimize this Figma component for code export - Auto Layout, design tokens, semantic naming, responsive&quot;<br/>✦ Pro move: Ask &quot;Audit my Figma file for clean code export - check Auto Layout usage, nesting, absolute positioning&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8029-b607-cf6b6cb4ff8b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-8040-8865-e85a25eeed57"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80c6-ac47-e353bac12fee" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="2d867ccc-6bef-80ba-8d3b-e9b56ad82dd9" class="bulleted-list"><li style="list-style-type:disc">&quot;Optimize button component for HTML/CSS export - Auto Layout, design tokens, semantic &lt;button&gt; tag, Tailwind classes&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d867ccc-6bef-8046-a1fd-c355085fa836" class="bulleted-list"><li style="list-style-type:disc">&quot;Convert this Figma card to responsive flexbox - Auto Layout settings, fill container, gap/padding with tokens&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d867ccc-6bef-80c4-8ffa-d95591d86d00" class="bulleted-list"><li style="list-style-type:disc">&quot;Prepare hero section for code export - Auto Layout, semantic HTML structure, responsive constraints, clean nesting&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d867ccc-6bef-802b-9ad5-f3127c48e9cb" class="bulleted-list"><li style="list-style-type:disc">&quot;Generate Tailwind CSS from Figma - design tokens to Tailwind config, utility classes, responsive breakpoints&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80fa-b77a-e498bb1fbbf1"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-8011-b908-ee829a0652dd"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8041-96a3-f40d92af0caf" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-805f-ad9c-e1d6e5d3721a" class="image"><a href="74_Example_Output.png"><img style="width:643.9921875px" src="74_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8062-a52f-fe3c8a2caced"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-805e-940d-e49c416492fc"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80c2-9683-e670ab3f19a2" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80cb-b87c-c5a84db5e990" class="">→ Recipe #75: <a href="R-75 Developer Prototypes with Figma AI 2d867ccc6bef809585e0e8256265034f.html">Developer Prototypes with Figma AI</a><br/>→ Recipe #73: <a href="R-73 Developer-Friendly Design Specs 2d867ccc6bef804eae58c28f42a64b2d.html">Developer-Friendly Design Specs</a><br/>→ Recipe #72: <a href="R-72 Design Tokens in Figma 2d867ccc6bef80839ee7ec3aaadb1649.html">Design Tokens in Figma</a><br/>→ Recipe #46: <a href="R-46 Build a Design System Foundation 2d767ccc6bef80169c93ff15b9a23dff.html">Build a Design System Foundation</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80bc-8675-d61188ba771c" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

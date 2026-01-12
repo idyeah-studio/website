@@ -1,0 +1,824 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-53: Flexible Data Tables</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-8020-b5e8-fea04b8f6efe" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-8080-87b0-d3ff72e00d6f" class="">Recipe #53: Flexible Data Tables</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80a2-9831-cbb7d3487847" class="">Category: Systems &amp; Components  |  ⏱️ 45-60 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-806c-8b90-ced076cb2d61" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="fafeaa43-3412-4c7f-a028-8f05fc437994"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="f799eeb4-f0da-4c6a-a5be-b31508de73f0" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="0e3a3bbf-3813-4fc5-b11a-fe7d31fe0576" class="">You&#x27;re building data table components that need to handle diverse content types (text, numbers, badges, actions, icons), different row configurations (single-line, multi-line, expandable), and essential table features (search, filters, sorting, bulk actions, pagination). Your current tables are rigid, require rebuilding for each use case, or lack the flexibility to handle varying data structures.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-801d-9c2d-e5c056b417ea"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="7ee785fb-7861-429e-b4d8-01b546d6b5b4"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="64a34d5f-c1a0-46e0-8bab-934dfa295e15" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="f3bcdd91-9f88-47d3-b4ad-d8546b980229" class="">Many designers create inflexible table components - building separate tables for every data type (UserTable, TaskTable, ProjectTable = dozens of variants), cells that can&#x27;t adapt to different content types, no systematic row/cell architecture, tables that break when content is too long, or missing essential features like sorting, filtering, bulk selection, and pagination. Teams waste time rebuilding tables for each new feature, struggle with inconsistent table patterns across the product, can&#x27;t handle edge cases (empty states, loading, errors, long text), and create tables that work in design but break in development. You need a flexible table system built from composable parts - Row components with single-line/multi-line variants containing Cell components with content-type variants (text, number, status, action, badge, icon, etc.), optional Column components for structure, plus search/filter, bulk actions, sorting, and pagination patterns. This component architecture scales to any data type without rebuilding.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8027-adfe-f97aa1ab1e95"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="9a9bdb19-0e6c-4c92-b66e-2757223e56eb"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="9cf29302-1940-4ba8-a21b-8c82be8004d3" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="c2986d2d-21ce-4618-b698-082b08c8d3c4" class="">The AI will provide hierarchical component architecture (Table → Row → Cell → Column) with Row variants for single-line, multi-line, and expanded states plus hover/selected interactions, Cell component variants for 10+ content types (Text, Number, Date, Status, Action, Badge, Icon, Image, Link, Checkbox) with alignment and truncation specs, Column structure defining width strategies (fixed, flexible, min/max, percentage) with sorting and resize capabilities, complete table features including search, filters, sorting indicators, bulk actions bar, pagination controls, column visibility toggles, and density options, comprehensive state patterns covering empty, loading, error, and no-results scenarios, responsive strategies for desktop full-table, tablet horizontal-scroll or priority-columns, and mobile stacked-cards or scroll approaches, and detailed edge case handling for long text truncation, missing data display, overflow action menus, wide tables with sticky columns, and large datasets with virtual scrolling. Optionally includes visual examples showing Row with different Cell variants and fully-featured table.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="ba5be7d9-6225-4dd9-a585-1d6512b5f141"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="4522a872-87b3-44f2-9797-606742031084"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="25c2516a-de8a-424c-b49e-72b007cde3f8" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e4a326ff-30d4-46bc-860b-76c63a4b8373" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Data Visualization Component Specialist focusing on flexible table systems, component architecture, and scalable data display patterns.
+
+I&#x27;m designing a flexible data table system for a [Product Type] that can handle [Data Types] without creating separate tables for each use case.
+
+[OPTIONAL: Attach current rigid table components or examples]
+
+Data table requirements:
+- Data types to display: [e.g., Users, Tasks, Projects, Orders, Transactions, Customers]
+- Content types in cells: [e.g., Text, Numbers, Dates, Badges, Actions, Icons, Images, Links]
+- Row variations: [e.g., Single-line, Multi-line, Expandable, Selectable, Draggable]
+- Table features needed: [e.g., Search, Filters, Sorting, Bulk actions, Pagination, Export]
+- Data volume: [e.g., 10-100 rows, 100-1000 rows, 1000+ rows with virtual scrolling]
+- Responsive needs: [e.g., Desktop only, Mobile horizontal scroll, Mobile stacked cards]
+
+Current table problems:
+- [Problem 1: e.g., Separate UserTable, TaskTable, ProjectTable - 15 table variants, unmaintainable]
+- [Problem 2: e.g., Cells can&#x27;t adapt - text cell doesn&#x27;t handle numbers, badges, or icons]
+- [Problem 3: e.g., No row/cell architecture - building tables from scratch each time]
+- [Problem 4: e.g., Long text breaks layout - no truncation or multi-line handling]
+- [Problem 5: e.g., Missing features - no search, sorting, bulk select, pagination]
+
+Team context: [Designer data viz experience, table complexity needs, development constraints]
+
+Please provide:
+1. Component architecture (Row → Cell → Column hierarchy)
+2. Row component variants (single-line, multi-line, expanded, selected, hover)
+3. Cell component variants (text, number, status, action, badge, icon, image, link, checkbox)
+4. Column component structure (header, width, alignment, sorting)
+5. Table features (search, filters, sorting, bulk actions, pagination)
+6. State patterns (empty, loading, error, no results)
+7. Responsive strategies (mobile horizontal scroll, stacked cards, priority columns)
+8. Edge case handling (long text, missing data, overflow actions)
+
+Consider: [Constraints - e.g., Must scale to 1000+ rows, Mobile support required, Accessibility (keyboard navigation, screen readers), Consistent with design system]</code></pre></div><div style="display:contents" dir="auto"><p id="04fd19c6-dea9-40fb-a0b4-0db5ac5684e4" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="bfe15ecf-5cf3-4890-b355-230deebfa365" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = SaaS, E-commerce, Dashboard, Admin panel, CRM, Analytics tool</li></ul></div><div style="display:contents" dir="auto"><ul id="9e6064de-d937-427e-8c37-e36c5b9f33db" class="bulleted-list"><li style="list-style-type:disc">[Data Types] = What data you&#x27;re displaying</li></ul></div><div style="display:contents" dir="auto"><ul id="3ff2ad42-5728-4657-89c3-b3851d911055" class="bulleted-list"><li style="list-style-type:disc">[Content types] = What goes in cells</li></ul></div><div style="display:contents" dir="auto"><ul id="debbfc27-baaf-47ba-a35f-c43e565e76fc" class="bulleted-list"><li style="list-style-type:disc">[Row variations] = Different row types needed</li></ul></div><div style="display:contents" dir="auto"><ul id="1b52deca-b153-4b89-8f5c-0c46525962a6" class="bulleted-list"><li style="list-style-type:disc">[Table features] = Which features to include</li></ul></div><div style="display:contents" dir="auto"><ul id="6411cba9-96a6-490d-b7d3-63c3949fc264" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current table inflexibility issues</li></ul></div><div style="display:contents" dir="auto"><ul id="7f4c0a9b-c897-4bd6-9904-85bf28742e73" class="bulleted-list"><li style="list-style-type:disc">Attach rigid table examples</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80ea-b56b-da5ee69aa6c6"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8014-a576-e8080f6b89fa"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-807f-ab46-e0be73c25b0e" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-807e-a9bb-f48cdd6dd543" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Data Visualization Component Specialist focusing on flexible table systems, component architecture, and scalable data display patterns.
+
+I&#x27;m designing a flexible data table system for a SaaS Project Management Tool that can handle Tasks, Projects, Users, and Activity logs without creating separate tables for each use case.
+
+[User would attach current rigid table components]
+
+Data table requirements:
+- Data types to display:
+  - Tasks: Title, assignee, due date, priority, status, actions
+  - Projects: Name, team members, progress, deadline, status
+  - Users: Name, role, email, last active, actions
+  - Activity: User, action, timestamp, details
+  - Reports: Metric, value, change, trend
+- Content types in cells:
+  - Text: Task titles, names, descriptions (varying lengths)
+  - Numbers: Counts, percentages, IDs
+  - Dates: Due dates, timestamps, date ranges
+  - Badges: Status (To Do, In Progress, Done), Priority (High, Medium, Low)
+  - Actions: Edit, Delete, Share buttons/icons
+  - Icons: Type indicators, flags, warnings
+  - Images: Avatars, thumbnails
+  - Links: Clickable names, external links
+  - Checkboxes: Row selection, task completion
+- Row variations:
+  - Single-line: Standard row, 48-56px height, one line of text
+  - Multi-line: Expanded row, 72-96px height, wrapped text
+  - Expandable: Row with expand/collapse for details
+  - Selectable: Checkbox on left, selected state
+  - Hover: Hover state, action buttons appear
+  - Draggable: Drag handle for reordering (optional)
+- Table features needed:
+  - Search: Global search across all columns
+  - Filters: Filter by status, priority, assignee, date range
+  - Sorting: Click column header to sort (ascending/descending)
+  - Bulk actions: Select multiple rows, &quot;Delete selected&quot;, &quot;Change status&quot;
+  - Pagination: 20, 50, 100 rows per page with page numbers
+  - Export: Export to CSV, PDF
+  - Column visibility: Show/hide columns
+  - Density: Compact, Standard, Comfortable row heights
+- Data volume:
+  - Typical: 50-200 rows per table
+  - Maximum: 1000+ rows (use virtual scrolling or pagination)
+  - Columns: 4-10 visible columns, 15+ total columns
+- Responsive needs:
+  - Desktop: Full table (1280px+)
+  - Tablet: Horizontal scroll or hide low-priority columns (768-1024px)
+  - Mobile: Stacked card view or horizontal scroll (320-767px)
+
+Current table problems:
+- Separate table for each data type - TaskTable, ProjectTable, UserTable, ActivityTable built as separate components, 15 table variants total, changing header styling requires updating 15 tables, unmaintainable nightmare
+- Cells can&#x27;t adapt to content types - Text cell component doesn&#x27;t handle numbers (wrong alignment), can&#x27;t show badges (fixed text only), can&#x27;t include actions (buttons break layout), building cell-by-cell manually for each table
+- No systematic row/cell architecture - Designers building tables as flat frames, no reusable Row or Cell components, every table designed from scratch, inconsistent cell padding/spacing/alignment
+- Long text breaks layout - Task title &quot;Implement advanced search functionality with filters and real-time results&quot; overflows cell, breaks alignment with other rows, no truncation strategy, no multi-line option
+- Missing table features - No search bar, no filters, no column sorting indicators, no bulk selection checkboxes, no pagination controls, static table only
+- Row states incomplete - Only default row shown, no hover state (actions hidden), no selected state (bulk actions), no expandable rows (can&#x27;t show task details), no loading skeleton
+- Column structure undefined - No Column component, column widths hardcoded (200px, 150px, 300px), can&#x27;t resize columns, no min/max width constraints, breaks responsive
+- No empty/loading/error states - Empty table just shows headers with blank space, no &quot;No tasks found&quot; message, no loading skeleton when fetching data, no error state when API fails
+
+Team context:
+- 8 designers need to create 20+ different tables (tasks, projects, users, files, comments, activity, reports, settings)
+- Current workflow: Copy existing table, manually adjust cells, recreate features = 2-3 hours per table
+- Want component system: Drag Row component, swap Cell variants, configure columns = 15 minutes per table
+- Developers need consistent table structure (React Table, Tanstack Table libraries expect row/cell architecture)
+- Tables must handle edge cases (0 rows, 1000+ rows, very long text, missing data)
+- Accessibility required (keyboard navigation, screen reader row/cell announcements, focus management)
+
+Please provide:
+1. Component architecture (Row → Cell → Column hierarchy)
+2. Row component variants (single-line, multi-line, expanded, selected, hover)
+3. Cell component variants (text, number, status, action, badge, icon, image, link, checkbox)
+4. Column component structure (header, width, alignment, sorting)
+5. Table features (search, filters, sorting, bulk actions, pagination)
+6. State patterns (empty, loading, error, no results)
+7. Responsive strategies (mobile horizontal scroll, stacked cards, priority columns)
+8. Edge case handling (long text, missing data, overflow actions)
+
+Consider: Must scale from 10 to 1000+ rows. Reusable across 20+ data types. Cells must handle 10+ content types. Row/Cell/Column component architecture required. Search, filter, sort, bulk actions, pagination essential. Mobile responsive (horizontal scroll or cards). Keyboard accessible. Handles edge cases (empty, loading, errors, long text).</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-805a-851b-d60639fbf26e"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="1812b78c-7dda-49ad-93de-7d7b8d967dea"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="76d64d0d-1a06-438a-bd04-463da4e6492a" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="d5e1aa39-e4b9-48af-9f39-1d40973df43c" class="">✦ Row → Cell architecture is key: Build tables from composable Row and Cell components, not flat frames - enables reuse across 20+ data types<br/>✦ Common mistake: Building separate TaskTable, UserTable, ProjectTable - use one flexible table system with Cell variants instead<br/>✦ Best with: Claude (excellent at component architecture), ChatGPT (good for table patterns)<br/>✦ Remix it: &quot;Design the expandable row pattern - click to reveal nested details, subtasks, or comments&quot;<br/>✦ Pro move: Ask &quot;Create the table configuration system - JSON structure defining columns, cell types, and features for any table&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80a7-a130-d1cb02a57a45"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="a6d7a20a-51c4-4cbc-84be-dd1d4477da3f"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="4a16a2c4-fcb5-4836-b55d-e855e1f48fc6" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="c020c5a6-d649-4a36-8ad8-8fb22a9e1109" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the Cell component library - all 10 cell types (text, number, status, action, badge, icon, image, link, checkbox) with specs&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="385d060d-8aeb-43f9-bcf0-addc2a97206c" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the bulk action patterns - select all, select filtered, deselect, action bar with delete/export/assign&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="06e2dfd4-526a-4de3-9959-f17b521cf5bc" class="bulleted-list"><li style="list-style-type:disc">&quot;How to handle mobile tables - horizontal scroll vs. stacked cards vs. priority columns&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="09acfeef-7a46-4522-9824-3e673b38e124" class="bulleted-list"><li style="list-style-type:disc">&quot;Build the advanced filter system - multi-select dropdowns, date ranges, saved filters&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80fd-ac14-e29da7136166"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8073-88c8-e55892eb2eb1"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-809c-bfba-ed87fb7eab57" class="">EXAMPLE OUTPUT</p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80ba-bb04-ebcb1a20bca2" class="image"><a href="53_Example_Output.png"><img style="width:643.9921875px" src="53_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8073-ab34-c3642ebc2c22"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="8eb0b054-584c-404b-b778-f07de878ea92"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="4f852978-f2f5-4728-83be-9c30e17be2c0" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="a2ebfb2c-479e-4403-8abe-326a0ee5955b" class="">→ Recipe #49: <a href="R-49 Design Component Variants 2d767ccc6bef8061a641c8db579cd3b7.html">Design Component Variants in Figma</a><br/>→ Recipe #51: <a href="R-51 Build Responsive Components 2d767ccc6bef8015b2effc042a7b2cbe.html">Build Responsive Components in Figma</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-806f-9d6a-c57eb09d18a8" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

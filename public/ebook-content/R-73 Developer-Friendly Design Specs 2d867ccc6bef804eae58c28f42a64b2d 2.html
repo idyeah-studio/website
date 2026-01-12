@@ -1,0 +1,797 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-73: Developer-Friendly Design Specs</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d867ccc-6bef-804e-ae58-c28f42a64b2d" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d867ccc-6bef-800f-bf2e-d4b5b65ee7d9" class="">Recipe #73: Developer-Friendly Design Specs</h1></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80c2-b445-f427990fdf46" class="">Category: Bonus — Hand-off  |  ⏱️ 35-45 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80ff-a750-e2ec655c7c6c" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="1db9febe-a203-4894-b9df-cdb5b24afe3a"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0f1d49f2-c08d-4c23-bad2-bf736e238f41" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="face9083-b2d8-480a-8547-fc7120f60b71" class="">You&#x27;re handing off designs to developers, preparing Figma files for development, documenting component specifications, annotating interactions and animations, or bridging the design-development gap. Your current handoffs are unclear, developers ask many questions, implementations don&#x27;t match designs, or you spend hours explaining specs in meetings.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80f4-ae3e-e10ab34d3404"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="f97f7a87-0971-45cb-b8d7-5dad5e179b4b"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="814b8154-0e84-4b9f-9dba-d4797bea5a38" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="faf40ca3-5aec-4895-b542-39846ea47be1" class="">Many designers create poor design specs - vague annotations (&quot;make it look good&quot;), missing interaction details (no hover/focus/disabled states), unclear spacing (developers guess padding values), no component documentation (props/variants unclear), inconsistent naming (layer names don&#x27;t match code), missing edge cases (empty states, errors, loading), or relying on verbal explanations (specs disappear after handoff call). Teams build products that don&#x27;t match designs, waste time in back-and-forth Slack messages, hold endless clarification meetings, or ship inconsistent implementations. You need systematic design specs - clear annotations (spacing, sizing, colors with exact values), complete state documentation (default/hover/focus/active/disabled/loading/error), interaction specifications (animations, transitions, timing), component APIs (props, variants, behavior), organized Figma files (Dev Mode ready, clean layers, proper naming), edge case coverage (responsive, empty, error, loading states), and async-friendly documentation (specs developers can reference independently).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8017-a93d-c880a5e1917b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="31730d97-a69f-448d-8ca1-3effd3868da5"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a6817bb9-34e1-4738-a994-6ac4a6afeda8" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="071d45c0-5d5b-4d6f-8d67-91b54968bbf0" class="">The AI will provide Figma Dev Mode setup (enable Dev Mode, mark ready for dev, organize sections, clean layer naming), complete component specifications (all states including hover/focus/disabled/loading/error, props/variants, exact values with design tokens), interaction and animation specs (transition timing, easing functions, triggers), spacing and layout documentation (padding, gaps, Auto Layout settings, responsive breakpoints), typography and color specs (text styles, color tokens, accessibility notes), edge case documentation (empty states, loading, errors, long content, small screens), annotation guidance (measurements, token references, complex logic explanations), and handoff best practices (naming conventions, file organization, async-friendly documentation). You&#x27;ll get systematic approaches to create clear, complete design specs that developers can implement independently.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="01b15941-5a67-4859-9d0d-2534de9468f9"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="c932d79e-0319-4572-8bb5-c5ec9e5bd065"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b3be2d8d-765d-4357-996d-9ab199f37e87" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="9ba80f18-ad25-40e1-8f36-3a4d8dcba3f9" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Design-to-Development Handoff Specialist focusing on clear specifications, Figma Dev Mode, component documentation, and effective designer-developer collaboration.
+
+I&#x27;m creating design specs for [Project/Feature] to hand off to [Developer Team] by documenting [Components/Screens] with [Specification Details] while optimizing for [Handoff Goals] and avoiding [Common Spec Problems].
+
+[OPTIONAL: Attach Figma designs needing specs or examples of unclear handoffs]
+
+Design spec requirements:
+- Project type: [e.g., New feature, Component library, Full product, Design system, Redesign]
+- Developer team: [e.g., Frontend developers (React), Mobile developers (iOS/Android), Full-stack team]
+- Handoff scope: [e.g., Individual components, Full screens, Interaction flows, Design system]
+- Tech stack: [e.g., React, Vue, React Native, SwiftUI, HTML/CSS, Tailwind]
+- Timeline: [e.g., Async handoff (developers work independently), Live handoff (design review meeting), Iterative (ongoing collaboration)]
+
+Current handoff problems:
+- [Problem 1: e.g., Vague specs - annotations say &quot;add some spacing&quot; without exact values, developers guess]
+- [Problem 2: e.g., Missing states - only default state shown, no hover/focus/disabled/error/loading states]
+- [Problem 3: e.g., Unclear interactions - no animation specs, transition timing, or behavior documentation]
+- [Problem 4: e.g., Poor Figma organization - messy layers, inconsistent naming, developers can&#x27;t find components]
+- [Problem 5: e.g., No edge cases - missing empty states, error states, responsive behavior, long content]
+
+Team context: [Design-dev relationship, handoff frequency, developer Figma access, documentation tools]
+
+Please provide:
+1. Figma Dev Mode setup (enable Dev Mode, mark ready for dev, organize sections, clean layers)
+2. Component specifications (states, props/variants, sizing, spacing, exact values with design tokens)
+3. Interaction and animation specs (hover/focus/active, transitions, timing, easing, triggers)
+4. Spacing and layout documentation (padding, gaps, Auto Layout settings, responsive behavior)
+5. Typography and color specs (text styles, color tokens, semantic naming, accessibility notes)
+6. Edge case documentation (empty states, errors, loading, long content, small screens)
+7. Annotations and comments (callouts for complex logic, design decisions, implementation notes)
+8. Handoff best practices (naming conventions, organized files, async-friendly documentation)
+
+Consider: [Constraints - e.g., Async handoff (no live meetings), Junior developers (need detailed specs), Remote team (different time zones)]</code></pre></div><div style="display:contents" dir="auto"><p id="efa66ed2-4a35-41fb-9fc8-cb1e6dad4fb1" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="2409ca52-5669-4a15-891d-a91c0637a241" class="bulleted-list"><li style="list-style-type:disc">[Project/Feature] = What you&#x27;re handing off</li></ul></div><div style="display:contents" dir="auto"><ul id="886b53be-f737-4703-9983-f2b85d2ba37f" class="bulleted-list"><li style="list-style-type:disc">[Developer Team] = Who&#x27;s implementing</li></ul></div><div style="display:contents" dir="auto"><ul id="3bc57f44-53d4-4eed-90b0-8cfaa7e74d57" class="bulleted-list"><li style="list-style-type:disc">[Components/Screens] = What needs specs</li></ul></div><div style="display:contents" dir="auto"><ul id="4e9086fb-a194-4517-a667-ae9aefd2e82e" class="bulleted-list"><li style="list-style-type:disc">[Specification Details] = States, spacing, interactions</li></ul></div><div style="display:contents" dir="auto"><ul id="94584ee9-89f0-4ace-964e-2f7c8cefeb1a" class="bulleted-list"><li style="list-style-type:disc">[Handoff Goals] = Clarity, independence, accuracy</li></ul></div><div style="display:contents" dir="auto"><ul id="f3b89b89-4ee2-4312-9e9a-b1e5885a1392" class="bulleted-list"><li style="list-style-type:disc">[Common Spec Problems] = Current issues</li></ul></div><div style="display:contents" dir="auto"><ul id="305f4236-3f6c-4d1e-933b-7a299dee44f2" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Specific handoff problems</li></ul></div><div style="display:contents" dir="auto"><ul id="8218b413-fc3c-4160-b4be-9331c0ebd30d" class="bulleted-list"><li style="list-style-type:disc">Attach Figma files with spec issues</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-8012-85c7-eb4d7d4c77b3"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-80e0-bd77-e208c5f86e3e"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80e2-89ad-f3ffa3291478" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d867ccc-6bef-8037-850d-d8aa76306f0e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Design-to-Development Handoff Specialist focusing on clear specifications, Figma Dev Mode, component documentation, and effective designer-developer collaboration.
+
+I&#x27;m creating design specs for a Dashboard Redesign (analytics dashboard with charts, tables, filters, and real-time data) to hand off to a remote frontend development team (3 React developers, 2 junior, 1 mid-level, in different time zones) by documenting 15 new components (cards, data tables, filter panels, chart components) and 8 key screens with complete component states (default/hover/focus/active/disabled/loading/error), exact spacing values (using design tokens), interaction animations (transition timing, easing functions), responsive behavior (desktop/tablet/mobile breakpoints), and edge cases (empty states, loading states, error states, long data) while optimizing for async handoff (developers work independently without live meetings), junior developer clarity (detailed specs, no assumptions), and accurate implementation (matches designs exactly, minimal revisions) and avoiding vague annotations, missing interaction details, unclear responsive behavior, forgotten edge cases, and relying on Slack explanations.
+
+[User would attach Figma dashboard designs - components without specs, unclear states, missing annotations]
+
+Design spec requirements:
+- Project type: Dashboard redesign (analytics product, 20+ screens, data-heavy)
+- Developer team:
+  - 3 React developers (2 junior with 1 year experience, 1 mid-level with 3 years)
+  - Remote team (US, Europe, Asia - different time zones, async work)
+  - Tech stack: React, TypeScript, Tailwind CSS, Recharts (for charts)
+  - Figma access: Yes (developers use Figma Dev Mode for specs)
+- Handoff scope:
+  - 15 new components (buttons, cards, data tables, filters, charts, modals)
+  - 8 key screens (main dashboard, analytics detail, user management, settings)
+  - Interaction flows (filtering data, drill-down navigation, real-time updates)
+- Tech stack: React, TypeScript, Tailwind CSS (design tokens map to Tailwind classes)
+- Timeline:
+  - Async handoff (no live handoff meetings, developers reference Figma independently)
+  - 2-week sprint cycles (design complete, developers implement over 2 weeks)
+  - Iterative (ongoing design refinements during development)
+
+Current handoff problems:
+- Vague spacing specs - Annotations say &quot;add some padding&quot; or &quot;space things out nicely&quot; without exact pixel values, developers guess (some use 12px, others 16px, others 20px), visual inconsistency in implemented product, back-and-forth Slack: &quot;How much padding did you want here?&quot;, wastes 2-3 hours per week in clarification messages
+- Missing component states - Designed default button state only, no hover/focus/active/disabled states shown, developers implement generic browser defaults (ugly blue outline on focus), doesn&#x27;t match brand, discovered in QA (too late), have to redesign states retroactively, delays sprint
+- No interaction or animation specs - Designed dropdown menu, no spec for how it opens (fade? slide? instant?), no transition timing, developers implement instant show/hide (looks jarring, not polished), wanted smooth 200ms ease-out transition, have to revise post-implementation
+- Poor Figma layer organization - Layers named &quot;Rectangle 47&quot;, &quot;Group 23&quot;, &quot;Frame 891&quot; (meaningless), developers can&#x27;t find components in Figma, spend 10 minutes hunting for &quot;that blue button&quot;, messy frames (components scattered, no organization), developers frustrated, ask &quot;Where&#x27;s the error state for the card?&quot;
+- Missing edge cases - Designed data table with 20 rows of data (looks great), never designed empty state (no data), never designed error state (API failure), never designed loading state (skeleton screen), developers ask &quot;What should empty table look like?&quot;, have to design on the fly (delays sprint), shipped with generic &quot;No data&quot; text (not brand-aligned)
+- No responsive specs - Designed desktop only (1440px), no tablet (768px) or mobile (375px) specs, developers guess how to adapt layout, cards stack weird on mobile, navigation breaks on tablet, have to redesign responsive after seeing broken implementation
+- Unclear design token usage - Figma uses design tokens (Primary Color, Spacing-4), but annotations don&#x27;t reference them, say &quot;use this blue&quot; without specifying it&#x27;s {Brand/Primary}, developers hardcode #3B82F6 instead of using theme token, can&#x27;t switch themes later, token system wasted
+
+Team context:
+- Design-dev relationship: Good (devs trust designer), but async (rarely in live meetings together)
+- Handoff frequency: Every 2 weeks (per sprint)
+- Developer Figma access: Yes (all devs have Figma accounts, use Dev Mode for specs)
+- Documentation: Figma only (no separate spec docs, everything in Figma annotations)
+- Developers&#x27; pain points: &quot;Not enough detail&quot;, &quot;Missing states&quot;, &quot;Unclear interactions&quot;, &quot;Can&#x27;t find components&quot;
+- Designer&#x27;s pain point: Spending 5+ hours/week answering Slack questions about specs
+
+Please provide:
+1. Figma Dev Mode setup (enable Dev Mode, mark ready for dev, organize sections, clean layers)
+2. Component specifications (states, props/variants, sizing, spacing, exact values with design tokens)
+3. Interaction and animation specs (hover/focus/active, transitions, timing, easing, triggers)
+4. Spacing and layout documentation (padding, gaps, Auto Layout settings, responsive behavior)
+5. Typography and color specs (text styles, color tokens, semantic naming, accessibility notes)
+6. Edge case documentation (empty states, errors, loading, long content, small screens)
+7. Annotations and comments (callouts for complex logic, design decisions, implementation notes)
+8. Handoff best practices (naming conventions, organized files, async-friendly documentation)
+
+Consider: Async handoff (no live meetings, specs must be complete). Junior developers (need detailed guidance). Remote team (time zones, Slack async). React/Tailwind (token names should match). Data-heavy (empty/error/loading states critical). 15 components + 8 screens (large scope, needs organization). Vague specs history (must be precise).</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80d5-b83b-e17972f46729"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-8079-a23e-e59b81717561"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80ca-afba-fb9bf75259e8" class=""><strong>CHEF’S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8094-a111-c0c73b6dd1a0" class="">✦ Show all states: Don&#x27;t just design default - developers need hover, focus, active, disabled, loading, error states<br/>✦ Common mistake: Vague spacing (&quot;add some padding&quot;) - always use exact values with design tokens<br/>✦ Best with: Claude (excellent at systematic specs, thorough documentation), ChatGPT (good for checklist generation)<br/>✦ Remix it: &quot;Create design specs for this component - all states, exact spacing with tokens, interactions, edge cases&quot;<br/>✦ Pro move: Ask &quot;Audit my Figma file for dev handoff readiness - check layer names, missing states, vague specs&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80a3-b01b-e384b0583737"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-800c-a786-d63f36b8b4c9"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80eb-8974-f4f977afd833" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="2d867ccc-6bef-80cd-8f11-da288be502fe" class="bulleted-list"><li style="list-style-type:disc">&quot;Document button component specs - all states (default/hover/focus/active/disabled), exact padding, transitions&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d867ccc-6bef-8085-8b64-d8f3419823cb" class="bulleted-list"><li style="list-style-type:disc">&quot;Create data table specs - empty state, loading (skeleton), error state, responsive behavior, interactions&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d867ccc-6bef-80d6-bead-ef59044eef20" class="bulleted-list"><li style="list-style-type:disc">&quot;Specify modal animation - open/close transitions, timing (200ms), easing, backdrop fade, focus management&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d867ccc-6bef-8027-86da-e969f1d3c6a2" class="bulleted-list"><li style="list-style-type:disc">&quot;Organize Figma file for dev handoff - clean layers, mark ready for dev, add annotations, edge cases&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-80b9-9730-c3626f05148a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-8010-8e6a-cef9719e201b"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8038-882f-e29eb00ab0aa" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-8066-84df-ea47d749db6e" class="image"><a href="73_Example_Output.png"><img style="width:643.9921875px" src="73_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d867ccc-6bef-801e-88f2-f831f9d5842f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="2d867ccc-6bef-80e7-892a-e49f57c2ab16"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80d4-b9d7-c2737458ee3a" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-8058-a778-f5edf2015eb7" class="">→ Recipe #74: <a href="R-74 Generate HTML & CSS from Figma 2d867ccc6bef80a28208fba9fe6e39da.html">Generate HTML &amp; CSS from Figma</a><br/>→ Recipe #72: <a href="R-72 Design Tokens in Figma 2d867ccc6bef80839ee7ec3aaadb1649.html">Design Tokens in Figma</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d867ccc-6bef-80b8-8ab2-db44d390ddf9" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

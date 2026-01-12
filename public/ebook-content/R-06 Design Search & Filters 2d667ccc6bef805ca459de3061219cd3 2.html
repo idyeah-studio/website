@@ -1,0 +1,785 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-06: Design Search &amp; Filters</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-805c-a459-de3061219cd3" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-8030-a95f-c3f0cf18e1a1" class="">Recipe #6: Design Search &amp; Filters</h1></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80e6-b748-d3e3255228b9" class="">Category: Wireframing &amp; IA  |  ⏱️ 30-35 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-806c-a623-ed9464f5cd84" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="97d7b267-8ae6-404d-8e39-0b9724d41f95"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6160ddf6-e674-451b-855a-9ca1792711af" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="64a11698-b2d8-4fe4-914c-2ad7e495b563" class="">You&#x27;re designing search and filter interfaces for apps with large datasets (1,000+ items) - need to structure faceted search, determine filter priority, design active filter UI, and handle edge cases like zero results. Users need to narrow down options efficiently.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80d5-a9f0-d467973d0c7c"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="ff1a971c-d2ba-441a-bf56-ba2541f157f1"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="41811f8c-120d-47df-8ab5-e4f4c358b9af" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="a826b2a2-b69a-4e0c-9dc0-e62c38448182" class="">Many applications have poorly structured search and filter systems - too many filter options overwhelming users, no clear filter hierarchy, active filters hidden or unclear, no way to quickly clear all filters, inconsistent filter types (checkboxes, dropdowns, sliders mixed randomly), and terrible &quot;no results&quot; states that just say &quot;0 results&quot; without helping users. Users apply filters but can&#x27;t see what&#x27;s active, get zero results and give up, or face 50 filter options with no organization. You need a structured approach to faceted search with clear filter hierarchy, visible active filters, and helpful zero-results states.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8076-8a18-fffdde0aefef"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="ca9c30ff-8def-4056-93c9-c8f187f8c81f"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="aef48ee0-3a49-436c-a972-e80c1e34a4cb" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="49782f00-2580-4fb0-8f3b-71f6480f35cd" class="">The AI will provide a prioritized list of 5 key filters (e.g., Location, Price, Bedrooms) with detailed structural sidebar layout showing primary filters expanded and secondary collapsed. You&#x27;ll get active filter UI patterns (removable chips with &quot;clear all&quot;), filter type recommendations (sliders for ranges, checkboxes for multi-select, radio for single choice), sorting options with default, helpful &quot;No Results&quot; states with suggestions and similar items, mobile-optimized bottom sheet design with apply button, and filter logic guidance (OR within categories, AND between) with real-time result counts and filter dependencies.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-805e-9e50-ff71388778ab"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="38d49c55-d8ba-4666-8950-194d58fd808b"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="4513cd72-c12b-48a7-b01c-372dd08708d6" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0d2fe88d-6022-4790-b339-4f4b9669f903" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Information Architect specializing in search interfaces, faceted navigation, and filter systems.
+
+I am redesigning the [Search Results View] for an app with [Number]+ items. Create a structural layout for a &#x27;Faceted Search&#x27; sidebar.
+
+[OPTIONAL: Attach screenshots of current search/filter interface or competitor examples]
+
+Search and filter requirements:
+- Content being searched: [e.g., Products, Properties, Jobs, Articles, Files]
+- Dataset size: [e.g., 1,000 items, 10,000 items, 100,000+ items]
+- User search patterns: [e.g., Browse by category, Filter by attributes, Price-focused, Location-based]
+- Filter types needed: [e.g., Category, Price range, Location, Date, Rating, Attributes]
+
+Please provide:
+1. List the 5 most important filters (prioritized by user needs)
+2. Structural layout for faceted search sidebar
+3. UI pattern for &#x27;Active Filters&#x27; (e.g., chips or tags)
+4. Filter type recommendations (checkbox, dropdown, slider, etc.)
+5. Sorting options and default sort
+6. &quot;No Results Found&quot; wireframe with helpful suggestions
+7. Mobile filter pattern
+8. Filter logic (AND vs OR, filter dependencies)
+
+Consider: [Constraints - e.g., Must work on mobile, large dataset performance, filter counts in real-time, save filter combinations]</code></pre></div><div style="display:contents" dir="auto"><p id="21a25b2e-47bc-4254-af55-a72229deedbe" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="5d1e8867-8515-4e26-b9ca-36d8f59278c8" class="bulleted-list"><li style="list-style-type:disc">[Search Results View] = Product listings, Property search, Job board, Content library</li></ul></div><div style="display:contents" dir="auto"><ul id="243e5a3e-29d5-4020-9a96-18c989602d42" class="bulleted-list"><li style="list-style-type:disc">[Number] = Size of your dataset</li></ul></div><div style="display:contents" dir="auto"><ul id="38eb5aa7-bd73-484a-aa59-72f48404bf04" class="bulleted-list"><li style="list-style-type:disc">[Content type] = What users are searching for</li></ul></div><div style="display:contents" dir="auto"><ul id="8473375d-2313-44fd-adf8-630ff0617a85" class="bulleted-list"><li style="list-style-type:disc">[Filter types] = Available filter criteria</li></ul></div><div style="display:contents" dir="auto"><ul id="718f27e4-d383-4ea0-a663-8c9a25500deb" class="bulleted-list"><li style="list-style-type:disc">Upload current search/filter interface or examples</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-801e-aa09-f6d6ebb41967"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-8073-ae9a-ec2e8f9de2e0"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-807e-b0c0-f0aee122d903" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d667ccc-6bef-8038-b1a3-f58e2c429e02" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Information Architect specializing in search interfaces, faceted navigation, and filter systems.
+
+I am redesigning the Property Search Results for a Real Estate app with 15,000+ property listings. Create a structural layout for a &#x27;Faceted Search&#x27; sidebar.
+
+[User would attach search interface screenshots here]
+
+Search and filter requirements:
+- Content being searched: 
+  - Residential properties (houses, apartments, condos)
+  - Rental and sale listings
+  - 15,000+ active listings across 50+ cities
+- Dataset size: 15,000 active listings, growing 200-300 per month
+- User search patterns:
+  - 70% start with location (city or neighborhood)
+  - 60% filter by price range first
+  - 50% filter by number of bedrooms/bathrooms
+  - 40% use property type filter (house, apartment, condo)
+  - 30% filter by amenities (parking, pool, gym)
+  - Most users apply 3-5 filters total
+- Filter types needed:
+  - Location (city, neighborhood, radius)
+  - Price range (min-max slider)
+  - Property type (house, apartment, condo, townhouse)
+  - Bedrooms (1, 2, 3, 4, 5+)
+  - Bathrooms (1, 1.5, 2, 2.5, 3+)
+  - Square footage range
+  - Amenities (parking, pool, gym, pet-friendly, etc.)
+  - Listing type (sale, rent)
+  - Date listed (last 24h, last week, last month)
+  - Virtual tour available (yes/no)
+
+Current problems:
+- 20+ filters displayed equally - overwhelming, no hierarchy
+- Active filters hidden - users don&#x27;t know what&#x27;s applied
+- &quot;0 results&quot; just shows empty page - no help or suggestions
+- Mobile has no filters - users can&#x27;t narrow search on phone
+- Filters don&#x27;t show result counts - users apply filters that yield zero results
+
+Please provide:
+1. List the 5 most important filters (prioritized by user needs)
+2. Structural layout for faceted search sidebar
+3. UI pattern for &#x27;Active Filters&#x27; (e.g., chips or tags)
+4. Filter type recommendations (checkbox, dropdown, slider, etc.)
+5. Sorting options and default sort
+6. &quot;No Results Found&quot; wireframe with helpful suggestions
+7. Mobile filter pattern
+8. Filter logic (AND vs OR, filter dependencies)
+
+Consider: Must prioritize location and price (most used). Show result counts per filter option. Mobile users need quick access to top 5 filters. &quot;No results&quot; should suggest loosening filters. Save search functionality for repeat users. Performance with 15K+ items.</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80df-b7cd-fcac8c02df08"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="bbde3646-992d-4174-934c-869ec7212081"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a2227775-e967-49b4-95d2-489f6b5f7a6c" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="71657d9e-66b9-4b05-b606-9db1eb360d4b" class="">✦ Don&#x27;t forget &quot;No Results Found&quot;: It&#x27;s an opportunity to suggest related items and help users adjust filters<br/>✦ Common mistake: Hiding active filters - users forget what they applied, always show chips at top<br/>✦ Best with: Claude (excellent at information architecture), ChatGPT (good for filter hierarchy)<br/>✦ Remix it: &quot;Design the saved search feature - let users save filter combinations and get alerts for new matches&quot;<br/>✦ Pro move: Ask &quot;Create the filter analytics dashboard - track which filters are most used, which combinations yield zero results&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8014-96ed-d25a72522263"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="83e80ec4-8db0-41b1-b35c-65f13d679d00"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="099c1e70-2b71-4302-8a2a-6e87ef7fffc1" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="14331d38-b92c-4c86-a073-239542bb0720" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the mobile filter bottom sheet - how to present 20+ filters on small screens&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="876fb8f1-1181-44c8-b909-b7fb1339eb40" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the filter result count system - show how many results each filter option will yield&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="188cc622-6f9c-4e96-a3e0-066925978e08" class="bulleted-list"><li style="list-style-type:disc">&quot;How should filter dependencies work - when selecting &#x27;Rent&#x27; changes available price ranges?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="82a57fde-a62b-40dc-bc39-58c16105eedb" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the saved search feature - save filter combinations, get alerts for new matches&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80da-9ac3-d7eb3e97b94b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-8098-ab7a-c59e86e99f5e"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80a4-b53b-fa6c507fb585" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-807e-a264-c3b6f28b6abd" class="image"><a href="6_Example_Output.png"><img style="width:643.9921875px" src="6_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80e8-a303-d9ae3e8b214c"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="72798334-b3bc-4f73-8b44-08983387a5ff"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="695ca59b-2849-453a-97b7-71a7269a180d" class=""><strong>RELATED RECIPES</strong><br/>→ Recipe #38: <a href="R-38 Build Smart Search Bars 2d767ccc6bef808691d8cc363e24cc2d.html">Build Smart Search Bars</a><br/>→ Recipe #40: <a href="R-40 Design Better Modals 2d767ccc6bef800d9012d412a0122f53.html">Design Better Modals</a><br/>→ Recipe #48: <a href="R-48 Design Smart Defaults 2d767ccc6bef80729793db8459ae5170.html">Design Smart Defaults</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8009-a50a-d49caa5a8ef5" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,781 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-12: Build High-Converting Pages</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-804c-85c0-d115079037e7" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-8051-a9d4-f17894a08e20" class="">Recipe #12: Build High-Converting Pages</h1></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80fe-82d1-f76d72398e33" class="">Category: Wireframing &amp; IA  |  ⏱️ 30-40 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-800c-b9b4-f14cedd564be" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="8b72eb82-eb98-4620-b012-d7ff81c6c57d"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="774ef46e-8708-440c-a81b-d8cc4a4341b1" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="9a8f7968-4518-43a5-8ec6-6796eb1bf651" class="">You&#x27;re redesigning a conversion-critical page (landing page, pricing page, sign-up flow, checkout) that has low conversion rates. Analytics show high bounce rates, form abandonment, or users viewing but not taking action. You need to redesign for persuasion and clarity.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80c4-ab00-c3d046bb6c62"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="0a525232-b58f-4896-bbf0-4b7b9849d116"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="70b3d52e-d2b7-4f7b-ac41-aa0ad0536dc7" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="54d937b7-d995-4b88-abdc-9719d2247940" class="">Conversion pages in existing applications often suffer from competing CTAs, unclear value propositions, trust issues, overwhelming choices, or buried key information. The page was designed by committee - every stakeholder added their &quot;must-have&quot; element, resulting in a cluttered mess that converts poorly. Users land on the page but don&#x27;t understand the value, don&#x27;t trust the offer, or don&#x27;t know what action to take. You need to strip away distractions and design a focused conversion experience.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80eb-81b9-dae2fe949d7d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="689aa5af-0beb-4e7d-a1a1-860c86660072"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="118ea85f-ada1-4375-9a26-925686467a66" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="a80c4bd5-a175-4c81-b3bb-f0fa6206b7b3" class="">The AI will provide a value proposition framework with benefit-focused headlines and feature hierarchy, single primary CTA strategy with psychological button copy and visual prominence, trust-building elements including social proof and security badges, information hierarchy optimizing above-the-fold content with progressive disclosure, form optimization reducing fields to minimum viable with smart defaults and inline validation, mobile-specific optimizations for thumb-friendly placement and simplified forms, and A/B testing suggestions with hypothesis-driven variations. Optional annotated wireframe shows the high-converting layout.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="f9801d15-31a8-4bda-b360-60c233dbfc6b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="d902b8c5-3a47-4f43-a505-7cc874c2b489"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="57b5e839-4ff9-44bd-bb41-b0e8b8b6ae72" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6281e14b-f463-4f27-baf0-2a971e2ced57" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Conversion-Focused UX Designer specializing in high-converting page design.
+
+I&#x27;m redesigning a [Page Type] that currently has a [Current Conversion Rate]% conversion rate and needs improvement.
+
+[OPTIONAL: Attach screenshot of current page, analytics data showing drop-off points]
+
+Current page problems:
+- Conversion goal: [e.g., Sign up for free trial, Purchase product, Book demo, Download]
+- Current issues: [e.g., Unclear value prop, too many CTAs, long form, no social proof]
+- Analytics insights: [e.g., 70% bounce in first 5 seconds, form abandonment at step 2]
+- User feedback: [e.g., &quot;Don&#x27;t understand what this does&quot;, &quot;Seems expensive&quot;, &quot;Too complicated&quot;]
+
+Page context:
+- Target audience: [Who visits this page and why]
+- Traffic source: [Paid ads, organic search, email, direct]
+- User intent: [What problem are they trying to solve]
+- Competition: [What alternatives do users consider]
+
+Please provide:
+1. Value proposition strategy (headline, subheadline, messaging hierarchy)
+2. CTA optimization (primary action, copy, placement, design)
+3. Trust elements and social proof placement
+4. Information architecture (what to show, what to hide, visual hierarchy)
+5. Friction reduction tactics (form optimization, objection handling)
+6. Above-the-fold strategy
+7. Mobile conversion optimization
+
+Consider: [Constraints - e.g., Must include legal disclaimers, multiple pricing tiers, different user segments]</code></pre></div><div style="display:contents" dir="auto"><p id="79201d0b-9914-414a-9bbe-abe63419c629" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="1178c5e7-dca0-4cbc-8aee-234a24393e18" class="bulleted-list"><li style="list-style-type:disc">[Page Type] = Landing page, Pricing page, Sign-up flow, Checkout, Product page, Demo request</li></ul></div><div style="display:contents" dir="auto"><ul id="ee38b005-7aad-4094-ada7-cfb5988c5164" class="bulleted-list"><li style="list-style-type:disc">[Current Conversion Rate] = Your actual conversion rate if known</li></ul></div><div style="display:contents" dir="auto"><ul id="76a39102-63f8-4dd6-a286-599269f33063" class="bulleted-list"><li style="list-style-type:disc">[Conversion goal] = Specific action you want users to take</li></ul></div><div style="display:contents" dir="auto"><ul id="a924fe68-820f-43ee-8c5c-b0d0056188f9" class="bulleted-list"><li style="list-style-type:disc">[Current issues] = Known problems from testing or analytics</li></ul></div><div style="display:contents" dir="auto"><ul id="01a02ffd-80ce-4af9-996a-8ce2465dbfb3" class="bulleted-list"><li style="list-style-type:disc">[Analytics insights] = Drop-off points, bounce rates, time on page</li></ul></div><div style="display:contents" dir="auto"><ul id="5774d0f5-6274-44d5-b500-d668b08665b8" class="bulleted-list"><li style="list-style-type:disc">[User feedback] = Actual quotes from user research</li></ul></div><div style="display:contents" dir="auto"><ul id="a1b4dd3e-c3b9-4dde-9078-957c2a4d789a" class="bulleted-list"><li style="list-style-type:disc">Upload screenshot of current page for specific recommendations</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8086-9860-f371499b592a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-80bb-921c-f0bbbaae3ac5"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80d7-b840-f5cc4884ee68" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d667ccc-6bef-80cf-8fb6-ed6932e74bd7" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Conversion-Focused UX Designer specializing in high-converting page design.
+
+I&#x27;m redesigning a SaaS Free Trial Sign-Up Page that currently has a 12% conversion rate (industry average is 25-35%) and needs improvement.
+
+[User would attach screenshot here]
+
+Current page problems:
+- Conversion goal: Get users to start a 14-day free trial (no credit card required)
+- Current issues: 
+  - Headline says &quot;Welcome&quot; (generic, no value)
+  - 8-field sign-up form visible immediately (first name, last name, email, password, confirm password, company name, company size, how did you hear about us)
+  - Three CTAs competing: &quot;Start Free Trial&quot;, &quot;Watch Demo&quot;, &quot;Talk to Sales&quot;
+  - No social proof or trust indicators
+  - Features listed in small text below form (buried value props)
+  - Legal disclaimer takes up 1/3 of screen
+- Analytics insights: 
+  - 65% bounce rate in first 10 seconds
+  - Of those who start form, 45% abandon after entering email (when they see 6 more fields)
+  - Mobile conversion is 3% (vs 15% desktop)
+- User feedback: 
+  - &quot;Why do you need my company size to try the product?&quot;
+  - &quot;Seems like a lot of work just to test it&quot;
+  - &quot;I don&#x27;t know what this tool does from this page&quot;
+
+Page context:
+- Target audience: Marketing managers at 50-500 person companies looking for automation tools
+- Traffic source: 60% Google Ads (high intent), 30% content marketing, 10% referrals
+- User intent: Want to test if tool solves their specific automation problem before buying
+- Competition: 5-6 similar tools, users compare features and ease of trial
+
+Please provide:
+1. Value proposition strategy (headline, subheadline, messaging hierarchy)
+2. CTA optimization (primary action, copy, placement, design)
+3. Trust elements and social proof placement
+4. Information architecture (what to show, what to hide, visual hierarchy)
+5. Friction reduction tactics (form optimization, objection handling)
+6. Above-the-fold strategy
+7. Mobile conversion optimization
+
+Consider: Must collect email at minimum. Company size data is valuable for sales but not required for trial. Legal disclaimer is required but currently too prominent. High-intent users from ads convert better - should we show different pages based on traffic source?</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80c5-b485-d0b80a090671"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="f3235119-6d30-4762-a0b5-39db8fd17bde"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="e7b23896-f839-4764-b64a-f3a202329506" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="e26046d7-c26a-4408-b6f6-bf358266a762" class="">✦ Lead with value, not features: Users don&#x27;t care about what you built, they care about what problem you solve<br/>✦ Common mistake: Asking for information you don&#x27;t immediately need - every form field kills ~10% of conversions<br/>✦ Best with: Claude (excellent at persuasion psychology and copywriting), ChatGPT o1 (for complex multi-variant testing strategies)<br/>✦ Remix it: &quot;Now design 3 variations targeting: enterprise buyers, SMB buyers, and individual users&quot;<br/>✦ Pro move: Ask &quot;Create an objection-handling map: for each common concern, where and how do we address it?&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80bc-a5ea-ccec0c8ab632"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="9e3fa7ee-ade2-410f-a653-f1ae6cfa239d"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d9022e0d-9c40-42ad-ada7-318c9d6cd8e7" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="41c0f678-c3d0-4b08-9694-2dd9fc5966db" class="bulleted-list"><li style="list-style-type:disc">&quot;Write 5 headline variations using different psychological triggers (urgency, social proof, benefit, curiosity, authority)&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="06ab7f56-6f10-4613-9a8d-2702f487e345" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the post-conversion thank you page that maximizes next-step engagement&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="b14aa9a6-ef48-4a15-8e8a-c462df92e950" class="bulleted-list"><li style="list-style-type:disc">&quot;What exit-intent popup should we show to users who try to leave without converting?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3922da96-f64a-4d1a-a5b5-71088fcdbfb9" class="bulleted-list"><li style="list-style-type:disc">&quot;Create an A/B test roadmap: which elements to test first for biggest conversion lift&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80ef-b3d8-e280b5f31f73"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-806b-8b21-c59945cb4ef5"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80d7-b27c-e2e6454e4007" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80f7-9ce5-c7a2817ed174" class="image"><a href="12_Example_Output.png"><img style="width:643.9921875px" src="12_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-806f-8af6-f581c8b600fe"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="9dba9558-680b-4f84-9756-822a2109825f"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ae05bf31-a320-4206-8775-a52ce69f96de" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="f1bc6fe4-3dd5-43c8-8bc1-43ba5a33a91f" class="">→ Recipe #04: <a href="R-04 Design Multi-Step Flows 2d667ccc6bef806f9f3be9cdaefa9a9e.html">Design Multi-Step Flows</a><br/>→ Recipe #39: <a href="R-39 Iterate Your Hero Sections 2d767ccc6bef80a294e9c663923f0a75.html">Iterate Your Hero Sections</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80a7-9e02-dc8ab4769713" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

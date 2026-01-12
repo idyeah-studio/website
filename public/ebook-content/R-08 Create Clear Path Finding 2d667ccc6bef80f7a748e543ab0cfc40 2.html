@@ -1,0 +1,770 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-08: Create Clear Path Finding</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-80f7-a748-e543ab0cfc40" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-80df-9597-df317e910f19" class="">Recipe #8: Create Clear Path Finding</h1></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8085-8c63-e8de34d43829" class="">Category: Wireframing &amp; IA  |  ⏱️ 20-25 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-801e-b22c-eabf04b765b1" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="74ae4a9f-0d97-4185-93c5-9692a7d5dfe9"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="ff03ddf7-cbcb-477c-b7bb-79e1e90e6bd7" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="a6f09ef2-909c-4ca8-8bd3-5d6eeeb5dee9" class="">You&#x27;re redesigning an application where users feel lost - they don&#x27;t know where they are in the product, how they got there, or how to get back. Common complaints include &quot;I can&#x27;t find my way back to that screen&quot; or &quot;I don&#x27;t know where I am in the app.”</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8085-ad66-e3f94e772db9"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="031fd40e-806d-4e32-bbf5-1b6565c9ee51"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="154ec3a1-3255-46b5-9549-d1d5d293c1ea" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="764e13f2-db5e-4230-9e62-18c47a0bb90d" class="">As applications grow, navigation becomes complex and users lose context. Breadcrumbs are missing, page titles are vague, there&#x27;s no clear visual indicator of current location, and the back button behavior is unpredictable. Users feel disoriented, especially in deep hierarchies (settings, nested folders, multi-level admin panels). You need to design a wayfinding system that gives users constant spatial awareness.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80df-892c-d11795f7e5dd"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="003941c2-e058-412e-9be6-ed38b4c4a073"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="16c1c918-8a31-4e24-8ffb-db784d932b4b" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="c25affa9-5efd-4d5b-b989-d01bac038d0a" class="">The AI will provide a comprehensive breadcrumb implementation strategy (depth thresholds, interactive vs. static, truncation rules), page header patterns with title hierarchy and context indicators, active state system with multi-level sidebar highlighting and visual location cues, navigation behavior rules defining back button logic and up vs. back distinctions, and mobile adaptations for compact breadcrumbs with touch-friendly navigation in limited space. Optional annotated wireframes show the complete wayfinding system in action.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8018-91d7-edd96f629f7a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="992f898b-b4c1-4d9a-8b48-8193b31c3273"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="fd889611-8f69-4d5e-bc46-2e307a394e44" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b7c38196-0725-429a-969a-06f2e96cfa47" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Information Architect specializing in navigation and wayfinding systems.
+
+I&#x27;m redesigning the wayfinding system for a [Product Type] where users frequently get lost and disoriented.
+
+[OPTIONAL: Attach screenshots of current navigation, sitemap, or user complaints]
+
+Current wayfinding problems:
+- [Problem 1: e.g., No breadcrumbs in nested settings pages]
+- [Problem 2: e.g., Page titles don&#x27;t indicate location in hierarchy]
+- [Problem 3: e.g., Users can&#x27;t tell which section they&#x27;re in]
+- [Problem 4: e.g., Back button takes users to unexpected places]
+
+Application structure:
+- Depth levels: [e.g., Up to 5 levels deep in some areas]
+- Navigation patterns: [e.g., Sidebar + tabs + sub-navigation]
+- Common user paths: [e.g., Dashboard → Projects → Tasks → Details]
+
+User context: [Who navigates the app, their familiarity level, and typical tasks]
+
+Please suggest:
+1. Breadcrumb strategy (when/where to use, what to show)
+2. Page title and header patterns for location awareness
+3. Active state indicators (highlighting current location)
+4. Back button and navigation behavior rules
+5. Visual hierarchy that reinforces structure
+6. Mobile wayfinding adaptations
+
+Consider: [Constraints - e.g., Limited header space, complex hierarchies, must work on mobile]</code></pre></div><div style="display:contents" dir="auto"><p id="8981fbcc-44b5-4fb7-8871-f176924cbfc7" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="325ef058-cb44-4dbc-b4d2-3ae4989b1ccd" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = Admin panel, File management system, E-commerce site, SaaS platform, Content management system</li></ul></div><div style="display:contents" dir="auto"><ul id="596655f3-8d41-4c13-980b-8d29653f6341" class="bulleted-list"><li style="list-style-type:disc">[Problem 1-4] = Specific wayfinding issues from user feedback</li></ul></div><div style="display:contents" dir="auto"><ul id="9f5fcf10-ea46-4442-a313-580e00bf3072" class="bulleted-list"><li style="list-style-type:disc">[Depth levels] = How many levels deep users navigate</li></ul></div><div style="display:contents" dir="auto"><ul id="edcb6890-3db7-4a63-81a4-0509e721615c" class="bulleted-list"><li style="list-style-type:disc">[Navigation patterns] = Your current nav structure</li></ul></div><div style="display:contents" dir="auto"><ul id="bd4b0c45-4709-4cfc-9fe1-647d92bbbf2f" class="bulleted-list"><li style="list-style-type:disc">[Common user paths] = Typical navigation journeys</li></ul></div><div style="display:contents" dir="auto"><ul id="594be1e8-1926-4074-ab0d-6b402594546e" class="bulleted-list"><li style="list-style-type:disc">Upload screenshots showing navigation structure and problem areas</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8099-abb4-ff7b5c8e543a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-80d7-b751-cc4e143be9f8"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-806a-9d5c-e922881b2427" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d667ccc-6bef-8073-9888-f98ebab6989d" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as an Information Architect specializing in navigation and wayfinding systems.
+
+I&#x27;m redesigning the wayfinding system for a Learning Management System where users frequently get lost and disoriented.
+
+[User would attach screenshots here]
+
+Current wayfinding problems:
+- No breadcrumbs anywhere - students navigating: Course → Module → Lesson → Assignment → Submission can&#x27;t backtrack
+- Page titles only show &quot;Lesson 3&quot; with no context of which course or module
+- Sidebar highlights &quot;Courses&quot; even when user is 4 levels deep in a specific course
+- Back button sometimes goes to previous lesson, sometimes to module overview, sometimes to dashboard (unpredictable)
+- On mobile, header only shows hamburger menu - zero context of current location
+
+Application structure:
+- Depth levels: Dashboard → Courses → Modules → Lessons → Assignments → Submissions (6 levels)
+- Navigation patterns: Persistent sidebar (courses list) + top nav (account) + in-page tabs (lessons/assignments/discussions)
+- Common user paths: Students navigate deep into courses daily. Instructors jump between multiple courses frequently.
+
+User context: College students accessing from phones (60%) and laptops. They often have 4-6 active courses and need to quickly orient themselves. Instructors manage multiple courses and need fast navigation between them.
+
+Please suggest:
+1. Breadcrumb strategy (when/where to use, what to show)
+2. Page title and header patterns for location awareness
+3. Active state indicators (highlighting current location)
+4. Back button and navigation behavior rules
+5. Visual hierarchy that reinforces structure
+6. Mobile wayfinding adaptations
+
+Consider: Header space is limited (mobile constraint). Must accommodate 6 levels of depth. Students need simple orientation, instructors need power-user shortcuts. Course names can be long (truncation strategy needed).</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-801a-9f1c-e7f2d081c768"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="a03c8196-cc99-4514-bd8b-4c798dc9b9bf"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="fcf9755b-5f8d-46cb-b141-3a151afc9d5d" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="c4b02a08-289c-4b0e-aedd-e094663067a6" class="">✦ Map the deepest paths: Focus on worst-case scenarios - if wayfinding works at 6 levels deep, it&#x27;ll work everywhere<br/>✦ Common mistake: Adding breadcrumbs everywhere - they&#x27;re most valuable in deep hierarchies, not shallow pages<br/>✦ Best with: Claude (excellent at complex navigation logic), ChatGPT (good for visual hierarchy patterns)<br/>✦ Remix it: &quot;Show me how this wayfinding system adapts when the same content is accessed via search vs. navigation&quot;<br/>✦ Pro move: Ask &quot;Design the &#x27;You are here&#x27; indicator for users who land on deep pages via external links&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8039-ab56-c19bcd8217c2"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="581655c5-7645-4712-8ed7-cd483644ce67"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="84597354-ab88-4e08-9a65-6bb30a51b982" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="241298f6-51be-4d31-b43c-e3535dbdf446" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the truncation rules for breadcrumbs when the path is too long for mobile screens&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3b93f6eb-72b2-480a-86a5-af6b71fd6182" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the keyboard navigation pattern for power users to quickly jump between sections&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="031f5762-329e-4f40-afbd-1b4983951e4b" class="bulleted-list"><li style="list-style-type:disc">&quot;How should breadcrumbs behave in a single-page app vs. traditional multi-page app?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="59519c14-e308-495c-a46f-9941e27c3f9e" class="bulleted-list"><li style="list-style-type:disc">&quot;Write the aria-labels and accessibility annotations for this wayfinding system&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8087-89c8-d9530a06c4be"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-8007-9fa1-c03704334883"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80ff-81df-c459464286c8" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-8030-83e3-dc441b02f4e4" class="image"><a href="8_Example_Output.png"><img style="width:643.9921875px" src="8_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80c9-8cdf-c57b43e11df3"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="f5c39243-b102-40ae-957b-dd4035b8aabb"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0eddb154-1993-4002-a303-7657e57cc2ee" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="164d546f-b976-4a7b-95d0-08c9eef26276" class="">→ Recipe #03: <a href="R-03 Organize Your Main Navigation 2d667ccc6bef8036a4f1cffbd03ee3dd.html">Organize Your Main Navigation</a><br/>→ Recipe #07: <a href="R-07 Find Hidden User Dead-Ends 2d667ccc6bef806b890bc2048285b3fa.html">Find Hidden User Dead-Ends</a><br/>→ Recipe #09: <a href="R-09 Move Desktop to Mobile 2d667ccc6bef806bb6becb18abb33dfe.html">Move Desktop to Mobile</a><br/>→ Recipe #13: <a href="R-13 Fix Messy Settings Pages 2d667ccc6bef80a7a976db712071bdce.html">Fix Messy Settings Pages</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-803d-b93c-faafc5529cb2" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

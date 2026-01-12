@@ -1,0 +1,772 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-11: Right-Click Menus</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-80cb-98c8-cde92785b136" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-8030-bde5-edf93656fae9" class="">Recipe #11: Right-Click Menus</h1></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-807d-b422-e7b61656e386" class="">Category: Wireframing &amp; IA  |  ⏱️ 20-25 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80b7-9bcc-cc671b427fd9" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="aac7bd14-e6e9-4be9-b26e-845035d5fa0a"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="18e0cdca-c55f-46fb-bec7-6c8c718d03f8" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="0b47a69b-a267-4adf-87fd-7844e54e7943" class="">You&#x27;re redesigning an application that lacks right-click context menus (forcing users to hunt for actions in toolbars) or has poorly organized context menus with 20+ random options. Power users want efficient contextual actions, but the current implementation is either missing or overwhelming.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80db-a105-e1d3af10e3f6"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="dc1d34ab-7d16-454d-8cb0-04b6e51d7847"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="e7e503b2-e94a-4545-a2e4-92a431f93086" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="33ca87bf-a163-45f9-9bf3-547801a80a10" class="">Many applications either ignore right-click menus entirely (making power users inefficient) or dump every possible action into the context menu without prioritization. Users right-click and face a wall of 15-25 options with no grouping, unclear labels, or irrelevant actions for the selected item. Meanwhile, mobile users have no equivalent pattern. You need to design smart, contextual menus that show the right actions at the right time, with clear hierarchy and mobile alternatives.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-801b-94d0-de71230f251f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="f7e96547-1f17-4b4e-9f95-650cb4dc147a"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="f0ae8b68-524a-47c9-b5aa-b856dbbe81c6" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="31061304-d549-4a50-9518-d1262504d133" class="">The AI will provide an action hierarchy system with primary actions at top, secondary grouped in middle, and destructive actions separated at bottom, plus menu structure with logical grouping, dividers, and keyboard shortcuts. You&#x27;ll get contextual rules for single versus multiple selection, file types, and permissions, keyboard shortcut mapping for platform differences, destructive action patterns with visual separation and color coding, mobile equivalents using touch-and-hold and bottom sheet menus, and accessibility specifications for keyboard navigation and screen readers. Optional visual wireframe shows the organized context menu.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80c0-a2ca-fe94bafe891a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="82b60e5b-7a70-409a-be59-7b50b81a737e"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0a9a3fdd-2a0a-400d-a337-ac26dd01773b" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11b65540-381a-4a8e-8d02-caa1db391f02" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a UX Designer specializing in interaction patterns and power user features.
+
+I&#x27;m designing right-click context menus for a [Product Type] where users interact with [Object Type: e.g., files, contacts, tasks, items].
+
+[OPTIONAL: Attach screenshots of current right-click menu or action toolbar]
+
+Context menu requirements:
+- Objects users right-click on: [e.g., Files, Folders, Tasks, Messages, Table rows]
+- Available actions per object: [List all possible actions]
+- User types: [e.g., Basic users, Power users, Admins]
+- Most frequent actions: [Based on analytics if available]
+
+Current problems:
+- [Problem 1: e.g., No context menu exists, users must use toolbar]
+- [Problem 2: e.g., Menu has 22 options with no organization]
+- [Problem 3: e.g., Same menu for all item types regardless of context]
+
+Please provide:
+1. Action prioritization strategy (which actions to show, which to hide)
+2. Menu organization and grouping
+3. Contextual logic (what shows based on item state/type)
+4. Keyboard shortcuts to display alongside actions
+5. Destructive action handling (delete, archive)
+6. Mobile touch-and-hold equivalent
+7. Accessibility considerations
+
+Consider: [Constraints - e.g., Must work on Windows/Mac, support keyboard-only users, have mobile equivalent]</code></pre></div><div style="display:contents" dir="auto"><p id="80938001-9989-459f-9947-9e215c924183" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="325a17f6-01aa-4afc-ac9d-0a9ba86066bf" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = File manager, CRM, Project tool, Email client, Data table application</li></ul></div><div style="display:contents" dir="auto"><ul id="9ebf6faf-6d21-4ad7-8000-5578ebfca693" class="bulleted-list"><li style="list-style-type:disc">[Object Type] = What users right-click on</li></ul></div><div style="display:contents" dir="auto"><ul id="3c1d7194-6a60-44bc-a62a-8beacb199adf" class="bulleted-list"><li style="list-style-type:disc">[Available actions] = Complete list of possible actions</li></ul></div><div style="display:contents" dir="auto"><ul id="c58f5d9f-8688-491f-acf1-3938f28b0b09" class="bulleted-list"><li style="list-style-type:disc">[User types] = Different user roles with different action needs</li></ul></div><div style="display:contents" dir="auto"><ul id="8435cb64-0099-454a-b974-411d6a027192" class="bulleted-list"><li style="list-style-type:disc">[Most frequent actions] = Analytics data on common actions</li></ul></div><div style="display:contents" dir="auto"><ul id="0fa0a455-ddb3-481d-bb59-9c6744da2ea0" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-3] = Current context menu issues</li></ul></div><div style="display:contents" dir="auto"><ul id="8b470b3c-9d8b-4b46-a2e9-1f8c54004ad9" class="bulleted-list"><li style="list-style-type:disc">Upload screenshot of existing context menu or action patterns</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-805e-abaf-c35f01e5a50d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-800a-bf1e-fa3130cf46ce"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80b6-be67-c4986c8fad3b" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d667ccc-6bef-8061-b49c-d46a85c1aa8e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a UX Designer specializing in interaction patterns and power user features.
+
+I&#x27;m designing right-click context menus for a File Management SaaS where users interact with files and folders in a cloud storage interface.
+
+[User would attach screenshots here]
+
+Context menu requirements:
+- Objects users right-click on: Individual files, Multiple selected files, Folders, Empty space in folder
+- Available actions per object: 
+  - Files: Open, Download, Share, Copy link, Move to, Rename, Duplicate, Add to favorites, Version history, Properties, Delete
+  - Folders: Open, Share, Move to, Rename, Add to favorites, Download as zip, Delete
+  - Multiple selection: Download all, Move to, Share, Delete
+  - Empty space: New file, New folder, Upload, Paste, Sort by, View options
+- User types: Free users (view/download only), Paid users (full editing), Admins (can manage sharing/permissions)
+- Most frequent actions: Open (45%), Download (28%), Share (15%), Move to (8%)
+
+Current problems:
+- Right-click menu shows all 11 actions for every file, regardless of file type or user permissions
+- Menu is flat - no visual separation between frequent vs. rare actions
+- Destructive &quot;Delete&quot; appears in middle of menu next to &quot;Duplicate&quot;
+- Mobile users have no way to access these actions (currently hidden in ... menu with different organization)
+
+Please provide:
+1. Action prioritization strategy (which actions to show, which to hide)
+2. Menu organization and grouping
+3. Contextual logic (what shows based on item state/type)
+4. Keyboard shortcuts to display alongside actions
+5. Destructive action handling (delete, archive)
+6. Mobile touch-and-hold equivalent
+7. Accessibility considerations
+
+Consider: Windows/Mac keyboard shortcut differences. Free users shouldn&#x27;t see &quot;Share&quot; option. PDFs should show &quot;Open in viewer&quot;, images should show &quot;Preview&quot;. Mobile users (40% of traffic) need touch-and-hold pattern. Must support keyboard-only navigation with arrow keys.</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80a3-96da-e4317ad57343"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="94495b78-6a3c-4614-94ea-3fd1abf3c0d9"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="64dc8608-7bf5-4e0b-9760-4fcf0f05dc49" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="a64c7066-ad6b-4f93-acca-bd64fabb07e1" class="">✦ Analytics over assumptions: If you know which actions users take most, put those at the top - don&#x27;t guess<br/>✦ Common mistake: Showing all actions all the time - context menus should be contextual (hide irrelevant options)<br/>✦ Best with: Claude (excellent at action categorization and rules), ChatGPT (good for interaction patterns)<br/>✦ Remix it: &quot;Design the progressive disclosure version - show 5 actions, hide 10 behind &#x27;More actions&#x27;&quot;<br/>✦ Pro move: Ask &quot;Create a keyboard shortcut cheat sheet that teaches users faster alternatives to right-click&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8072-b505-d1b4981706d0"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="57937a59-0d7b-4fed-a6c1-4566d69ab948"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="e822cad1-6b50-4cbf-9b12-29a3ac758019" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="ed2f17ef-e57c-41ba-81f2-e8cdaefb87e4" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the nested submenu behavior: how deep can menus go before it&#x27;s too complex?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3129ef30-97bc-45a3-bb3f-dfa3703ea64c" class="bulleted-list"><li style="list-style-type:disc">&quot;What happens when user right-clicks on an item they don&#x27;t have permission to edit?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="4382783e-0ed2-4bbf-adb7-1870041eaad4" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the animation and timing specs: how fast should the menu appear, fade in/out?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="f8708496-df56-4531-8982-6ba2b9e784ee" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the mobile swipe action pattern as an alternative to context menus&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80b8-baee-ed6a0b6498e6"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-800b-9c03-fd4ef8645dcf"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8021-be18-d597ccd4f42c" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-804a-afc6-f36b0ba5eb24" class="image"><a href="11_Example_Output.png"><img style="width:643.9921875px" src="11_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8035-bd60-f6211a04f34b"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="35d45e8c-a547-4bb8-af25-2077f3196a2c"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8a54cedb-b7b2-4105-acc6-59e590f62192" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="f96bee46-f2ce-4f74-842e-50839954359d" class="">→ Recipe #10: <a href="R-10 Modals vs Side Panels 2d667ccc6bef80ba87d9dca8ddee9a39.html">Modals vs. Side Panels</a><br/>→ Recipe #16: <a href="R-16 Build Bulk Action Tools 2d667ccc6bef80b8bd2bc0615a25c87c.html">Build Bulk Action Tools</a><br/>→ Recipe #37: <a href="R-37 Design Better Tooltips 2d767ccc6bef804ea807db188f871c58.html">Design Better Tooltips</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-807a-858e-c681830b37ec" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

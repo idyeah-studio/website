@@ -1,0 +1,797 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-26: Add Depth and Shadows</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-8025-a4af-f26e74f609ab" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-80e3-883f-f559da757f29" class="">Recipe #26: Add Depth and Shadows</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8057-a7ed-c98114043cc5" class="">Category: UI &amp; Visuals  |  ⏱️ 25-30 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8068-9043-cfe06095faf7" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="0d48301e-bcc1-4260-a59a-acb63541d98d"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="89a81ad8-3840-4c40-b4ac-a088325709d0" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="ef7a706e-7ee8-42db-a9bb-4e8128f31b32" class="">You&#x27;re redesigning a flat interface that lacks visual hierarchy and depth - users can&#x27;t distinguish interactive elements from static content, cards blend with backgrounds, or the interface feels visually monotonous. You need to add dimension through elevation and shadows.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80bd-a950-d8a95cfb71e9"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="3e4b89af-4425-4945-a309-764eb5aa2b0b"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a2d3de07-e1ce-4a42-aa2a-177caf390924" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="fa6d5f74-a448-47cd-8c1e-1529d513bc6f" class="">Many applications either use no shadows at all (creating a flat, lifeless interface where nothing stands out) or apply shadows inconsistently (random blur values, colors, and opacities that create visual chaos). Buttons don&#x27;t look clickable, modals don&#x27;t appear above content, and cards blend into backgrounds. Over-reliance on borders and dividers creates visual clutter. Users struggle to understand spatial relationships and interactive affordances. You need a systematic elevation system that creates clear hierarchy without looking heavy-handed.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-809e-be69-cb112f4132cb"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="8680ef34-640f-4c98-bbd1-5d808a2298da"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="5c5180f7-97f7-4efe-a56c-4171be0f4b46" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="5c7b8c32-5b31-432c-abc3-63f5059cdbc1" class="">You&#x27;ll get shadow system recommendations (elevation scales, shadow values), depth hierarchy strategies (layering components, z-axis organization), lighting direction principles, shadow performance optimization, accessibility considerations (sufficient contrast with shadows), and context-appropriate usage. Output includes shadow scale with CSS/design token values.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2da67ccc-6bef-8006-9335-ee004e4a2132"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="9adcf7fc-7312-4e49-93a0-6e3c2b583e37"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="8cef0b32-dd06-4794-84fb-496115659e4f" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="766920e3-e1c2-41b8-a4b0-8ae39d873b49" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Visual Design Specialist focusing on elevation systems and shadow design.
+
+I&#x27;m creating a depth and shadow system for a [Product Type] with a [Design Style] aesthetic.
+
+[OPTIONAL: Attach screenshots showing current flat or inconsistent shadow usage]
+
+Interface characteristics:
+- Design style: [e.g., Material Design, Soft UI, Neumorphism, Minimal, Bold]
+- Color palette: [e.g., Light backgrounds, dark mode, colorful]
+- Component types: [e.g., Cards, Buttons, Modals, Dropdowns, Tooltips, Floating action buttons]
+- Interaction patterns: [e.g., Hover states, Active states, Drag and drop]
+
+Current depth/shadow problems:
+- [Problem 1: e.g., No shadows at all - everything flat, can&#x27;t tell what&#x27;s clickable]
+- [Problem 2: e.g., Random shadow values - some 2px blur, some 20px blur, no system]
+- [Problem 3: e.g., Harsh black shadows look outdated and heavy]
+- [Problem 4: e.g., Buttons don&#x27;t look interactive - no depth or elevation]
+- [Problem 5: e.g., Modals don&#x27;t appear &quot;above&quot; content - blend in]
+
+User context: [Platform, viewing conditions, interaction expectations]
+
+Please provide:
+1. Elevation system (levels 0-5 with specific shadow values)
+2. Shadow specifications (color, blur, spread, offset)
+3. Component-level elevation assignments
+4. Interactive state shadows (hover, active, focus)
+5. Dark mode shadow adaptations
+6. Alternative depth techniques (borders, backgrounds, blur)
+7. Performance considerations
+8. Accessibility impact
+
+Consider: [Constraints - e.g., Must work in dark mode, performance with many shadows, print/export needs, brand guidelines]</code></pre></div><div style="display:contents" dir="auto"><p id="707dcea2-b070-4c90-beaf-c1ba3f9563cb" class="">💡 <mark class="highlight-gray"><strong>What to customize:</strong></mark></p></div><div style="display:contents" dir="auto"><ul id="36cdeb50-bba4-42a8-8928-130cb09168ac" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[Product Type] = Web app, Mobile app, Dashboard, Design tool, E-commerce site</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="6e9a8a03-fda9-482c-a1ff-8df8731ad7d6" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[Design Style] = Your visual aesthetic approach</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="92017f52-6a92-4b0f-9303-61dac3597734" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[Color palette] = Background colors that affect shadow visibility</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="ba2fd3fb-807b-487e-8116-cbc631b3696e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[Component types] = UI elements that need elevation</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="e6716c89-1b29-49df-89cb-7dab2aa15ff6" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">[Problems 1-5] = Current depth and shadow issues</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="2ad40a0a-f359-4d18-89f7-3ae289b81614" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">Upload screenshots showing current shadow usage (or lack thereof)</mark></li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80b2-a61c-f230a5c4c5c5"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8071-b85a-f446519313af"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8057-921c-d22871e502fe" class=""><mark class="highlight-default"><strong>LIVE EXAMPLE</strong></mark></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-80a5-a915-d624eead13e7" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Visual Design Specialist focusing on elevation systems and shadow design.
+
+I&#x27;m creating a depth and shadow system for a Project Management Web App with a clean, modern, professional aesthetic.
+
+[User would attach screenshots here]
+
+Interface characteristics:
+- Design style: Modern and clean, inspired by Material Design but not strictly following it, professional but not corporate
+- Color palette: 
+  - Light mode: White backgrounds (#FFFFFF), light gray surfaces (#F7F7F7)
+  - Dark mode: Dark backgrounds (#1A1A1A), slightly lighter surfaces (#2A2A2A)
+  - Brand colors: Purple #6366F1, Teal #14B8A6
+- Component types:
+  - Cards (project cards, task cards, team member cards)
+  - Buttons (primary, secondary, icon buttons)
+  - Modals and dialogs
+  - Dropdown menus and popovers
+  - Floating action button
+  - Sidebars and panels
+  - Toast notifications
+  - Tooltips
+- Interaction patterns:
+  - Hover states on interactive elements
+  - Active/pressed states on buttons
+  - Drag-and-drop for task management
+  - Modal overlays
+  - Expandable cards
+
+Current depth/shadow problems:
+- Completely flat interface - no shadows anywhere, everything uses borders instead
+- Cards look identical to page background - users can&#x27;t distinguish content areas
+- Primary buttons have 1px border but no elevation - don&#x27;t look clickable
+- Modal dialogs blend with underlying content - not clear they&#x27;re overlays
+- Dropdown menus use thick 2px borders to separate from content - looks outdated
+- Hover states only change background color - no depth change
+- Dragged items look flat - no visual feedback that they&#x27;re &quot;lifted&quot;
+- Interface feels monotonous and lifeless - nothing has visual weight
+- Heavy reliance on divider lines (1px borders everywhere) creates visual clutter
+
+User context: Knowledge workers spending 4-8 hours daily in the app. Desktop-focused (1440px-1920px screens). Need clear visual hierarchy to distinguish primary actions from secondary. Drag-and-drop used frequently for organizing tasks. Dark mode used by 40% of users. Must feel professional and polished.
+
+Please provide:
+1. Elevation system (levels 0-5 with specific shadow values)
+2. Shadow specifications (color, blur, spread, offset)
+3. Component-level elevation assignments
+4. Interactive state shadows (hover, active, focus)
+5. Dark mode shadow adaptations
+6. Alternative depth techniques (borders, backgrounds, blur)
+7. Performance considerations
+8. Accessibility impact
+
+Consider: Must work equally well in light and dark mode. Performance matters - some views have 50+ cards on screen. Shadows should feel subtle and modern, not heavy Material Design 2014 style. Need clear elevation hierarchy (modals above dropdowns above cards above page). Print/export views should gracefully handle shadows.</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-804c-87eb-fbe2a17934d8"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="03a4dc57-9209-4f5e-9b80-d6c66bab3530"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d1940a21-1e5a-49a2-90d2-b8d9c88142d1" class=""><strong>CHEF’S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="87aa8ea4-4258-4518-9cc1-07f3384c4399" class="">✦ Less is more: Start with subtle shadows - you can always add more, but heavy shadows are hard to dial back<br/>✦ Common mistake: Using pure black (#000000) shadows - use dark gray with transparency instead<br/>✦ Best with: Claude (excellent at systematic elevation hierarchies), ChatGPT (good for shadow CSS values)<br/>✦ Remix it: &quot;Design the glassmorphism variant - how to create depth with blur and transparency instead of shadows&quot;<br/>✦ Pro move: Ask &quot;Generate the shadow system as CSS custom properties with fallbacks for older browsers&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8042-a3d4-eedaafb0ca87"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="8225eb40-8bf2-4c48-8fba-d930f610a0a4"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="d74fcebd-1fa7-4952-aeb8-905c5af542ef" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="885bd2fd-7208-4dc8-adc9-487742a0aa99" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the animation system - how should shadows transition smoothly between states?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="f07c42cd-44b8-4bc3-b3aa-6c88c29f6678" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the neumorphic (soft UI) version - how to create depth with light/dark shadows on same-color backgrounds?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="442a91de-d415-48bd-b432-1f3b1f9f02da" class="bulleted-list"><li style="list-style-type:disc">&quot;How should shadows adapt for high-contrast accessibility mode?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3ad3eb10-249e-4c1d-8f0a-1297fbdbbc68" class="bulleted-list"><li style="list-style-type:disc">&quot;Generate the print stylesheet - which shadows to keep, which to remove for PDF/print output&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8076-81e1-e35b58abb9dc"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80cc-b00d-fbc03a930711"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8095-a1de-fba23cffaadc" class=""><mark class="highlight-default"><strong>EXAMPLE OUTPUT</strong></mark></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-804d-93db-e1ff1864ab57" class="image"><a href="26_Example_Output.png"><img style="width:643.9921875px" src="26_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8068-a30b-fedc196cf843"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="fe7d27f0-c247-462c-aea6-a9ed7b988449"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2a7a993f-1c1c-4e19-8116-d9f320ab525c" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="1e50d804-7dad-4ea4-a825-de4492cf5e48" class="">→ Recipe #21: <a href="R-21 Turn Brand into UI Styles 2d667ccc6bef808fb671c9d953cc5641.html">Turn Brand into UI Styles</a><br/>→ Recipe #25: <a href="R-25 Pick Your Icon Styles 2d767ccc6bef809cbd6bc7ee914bebdf.html">Pick Your Icon Styles</a><br/>→ Recipe #28: <a href="R-28 Remove Visual Clutter 2d767ccc6bef806ea5dbd329ca407ba1.html">Remove Visual Clutter</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8066-9a0d-e848ea09ebd2" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

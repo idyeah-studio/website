@@ -8,7 +8,15 @@ import profilePhoto from '../assets/profile-photo.jpg';
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const [hoveredLogo, setHoveredLogo] = useState<number | null>(null);
   const { isDarkMode, toggleTheme, theme } = useTheme();
+
+  // Client logos - replace these paths with actual logo files
+  const clientLogos = [
+    { id: 1, name: 'Midas Touch', src: '/midastouch-logo.png' },
+    { id: 2, name: 'Visionaize', src: '/visionaize-logo.png' },
+    { id: 3, name: 'Rialty.AI', src: '/rialty-logo.png' }
+  ];
 
   return (
     <div
@@ -16,14 +24,228 @@ export default function Home() {
         minHeight: '100vh',
         backgroundColor: theme.bg,
         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
-        transition: 'background-color 0.3s ease'
+        transition: 'background-color 0.3s ease',
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
+      {/* CSS animations */}
+      <style>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px);
+          }
+          50% {
+            transform: translateY(-20px) translateX(10px);
+          }
+        }
+        
+        @keyframes floatSlow {
+          0%, 100% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+          33% {
+            transform: translate(30px, -30px) rotate(120deg);
+          }
+          66% {
+            transform: translate(-20px, 20px) rotate(240deg);
+          }
+        }
+        
+        @keyframes floatMedium {
+          0%, 100% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+          50% {
+            transform: translate(-25px, -25px) rotate(180deg);
+          }
+        }
+        
+        @keyframes gradientShift {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(1.1);
+          }
+        }
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .fade-in-section {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .delay-4 { animation-delay: 0.4s; opacity: 0; }
+      `}</style>
+      
+      {/* Background Elements */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+        pointerEvents: 'none',
+        zIndex: 1
+      }}>
+        {/* Large Gradient Orbs */}
+        <div style={{
+          position: 'absolute',
+          top: '-10%',
+          right: '-5%',
+          width: '600px',
+          height: '600px',
+          borderRadius: '50%',
+          background: isDarkMode 
+            ? 'radial-gradient(circle, rgba(100,150,255,0.25) 0%, rgba(100,150,255,0.05) 50%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(100,150,255,0.15) 0%, rgba(100,150,255,0.04) 50%, transparent 70%)',
+          animation: 'floatSlow 20s ease-in-out infinite',
+          filter: 'blur(80px)',
+        }}/>
+        
+        <div style={{
+          position: 'absolute',
+          top: '40%',
+          left: '-10%',
+          width: '550px',
+          height: '550px',
+          borderRadius: '50%',
+          background: isDarkMode 
+            ? 'radial-gradient(circle, rgba(255,100,180,0.2) 0%, rgba(255,100,180,0.04) 50%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(255,100,180,0.12) 0%, rgba(255,100,180,0.03) 50%, transparent 70%)',
+          animation: 'floatMedium 15s ease-in-out infinite',
+          filter: 'blur(80px)',
+        }}/>
+        
+        <div style={{
+          position: 'absolute',
+          bottom: '-5%',
+          right: '10%',
+          width: '650px',
+          height: '650px',
+          borderRadius: '50%',
+          background: isDarkMode 
+            ? 'radial-gradient(circle, rgba(150,100,255,0.22) 0%, rgba(150,100,255,0.05) 50%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(150,100,255,0.14) 0%, rgba(150,100,255,0.035) 50%, transparent 70%)',
+          animation: 'floatSlow 25s ease-in-out infinite reverse',
+          filter: 'blur(80px)',
+        }}/>
+        
+        {/* Geometric Shapes */}
+        <div style={{
+          position: 'absolute',
+          top: '20%',
+          right: '15%',
+          width: '300px',
+          height: '300px',
+          borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+          background: isDarkMode 
+            ? 'linear-gradient(135deg, rgba(100,200,255,0.15) 0%, rgba(100,200,255,0.02) 100%)'
+            : 'linear-gradient(135deg, rgba(100,200,255,0.1) 0%, rgba(100,200,255,0.02) 100%)',
+          animation: 'floatMedium 18s ease-in-out infinite',
+          transform: 'rotate(45deg)',
+        }}/>
+        
+        <div style={{
+          position: 'absolute',
+          bottom: '25%',
+          left: '10%',
+          width: '250px',
+          height: '250px',
+          borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
+          background: isDarkMode 
+            ? 'linear-gradient(225deg, rgba(255,180,100,0.15) 0%, rgba(255,180,100,0.02) 100%)'
+            : 'linear-gradient(225deg, rgba(255,180,100,0.1) 0%, rgba(255,180,100,0.02) 100%)',
+          animation: 'floatSlow 22s ease-in-out infinite',
+          transform: 'rotate(-30deg)',
+        }}/>
+        
+        {/* Subtle Grid Pattern */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: isDarkMode
+            ? 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)'
+            : 'linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px)',
+          backgroundSize: '100px 100px',
+          opacity: 0.5,
+        }}/>
+      </div>
+      
+      {/* Promotional Top Bar */}
+      <div
+        style={{
+          width: '100%',
+          backgroundColor: isDarkMode ? '#ffffff' : '#000000',
+          padding: '10px 24px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '16px',
+          position: 'relative',
+          zIndex: 20,
+          boxSizing: 'border-box'
+        }}
+      >
+        <span
+          style={{
+            fontSize: '14px',
+            fontWeight: 400,
+            color: isDarkMode ? '#000000' : '#ffffff',
+            letterSpacing: '0.01em',
+            lineHeight: '1.5'
+          }}
+        >
+          Ship designs 3x faster → The AI prompt playbook for design leaders.
+        </span>
+        <a
+          href="https://idyeah.gumroad.com/l/design-ai-alchemy"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontSize: '14px',
+            fontWeight: 500,
+            color: isDarkMode ? '#000000' : '#ffffff',
+            textDecoration: 'underline',
+            cursor: 'pointer',
+            transition: 'opacity 0.2s',
+            whiteSpace: 'nowrap'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.opacity = '0.7';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = '1';
+          }}
+        >
+          Get it now!
+        </a>
+      </div>
+
       {/* Header */}
       <div
         style={{
           position: 'absolute',
-          top: '20px',
+          top: '68px',
           left: '24px',
           right: '24px',
           zIndex: 10,
@@ -33,29 +255,30 @@ export default function Home() {
         }}
       >
         {/* Theme Toggle - Left Side */}
-        <button
-          onClick={toggleTheme}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '6px 12px',
-            borderRadius: '9999px',
-            border: `1px solid ${theme.borderStrong}`,
-            backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)',
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-            fontSize: '14px',
-            fontWeight: 400,
-            color: theme.text
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
-          }}
-        >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <button
+            onClick={toggleTheme}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '6px 12px',
+              borderRadius: '9999px',
+              border: `1px solid ${theme.borderStrong}`,
+              backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              fontSize: '14px',
+              fontWeight: 400,
+              color: theme.text
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+            }}
+          >
           {isDarkMode ? (
             // Moon icon for dark mode
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +291,8 @@ export default function Home() {
               <path d="M9.66797 14.6387C12.4121 14.6387 14.6387 12.4121 14.6387 9.66797C14.6387 6.92383 12.4121 4.6875 9.66797 4.6875C6.92383 4.6875 4.6875 6.92383 4.6875 9.66797C4.6875 12.4121 6.92383 14.6387 9.66797 14.6387ZM9.66797 13.1543C7.73438 13.1543 6.17188 11.6016 6.17188 9.66797C6.17188 7.73438 7.73438 6.17188 9.66797 6.17188C11.6016 6.17188 13.1543 7.73438 13.1543 9.66797C13.1543 11.6016 11.6016 13.1543 9.66797 13.1543Z" fill="currentColor" fillOpacity="0.85"/>
             </svg>
           )}
-        </button>
+          </button>
+        </div>
 
         {/* Right Side Buttons */}
         <div
@@ -78,40 +302,11 @@ export default function Home() {
             gap: '12px'
           }}
         >
-          {/* Ebook Button */}
-          <a
-            href="https://idyeah.gumroad.com/l/design-ai-alchemy"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontSize: '14px',
-              fontWeight: 400,
-              color: '#9d5773',
-              textDecoration: 'none',
-              padding: '6px 16px',
-              borderRadius: '9999px',
-              border: '1px solid #c98ba0',
-              backgroundColor: 'rgba(201, 139, 160, 0.06)',
-              transition: 'all 0.2s'
-            }}
-            onMouseEnter={(e) => {
-              const target = e.target as HTMLElement;
-              target.style.backgroundColor = '#9d5773';
-              target.style.color = '#ffffff';
-            }}
-            onMouseLeave={(e) => {
-              const target = e.target as HTMLElement;
-              target.style.backgroundColor = 'rgba(201, 139, 160, 0.06)';
-              target.style.color = '#9d5773';
-            }}
-          >
-            Design AI Alchemy (Ebook)
-          </a>
-
           {/* Founder Profile Button */}
           <Link
             to="/founderprofile"
             style={{
+              display: 'inline-block',
               fontSize: '14px',
               fontWeight: 400,
               color: theme.text,
@@ -199,7 +394,7 @@ export default function Home() {
               padding: '0 16px'
             }}
           >
-            Strategic brand and UX direction for founders building real products. No bloat. No endless decks. Just the clarity you need to move forward.
+            Brand storytelling and UX direction for founders building real products. No bloat. No endless decks. Just the clarity you need to move forward.
           </p>
 
           {/* Trusted By */}
@@ -213,6 +408,81 @@ export default function Home() {
           >
             Trusted by founders at early and mid stage startups
           </p>
+        </div>
+
+        {/* Clients Section */}
+        <div
+          style={{
+            paddingBottom: 'clamp(64px, 15vw, 96px)',
+            position: 'relative'
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '48px',
+              height: '1px',
+              backgroundColor: theme.divider
+            }}
+          />
+
+          <h2
+            style={{
+              fontSize: 'clamp(24px, 6vw, 28px)',
+              fontWeight: 600,
+              lineHeight: 1.2,
+              color: theme.text,
+              letterSpacing: '-0.01em',
+              textAlign: 'center',
+              marginBottom: 'clamp(64px, 15vw, 96px)',
+              paddingTop: 'clamp(64px, 15vw, 80px)'
+            }}
+          >
+            Clients
+          </h2>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 'clamp(16px, 4vw, 24px)',
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}
+          >
+            {clientLogos.map((logo) => (
+              <div
+                key={logo.id}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '20px',
+                  borderRadius: '16px',
+                  border: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)'}`,
+                  backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.5)',
+                  width: '140px',
+                  height: '80px'
+                }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    width: 'auto',
+                    height: 'auto',
+                    objectFit: 'contain'
+                  }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* What You Get */}

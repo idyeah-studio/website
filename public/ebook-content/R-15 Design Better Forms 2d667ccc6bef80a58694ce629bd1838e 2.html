@@ -1,0 +1,805 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-15: Design Better Forms</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-80a5-8694-ce629bd1838e" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-8019-85e8-f2eeb1c43697" class="">Recipe #15: Design Better Forms</h1></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-800b-8afe-c804edda9558" class="">Category: Wireframing &amp; IA  |  ⏱️ 30-40 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8078-a32e-ff2b73b39f19" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="624f9034-6f53-4f2c-b0cb-d8b5f6626381"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="894c81f9-9c14-4c68-92e8-b1e8be04349c" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="2ef28c83-78dc-4396-8027-c5a3324e6ff2" class="">You&#x27;re designing forms for user input - signup/login forms, settings, data entry, checkout, search filters, or any interface where users need to enter information. Your current forms are confusing, have poor validation, unclear labels, or create friction in the user experience.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8093-b2e7-c4d0321b26e4"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="d32007b1-7ccb-4918-9d01-b88bb1e8674a"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="432abc7d-3187-4a10-a3dd-5f5472c43100" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="4aaf36db-e784-440a-a544-bc66e36c77fa" class="">Many designers struggle with forms - creating cluttered multi-column layouts that confuse users, using placeholders instead of labels (disappear when typing), unclear validation (errors appear only on submit, not inline), poor error messages (&quot;Invalid input&quot; without explanation), no indication of required vs optional fields, inconsistent input types (text field for date instead of date picker), forms that don&#x27;t work on mobile (tiny inputs, wrong keyboards), or missing smart defaults (forcing users to type obvious information). Teams create forms with high abandonment rates, validation errors frustrate users, mobile forms are painful to complete, or checkout flows lose customers. You need systematic form design - clear structure (single column, logical flow), proper labels (always visible, descriptive), smart validation (inline feedback, helpful errors), appropriate input types (date picker for dates, dropdown for known options), mobile-optimized (large inputs, correct keyboards), and accessibility (keyboard navigation, screen reader support).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-801b-9ef4-c6570e6c217f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="de114e6a-233f-4345-aac0-e605b4435988"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="214aa206-950d-480d-85a1-20005a11f870" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="7de369d4-88d3-4fed-8843-ae6d80681295" class="">The AI will provide form structure and layout recommendations including single versus multi-column patterns with spacing and visual hierarchy guidelines, labels and placeholders with always-visible labels and required indicators, input field type selection for text, email, password, number, date, dropdown, checkbox, radio, and textarea with appropriate keyboard types, validation strategies distinguishing real-time inline, on blur, and on submit approaches with validation states, error message best practices emphasizing specific and actionable messaging, mobile form optimization with large touch targets and correct keyboard types, form accessibility covering labels, keyboard navigation, ARIA attributes, and screen reader support, and smart defaults including auto-detection, character counts, and password strength indicators. Optional visual form examples showing structure and validation states.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="e6853a84-6016-46a8-bad2-53c7c5c88966"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="4e255004-a675-4623-84ef-79e6a4ce07f6"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="99e4d92e-1b0e-4f1a-a03a-1f6adc718561" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7d2a2897-1e38-41c5-beaf-248a9994d0ee" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Form Design Specialist focusing on form structure, validation patterns, input types, and user-friendly data entry experiences.
+
+I&#x27;m designing forms for [Product Type] including [Form Types] that need to be clear, easy to complete, and work seamlessly on mobile and desktop.
+
+[OPTIONAL: Attach current form designs with issues]
+
+Form design requirements:
+- Form types: [e.g., Login/signup, Settings, Multi-step checkout, Data entry, Search filters]
+- Input complexity: [e.g., Simple (name, email), Medium (address, payment), Complex (conditional fields, file uploads)]
+- Validation needs: [e.g., Real-time inline, On blur, On submit, Server-side]
+- Mobile priority: [e.g., Mobile-first, Desktop-first, Responsive]
+- Accessibility: [e.g., WCAG AA required, Keyboard navigation, Screen readers]
+
+Current form problems:
+- [Problem 1: e.g., Multi-column layout confuses users - jumping between columns, unclear flow]
+- [Problem 2: e.g., Placeholder-only labels - text disappears when typing, users forget what field is]
+- [Problem 3: e.g., Validation only on submit - users fill entire form, click submit, see 5 errors at once]
+- [Problem 4: e.g., Unclear error messages - &quot;Invalid input&quot; doesn&#x27;t explain what&#x27;s wrong]
+- [Problem 5: e.g., All fields look required - no visual difference between required and optional]
+
+Team context: [Form usage frequency, user technical skills, mobile vs desktop split, common validation errors]
+
+Please provide:
+1. Form structure and layout (single vs multi-column, spacing, grouping, visual hierarchy)
+2. Labels and placeholders (always-visible labels, helpful placeholders, required indicators)
+3. Input field types (text, email, password, number, date, dropdown, checkbox, radio - when to use each)
+4. Validation strategies (inline real-time, on blur, on submit, error message patterns)
+5. Error message best practices (clear, specific, actionable, positive tone)
+6. Mobile form optimization (single column, large inputs, correct keyboards, touch-friendly)
+7. Form accessibility (labels, keyboard navigation, ARIA, screen reader support)
+8. Smart defaults and helpers (autofill, pre-populate, helpful examples, character counts)
+
+Consider: [Constraints - e.g., Must work on mobile, Accessibility required, Multi-step if long, Clear validation, Smart defaults]</code></pre></div><div style="display:contents" dir="auto"><p id="86f44f74-7643-4ede-8b04-66601a674923" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="6fcfa996-289e-48f8-b2b7-3d8d94c9c1aa" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = SaaS, E-commerce, Mobile app, Enterprise software</li></ul></div><div style="display:contents" dir="auto"><ul id="ded2e63a-9cf3-4bff-ae2c-d61722a870de" class="bulleted-list"><li style="list-style-type:disc">[Form Types] = What forms you&#x27;re designing</li></ul></div><div style="display:contents" dir="auto"><ul id="f73dde37-0ab8-4e7c-9193-50f2284c59dc" class="bulleted-list"><li style="list-style-type:disc">[Input complexity] = Simple to complex forms</li></ul></div><div style="display:contents" dir="auto"><ul id="ace43f68-87b6-46fb-8880-b4d23b8ba4ea" class="bulleted-list"><li style="list-style-type:disc">[Validation needs] = Real-time, on blur, on submit</li></ul></div><div style="display:contents" dir="auto"><ul id="0e8fde3f-632e-4fb8-9504-0ff72daf44ae" class="bulleted-list"><li style="list-style-type:disc">[Mobile priority] = Mobile-first or desktop-first</li></ul></div><div style="display:contents" dir="auto"><ul id="fb2c7b9a-3f03-45d4-a8a3-d9378d18cee6" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current form issues</li></ul></div><div style="display:contents" dir="auto"><ul id="6437ad49-899b-4e09-bed1-4079de1609b5" class="bulleted-list"><li style="list-style-type:disc">Attach form designs with problems</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8074-8695-dd976093f59e"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-809b-91a5-e5a7fb95a3f8"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-803a-b8c0-cf196cff8338" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d667ccc-6bef-801f-ba1e-e690d9ef8dc4" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Form Design Specialist focusing on form structure, validation patterns, input types, and user-friendly data entry experiences.
+
+I&#x27;m designing forms for a SaaS Project Management Tool including signup, login, create project, user settings, and invite team members that need to be clear, easy to complete, and work seamlessly on mobile and desktop.
+
+[User would attach current form designs showing multi-column layouts, placeholder-only labels, poor validation]
+
+Form design requirements:
+- Form types:
+  - Authentication: Signup (name, email, password), Login (email, password, remember me), Forgot password
+  - Project creation: Project name, description, team members, due date, priority
+  - Settings: User profile (name, email, avatar, timezone), Notification preferences, Team settings
+  - Invite users: Email addresses (multiple), role selection, personal message
+  - Search/filters: Keyword search, filter by status/assignee/date
+- Input complexity:
+  - Simple: Login (2 fields), Forgot password (1 field)
+  - Medium: Signup (4-5 fields), Create project (6-8 fields)
+  - Complex: Team settings (10+ fields with conditional logic), Multi-step onboarding
+- Validation needs:
+  - Real-time inline: Email format validation (shows ✓ or ✗ as user types)
+  - On blur: Password strength indicator (shows after user leaves field)
+  - On submit: Final validation check before submission
+  - Server-side: Email already exists, username taken (after submit)
+- Mobile priority:
+  - 60% mobile users (mobile-first design critical)
+  - Forms must be easy to complete on 375px iPhone
+  - Large touch targets, correct keyboards (email keyboard, number pad)
+- Accessibility:
+  - WCAG AA compliance required
+  - Keyboard navigation (tab through fields, submit on Enter)
+  - Screen reader support (proper labels, error announcements)
+
+Current form problems:
+- Multi-column layout on signup form - Name | Email on left, Password | Company on right, users confused which field to fill next, jumping left-right-left-right, high error rate, especially bad on tablet (cramped)
+- Placeholder-only labels everywhere - &quot;Enter your email&quot; as placeholder, no visible label, when user starts typing placeholder disappears, user forgets which field it is, have to delete text to see placeholder again, terrible UX
+- Validation only happens on submit - User fills entire 8-field signup form, clicks &quot;Create account&quot;, page shows 3 validation errors at top (email invalid, password too short, terms not checked), frustrating to fix errors after completing form, 40% abandonment at this step
+- Vague error messages - &quot;Invalid input&quot; (which input? why invalid?), &quot;Password error&quot; (too short? need special character? what&#x27;s wrong?), &quot;Please try again&quot; (try what again? what failed?)
+- No required/optional indicators - All 8 fields look identical, user doesn&#x27;t know which are required, fills optional fields thinking required, wastes time, or skips required fields thinking optional, gets errors
+- Wrong input types - Date field is text input (user types &quot;12/25/2024&quot; or &quot;December 25&quot; or &quot;25-12-24&quot; inconsistent), should be date picker, Phone number is text (gets letters, spaces, dashes), should be number input
+- Tiny mobile inputs - Input fields are 36px tall on mobile (below 44px touch target minimum), hard to tap, wrong keyboard (email field shows default keyboard not email keyboard with @ symbol)
+- No smart defaults - Country dropdown defaults to Afghanistan (alphabetical), should default to user&#x27;s location, Timezone empty (user must search through 100 options), should auto-detect
+
+Team context:
+- Forms used daily by 10,000+ users
+- 60% mobile, 40% desktop (mobile-first critical)
+- Common errors: Email format (20%), Password too weak (15%), Required fields missed (25%)
+- User skill level: Non-technical (project managers, marketers, not developers)
+- Need: Clear, forgiving forms that guide users to success
+
+Please provide:
+1. Form structure and layout (single vs multi-column, spacing, grouping, visual hierarchy)
+2. Labels and placeholders (always-visible labels, helpful placeholders, required indicators)
+3. Input field types (text, email, password, number, date, dropdown, checkbox, radio - when to use each)
+4. Validation strategies (inline real-time, on blur, on submit, error message patterns)
+5. Error message best practices (clear, specific, actionable, positive tone)
+6. Mobile form optimization (single column, large inputs, correct keyboards, touch-friendly)
+7. Form accessibility (labels, keyboard navigation, ARIA, screen reader support)
+8. Smart defaults and helpers (autofill, pre-populate, helpful examples, character counts)
+
+Consider: Mobile-first (60% mobile users). Single-column layout. Always-visible labels. Inline validation (real-time feedback). Helpful error messages (specific, actionable). Correct input types (email keyboard, date picker). Large touch targets (44px minimum). Smart defaults (auto-detect location, timezone). Accessibility (keyboard nav, screen readers). Low error rate (guide users to success).</code></pre></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-806f-a372-f4f0e1e2bae7"/></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="a2ff7ced-db19-4664-8609-033fb4504a00"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b5791ef9-48d0-44c3-9115-4c45699dbd4c" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="13894f1b-37e9-47bb-887a-d3989b6a65ce" class="">✦ Single-column layout wins: 25% faster completion and fewer errors than multi-column<br/>✦ Common mistake: Using placeholders instead of labels - placeholders disappear when typing, terrible UX<br/>✦ Best with: Claude (excellent at form structure and validation patterns), ChatGPT (good for error messages and copy)<br/>✦ Remix it: &quot;Design mobile-first signup form - single column, inline validation, helpful errors, 44px touch targets&quot;<br/>✦ Pro move: Ask &quot;Audit my checkout form for UX issues - layout, validation, error messages, mobile optimization&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8091-8ea0-e12dcb57a1ca"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="70df3cfc-4908-4286-b886-4ef1eee93047"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d71347d-50ba-4edc-8cb1-1c305d8eef2c" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="b4f03aa6-46de-4834-aa1e-f64b5ee4ad15" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the signup form - name, email, password with strength indicator, inline validation, mobile-optimized&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="a609d2f6-e2ce-4d35-a1fe-dc6dbce2dada" class="bulleted-list"><li style="list-style-type:disc">&quot;Create validation patterns - when to validate (real-time, on blur, on submit), helpful error messages&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="7d720f20-fec0-4306-8417-280b6dca926e" class="bulleted-list"><li style="list-style-type:disc">&quot;Design mobile form best practices - single column, large inputs, correct keyboards, minimal typing&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="03f048bb-a35e-4c88-a352-929e49ae7071" class="bulleted-list"><li style="list-style-type:disc">&quot;Write better form error messages - specific, actionable, positive tone with examples&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80fa-a2d6-d69f389327fc"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-8035-9e8f-cde87edcedad"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-809e-b57f-eef10ef4d517" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-8093-88c4-f6e57ee1d392" class="image"><a href="15_Example_Output.png"><img style="width:643.9921875px" src="15_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-803d-9823-f6c70a93f4d8"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="a7a72869-e288-4ffb-9070-ef24ebf0f45f"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="11be5dcb-8e70-4ec7-ab63-60f6d37cb156" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="49df16c8-afaa-4c4c-858e-a9c19f23e0ae" class="">→ Recipe #04: <a href="R-04 Design Multi-Step Flows 2d667ccc6bef806f9f3be9cdaefa9a9e.html">Design Multi-Step Flows</a><br/>→ Recipe #34: <a href="R-34 Polish Your Input Fields 2d767ccc6bef806aa554c4a058472a9b.html">Polish Your Input Fields</a><br/>→ Recipe #64: <a href="R-64 Design Accessible Components d8c67ccc6bef83ed9c3201d848757c88.html">Design Accessible Components (Bonus)</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8043-b037-e0297255c11a" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

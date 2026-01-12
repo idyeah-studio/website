@@ -1,0 +1,822 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-54: Flexible Chart Components</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-80c5-b226-e720fef24fa2" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-8079-88c9-dcdd79c9ece3" class="">Recipe #54: Flexible Chart Components</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80fa-901f-c53b79ee46a5" class="">Category: Systems &amp; Components  |  ⏱️ 45-60 min  |  🌶️🌶️🌶️ Advanced</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80ec-86e9-fc796248aa24" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="bcba4e3e-f935-4f8c-9af3-f0b27b07dc90"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="213c62b3-5e57-47ab-b868-672c490d75ea" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="5fdf805f-1657-476c-ac4d-3e2f97bbaa9c" class="">You&#x27;re building chart components (bar, line, pie, donut, area) that need to handle varying datasets, different visual styles, interactive states, and responsive behavior. Your current charts are static images, require rebuilding for each dataset, or lack the flexibility to adapt to different contexts and screen sizes.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-807c-a8e4-e400b1ab1b0e"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="ea7cd63d-4fcd-4dda-b667-239dd6ff2b74"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="89f1c735-9238-4549-a1ff-aaf91f282901" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="8ef07226-9e67-47c6-8c90-cc47f1067771" class="">Many designers create rigid, single-use charts - building separate BarChartRevenue, BarChartUsers, BarChartSales (dozens of chart variants for each dataset), charts as flat static images that can&#x27;t be edited, no systematic chart anatomy (axes, labels, legends, tooltips, gridlines as components), charts that break on mobile or different data ranges, missing interactive states (hover highlights, tooltips, selected data points), and no consideration for accessibility (color-only data representation). Teams waste time recreating charts for every report, struggle with inconsistent chart styling across dashboards, can&#x27;t handle edge cases (0 data, negative values, very large numbers), and create charts that work in design but can&#x27;t be implemented. You need a flexible chart component system - chart anatomy broken into reusable parts (axes, bars/lines, labels, legends, tooltips, gridlines), variants for different chart types and styles, data-driven flexibility (handles any dataset), interactive states (hover, selected, empty, loading), responsive behavior (mobile adaptations), and accessibility patterns (not color-only).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80c5-9c1d-fb823b320cdc"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="b93ea275-8558-4d4a-8f23-8f38545a13ca"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="fd27ba4f-22e6-4ec7-a20f-876f806b290a" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="0ad9e52b-8081-4cb2-962d-4ffd6fc98b45" class="">The AI will provide comprehensive chart anatomy breakdown of universal components (container, title, axes, gridlines, data elements, legend, tooltips, data labels) with component hierarchy and reusable sub-components, detailed chart type patterns for bar, line, pie/donut, and area charts showing specific anatomy and variants for each, data representation strategies for making charts data-driven with dynamic axis scaling, handling varying data ranges, number formatting, and data point limits, complete interactive states covering hover highlights, selected states, tooltips, drilldown, plus empty/loading/error state designs, visual styling specifications including accessible color systems for single and multiple data series, typography, spacing, and light/dark mode theming, responsive strategies detailing desktop full-featured charts, tablet medium complexity, and mobile simplified approaches with chart-type-specific adaptations, and comprehensive accessibility patterns implementing color-plus-pattern approaches (not color-only), colorblind-safe palettes, alternative text, keyboard navigation, and screen reader support for WCAG AA compliance. Optionally includes visual examples showing flexible chart system with anatomy and responsive adaptations.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="33aa9c8a-9a30-4666-bed2-f3d954a5bf47"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="72ab5a90-12a1-4214-bd78-23b7f1097a36"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="77558c5f-7107-4f58-bda3-e1483de71984" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3ffd8d7b-5d4a-4da8-9f91-f208d869248e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Data Visualization Component Specialist focusing on flexible chart systems, chart anatomy, and scalable data visualization patterns.
+
+I&#x27;m designing flexible chart components for a [Product Type] that can handle varying datasets and contexts without creating separate charts for each use case.
+
+[OPTIONAL: Attach current rigid chart designs or static chart images]
+
+Chart requirements:
+- Chart types needed: [e.g., Bar, Line, Pie, Donut, Area, Scatter, Combo]
+- Data types to visualize: [e.g., Revenue, Users, Tasks, Sales, Performance metrics]
+- Chart features: [e.g., Tooltips, Legends, Gridlines, Axes, Data labels, Annotations]
+- Interactive states: [e.g., Hover highlights, Selected data points, Tooltips, Drilldown]
+- Visual variations: [e.g., Multiple color themes, Light/dark mode, Branded colors]
+- Responsive needs: [e.g., Desktop full charts, Mobile simplified, Tablet medium complexity]
+
+Current chart problems:
+- [Problem 1: e.g., Separate chart for each dataset - BarChartRevenue, BarChartUsers - 30 chart variants]
+- [Problem 2: e.g., Charts are static images - can&#x27;t update data, must recreate from scratch]
+- [Problem 3: e.g., No chart anatomy - axes, bars, labels built as flat frames, not components]
+- [Problem 4: e.g., Charts break on mobile - desktop 1200px charts don&#x27;t fit 320px screens]
+- [Problem 5: e.g., No interactive states - no hover tooltips, no selected states, static only]
+
+Team context: [Designer data viz experience, chart complexity needs, development constraints]
+
+Please provide:
+1. Chart anatomy breakdown (axes, data elements, labels, legends, tooltips, gridlines)
+2. Chart component architecture (reusable parts, variants, flexibility)
+3. Chart type patterns (bar, line, pie, donut, area - anatomy for each)
+4. Data representation (how to make charts data-driven, handle varying ranges)
+5. Interactive states (hover, selected, tooltip, drilldown, empty, loading)
+6. Visual styling (colors, spacing, typography, theming)
+7. Responsive strategies (mobile simplification, adaptive layouts)
+8. Accessibility patterns (color + pattern, not color-only, screen reader support)
+
+Consider: [Constraints - e.g., Must handle 5 to 500 data points, Mobile responsive required, Accessibility WCAG AA, Consistent with design system, Real-time data updates]</code></pre></div><div style="display:contents" dir="auto"><p id="47e4aea4-adfd-40ba-b3b7-b0c394c68095" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="91b3ff76-0b56-4fdb-ade7-4162fe0d09ca" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = SaaS dashboard, Analytics tool, Admin panel, E-commerce, Mobile app</li></ul></div><div style="display:contents" dir="auto"><ul id="0166ea83-ee12-4ca2-8d9b-540995dec4c7" class="bulleted-list"><li style="list-style-type:disc">[Chart types] = Which charts you need</li></ul></div><div style="display:contents" dir="auto"><ul id="11ed6416-db6a-49db-b9ab-b680ffd38dcc" class="bulleted-list"><li style="list-style-type:disc">[Data types] = What data you&#x27;re visualizing</li></ul></div><div style="display:contents" dir="auto"><ul id="abe09fcd-ec8d-4568-a982-e74745b77f17" class="bulleted-list"><li style="list-style-type:disc">[Chart features] = Which features to include</li></ul></div><div style="display:contents" dir="auto"><ul id="50b16052-738a-4832-a618-052db0a98f69" class="bulleted-list"><li style="list-style-type:disc">[Visual variations] = Different styles needed</li></ul></div><div style="display:contents" dir="auto"><ul id="cf578e50-f171-4f7a-a9e8-b3d4bca2fe6b" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current chart inflexibility issues</li></ul></div><div style="display:contents" dir="auto"><ul id="37c51c0e-1953-49ea-8c2e-d08b7efd1d94" class="bulleted-list"><li style="list-style-type:disc">Attach rigid chart examples or static images</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-807a-a2ad-f9ad912d80e4"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8041-8ff8-c2f282ae8de6"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80f6-8aab-d22a338ce015" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-80dd-9998-c689a380892e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Data Visualization Component Specialist focusing on flexible chart systems, chart anatomy, and scalable data visualization patterns.
+
+I&#x27;m designing flexible chart components for a SaaS Analytics Dashboard that can handle varying datasets (revenue, users, tasks, engagement) and contexts (overview dashboard, detailed reports, mobile app) without creating separate charts for each use case.
+
+[User would attach current static chart images or rigid chart components]
+
+Chart requirements:
+- Chart types needed:
+  - Bar chart: Vertical bars, horizontal bars, stacked bars, grouped bars
+  - Line chart: Single line, multiple lines, area under line
+  - Pie/Donut chart: Full circle, partial circle, with labels
+  - Area chart: Single area, stacked areas
+  - Combo chart: Bars + line combined
+- Data types to visualize:
+  - Revenue: Daily/weekly/monthly revenue ($0 to $100K+ range)
+  - Users: Active users, new signups, churn (0 to 10,000+ users)
+  - Tasks: Completed, in progress, overdue (0 to 1,000+ tasks)
+  - Engagement: Page views, session duration, conversion rate (percentages and counts)
+  - Performance: Load times, error rates, uptime (milliseconds, percentages)
+- Chart features:
+  - Tooltips: Hover over data point shows exact value, label, date
+  - Legends: Color key for multiple data series
+  - Gridlines: Horizontal lines for value reference
+  - Axes: X-axis (time/categories), Y-axis (values with labels)
+  - Data labels: Show values on bars/points (optional)
+  - Annotations: Mark important events, goals, thresholds
+  - Zoom/pan: Zoom into time range (optional, advanced)
+- Interactive states:
+  - Hover: Data point/bar highlights, tooltip appears
+  - Selected: Click data point to select, dim others
+  - Tooltip: Shows exact values, formatted numbers
+  - Drilldown: Click bar to see detailed breakdown (optional)
+  - Empty: No data available for time range
+  - Loading: Skeleton chart or spinner while loading data
+  - Error: Failed to load data, retry option
+- Visual variations:
+  - Multiple color themes: Blue (default), Green (success), Red (alerts), Purple (brand)
+  - Light/dark mode: Light background charts, dark background charts
+  - Branded colors: Custom color palette for multi-brand products
+  - Density: Compact (small), Standard (medium), Spacious (large)
+- Responsive needs:
+  - Desktop (1024px+): Full chart, all features, detailed tooltips
+  - Tablet (768-1023px): Medium chart, simplified legend, fewer gridlines
+  - Mobile (320-767px): Simplified chart, minimal labels, horizontal scroll if needed
+
+Current chart problems:
+- Separate chart for each dataset - BarChartRevenue (shows $), BarChartUsers (shows count), BarChartTasks (shows tasks), LineChartEngagement (shows %) - 30+ chart variants total, changing bar color requires updating 30 charts individually, unmaintainable
+- Charts are static PNG/SVG images - designer exports chart as image, developers can&#x27;t update data dynamically, must recreate chart in design for each data change, no real-time updates possible
+- No chart anatomy structure - chart built as single flat frame, axes drawn as lines (not components), bars drawn as rectangles (not reusable bar component), labels as text layers (no systematic placement), can&#x27;t swap parts or reuse
+- Charts don&#x27;t scale responsively - 1200px wide bar chart designed for desktop, breaks on 320px mobile (text overlaps, bars too narrow, unreadable), no mobile variant, horizontal scroll nightmare
+- No interactive states defined - charts show only static state, no hover tooltips specified (developers implement inconsistently), no selected state (can&#x27;t highlight individual bars), no loading skeleton (just blank space while loading)
+- Color-only data representation - line chart with 5 lines differentiated only by color (red, blue, green, orange, purple), fails for colorblind users (8% of male users), no patterns or line styles, accessibility failure
+- No empty/error states - chart with no data just shows empty axes (confusing), chart that fails to load shows nothing (users think it&#x27;s loading forever), no &quot;No data for this time range&quot; message
+- Fixed data ranges - Y-axis shows 0-100, breaks when data is 0-10,000 (scale wrong), or 0-5 (too much empty space), no dynamic axis scaling
+
+Team context:
+- 8 designers creating 50+ charts across dashboards, reports, and mobile app
+- Current workflow: Create new chart from scratch for each dataset = 2-3 hours per chart
+- Want component system: Swap chart type variant, update data range, configure colors = 15 minutes
+- Developers use Chart.js, D3.js, Recharts (React charts) - need specs matching library capabilities
+- Charts must update in real-time (live data every 30 seconds)
+- Accessibility audit flagged color-only charts (compliance issue)
+- Mobile users (40%) complain charts are unreadable
+
+Please provide:
+1. Chart anatomy breakdown (axes, data elements, labels, legends, tooltips, gridlines)
+2. Chart component architecture (reusable parts, variants, flexibility)
+3. Chart type patterns (bar, line, pie, donut, area - anatomy for each)
+4. Data representation (how to make charts data-driven, handle varying ranges)
+5. Interactive states (hover, selected, tooltip, drilldown, empty, loading)
+6. Visual styling (colors, spacing, typography, theming)
+7. Responsive strategies (mobile simplification, adaptive layouts)
+8. Accessibility patterns (color + pattern, not color-only, screen reader support)
+
+Consider: Must handle 5 to 500 data points. Mobile responsive (40% of users). Accessibility WCAG AA (color + pattern). Real-time data updates. Consistent with design system colors. Dynamic axis scaling. Tooltips on hover. Empty/loading/error states. Light/dark mode support.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="ccabd902-beee-4ba8-a7d0-7d545b1a2cb1"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="72893a91-7c8e-44bd-94a7-0d8db4d90d33" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="77bdf52e-bc15-4591-8ee1-529675ef3fe2" class="">✦ Chart anatomy as components: Break charts into axes, data elements, legends, tooltips - reusable across all chart types<br/>✦ Common mistake: Static chart images - build flexible components with variants that adapt to any dataset<br/>✦ Best with: Claude (excellent at component architecture), ChatGPT (good for data visualization patterns)<br/>✦ Remix it: &quot;Design the combo chart pattern - bars + line in single chart showing two metrics with different scales&quot;<br/>✦ Pro move: Ask &quot;Create the chart configuration system - JSON structure defining chart type, data, colors, features for any chart&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80c8-a5c8-ffcdab2da8f8"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="63f4eb0f-6085-4fd3-99fa-3d6976fe1518"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="9cc7bdc9-bc2e-49c0-8dfc-f4801dbe239f" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="fefc2ad3-2542-454f-8e6b-f52294a11f78" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the tooltip component - appears on hover, shows formatted values, adapts to chart type&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="008e52b6-c2a6-4db5-90d5-d83560196e67" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the legend component - color key for multiple data series, interactive show/hide, responsive positioning&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="a0cf67b4-da3d-40c2-be35-6db8616f1c16" class="bulleted-list"><li style="list-style-type:disc">&quot;How to handle edge cases - zero data, negative values, very large numbers, missing data points&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="f94e20f1-4e43-4cb7-bb51-5895b1a71710" class="bulleted-list"><li style="list-style-type:disc">&quot;Build the empty/loading/error state patterns - skeleton charts, no data messages, retry options&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8068-af59-d64ffff5a22d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8058-9def-def581bc88e6"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-800e-a79d-ea8c1db82d7c" class="">EXAMPLE OUTPUT</p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80cd-b6b8-f662ddd26c59" class="image"><a href="54_Example_Output.png"><img style="width:643.9921875px" src="54_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80c5-9789-faf24c87654f"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="4e5b5e94-8ced-47a9-831b-89ff3afed041"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="9d03bb10-50d9-475d-a37f-7778367dae49" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="47328d45-e13e-41cc-9ec9-32aeb2f9fb3f" class="">→ Recipe #53: <a href="R-53 Flexible Data Tables 2d767ccc6bef8020b5e8fea04b8f6efe.html">Design Flexible Data Tables</a><br/>→ Recipe #49: <a href="R-49 Design Component Variants 2d767ccc6bef8061a641c8db579cd3b7.html">Design Component Variants in Figma</a><br/>→ Recipe #51: <a href="R-51 Build Responsive Components 2d767ccc6bef8015b2effc042a7b2cbe.html">Build Responsive Components in Figma</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80cb-af14-cc5c0f043df8" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

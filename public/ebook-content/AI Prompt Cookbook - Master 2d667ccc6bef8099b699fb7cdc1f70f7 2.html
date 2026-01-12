@@ -1,0 +1,714 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>AI Prompt Cookbook - Master</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-8099-b699-fb7cdc1f70f7" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📚</span></div><h1 class="page-title" dir="auto"><code>AI Prompt Cookbook - Master</code></h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-80b9-a40d-f2629723940a" class=""></h1></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-804f-b828-fcc392940827" class="link-to-page"><a href="Recipe%20Template%20%E2%80%94%20DO%20NOT%20EDIT%202d667ccc6bef804fb828fcc392940827.html"><span class="icon">🖊️</span>Recipe Template — DO NOT EDIT</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-8044-941b-eb6a5c872b37" class="link-to-page"><a href="R-01%20Plan%20Your%20Page%20Layout%202d667ccc6bef8044941beb6a5c872b37.html"><span class="icon">📐</span>R-01: Plan Your Page Layout</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80cb-97c4-fcafda955f11" class="link-to-page"><a href="R-02%20Fix%20Cluttered%20Data%20Views%202d667ccc6bef80cb97c4fcafda955f11.html"><span class="icon">🧹</span>R-02: Fix Cluttered Data Views</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-8036-a4f1-cffbd03ee3dd" class="link-to-page"><a href="R-03%20Organize%20Your%20Main%20Navigation%202d667ccc6bef8036a4f1cffbd03ee3dd.html"><span class="icon">📍</span>R-03: Organize Your Main Navigation</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-806f-9f3b-e9cdaefa9a9e" class="link-to-page"><a href="R-04%20Design%20Multi-Step%20Flows%202d667ccc6bef806f9f3be9cdaefa9a9e.html"><span class="icon">🔁</span>R-04: Design Multi-Step Flows</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80d2-ac13-f0eb7bcf0b17" class="link-to-page"><a href="R-05%20Rank%20Dashboard%20Information%202d667ccc6bef80d2ac13f0eb7bcf0b17.html"><span class="icon">📈</span>R-05: Rank Dashboard Information</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-805c-a459-de3061219cd3" class="link-to-page"><a href="R-06%20Design%20Search%20&amp;%20Filters%202d667ccc6bef805ca459de3061219cd3.html"><span class="icon">🔍</span>R-06: Design Search &amp; Filters</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-806b-890b-c2048285b3fa" class="link-to-page"><a href="R-07%20Find%20Hidden%20User%20Dead-Ends%202d667ccc6bef806b890bc2048285b3fa.html"><span class="icon">🚧</span>R-07: Find Hidden User Dead-Ends</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80f7-a748-e543ab0cfc40" class="link-to-page"><a href="R-08%20Create%20Clear%20Path%20Finding%202d667ccc6bef80f7a748e543ab0cfc40.html"><span class="icon">🗺️</span>R-08: Create Clear Path Finding</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-806b-b6be-cb18abb33dfe" class="link-to-page"><a href="R-09%20Move%20Desktop%20to%20Mobile%202d667ccc6bef806bb6becb18abb33dfe.html"><span class="icon">📱</span>R-09: Move Desktop to Mobile</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80ba-87d9-dca8ddee9a39" class="link-to-page"><a href="R-10%20Modals%20vs%20Side%20Panels%202d667ccc6bef80ba87d9dca8ddee9a39.html"><span class="icon">🪟</span>R-10: Modals vs. Side Panels</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80cb-98c8-cde92785b136" class="link-to-page"><a href="R-11%20Right-Click%20Menus%202d667ccc6bef80cb98c8cde92785b136.html"><span class="icon">🖱️</span>R-11: Right-Click Menus</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-804c-85c0-d115079037e7" class="link-to-page"><a href="R-12%20Build%20High-Converting%20Pages%202d667ccc6bef804c85c0d115079037e7.html"><span class="icon">💰</span>R-12: Build High-Converting Pages</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80a7-a976-db712071bdce" class="link-to-page"><a href="R-13%20Fix%20Messy%20Settings%20Pages%202d667ccc6bef80a7a976db712071bdce.html"><span class="icon">⚙️</span>R-13: Fix Messy Settings Pages</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80ce-9486-d0ade6250204" class="link-to-page"><a href="R-14%20Design%20Step-by-Step%20Wizards%202d667ccc6bef80ce9486d0ade6250204.html"><span class="icon">🪄</span>R-14: Design Step-by-Step Wizards</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80a5-8694-ce629bd1838e" class="link-to-page"><a href="R-15%20Design%20Better%20Forms%202d667ccc6bef80a58694ce629bd1838e.html"><span class="icon">📝</span>R-15: Design Better Forms</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80b8-bd2b-c0615a25c87c" class="link-to-page"><a href="R-16%20Build%20Bulk%20Action%20Tools%202d667ccc6bef80b8bd2bc0615a25c87c.html"><span class="icon">☑️</span>R-16: Build Bulk Action Tools</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80b2-b6b4-d90575a87d67" class="link-to-page"><a href="R-17%20Design%20Comparison%20Tables%202d667ccc6bef80b2b6b4d90575a87d67.html"><span class="icon">⚖️</span>R-17: Design Comparison Tables</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-8045-b369-c44f1bba516e" class="link-to-page"><a href="R-18%20Build%20Notification%20Hubs%202d667ccc6bef8045b369c44f1bba516e.html"><span class="icon">🔔</span>R-18: Build Notification Hubs</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-8092-9d1d-d2366cada8e3" class="link-to-page"><a href="R-19%20Set%20Up%20User%20Permissions%202d667ccc6bef80929d1dd2366cada8e3.html"><span class="icon">👥</span>R-19: Set Up User Permissions</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-80a1-b822-db98adf1829c" class="link-to-page"><a href="R-20%20Audit%20Your%20Page%20Balance%202d667ccc6bef80a1b822db98adf1829c.html"><span class="icon">🎨</span>R-20: Audit Your Page Balance</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-808f-b671-c9d953cc5641" class="link-to-page"><a href="R-21%20Turn%20Brand%20into%20UI%20Styles%202d667ccc6bef808fb671c9d953cc5641.html"><span class="icon">🖌️</span>R-21: Turn Brand into UI Styles</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-8030-822c-c761e4959070" class="link-to-page"><a href="R-22%20Check%20Your%20Color%20Contrast%202d667ccc6bef8030822cc761e4959070.html"><span class="icon">👁️</span>R-22: Check Your Color Contrast</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-8060-ae6a-dfa0fd1d081d" class="link-to-page"><a href="R-23%20File%20and%20Media%20Management%202d667ccc6bef8060ae6adfa0fd1d081d.html"><span class="icon">🖼️</span>R-23: File and Media Management</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-804e-8924-e15be9db459f" class="link-to-page"><a href="R-24%20Fix%20Hard-to-Read%20Text%202d767ccc6bef804e8924e15be9db459f.html"><span class="icon">👓</span>R-24: Fix Hard-to-Read Text</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-809c-bd6b-c7ee914bebdf" class="link-to-page"><a href="R-25%20Pick%20Your%20Icon%20Styles%202d767ccc6bef809cbd6bc7ee914bebdf.html"><span class="icon">✨</span>R-25: Pick Your Icon Styles</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8025-a4af-f26e74f609ab" class="link-to-page"><a href="R-26%20Add%20Depth%20and%20Shadows%202d767ccc6bef8025a4aff26e74f609ab.html"><span class="icon">🌓</span>R-26: Add Depth and Shadows</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8097-9ab0-f6fc70dc611e" class="link-to-page"><a href="R-27%20Design%20Smooth%20Interactions%202d767ccc6bef80979ab0f6fc70dc611e.html"><span class="icon">🎭</span>R-27: Design Smooth Interactions</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-806e-a5db-d329ca407ba1" class="link-to-page"><a href="R-28%20Remove%20Visual%20Clutter%202d767ccc6bef806ea5dbd329ca407ba1.html"><span class="icon">✂️</span>R-28: Remove Visual Clutter</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8070-ab71-c1326164ae2f" class="link-to-page"><a href="R-29%20Create%20Your%20Unique%20Hook%202d767ccc6bef8070ab71c1326164ae2f.html"><span class="icon">🎣</span>R-29: Create Your Unique Hook</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80bf-8926-fcdc9c1d4e5a" class="link-to-page"><a href="R-30%20Design%20Empty%20States%202d767ccc6bef80bf8926fcdc9c1d4e5a.html"><span class="icon">📭</span>R-30: Design Empty States</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-806d-9294-c17a339f61c3" class="link-to-page"><a href="R-31%20Polish%20Your%20Loading%20States%202d767ccc6bef806d9294c17a339f61c3.html"><span class="icon">⏳</span>R-31: Polish Your Loading States</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-807b-9fd9-e696c8f009ff" class="link-to-page"><a href="R-32%20Fix%20Broken%20Responsive%20Design%202d767ccc6bef807b9fd9e696c8f009ff.html"><span class="icon">💻</span>R-32: Fix Broken Responsive Design</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-808a-9279-dcff30fecd7f" class="link-to-page"><a href="R-33%20Design%20Clear%20Data%20Charts%202d767ccc6bef808a9279dcff30fecd7f.html"><span class="icon">📊</span>R-33: Design Clear Data Charts</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-806a-a554-c4a058472a9b" class="link-to-page"><a href="R-34%20Polish%20Your%20Input%20Fields%202d767ccc6bef806aa554c4a058472a9b.html"><span class="icon">✏️</span>R-34: Polish Your Input Fields</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80af-ba3a-ea677109d708" class="link-to-page"><a href="R-35%20Design%20Better%20Dropdowns%202d767ccc6bef80afba3aea677109d708.html"><span class="icon">🔽</span>R-35: Design Better Dropdowns</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8066-ac75-cd49763ffa25" class="link-to-page"><a href="R-36%20Update%20Your%20Card%20Designs%202d767ccc6bef8066ac75cd49763ffa25.html"><span class="icon">🃏</span>R-36: Update Your Card Designs</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-804e-a807-db188f871c58" class="link-to-page"><a href="R-37%20Design%20Better%20Tooltips%202d767ccc6bef804ea807db188f871c58.html"><span class="icon">💬</span>R-37: Design Better Tooltips</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8086-91d8-cc363e24cc2d" class="link-to-page"><a href="R-38%20Build%20Smart%20Search%20Bars%202d767ccc6bef808691d8cc363e24cc2d.html"><span class="icon">🔍</span>R-38: Build Smart Search Bars</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80a2-94e9-c663923f0a75" class="link-to-page"><a href="R-39%20Iterate%20Your%20Hero%20Sections%202d767ccc6bef80a294e9c663923f0a75.html"><span class="icon">🚀</span>R-39: Iterate Your Hero Sections</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-800d-9012-d412a0122f53" class="link-to-page"><a href="R-40%20Design%20Better%20Modals%202d767ccc6bef800d9012d412a0122f53.html"><span class="icon">🪟</span>R-40: Design Better Modals</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80cf-b82f-d8f83c76b743" class="link-to-page"><a href="R-41%20Design%20Alerts%202d767ccc6bef80cfb82fd8f83c76b743.html"><span class="icon">🔔</span>R-41: Design Alerts</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80f2-b6b2-c8839d98fe10" class="link-to-page"><a href="R-42%20Improve%20Onboarding%20Flows%202d767ccc6bef80f2b6b2c8839d98fe10.html"><span class="icon">🎯</span>R-42: Improve Onboarding Flows</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-804a-ba84-f6e0d45a2146" class="link-to-page"><a href="R-43%20Create%20Confirmation%20Patterns%202d767ccc6bef804aba84f6e0d45a2146.html"><span class="icon">🎉</span>R-43: Create Confirmation Patterns</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-804c-aa1b-f81f3a87a5f9" class="link-to-page"><a href="R-44%20Design%20Status%20Indicators%202d767ccc6bef804caa1bf81f3a87a5f9.html"><span class="icon">🏷️</span>R-44: Design Status Indicators</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8073-a41e-c682a146654a" class="link-to-page"><a href="R-45%20Design%20Better%20Footers%202d767ccc6bef8073a41ec682a146654a.html"><span class="icon">📑</span>R-45: Design Better Footers</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8016-9c93-ff15b9a23dff" class="link-to-page"><a href="R-46%20Build%20a%20Design%20System%20Foundation%202d767ccc6bef80169c93ff15b9a23dff.html"><span class="icon">🏗️</span>R-46: Build a Design System Foundation</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80d2-9ce0-c95e7a0fbf37" class="link-to-page"><a href="R-47%20Organize%20Component%20Libraries%20in%20Figma%202d767ccc6bef80d29ce0c95e7a0fbf37.html"><span class="icon">🗂️</span>R-47: Organize Component Libraries in Figma</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8072-9793-db8459ae5170" class="link-to-page"><a href="R-48%20Design%20Smart%20Defaults%202d767ccc6bef80729793db8459ae5170.html"><span class="icon">⚡</span>R-48: Design Smart Defaults</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8061-a641-c8db579cd3b7" class="link-to-page"><a href="R-49%20Design%20Component%20Variants%202d767ccc6bef8061a641c8db579cd3b7.html"><span class="icon">🎛️</span>R-49: Design Component Variants</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80e2-b61b-d3a4a3a760b5" class="link-to-page"><a href="R-50%20Properties%20vs%20Variants%20in%20Figma%202d767ccc6bef80e2b61bd3a4a3a760b5.html"><span class="icon">🔀</span>R-50: Properties vs. Variants in Figma</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8015-b2ef-fc042a7b2cbe" class="link-to-page"><a href="R-51%20Build%20Responsive%20Components%202d767ccc6bef8015b2effc042a7b2cbe.html"><span class="icon">📱</span>R-51: Build Responsive Components</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80c0-91a9-e89c40b1fd3a" class="link-to-page"><a href="R-52%20Design%20Multi-State%20Components%202d767ccc6bef80c091a9e89c40b1fd3a.html"><span class="icon">🎭</span>R-52: Design Multi-State Components</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8020-b5e8-fea04b8f6efe" class="link-to-page"><a href="R-53%20Flexible%20Data%20Tables%202d767ccc6bef8020b5e8fea04b8f6efe.html"><span class="icon">🥅</span>R-53: Flexible Data Tables</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80c5-b226-e720fef24fa2" class="link-to-page"><a href="R-54%20Flexible%20Chart%20Components%202d767ccc6bef80c5b226e720fef24fa2.html"><span class="icon">📈</span>R-54: Flexible Chart Components</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8074-b299-ef0842d21259" class="link-to-page"><a href="R-55%20Create%20Pattern%20Libraries%202d767ccc6bef8074b299ef0842d21259.html"><span class="icon">🧩</span>R-55: Create Pattern Libraries</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8026-8ce9-ff601c08a13e" class="link-to-page"><a href="R-56%20Build%20Color%20Palettes%202d767ccc6bef80268ce9ff601c08a13e.html"><span class="icon">🌈</span>R-56: Build Color Palettes</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80bb-acdb-dc5617f7f7ef" class="link-to-page"><a href="R-57%20Create%20Icon%20Systems%202d767ccc6bef80bbacdbdc5617f7f7ef.html"><span class="icon">✨</span>R-57: Create Icon Systems</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80a6-97f8-df65451a5b47" class="link-to-page"><a href="R-58%20Build%20Typography%20Systems%202d767ccc6bef80a697f8df65451a5b47.html"><span class="icon">🔠</span>R-58: Build Typography Systems</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8091-a4c4-d63ce2d8286b" class="link-to-page"><a href="R-59%20Design%20Grid%20Systems%202d767ccc6bef8091a4c4d63ce2d8286b.html"><span class="icon">⬜</span>R-59: Design Grid Systems</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80bc-b647-f5c77a19ffa8" class="link-to-page"><a href="R-60%20Documentation%20&amp;%20Guidelines%202d767ccc6bef80bcb647f5c77a19ffa8.html"><span class="icon">📚</span>R-60: Documentation &amp; Guidelines</a></figure></div><div style="display:contents" dir="ltr"><figure id="58d67ccc-6bef-8373-bbd4-0159926507e4" class="link-to-page"><a href="R-61%20Conduct%20User%20Interviews%2058d67ccc6bef8373bbd40159926507e4.html"><span class="icon">📚</span>R-61: Conduct User Interviews</a></figure></div><div style="display:contents" dir="ltr"><figure id="37867ccc-6bef-83a9-aefe-011022174a00" class="link-to-page"><a href="R-62%20Plan%20and%20Run%20Usability%20Tests%2037867ccc6bef83a9aefe011022174a00.html"><span class="icon">🧪</span>R-62: Plan and Run Usability Tests</a></figure></div><div style="display:contents" dir="ltr"><figure id="75767ccc-6bef-8338-adab-01eca04d1e57" class="link-to-page"><a href="R-63%20Research%20Surveys%20and%20Screeners%2075767ccc6bef8338adab01eca04d1e57.html"><span class="icon">📋</span>R-63: Research Surveys and Screeners</a></figure></div><div style="display:contents" dir="ltr"><figure id="d8c67ccc-6bef-83ed-9c32-01d848757c88" class="link-to-page"><a href="R-64%20Design%20Accessible%20Components%20d8c67ccc6bef83ed9c3201d848757c88.html"><span class="icon">♿</span>R-64: Design Accessible Components</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-800e-8746-f314fba73e87" class="link-to-page"><a href="R-65%20Design%20for%20Cognitive%20Accessibility%202d867ccc6bef800e8746f314fba73e87.html"><span class="icon">🧠</span>R-65: Design for Cognitive Accessibility</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-8007-aa94-f48df654ee97" class="link-to-page"><a href="R-66%20Design%20for%20Dark%20Mode%202d867ccc6bef8007aa94f48df654ee97.html"><span class="icon">🌓</span>R-66: Design for Dark Mode</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-8024-87a6-f66fa7a690e7" class="link-to-page"><a href="R-67%20Glassmorphism%20and%20Frosted%20UI%202d867ccc6bef802487a6f66fa7a690e7.html"><span class="icon">🪟</span>R-67: Glassmorphism and Frosted UI</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-80c6-ae22-cb9f2639fc8c" class="link-to-page"><a href="R-68%20Design%20for%20Mobile%202d867ccc6bef80c6ae22cb9f2639fc8c.html"><span class="icon">📱</span>R-68: Design for Mobile</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-8085-92b4-c0f3341bdd42" class="link-to-page"><a href="R-69%20Write%20Better%20UX%20Copy%202d867ccc6bef808592b4c0f3341bdd42.html"><span class="icon">✍️</span>R-69: Write Better UX Copy</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-8090-8126-c55fa1dbe103" class="link-to-page"><a href="R-70%20Internationalization%20&amp;%20Localization%202d867ccc6bef80908126c55fa1dbe103.html"><span class="icon">🌍</span>R-70: Internationalization &amp; Localization</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-80de-be9d-e04cb1dbeec7" class="link-to-page"><a href="R-71%20Design%20AI%20Chat%20Interfaces%202d867ccc6bef80debe9de04cb1dbeec7.html"><span class="icon">🤖</span>R-71: Design AI Chat Interfaces</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-8083-9ee7-ec3aaadb1649" class="link-to-page"><a href="R-72%20Design%20Tokens%20in%20Figma%202d867ccc6bef80839ee7ec3aaadb1649.html"><span class="icon">🔧</span>R-72: Design Tokens in Figma</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-804e-ae58-c28f42a64b2d" class="link-to-page"><a href="R-73%20Developer-Friendly%20Design%20Specs%202d867ccc6bef804eae58c28f42a64b2d.html"><span class="icon">📐</span>R-73: Developer-Friendly Design Specs</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-80a2-8208-fba9fe6e39da" class="link-to-page"><a href="R-74%20Generate%20HTML%20&amp;%20CSS%20from%20Figma%202d867ccc6bef80a28208fba9fe6e39da.html"><span class="icon">💻</span>R-74: Generate HTML &amp; CSS from Figma</a></figure></div><div style="display:contents" dir="ltr"><figure id="2d867ccc-6bef-8095-85e0-e8256265034f" class="link-to-page"><a href="R-75%20Developer%20Prototypes%20with%20Figma%20AI%202d867ccc6bef809585e0e8256265034f.html"><span class="icon">⚡</span>R-75: Developer Prototypes with Figma AI</a></figure></div><div style="display:contents" dir="auto"><p id="e41fd23d-d620-4883-ae26-f4ee1101f47f" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

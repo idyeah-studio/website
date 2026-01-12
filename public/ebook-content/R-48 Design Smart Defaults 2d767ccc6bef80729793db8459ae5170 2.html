@@ -1,0 +1,812 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-48: Design Smart Defaults</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-8072-9793-db8459ae5170" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-808f-9dc2-caf598aee9ea" class="">Recipe #48: Design Smart Defaults</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-805d-a391-f98dd6aa84bb" class="">Category: Systems &amp; Components  |  ⏱️ 25-30 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-802e-a339-c3916d814530" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="05c5a24e-4aa6-4387-85d7-3d2d49377690"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="b01c8d09-be32-4707-a907-495af98ce23d" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="325f4f26-562d-4a81-a358-fdb7f297538d" class="">You&#x27;re setting up Figma components, templates, or design systems and want to speed up designers&#x27; workflow - every new design starts from blank components, designers manually configure the same settings repeatedly, or templates are too generic to be useful. Smart defaults can eliminate repetitive work and guide designers toward good practices.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80ef-a78a-eb675a2f411e"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8067-92c1-f37090d4cccd"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-802c-9483-ee0695cbab2e" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-800a-ac4f-d84258f9c8c4" class="">Many design systems lack thoughtful defaults - components drop in blank (empty button, no text, no icon, designers fill everything manually), form fields start empty (designers type placeholder text every time), cards have no example content (hard to visualize layout), or templates are completely bare (defeating the purpose of templates). Designers waste time on repetitive setup - typing &quot;Button&quot; in every button, adding &quot;<a href="mailto:john@example.com">john@example.com</a>&quot; to email inputs, creating lorem ipsum for cards. Poor defaults also lead to inconsistency - some designers use &quot;Submit&quot;, others &quot;Save&quot;, others &quot;Continue&quot; for the same action. You need smart defaults that provide helpful starting points (realistic example content, common configurations, guided choices) while remaining easy to customize.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8058-9061-f50dfb52635f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="7af5c909-7833-4957-bf27-1e007bd7769b"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="cfc5c7e3-f27c-42d4-9042-ae02fe7632e7" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="68a5d6f8-5dde-464a-a69f-00675134e484" class="">The AI will provide realistic component default content (buttons with &quot;Save Changes&quot; instead of blank, inputs with helpful placeholders like &quot;<a href="mailto:you@company.com">you@company.com</a>&quot;, cards with example data showing task titles and assignees, pre-configured form templates), default variant selections explaining which variants should appear by default and why, component sizing specifications with Auto Layout defaults (hug/fill/fixed, spacing tokens, padding values), pre-structured template layouts for dashboards and forms that start designers 80% done, smart placeholder strategies distinguishing helpful examples from generic text, guidance on when NOT to set defaults (unique content, highly variable cases), and maintenance strategies for updating defaults based on usage data and team feedback. Optionally includes before/after examples showing components with poor versus smart defaults.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="ac99b7e1-1c1f-4dea-aeaf-88abcabbb585"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8041-baf9-c7defe61ed66"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8044-82f8-c4e6f12c7e52" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-8022-8eec-e36a3a430812" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Design Systems Specialist focusing on component defaults, starter content, and workflow optimization in Figma.
+
+I&#x27;m setting up smart defaults for a [Product Type] design system to help [Team Size] designers work faster and maintain consistency.
+
+[OPTIONAL: Attach Figma component examples or templates]
+
+Default requirements:
+- Component types: [e.g., Buttons, Inputs, Cards, Forms, Tables, Modals]
+- Common use cases: [e.g., Login forms, Product cards, User profiles, Dashboards]
+- Team workflow: [e.g., Start from templates, Drag components from library, Copy existing designs]
+- Content needs: [e.g., Realistic examples, Lorem ipsum, Actual product data]
+- Flexibility level: [e.g., Quick edits common, Heavily customized, Mostly use as-is]
+
+Current default problems:
+- [Problem 1: e.g., Buttons drop in empty - designers type &quot;Button&quot; every time]
+- [Problem 2: e.g., Input fields have no placeholder text - designers add manually]
+- [Problem 3: e.g., Cards are blank - can&#x27;t visualize layout with content]
+- [Problem 4: e.g., Form templates generic - don&#x27;t match real use cases]
+- [Problem 5: e.g., Modal starts at wrong size - designers resize every time]
+
+Team context: [Designer experience levels, common tasks, speed vs. customization preference]
+
+Please provide:
+1. Component default content (text, images, icons, realistic examples)
+2. Default variant selections (which variant shows by default)
+3. Default component sizing (width, height, padding, responsive settings)
+4. Template default structure (pre-configured layouts, common patterns)
+5. Smart placeholder strategies (helpful vs. distracting)
+6. Auto-layout defaults (hug, fill, fixed, spacing values)
+7. When NOT to set defaults (cases where blank is better)
+8. Maintenance strategy (updating defaults, versioning)
+
+Consider: [Constraints - e.g., Multi-language products, Various content lengths, Different user roles, Accessibility requirements]</code></pre></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8054-bc2a-e82409438bd2" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8012-bc44-ea5dc0df2bd2" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = SaaS, E-commerce, Mobile app, Dashboard, Marketing site</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8032-86c0-ca4216644454" class="bulleted-list"><li style="list-style-type:disc">[Team Size] = Designers using the system</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80d5-83ab-d458e178925f" class="bulleted-list"><li style="list-style-type:disc">[Component types] = What components need defaults</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8056-b9d3-c77b5af3dd95" class="bulleted-list"><li style="list-style-type:disc">[Common use cases] = Typical design scenarios</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8073-bf7b-f64a96bfc1e8" class="bulleted-list"><li style="list-style-type:disc">[Content needs] = Real data vs. placeholder</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-802f-b860-f4fe4c486d12" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current default issues</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80aa-a628-e350e5883b25" class="bulleted-list"><li style="list-style-type:disc">Attach Figma examples or templates</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-800f-a6d2-dd0272764772"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80e8-a2f1-c8a41ab662f1"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8023-aa96-d93a293ed315" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-8020-a3d4-f5a0cd2dd044" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Design Systems Specialist focusing on component defaults, starter content, and workflow optimization in Figma.
+
+I&#x27;m setting up smart defaults for a SaaS Project Management Tool design system to help 8 designers work faster on tasks, projects, and dashboards.
+
+[User would attach Figma component/template examples here]
+
+Default requirements:
+- Component types:
+  - Buttons (primary, secondary, icon buttons)
+  - Inputs (text, email, password, textarea, search)
+  - Cards (task cards, project cards, user cards)
+  - Forms (login, signup, create task, edit project)
+  - Tables (task lists, project lists, user lists)
+  - Modals (confirmations, multi-step forms)
+  - Navigation (header, sidebar, tabs)
+- Common use cases:
+  - Task management (80% of designs involve tasks)
+  - Project dashboards (status, progress, team members)
+  - User profiles and settings
+  - Team collaboration (comments, assignments, mentions)
+  - Reports and analytics
+- Team workflow:
+  - Start from component library (60%)
+  - Start from templates (30%)
+  - Copy existing designs (10%)
+  - Designers prefer speed over customization
+- Content needs:
+  - Realistic task examples (&quot;Design homepage&quot;, &quot;Fix login bug&quot;)
+  - Real user names (not &quot;John Doe&quot;)
+  - Actual dates and times
+  - Believable project names
+  - Avoid lorem ipsum (confusing)
+- Flexibility level:
+  - Quick edits common (change text, swap images)
+  - Heavy customization rare (80% use defaults with minor tweaks)
+  - Speed prioritized (ship features fast)
+
+Current default problems:
+- Buttons drop in completely empty - designers type &quot;Button&quot; placeholder text every single time, then change to actual label - waste of time
+- Input fields have no placeholder text or labels - designers manually add &quot;Email address&quot; and &quot;john@example.com&quot; to every email input across hundreds of forms
+- Task cards are blank white rectangles - impossible to visualize how layout works with real task titles, assignees, due dates, status - designers create fake content every time
+- Login form template is generic - just &quot;Label&quot; and &quot;Input&quot; repeated, doesn&#x27;t show actual login flow (email, password, remember me, forgot password link, submit button)
+- Modals default to 400px width - too small for multi-step forms, designers resize to 600px every time, should default to common size
+- Project card has no example data - shows empty state, not helpful for designing dashboard with 20 project cards
+- Search input has no search icon - designers add magnifying glass icon every time
+- Date pickers show no date - &quot;MM/DD/YYYY&quot; placeholder not helpful, should show example date like &quot;Dec 15, 2024&quot;
+
+Team context:
+- 8 designers, mix of junior (3), mid (4), senior (1)
+- Fast-paced environment (2-week sprints)
+- Designers create 10-20 task cards per day
+- Realistic examples help designers visualize layouts
+- Want to ship features quickly, not spend time on setup
+- Components should &quot;just work&quot; with minimal configuration
+
+Please provide:
+1. Component default content (text, images, icons, realistic examples)
+2. Default variant selections (which variant shows by default)
+3. Default component sizing (width, height, padding, responsive settings)
+4. Template default structure (pre-configured layouts, common patterns)
+5. Smart placeholder strategies (helpful vs. distracting)
+6. Auto-layout defaults (hug, fill, fixed, spacing values)
+7. When NOT to set defaults (cases where blank is better)
+8. Maintenance strategy (updating defaults, versioning)
+
+Consider: Task-focused product (most designs involve tasks). Designers value speed. Realistic examples better than generic placeholders. Multi-step forms common. Dashboard layouts with 10-20 cards. Mobile responsive (35% mobile users). Accessibility (labels, ARIA).</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80fe-8f83-ee83d0469613"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80d0-a30e-d4044f893748" class=""><strong>CHEF’S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8091-811e-def38c0a8133" class="">✦ Realistic beats generic: &quot;Design homepage mockup&quot; is more helpful than &quot;Task name&quot; as default text<br/>✦ Common mistake: Blank components - setting good defaults speeds up design 10x<br/>✦ Best with: Claude (excellent at realistic example content), ChatGPT (good for placeholder strategies)<br/>✦ Remix it: &quot;Create the design template library - pre-configured layouts for common screens&quot;<br/>✦ Pro move: Ask &quot;Analyze component usage - which defaults are kept vs. always changed?&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-806a-955e-f834623e714a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-807c-88e9-f0ff302c453f"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80db-86fd-eec0496e44d3" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80f4-8198-f2e4c5a0192a" class="bulleted-list"><li style="list-style-type:disc">&quot;Create realistic example content - task names, user names, project titles that feel real&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8078-911a-ddc37f7d8c8f" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the form template library - login, signup, settings, create/edit forms with smart defaults&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-8063-b709-f138ee78c3f4" class="bulleted-list"><li style="list-style-type:disc">&quot;How to set Auto Layout defaults - spacing, padding, sizing, constraints for every component&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="2d767ccc-6bef-80cb-a740-f425ce1ab8eb" class="bulleted-list"><li style="list-style-type:disc">&quot;Build the placeholder text system - helpful placeholders for all input types&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-801c-b398-e584467816d4"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8088-a583-fd32ebaf7f77"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80db-bf72-d1c8a254a87a" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-8069-865c-d8e52a25321a" class="image"><a href="48_Example_Output.png"><img style="width:643.9921875px" src="48_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-80ed-9880-ffc3c4b36331"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8030-a853-cd62926e3be6"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80ff-b8fe-dc784e77110e" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-804a-b42b-f78faa27dc1e" class="">→ Recipe #46: <a href="R-46 Build a Design System Foundation 2d767ccc6bef80169c93ff15b9a23dff.html">Build a Design System Foundation</a><br/>→ Recipe #47: <a href="R-47 Organize Component Libraries in Figma 2d767ccc6bef80d29ce0c95e7a0fbf37.html">Organize Component Libraries in Figma</a><br/>→ Recipe #34: <a href="R-34 Polish Your Input Fields 2d767ccc6bef806aa554c4a058472a9b.html">Polish Your Input Fields</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-8016-8951-c2c57efa4bb9" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

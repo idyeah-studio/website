@@ -1,0 +1,816 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-23: File and Media Management</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d667ccc-6bef-8060-ae6a-dfa0fd1d081d" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d667ccc-6bef-8069-bb3c-ccfca7b8ecf5" class="">Recipe #23: File and Media Management</h1></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80d0-a522-f77ecd9cbece" class="">Category: UI &amp; Visuals  |  ⏱️ 35-40 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-80bc-b48f-ee6f6e67df89" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="9718a1b3-aa4a-4de6-b670-f5ed50c032cb"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="e3309bd3-0b25-45ea-b77f-54fe942f020e" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="230bfa30-db1f-4a32-aa38-38ee124dfd36" class="">You&#x27;re designing file upload, storage, organization, or media gallery features - handling user uploads (documents, images, videos), browsing file libraries, managing folders, previewing media, or organizing assets. Your current file management UI is confusing, uploads lack feedback, galleries are clunky, or users struggle to find and manage their files.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-806c-a68a-d8e50f9be3ee"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="8e47f62f-87e7-4257-b0b3-a0de049a513f"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="eb223d3f-e9f9-43f8-91a7-0c2a5de012b9" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="654c2673-8921-4b8b-86d7-14ca9d929804" class="">Many designers struggle with file management interfaces - creating confusing upload flows (unclear how to upload, hidden upload buttons, no drag-drop support), poor upload feedback (no progress indication, files fail silently, unclear when upload completes), cluttered file lists (hard to scan, no thumbnails, poor organization), missing preview options (can&#x27;t preview before downloading, no lightbox for images), unclear file actions (download/delete/share hidden or hard to find), no folder organization (flat file list, can&#x27;t create folders, no hierarchy), or terrible mobile experience (can&#x27;t upload from mobile, tiny thumbnails, hard to select files). Teams create file systems with high support tickets, users lose files, galleries are hard to navigate, or uploads fail without clear errors. You need systematic file management design - clear upload patterns (drag-drop, browse, paste with progress feedback), organized views (list, grid, folders with breadcrumbs), preview capabilities (lightbox, quick look, inline preview), accessible file actions (download, delete, rename, share), and mobile optimization (mobile upload, responsive galleries, touch-friendly).</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8005-a05c-c9528f280774"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="ca6d31f6-69bb-4e32-af17-a75db0ed96da"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1b13703f-f4d2-4dfc-8244-57763459a26b" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="3caac2ab-d82e-4a21-930e-f849f1c18035" class="">The AI will provide multiple upload patterns (prominent drag-drop zones, browse button, paste, mobile camera/gallery access, multi-file batch upload) with comprehensive progress feedback (progress bars, thumbnails, status indicators, error handling, success confirmation), file organization systems (list and grid views with toggles, folder hierarchy with breadcrumbs, search, filters by type/date/size, sorting options), preview capabilities without downloading (image lightbox with zoom and navigation, inline PDF viewer, video player, quick look overlays), clear file actions (download, delete with confirmation, inline rename, share with permissions, move/copy, bulk operations with selection), media gallery patterns (responsive grid layouts, lightbox with keyboard/swipe navigation, slideshow mode), and mobile-optimized interfaces (camera/gallery upload, touch gestures for swipe-to-delete and long-press-to-select, responsive views adapting from desktop to mobile, pull-to-refresh). Optionally includes visual examples of upload flows, file grids, and preview interactions.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="f98f203a-6b76-4793-be4b-6a9c616e974c"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="0a958e63-9f86-42ed-b4ad-a1016e4ccf96"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="98b0679f-e453-474d-984b-9cc94d45e119" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5c302836-2fcf-4b63-be57-3c63456e44dd" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a File Management UI Specialist focusing on upload patterns, file organization, media galleries, and asset management interfaces.
+
+I&#x27;m designing file and media management for [Product Type] handling [File Types] with features for [User Actions] that need to be intuitive and work seamlessly across devices.
+
+[OPTIONAL: Attach current file management UI with issues]
+
+File management requirements:
+- File types: [e.g., Documents (PDF, Word, Excel), Images (JPG, PNG), Videos (MP4), Mixed media]
+- Upload methods: [e.g., Drag-drop, Browse button, Paste, URL import, Mobile camera]
+- Organization needs: [e.g., Folders, Tags, Search, Filters, Sorting]
+- Preview requirements: [e.g., Image lightbox, PDF viewer, Video player, Document preview]
+- Actions needed: [e.g., Download, Delete, Rename, Share, Move, Copy, Version history]
+
+Current file management problems:
+- [Problem 1: e.g., Hidden upload - users can&#x27;t find how to upload files, button buried in menu]
+- [Problem 2: e.g., No upload progress - files upload silently, users don&#x27;t know if working or stuck]
+- [Problem 3: e.g., No file preview - must download to see content, slow and annoying]
+- [Problem 4: e.g., Flat file list - 500 files in one list, no folders, impossible to organize]
+- [Problem 5: e.g., No thumbnails - text-only list, can&#x27;t identify image files visually]
+
+Team context: [User file management frequency, storage limits, mobile usage, common file types]
+
+Please provide:
+1. Upload patterns (drag-drop zones, browse button, paste, mobile upload, multi-file)
+2. Upload feedback (progress bars, thumbnails, status, errors, success confirmation)
+3. File list and grid views (list layout, grid layout, hybrid, when to use which)
+4. File organization (folders, breadcrumbs, hierarchy, tags, search, filters)
+5. File preview (lightbox for images, PDF viewer, video player, quick look)
+6. File actions (download, delete, rename, share, move, bulk actions)
+7. Media galleries (image grids, lightbox navigation, slideshow, zoom)
+8. Mobile file management (mobile upload from camera/gallery, responsive views, touch actions)
+
+Consider: [Constraints - e.g., Must work on mobile, Support large files, Preview without download, Folder organization, Bulk operations]</code></pre></div><div style="display:contents" dir="auto"><p id="b1fa27f3-306e-45b8-ab1d-193d25cd6873" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="0a39e762-42af-4814-81dc-fda35ad9a62b" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = Cloud storage, Project management, CMS, E-commerce, Portfolio</li></ul></div><div style="display:contents" dir="auto"><ul id="f6d95d6e-66d0-4e4f-9a56-4b6644d8b27d" class="bulleted-list"><li style="list-style-type:disc">[File Types] = Documents, images, videos, mixed</li></ul></div><div style="display:contents" dir="auto"><ul id="c8c97cab-5a78-4892-b6f8-cb9d390fee95" class="bulleted-list"><li style="list-style-type:disc">[User Actions] = Upload, organize, preview, share</li></ul></div><div style="display:contents" dir="auto"><ul id="898d9618-1c99-4ebf-91da-e518ce646e9c" class="bulleted-list"><li style="list-style-type:disc">[Upload methods] = Drag-drop, browse, paste, camera</li></ul></div><div style="display:contents" dir="auto"><ul id="5d1bb5fb-8165-4b5d-9c28-78864b131e8b" class="bulleted-list"><li style="list-style-type:disc">[Organization needs] = Folders, tags, search, filters</li></ul></div><div style="display:contents" dir="auto"><ul id="fbf98b5c-7000-46ea-b3a1-5adb41f69797" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current file management issues</li></ul></div><div style="display:contents" dir="auto"><ul id="ba0ee309-36d7-4432-80ed-a7b1799da1e9" class="bulleted-list"><li style="list-style-type:disc">Attach file management UI screenshots</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-802b-bab4-df5d0950c4cf"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c7920500-1618-435c-8771-7f47f8700ce0"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="a52708dc-bf4a-4d42-82ac-7e02f3d50eb2" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ba04c767-260f-4927-a6eb-7f01e9db877e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a File Management UI Specialist focusing on upload patterns, file organization, media galleries, and asset management interfaces.
+
+I&#x27;m designing file and media management for a SaaS Project Management Tool handling documents, images, and videos with features for upload, organize, preview, share, and collaborate that need to be intuitive and work seamlessly across devices.
+
+[User would attach current file management UI showing hidden upload, no progress, flat list, no previews]
+
+File management requirements:
+- File types:
+  - Documents: PDF, Word (.docx), Excel (.xlsx), PowerPoint (.pptx), Text files
+  - Images: JPG, PNG, GIF, SVG (up to 10MB each)
+  - Videos: MP4, MOV (up to 500MB each)
+  - Archives: ZIP files
+  - Mixed: Users upload all types to project folders
+- Upload methods:
+  - Drag-drop: Primary method (drag files into project)
+  - Browse button: Click to select files from computer
+  - Paste: Paste images from clipboard (Cmd+V)
+  - Mobile: Upload from camera or photo gallery (iOS/Android)
+  - Multiple files: Upload 10-50 files at once (batch upload)
+- Organization needs:
+  - Folders: Create folders, nest folders (up to 3 levels deep)
+  - Breadcrumbs: Show current location (Project &gt; Design &gt; Mockups)
+  - Search: Search by filename, search within folders
+  - Filters: Filter by file type (Images, Documents, Videos)
+  - Sorting: Sort by name, date, size, type
+  - Tags: Optional tagging for cross-folder organization
+- Preview requirements:
+  - Images: Lightbox viewer with zoom, next/prev navigation
+  - PDFs: In-app PDF viewer (don&#x27;t force download)
+  - Videos: Inline video player with controls
+  - Documents: Preview first page or thumbnail (full preview optional)
+  - Quick look: Hover or spacebar to quick preview (like macOS)
+- Actions needed:
+  - Download: Individual file or bulk download (zip)
+  - Delete: Single or bulk delete with confirmation
+  - Rename: Inline rename (click filename to edit)
+  - Share: Generate share link, set permissions (view/edit)
+  - Move: Drag-drop to move, or move via context menu
+  - Copy: Duplicate file within same project
+  - Version history: See previous versions, restore old version
+
+Current file management problems:
+- Hidden upload button - &quot;Upload&quot; button in top-right corner, tiny, users miss it, many support tickets &quot;How do I upload files?&quot;, 30% of new users can&#x27;t find upload, should be prominent drag-drop zone
+- No upload progress indication - Files upload in background, no progress bar, no thumbnail preview, users don&#x27;t know if upload working or stuck, large files (100MB+) take 2-3 minutes with zero feedback, users click upload multiple times thinking failed
+- No file preview capability - Click file → downloads to computer → open in app to view, slow workflow, especially painful for quick checks, users want to preview images/PDFs without downloading, need lightbox or inline preview
+- Flat file list chaos - 500+ files in single list, no folders, impossible to organize, users scroll forever to find files, need folder hierarchy and breadcrumbs
+- No thumbnails for images - File list shows only filenames &quot;IMG_1234.jpg&quot;, no visual thumbnail, can&#x27;t identify which image is which, need thumbnail grid view for images
+- Unclear file actions - Download/Delete/Share hidden in &quot;•••&quot; menu, users don&#x27;t discover actions, right-click does nothing (no context menu), need clear visible actions
+- Terrible mobile experience - Can&#x27;t upload from mobile camera, file list tiny on phone, no touch gestures (swipe to delete), need mobile-optimized upload and viewing
+- No bulk operations - Can&#x27;t select multiple files to delete/move/download, must do one-by-one, tedious for 20+ files, need checkbox selection and bulk actions
+- Upload errors fail silently - File too large or wrong type, upload fails with no error message, user thinks uploaded successfully but file missing, need clear error handling
+
+Team context:
+- Users upload 50-200 files per project (documents, screenshots, design files)
+- 40% mobile users (need mobile upload from camera/gallery)
+- File sizes: Images 1-5MB, Documents 1-10MB, Videos 50-500MB
+- Common actions: Upload (daily), Preview (hourly), Download (weekly), Organize into folders (weekly)
+- Pain points: Finding files (no search/folders), Uploading large batches (no progress), Previewing without downloading
+
+Please provide:
+1. Upload patterns (drag-drop zones, browse button, paste, mobile upload, multi-file)
+2. Upload feedback (progress bars, thumbnails, status, errors, success confirmation)
+3. File list and grid views (list layout, grid layout, hybrid, when to use which)
+4. File organization (folders, breadcrumbs, hierarchy, tags, search, filters)
+5. File preview (lightbox for images, PDF viewer, video player, quick look)
+6. File actions (download, delete, rename, share, move, bulk actions)
+7. Media galleries (image grids, lightbox navigation, slideshow, zoom)
+8. Mobile file management (mobile upload from camera/gallery, responsive views, touch actions)
+
+Consider: Prominent drag-drop upload. Real-time progress feedback. Folder organization with breadcrumbs. Image thumbnails in grid view. Lightbox preview for images. PDF inline viewer. Bulk selection and actions. Mobile camera upload. Search and filters. Clear error messages. Works on 320px mobile to 1920px desktop.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="cc9c06f9-cb7e-48d9-b39c-436e377ee5d8"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6e545554-42c5-40cd-8b82-18b27bace762" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="33c3a026-460f-4ca9-bd7d-828a4c8af7e2" class="">✦ Drag-drop is king: Make drag-drop upload prominent and always visible - it&#x27;s the fastest method<br/>✦ Common mistake: No upload progress - users need to see progress bars and status, especially for large files<br/>✦ Best with: Claude (excellent at systematic file management patterns), ChatGPT (good for upload flow details)<br/>✦ Remix it: &quot;Design image gallery with lightbox preview, grid view, and mobile camera upload&quot;<br/>✦ Pro move: Ask &quot;Audit my file upload flow for UX issues - progress feedback, error handling, mobile support&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8044-af9f-e35fc0eb7f67"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="a7c67bdf-2ddd-434f-985d-f0e4a8fa4c1d"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="12761924-5433-4773-9669-71b4bf7035b7" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="6a429e77-f89c-4417-bf07-a136b2ae16c2" class="bulleted-list"><li style="list-style-type:disc">&quot;Design file upload flow - drag-drop zone, browse button, progress bars, error handling, success confirmation&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="3cdc6ea2-cca5-49cf-95f3-6528d0d2065c" class="bulleted-list"><li style="list-style-type:disc">&quot;Create image gallery with lightbox - grid view, full-screen preview, zoom, navigation, mobile swipe&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="fc4859c8-a9fc-418f-bf4f-d26d4bb09ece" class="bulleted-list"><li style="list-style-type:disc">&quot;Design folder organization system - create folders, breadcrumbs, search, filters, move files between folders&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="8a6b2e32-f06d-4bea-9258-b2a3356a9ab1" class="bulleted-list"><li style="list-style-type:disc">&quot;Build mobile file upload - camera access, gallery picker, progress indicators, thumbnail previews&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-80eb-8d78-edc264fc53d5"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d667ccc-6bef-80a3-8079-dc7148d8a90f"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8057-ab96-ebaabebc52a2" class="">EXAMPLE OUTPUT</p></div><div style="display:contents" dir="ltr"><figure id="2d667ccc-6bef-809a-80cf-e8e89fab2dfe" class="image"><a href="23_Example_Output.png"><img style="width:643.9921875px" src="23_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d667ccc-6bef-8003-9853-f497465f1de3"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="6bdcd0b2-2f7e-4961-bbfb-f41adbccb7d1"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="70cf8d0c-e219-4919-aeed-e1d48536f3f7" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="45da87eb-9a6b-4777-b84f-0f04ef8b0e35" class="">→ Recipe #15: <a href="R-15 Design Better Forms 2d667ccc6bef80a58694ce629bd1838e.html">Design Better Forms</a><br/>→ Recipe #30: <a href="R-30 Design Empty States 2d767ccc6bef80bf8926fcdc9c1d4e5a.html">Design Empty States</a><br/>→ Recipe #31: <a href="R-31 Polish Your Loading States 2d767ccc6bef806d9294c17a339f61c3.html">Polish Your Loading States</a><br/>→ Recipe #40: <a href="R-40 Design Better Modals 2d767ccc6bef800d9012d412a0122f53.html">Design Better Modals</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d667ccc-6bef-8053-a78b-e65b09f98fe0" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

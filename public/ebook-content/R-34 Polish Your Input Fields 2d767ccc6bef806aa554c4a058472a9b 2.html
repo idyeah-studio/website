@@ -1,0 +1,793 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R-34: Polish Your Input Fields</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2d767ccc-6bef-806a-a554-c4a058472a9b" class="page sans"><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2d767ccc-6bef-8016-aa8b-c814015c3c2c" class="">Recipe #34: Polish Your Input Fields</h1></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80eb-a558-ffdb1576d02d" class="">Category: UI &amp; Visuals  |  ⏱️ 25-30 min  |  🌶️🌶️ Intermediate</p></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-800a-832d-c74a9b216e04" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="4a78778a-a237-4e3c-b1aa-d31b2fe4f0e3"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="6d6e6a50-387b-41d6-8807-65c64a9853d3" class=""><strong>USE WHEN:</strong></p></div><div style="display:contents" dir="auto"><p id="7b0d3d6e-dc78-42ce-903c-994db4c1140b" class="">You&#x27;re redesigning forms with inputs that feel clunky, unclear, or frustrating - fields with poor focus states, vague labels, tiny click targets, or confusing error messages. Users struggle to complete forms or make mistakes filling them out.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8017-8585-c12c8323b19f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="362bbba7-55fd-4002-a808-d8bc00ed18d5"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="3048dbdd-1aeb-4895-94a8-68aeeaad636b" class=""><strong>THE CHALLENGE</strong></p></div><div style="display:contents" dir="auto"><p id="ecd8f0c6-71b5-46f0-9422-f2c51ad41191" class="">Many applications have poorly designed input fields - tiny 32px height inputs that are hard to tap on mobile, vague placeholder text used as labels (disappearing when typing), no clear focus indication, disabled states that look identical to enabled, error states that appear too early or too late, and inconsistent styling across different input types. Users click submit only to discover validation errors they didn&#x27;t see. Mobile users struggle with tiny inputs and inappropriate keyboards. You need to design input fields that are obvious to interact with, provide clear feedback, prevent errors, and work beautifully across devices.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-809c-bea6-c7577a894223"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="074e16a1-c22d-4d61-a4de-64f6b4e9bca1"><div style="font-size:1.5em"><span class="icon">📊</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="316ff128-9aea-4548-b4ac-7a4c31298416" class=""><strong>WHAT TO EXPECT</strong></p></div><div style="display:contents" dir="auto"><p id="90ed40c9-ef29-46de-867a-fd12abff19f2" class="">The AI will provide input sizing specifications (44-48px height with proper padding and minimum 44x44px touch targets), label and placeholder strategy with persistent visible labels above inputs and placeholders used only for format examples, comprehensive state design covering default, hover, focus (highly visible with 2-3px blue border and glow), disabled (distinct gray background), error (red border with specific messages and icons), and success states, error handling guidance on validation timing (on blur for required fields, debounced for format validation) with specific helpful messages positioned directly below fields, input type recommendations for email, tel, password (with show/hide toggle), number, and search with appropriate mobile keyboard types and autocomplete attributes, and complete accessibility requirements including ARIA labels, keyboard navigation, 4.5:1 contrast ratios, and screen reader announcements. Optionally includes input field component library showing all states.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="d70b6870-0c94-4f7c-a118-30e10efa7dd2"/></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="86353cdf-1885-4cb1-b795-9c5dfa22d117"><div style="font-size:1.5em"><span class="icon">🧪</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1c18040f-28ba-4607-866f-2e4283b24263" class=""><strong>THE PROMPT BLUEPRINT</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8958415a-99b9-4c46-ade1-87c71dd49c06" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Form Design Specialist focusing on input field usability, accessibility, and states.
+
+I&#x27;m designing input fields for a [Product Type] that need to be clear, accessible, and easy to use.
+
+[OPTIONAL: Attach screenshots showing current input field designs]
+
+Input field requirements:
+- Input types needed: [e.g., Text, Email, Password, Number, Dropdown, Checkbox, Radio, Textarea, Date picker]
+- Form contexts: [e.g., Registration, Checkout, Settings, Search, Filters]
+- Device usage: [e.g., 60% desktop, 40% mobile]
+- User expertise: [e.g., Non-technical consumers, Business users, Technical users]
+
+Current input field problems:
+- [Problem 1: e.g., Input height is 36px - too small for touch on mobile (need 44px minimum)]
+- [Problem 2: e.g., Using placeholder as label - disappears when typing, no context]
+- [Problem 3: e.g., Focus state is subtle 1px blue outline - barely visible]
+- [Problem 4: e.g., Disabled inputs look identical to enabled - users try to click them]
+- [Problem 5: e.g., Error message appears while typing - aggressive and annoying]
+
+User context: [How users interact with forms, common errors, frustration points]
+
+Please provide:
+1. Input sizing and spacing (height, padding, touch targets)
+2. Label and helper text strategy
+3. Placeholder text best practices
+4. State design (default, hover, focus, disabled, error, success)
+5. Error handling and validation feedback
+6. Input type recommendations (when to use what)
+7. Mobile optimization (keyboard types, autocomplete)
+8. Accessibility requirements (ARIA, keyboard navigation)
+
+Consider: [Constraints - e.g., Must work on mobile, WCAG AA compliance, support screen readers, multiple languages, right-to-left text]</code></pre></div><div style="display:contents" dir="auto"><p id="d7f7b1e8-cdb7-4ad2-9d70-219f97e03c6a" class="">💡 What to customize:</p></div><div style="display:contents" dir="auto"><ul id="97d024d8-4839-41f0-8b23-ace7e41e1970" class="bulleted-list"><li style="list-style-type:disc">[Product Type] = E-commerce checkout, SaaS signup, Banking app, Contact form, Search interface</li></ul></div><div style="display:contents" dir="auto"><ul id="36aa84bf-be8c-416f-ad62-27c6a3ee6b67" class="bulleted-list"><li style="list-style-type:disc">[Input types] = Which input types you use</li></ul></div><div style="display:contents" dir="auto"><ul id="6bd07c7c-4c50-45ba-88b3-99297205ceab" class="bulleted-list"><li style="list-style-type:disc">[Form contexts] = Where inputs appear</li></ul></div><div style="display:contents" dir="auto"><ul id="b826555c-4065-4ee9-987a-2d48983d8d14" class="bulleted-list"><li style="list-style-type:disc">[Device usage] = Desktop vs. mobile split</li></ul></div><div style="display:contents" dir="auto"><ul id="c4db0c76-a768-4d62-ad80-2f4f8d8d315f" class="bulleted-list"><li style="list-style-type:disc">[Problems 1-5] = Current input field issues</li></ul></div><div style="display:contents" dir="auto"><ul id="40ba200c-081d-405f-9915-b3a56f4bb74f" class="bulleted-list"><li style="list-style-type:disc">Upload screenshots showing current input designs</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-808e-9cfc-c6e4cb87fabe"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-80c8-b71f-cddf02c197ea"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-809d-8921-cdb06f3b1d68" class=""><strong>LIVE EXAMPLE</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d767ccc-6bef-80e9-9ab7-eb04256f6b2e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">Act as a Form Design Specialist focusing on input field usability, accessibility, and states.
+
+I&#x27;m designing input fields for an E-commerce Checkout Form that need to reduce errors and cart abandonment.
+
+[User would attach input screenshots here]
+
+Input field requirements:
+- Input types needed:
+  - Text inputs (Name, Address, City, Zip)
+  - Email input (Email address)
+  - Phone input (Phone number with country code)
+  - Dropdown (Country, State selection)
+  - Checkbox (Save info, Terms agreement)
+  - Radio buttons (Shipping method selection)
+  - Credit card inputs (Number, CVV, Expiry)
+- Form contexts:
+  - Multi-step checkout (Shipping → Payment → Review)
+  - Account creation during checkout
+  - Address autocomplete/validation
+  - Payment information (PCI compliant)
+- Device usage: 40% mobile (increasing), 60% desktop
+- User expertise: General consumers, ages 25-65, not tech-savvy, in a hurry
+
+Current input field problems:
+- Input height is 36px with 8px padding - too small for mobile users with large thumbs (need 44px minimum touch target)
+- Using placeholder text &quot;Enter your email&quot; as the only label - disappears when typing, users forget what field they&#x27;re in
+- Focus state is barely visible - 1px light blue outline that&#x27;s hard to see, especially for users with vision impairment
+- Disabled &quot;State&quot; dropdown (until country selected) looks identical to enabled inputs - users click it repeatedly wondering why nothing happens
+- Error validation triggers on blur immediately - user tabs out of empty required field, sees &quot;This field is required&quot; before they&#x27;ve even started typing (aggressive)
+- All text inputs look identical - email, phone, zip code all have same styling, no visual hint about expected format
+- Checkbox for &quot;I agree to terms&quot; is 16x16px - too small to tap on mobile, users miss it and get error
+- Password field has no show/hide toggle - users can&#x27;t verify what they typed
+- Mobile keyboard shows default QWERTY for phone number field - should show numeric keypad
+- Error messages appear in tiny 12px red text below field - easy to miss, no icon
+
+User context: Users are trying to complete purchase quickly - every friction point risks cart abandonment. Mobile users often in poor lighting (can&#x27;t see subtle focus states). Users multitask - tab away and come back (need persistent labels, not placeholders). 30% of checkout errors are from form mistakes (wrong email format, missing required fields). Users get frustrated with aggressive validation. Accessibility critical - 15% of users have some vision impairment.
+
+Please provide:
+1. Input sizing and spacing (height, padding, touch targets)
+2. Label and helper text strategy
+3. Placeholder text best practices
+4. State design (default, hover, focus, disabled, error, success)
+5. Error handling and validation feedback
+6. Input type recommendations (when to use what)
+7. Mobile optimization (keyboard types, autocomplete)
+8. Accessibility requirements (ARIA, keyboard navigation)
+
+Consider: Mobile touch targets minimum 44x44px. WCAG AA contrast (4.5:1). Must support autocomplete for faster checkout. Real-time validation should be helpful not aggressive. Password visibility toggle required. Credit card fields need special security treatment. Form must work with password managers. Support for international addresses and phone formats.</code></pre></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-orange_background callout" style="white-space:pre-wrap;display:flex" id="785475f4-158a-45fd-bd33-1fb8e5f6451d"><div style="font-size:1.5em"><span class="icon">👩‍🍳</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="0f3e6046-57c5-40d2-9e3a-74b475ad4d96" class=""><strong>CHEF&#x27;S TIPS</strong></p></div><div style="display:contents" dir="auto"><p id="583c7be1-53dc-4271-8d78-281da51b596b" class="">✦ Focus states must be obvious: 3px blue border beats 1px outline every time - accessibility critical<br/>✦ Common mistake: Using placeholder as label - always have persistent visible label above input<br/>✦ Best with: Claude (excellent at state design and accessibility), ChatGPT (good for validation timing)<br/>✦ Remix it: &quot;Design the password strength indicator - real-time visual feedback as user types&quot;<br/>✦ Pro move: Ask &quot;Create the input field state matrix - all combinations of states with visual specs&quot;</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-801a-b442-dd8c61ec45e3"/></div><div style="display:contents" dir="ltr"><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="9bd2fb4e-5981-4e35-bf4c-db2a7d401028"><div style="font-size:1.5em"><span class="icon">🎯</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="e3d350c7-7f50-44b7-8ba2-4375fd7dc9d0" class=""><strong>FOLLOW-UP PROMPTS</strong></p></div><div style="display:contents" dir="auto"><ul id="7ac13591-463c-4b80-b0a0-0a69748b2fc8" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the inline validation strategy - when to validate, when to show errors, when to show success&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="fd743181-6bf5-49e7-ab10-df73b5e64089" class="bulleted-list"><li style="list-style-type:disc">&quot;Create the mobile form optimization - keyboard types, autocomplete, input sizing for touch&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="b86bd492-edf3-488f-934f-cce817d2e850" class="bulleted-list"><li style="list-style-type:disc">&quot;How should password input work - show/hide toggle, strength meter, requirements display?&quot;</li></ul></div><div style="display:contents" dir="auto"><ul id="ff46c62f-f820-4f6b-81da-7ef56154a5f9" class="bulleted-list"><li style="list-style-type:disc">&quot;Design the autofill/autocomplete experience - how to help browsers and users fill forms faster&quot;</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-805c-bef9-c9798e0140b8"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2d767ccc-6bef-8004-a217-d2029e8f0456"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-80c2-b507-cef7c15a88e9" class=""><strong>EXAMPLE OUTPUT</strong></p></div><div style="display:contents" dir="ltr"><figure id="2d767ccc-6bef-80b4-951d-d050367264a1" class="image"><a href="34_Example_Output.png"><img style="width:643.9921875px" src="34_Example_Output.png"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2d767ccc-6bef-8096-9dc3-f978c65aebf1"/></div><div style="display:contents" dir="ltr"><figure class="callout" style="white-space:pre-wrap;display:flex" id="b6f52d26-9edc-42e7-8e39-73cd790d6313"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="baf04255-d189-4f64-a5bb-ca95e698268c" class=""><strong>RELATED RECIPES</strong></p></div><div style="display:contents" dir="auto"><p id="3022c37f-9e28-4581-97cb-0692565949cd" class="">→ Recipe #15: <a href="R-15 Design Better Forms 2d667ccc6bef80a58694ce629bd1838e.html">Design Better Forms</a><br/>→ Recipe #27: <a href="R-27 Design Smooth Interactions 2d767ccc6bef80979ab0f6fc70dc611e.html">Design Smooth Interactions</a></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2d767ccc-6bef-801b-aec3-ed57dcb5b1c3" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
