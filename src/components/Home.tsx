@@ -8,7 +8,6 @@ import profilePhoto from '../assets/profile-photo.jpg';
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-  const [hoveredLogo, setHoveredLogo] = useState<number | null>(null);
   const { isDarkMode, toggleTheme, theme } = useTheme();
 
   // Client logos - replace these paths with actual logo files
