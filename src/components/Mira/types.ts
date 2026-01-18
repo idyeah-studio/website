@@ -64,3 +64,8 @@ export interface EmptyStateButton {
   id: string;
   text: string;
 }
+
+export interface PlaceholderConfig {
+  messageIndex: number;
+  placeholder: string;
+}

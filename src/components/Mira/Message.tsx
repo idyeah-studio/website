@@ -40,14 +40,22 @@ export default function Message({ message, suggestionChips, onChipClick }: Messa
           </div>
         )}
 
-        {/* Message bubble */}
+        {/* Message bubble with glassmorphic effect */}
         <div
           style={{
             maxWidth: '70%',
             padding: '16px 20px',
             borderRadius: '16px',
-            backgroundColor: isUser ? '#1e3a5f' : '#3d2f24',
-            color: '#FFFFFF'
+            backgroundColor: isUser 
+              ? 'rgba(30, 58, 95, 0.6)' 
+              : 'rgba(217, 119, 6, 0.15)',
+            backdropFilter: 'blur(10px)',
+            border: `1px solid ${isUser ? 'rgba(59, 130, 246, 0.3)' : 'rgba(217, 119, 6, 0.3)'}`,
+            boxShadow: isUser 
+              ? '0 4px 6px rgba(0, 0, 0, 0.1)' 
+              : '0 4px 6px rgba(217, 119, 6, 0.1)',
+            color: '#FFFFFF',
+            animation: 'messageSlideIn 0.3s ease-out'
           }}
         >
           {message.content.map((content, index) => (
@@ -91,12 +99,17 @@ export default function Message({ message, suggestionChips, onChipClick }: Messa
           {suggestionChips.map((chip) => (
             <button
               key={chip.id}
-              onClick={onChipClick}
+              onClick={(e) => {
+                e.currentTarget.style.animation = 'chipPulse 0.3s ease-out';
+                setTimeout(() => {
+                  if (onChipClick) onChipClick();
+                }, 150);
+              }}
               style={{
-                padding: '8px 16px',
-                borderRadius: '20px',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                padding: '10px 18px',
+                borderRadius: '24px',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
                 color: '#D1D5DB',
                 fontSize: '14px',
                 cursor: 'pointer',
@@ -104,12 +117,14 @@ export default function Message({ message, suggestionChips, onChipClick }: Messa
                 whiteSpace: 'nowrap'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
               {chip.text}

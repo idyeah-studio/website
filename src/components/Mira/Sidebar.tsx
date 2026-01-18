@@ -19,25 +19,27 @@ export default function Sidebar({ conversations, userProfile }: SidebarProps) {
       }}
     >
       {/* Header */}
-      <div style={{ padding: '24px 20px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
-          <h1
-            style={{
-              fontSize: '24px',
-              fontWeight: 700,
-              color: '#FFFFFF',
-              margin: 0,
-              letterSpacing: '0.5px'
-            }}
-          >
-            MIRα
-          </h1>
+      <div style={{ padding: '24px 20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <img 
+            src="/mira-logo.png" 
+            alt="MIRA" 
+            style={{ 
+              height: '32px',
+              width: 'auto'
+            }} 
+          />
+          <div style={{ 
+            width: '1px', 
+            height: '20px', 
+            backgroundColor: 'rgba(255, 255, 255, 0.2)' 
+          }} />
+          <p style={{ fontSize: '12px', color: '#9CA3AF', margin: 0 }}>powered by Ionate</p>
         </div>
-        <p style={{ fontSize: '13px', color: '#9CA3AF', margin: 0 }}>powered by Ionate</p>
       </div>
 
       {/* Conversations List */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '20px', paddingTop: '12px' }}>
         <h3
           style={{
             fontSize: '11px',

@@ -1,4 +1,4 @@
-import type { Conversation, UserProfile, EmptyStateButton } from './types';
+import type { Conversation, UserProfile, EmptyStateButton, PlaceholderConfig } from './types';
 
 // User Profile Configuration
 export const userProfile: UserProfile = {
@@ -12,6 +12,16 @@ export const emptyStateButtons: EmptyStateButton[] = [
   { id: 'btn1', text: 'Analyze dependencies' },
   { id: 'btn2', text: 'Find business rules' },
   { id: 'btn3', text: 'Start conversion' }
+];
+
+// Placeholder Configuration (messageIndex is the displayed message count)
+export const placeholderConfigs: PlaceholderConfig[] = [
+  { messageIndex: 0, placeholder: "e.g., /legacy/wire-transfer/*" }, // Empty state
+  { messageIndex: 2, placeholder: "e.g., /legacy/wire-transfer/*" }, // After MIRA asks for directory
+  { messageIndex: 4, placeholder: "Ask about business rules or dependencies..." }, // After analysis results
+  { messageIndex: 6, placeholder: "Choose your conversion target..." }, // After business rules shown
+  { messageIndex: 8, placeholder: "Conversion starting..." }, // After conversion setup
+  { messageIndex: 9, placeholder: "The conversion is in progress..." } // During progress
 ];
 
 // Conversations Configuration

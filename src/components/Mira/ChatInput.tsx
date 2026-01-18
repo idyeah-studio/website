@@ -1,8 +1,9 @@
 interface ChatInputProps {
   onSend?: () => void;
+  placeholder?: string;
 }
 
-export default function ChatInput({ onSend }: ChatInputProps) {
+export default function ChatInput({ onSend, placeholder = "Ask me anything about your codebase..." }: ChatInputProps) {
   return (
     <div
       style={{
@@ -11,8 +12,10 @@ export default function ChatInput({ onSend }: ChatInputProps) {
         left: 0,
         right: 0,
         padding: '20px 24px',
-        backgroundColor: '#1a1a1a',
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+        backgroundColor: 'rgba(26, 26, 26, 0.95)',
+        backdropFilter: 'blur(10px)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+        zIndex: 10
       }}
     >
       <div
@@ -60,23 +63,23 @@ export default function ChatInput({ onSend }: ChatInputProps) {
         {/* Input Field */}
         <input
           type="text"
-          placeholder="Ask me anything about your codebase..."
+          placeholder={placeholder}
           style={{
             flex: 1,
             padding: '12px 16px',
             borderRadius: '24px',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            backgroundColor: '#2a2a2a',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            backgroundColor: 'rgba(255, 255, 255, 0.05)',
             color: '#FFFFFF',
             fontSize: '15px',
             outline: 'none',
             transition: 'border-color 0.2s'
           }}
           onFocus={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
           }}
           onBlur={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
           }}
         />
 
@@ -122,7 +125,12 @@ export default function ChatInput({ onSend }: ChatInputProps) {
 
         {/* Send Icon */}
         <button
-          onClick={onSend}
+          onClick={(e) => {
+            e.currentTarget.style.animation = 'chipPulse 0.3s ease-out';
+            setTimeout(() => {
+              if (onSend) onSend();
+            }, 150);
+          }}
           style={{
             width: '40px',
             height: '40px',
@@ -134,13 +142,18 @@ export default function ChatInput({ onSend }: ChatInputProps) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'background-color 0.2s'
+            transition: 'all 0.2s',
+            boxShadow: '0 2px 8px rgba(217, 119, 6, 0.3)'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.backgroundColor = '#B45309';
+            e.currentTarget.style.transform = 'scale(1.05)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(217, 119, 6, 0.5)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.backgroundColor = '#D97706';
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 2px 8px rgba(217, 119, 6, 0.3)';
           }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
