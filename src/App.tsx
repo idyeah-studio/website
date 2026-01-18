@@ -8,6 +8,7 @@ import { Login } from './components/Auth/Login';
 import { Signup } from './components/Auth/Signup';
 import { Purchase } from './components/Purchase/Purchase';
 import { EbookReader } from './components/Ebook/EbookReader';
+import Mira from './components/Mira/Mira';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/purchase" element={<Purchase />} />
           <Route path="/ebook" element={<EbookReader />} />
+          <Route path="/mira" element={<Mira />} />
         </Routes>
       </AuthProvider>
     </ThemeProvider>
