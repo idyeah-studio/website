@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import ChatArea from './ChatArea';
 import { conversations, userProfile, emptyStateButtons, placeholderConfigs } from './miraConfig';
 import type { Conversation } from './types';
+import '../../styles/mira.css';
 
 export default function Mira() {
   // Get the full conversation data
