@@ -446,11 +446,10 @@ export default function Home() {
 
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
               gap: 'clamp(16px, 4vw, 24px)',
-              maxWidth: '600px',
+              maxWidth: '400px',
               margin: '0 auto'
             }}
           >
@@ -463,11 +462,9 @@ export default function Home() {
                   justifyContent: 'center',
                   padding: '20px',
                   borderRadius: '16px',
-                  border: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)'}`,
-                  backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.3)',
-                  width: '140px',
-                  height: '80px',
-                  backdropFilter: 'blur(10px)'
+                  border: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)'}`,
+                  backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.5)',
+                  height: '80px'
                 }}
               >
                 <img
