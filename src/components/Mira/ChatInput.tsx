@@ -11,7 +11,7 @@ export default function ChatInput({ onSend, placeholder = "Ask me anything about
         bottom: 0,
         left: 0,
         right: 0,
-        padding: '20px 24px',
+        padding: '16px 24px',
         backgroundColor: 'rgba(26, 26, 26, 0.95)',
         backdropFilter: 'blur(10px)',
         borderTop: '1px solid rgba(255, 255, 255, 0.1)',
