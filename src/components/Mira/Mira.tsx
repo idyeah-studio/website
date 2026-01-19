@@ -12,6 +12,31 @@ export default function Mira() {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
 
+  // Apply overflow hidden when MIRA mounts, restore when unmounts
+  useEffect(() => {
+    // Save original styles
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalRootOverflow = document.getElementById('root')?.style.overflow;
+    
+    // Apply MIRA styles
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    const root = document.getElementById('root');
+    if (root) {
+      root.style.overflow = 'hidden';
+    }
+    
+    // Cleanup: restore original styles when component unmounts
+    return () => {
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.body.style.overflow = originalBodyOverflow;
+      if (root) {
+        root.style.overflow = originalRootOverflow || '';
+      }
+    };
+  }, []);
+
   // Create a partial conversation with only messages up to current index
   const displayConversation: Conversation = {
     ...fullConversation,
