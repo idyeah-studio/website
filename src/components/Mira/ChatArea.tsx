@@ -36,7 +36,7 @@ export default function ChatArea({ conversation, emptyStateButtons, onNextMessag
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'radial-gradient(circle at 20% 30%, rgba(217, 119, 6, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.02) 0%, transparent 50%), linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%)',
+        background: 'radial-gradient(circle at 20% 30%, rgba(217, 119, 6, 0.04) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 50%), linear-gradient(180deg, #141414 0%, #0a0a0a 100%)',
         pointerEvents: 'none',
         zIndex: 0
       }}>
@@ -139,7 +139,7 @@ export default function ChatArea({ conversation, emptyStateButtons, onNextMessag
       <div
         style={{
           flex: 1,
-          overflowY: 'auto',
+          overflowY: hasMessages ? 'auto' : 'hidden',
           padding: hasMessages ? '32px' : '0',
           paddingBottom: hasMessages ? '120px' : '0',
           backgroundColor: 'transparent',
@@ -233,7 +233,8 @@ export default function ChatArea({ conversation, emptyStateButtons, onNextMessag
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: '32px'
+              padding: '32px',
+              transform: 'translateY(-60px)'
             }}
           >
             <h1

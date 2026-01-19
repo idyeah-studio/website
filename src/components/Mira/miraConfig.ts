@@ -11,12 +11,12 @@ export const userProfile: UserProfile = {
 export const emptyStateButtons: EmptyStateButton[] = [
   { id: 'btn1', text: 'Analyze dependencies' },
   { id: 'btn2', text: 'Find business rules' },
-  { id: 'btn3', text: 'Start conversion' }
+  { id: 'btn3', text: 'Show vulnerabilities' }
 ];
 
 // Placeholder Configuration (messageIndex is the displayed message count)
 export const placeholderConfigs: PlaceholderConfig[] = [
-  { messageIndex: 0, placeholder: "e.g., /legacy/wire-transfer/*" }, // Empty state
+  { messageIndex: 0, placeholder: "Ask me anything about your codebase*" }, // Empty state
   { messageIndex: 2, placeholder: "e.g., /legacy/wire-transfer/*" }, // After MIRA asks for directory
   { messageIndex: 4, placeholder: "Ask about business rules or dependencies..." }, // After analysis results
   { messageIndex: 6, placeholder: "Choose your conversion target..." }, // After business rules shown

@@ -15,7 +15,9 @@ export default function ChatInput({ onSend, placeholder = "Ask me anything about
         backgroundColor: 'rgba(26, 26, 26, 0.95)',
         backdropFilter: 'blur(10px)',
         borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-        zIndex: 10
+        zIndex: 10,
+        height: '72px',
+        boxSizing: 'border-box'
       }}
     >
       <div
