@@ -14,7 +14,8 @@ export default function Home() {
   const clientLogos = [
     { id: 1, name: 'Midas Touch', src: '/midastouch-logo.png' },
     { id: 2, name: 'Visionaize', src: '/visionaize-logo.png' },
-    { id: 3, name: 'Rialty.AI', src: '/rialty-logo.png' }
+    { id: 3, name: 'Rialty.AI', src: '/rialty-logo.png' },
+    { id: 4, name: 'Ionate', src: '/ionate-logo.png' }
   ];
 
   return (
@@ -462,10 +463,11 @@ export default function Home() {
                   justifyContent: 'center',
                   padding: '20px',
                   borderRadius: '16px',
-                  border: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)'}`,
-                  backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.5)',
+                  border: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)'}`,
+                  backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.3)',
                   width: '140px',
-                  height: '80px'
+                  height: '80px',
+                  backdropFilter: 'blur(10px)'
                 }}
               >
                 <img
