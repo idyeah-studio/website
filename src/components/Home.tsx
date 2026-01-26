@@ -8,6 +8,7 @@ import profilePhoto from '../assets/profile-photo.jpg';
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const [showPromoBar, setShowPromoBar] = useState(true);
   const { isDarkMode, toggleTheme, theme } = useTheme();
 
   // Client logos - replace these paths with actual logo files
@@ -192,66 +193,94 @@ export default function Home() {
       </div>
       
       {/* Promotional Top Bar */}
-      <div
-        style={{
-          width: '100%',
-          backgroundColor: isDarkMode ? '#ffffff' : '#000000',
-          padding: '10px 24px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '16px',
-          position: 'relative',
-          zIndex: 20,
-          boxSizing: 'border-box'
-        }}
-      >
-        <span
+      {showPromoBar && (
+        <div
           style={{
-            fontSize: '14px',
-            fontWeight: 400,
-            color: isDarkMode ? '#000000' : '#ffffff',
-            letterSpacing: '0.01em',
-            lineHeight: '1.5'
+            width: '100%',
+            backgroundColor: isDarkMode ? '#ffffff' : '#000000',
+            padding: '10px 24px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '16px',
+            position: 'relative',
+            zIndex: 20,
+            boxSizing: 'border-box'
           }}
         >
-          Ship designs 3x faster → The AI prompt playbook for design leaders.
-        </span>
-        <a
-          href="https://idyeah.gumroad.com/l/design-ai-alchemy"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            fontSize: '14px',
-            fontWeight: 500,
-            color: isDarkMode ? '#000000' : '#ffffff',
-            textDecoration: 'underline',
-            cursor: 'pointer',
-            transition: 'opacity 0.2s',
-            whiteSpace: 'nowrap'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.opacity = '0.7';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.opacity = '1';
-          }}
-        >
-          Get it now!
-        </a>
-      </div>
+          <span
+            style={{
+              fontSize: '14px',
+              fontWeight: 400,
+              color: isDarkMode ? '#000000' : '#ffffff',
+              letterSpacing: '0.01em',
+              lineHeight: '1.5'
+            }}
+          >
+            Ship designs 3x faster → The AI prompt playbook for design leaders.
+          </span>
+          <a
+            href="https://idyeah.gumroad.com/l/design-ai-alchemy"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontSize: '14px',
+              fontWeight: 500,
+              color: isDarkMode ? '#000000' : '#ffffff',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.opacity = '0.7';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.opacity = '1';
+            }}
+          >
+            Get it now!
+          </a>
+          <button
+            onClick={() => setShowPromoBar(false)}
+            style={{
+              position: 'absolute',
+              right: '16px',
+              background: 'none',
+              border: 'none',
+              color: isDarkMode ? '#000000' : '#ffffff',
+              fontSize: '20px',
+              cursor: 'pointer',
+              padding: '4px 8px',
+              lineHeight: '1',
+              opacity: 0.6,
+              transition: 'opacity 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.opacity = '1';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.opacity = '0.6';
+            }}
+            aria-label="Close promotional banner"
+          >
+            ×
+          </button>
+        </div>
+      )}
 
       {/* Header */}
       <div
         style={{
           position: 'absolute',
-          top: '68px',
+          top: showPromoBar ? '68px' : '24px',
           left: '24px',
           right: '24px',
           zIndex: 10,
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          transition: 'top 0.3s ease'
         }}
       >
         {/* Theme Toggle - Left Side */}
