@@ -439,7 +439,7 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Clients Section */}
+        {/* TODO: Clients Section - temporarily hidden, uncomment to restore
         <div
           style={{
             paddingBottom: 'clamp(64px, 15vw, 96px)',
@@ -511,6 +511,7 @@ export default function Home() {
             ))}
           </div>
         </div>
+        */}
 
         {/* What You Get */}
         <div
