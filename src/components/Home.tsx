@@ -11,13 +11,13 @@ export default function Home() {
   const [showPromoBar, setShowPromoBar] = useState(true);
   const { isDarkMode, toggleTheme, theme } = useTheme();
 
-  // Client logos - replace these paths with actual logo files
-  const clientLogos = [
-    { id: 1, name: 'Midas Touch', src: '/midastouch-logo.png' },
-    { id: 2, name: 'Visionaize', src: '/visionaize-logo.png' },
-    { id: 3, name: 'Rialty.AI', src: '/rialty-logo.png' },
-    { id: 4, name: 'Ionate', src: '/ionate-logo.png' }
-  ];
+  // TODO: Client logos - uncomment when restoring Clients section
+  // const clientLogos = [
+  //   { id: 1, name: 'Midas Touch', src: '/midastouch-logo.png' },
+  //   { id: 2, name: 'Visionaize', src: '/visionaize-logo.png' },
+  //   { id: 3, name: 'Rialty.AI', src: '/rialty-logo.png' },
+  //   { id: 4, name: 'Ionate', src: '/ionate-logo.png' }
+  // ];
 
   return (
     <div
