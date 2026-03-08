@@ -552,25 +552,66 @@
     .who-tag:hover { color:var(--gold); border-color:var(--gold-border); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width:1100px) {
-      .nav-inner,.wrap { padding:0 32px; }
-      .hero-grid { grid-template-columns:1fr; }
-      .hero-panel { display:none; }
-      .services-header { grid-template-columns:1fr; gap:20px; }
-      .service-row { grid-template-columns:48px 1fr; }
-      .svc-meta { display:none; }
-      .about-grid { grid-template-columns:1fr; gap:52px; }
-      .book-grid { grid-template-columns:1fr; gap:52px; }
-      .book-cover { max-width:260px; }
-      .testi-grid { grid-template-columns:1fr; }
-      .for-you-grid { grid-template-columns:1fr; gap:48px; }
-    }
-    @media (max-width:680px) {
-      .nav-inner,.wrap { padding:0 20px; }
-      .nav-links { display:none; }
-      .footer-inner { padding:28px 20px; }
-      .hero-headline { font-size:2.8rem; }
-    }
+@media (max-width:1100px) {
+  .nav-inner,.wrap { padding:0 32px; }
+  .hero-grid { grid-template-columns:1fr; }
+  .hero-panel { display:none; }
+  .services-header { grid-template-columns:1fr; gap:20px; }
+  .service-row { grid-template-columns:48px 1fr; }
+  .svc-meta { display:none; }
+  .about-grid { grid-template-columns:1fr; gap:52px; }
+  .book-grid { grid-template-columns:1fr; gap:52px; }
+  .book-cover { max-width:260px; }
+  .testi-grid { grid-template-columns:1fr; }
+  .for-you-grid { grid-template-columns:1fr; gap:48px; }
+}
+
+@media (max-width:680px) {
+  .nav-inner, .wrap { padding:0 20px; }
+.nav-inner { display:flex; justify-content:space-between; }
+  .nav-links { display:none; }
+  .footer-inner { padding:28px 20px; }
+  .hero-headline { font-size:2.8rem; }
+
+  /* Announcement bar — hide dots, tighten gap */
+  .ann-dot { display:none; }
+  .ann-inner { gap:8px; flex-wrap:wrap; justify-content:center; }
+
+  /* Hero — reduce vertical space */
+  #hero { padding:48px 0 60px; min-height:unset; }
+  .hero-logo-wrap { margin-bottom:28px; }
+  .hero-left { align-items:flex-start; }
+  .hero-sub { text-align:left; }
+
+  /* Section padding — 110px is too tall on mobile */
+  #services, #about, #testimonials,
+  #faq, #book, #for-you { padding:64px 0; }
+  #contact { padding:64px 0 80px; }
+
+  /* Services — tighter row padding */
+  .service-row { padding:24px 20px; }
+  .svc-body { padding-right:0; }
+
+  /* About — cred grid single column on phones */
+  .cred-grid { grid-template-columns:1fr; }
+
+  /* Book cover — full width on mobile */
+  .book-cover { max-width:100%; }
+
+  /* Contact detail — stack vertically */
+  .contact-detail { flex-direction:column; align-items:flex-start; gap:8px; }
+
+  /* Nav button — smaller on mobile */
+  .btn-cta { padding:8px 14px; font-size:0.7rem; }
+}
+
+@media (max-width:400px) {
+  .hero-headline { font-size:2.2rem; }
+
+  /* Contact actions — full width stacked buttons */
+  .contact-actions { flex-direction:column; }
+  .btn-primary, .btn-outline { width:100%; text-align:center; }
+} 
   </style>
 </head>
 <body>
