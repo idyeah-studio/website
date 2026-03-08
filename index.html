@@ -1,13 +1,944 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png?v=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IDYeah.Studio</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IDYeah Studio — Beyond the Ordinary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --dur: 0.55s;
+    }
+
+    /* ── DARK MODE TOKENS (contrast-audited) ─── */
+    [data-theme="dark"] {
+      --bg:          #080808;
+      --bg-2:        #0f0f0f;
+      --bg-3:        #181818;
+      --border:      rgba(255,255,255,0.07);
+      --text:        #ede9e2;          /* 16.5:1 ✓ */
+      --text-2:      rgba(237,233,226,0.60); /* bumped 0.52→0.60, ~5.8:1 ✓ */
+      --text-3:      rgba(237,233,226,0.36); /* decorative only */
+      --gold:        #c8a96e;          /* 8.9:1 on dark ✓ */
+      --gold-bright: #e2c28a;
+      --gold-dim:    rgba(200,169,110,0.10);
+      --gold-border: rgba(200,169,110,0.22);
+      --nav-bg:      rgba(8,8,8,0.92);
+      --card-bg:     #111111;
+      --card-border: rgba(255,255,255,0.055);
+      --ann-bg:      #c8a96e;
+      --ann-text:    #080808;          /* 8.9:1 ✓ */
+      --cta-text:    #080808;          /* 8.9:1 ✓ */
+    }
+
+    /* ── LIGHT MODE TOKENS (contrast-audited) ─── */
+    [data-theme="light"] {
+      --bg:          #f5f1ea;
+      --bg-2:        #faf8f4;
+      --bg-3:        #ede8df;
+      --border:      rgba(0,0,0,0.07);
+      --text:        #18130e;          /* 16.4:1 ✓ */
+      --text-2:      rgba(24,19,14,0.65); /* bumped 0.52→0.65, ~5.5:1 ✓ */
+      --text-3:      rgba(24,19,14,0.36); /* decorative only */
+      --gold:        #7a5520;          /* darkened for 6:1 ✓ on light bg */
+      --gold-bright: #9a6f2e;
+      --gold-dim:    rgba(122,85,32,0.10);
+      --gold-border: rgba(122,85,32,0.22);
+      --nav-bg:      rgba(245,241,234,0.92);
+      --card-bg:     #faf8f4;
+      --card-border: rgba(0,0,0,0.055);
+      --ann-bg:      #18130e;
+      --ann-text:    #f5f1ea;          /* 16.4:1 ✓ */
+      --cta-text:    #f5f1ea;          /* 8.9:1 ✓ */
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: overlay;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── ANNOUNCEMENT BAR ── */
+    .ann-bar {
+      background: var(--ann-bg); color: var(--ann-text);
+      text-align: center; padding: 11px 24px;
+      font-family: 'DM Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.13em; text-transform: uppercase;
+      transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+      position: relative; overflow: hidden;
+    }
+    .ann-bar::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(200,169,110,0.18) 50%, transparent);
+      animation: shimmer 4s ease-in-out infinite;
+    }
+    @keyframes shimmer { 0%,100%{transform:translateX(-100%);opacity:0} 50%{transform:translateX(100%);opacity:1} }
+    .ann-inner { display:flex; align-items:center; justify-content:center; gap:18px; position:relative; }
+    .ann-dot { width:4px; height:4px; border-radius:50%; background:currentColor; opacity:0.3; flex-shrink:0; }
+    .ann-bar a { color:currentColor; border-bottom:1px solid currentColor; padding-bottom:1px; opacity:0.8; transition:opacity 0.2s; }
+    .ann-bar a:hover { opacity:1; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    }
+    .nav-inner {
+    max-width: 1320px; margin: 0 auto; padding: 0 52px;
+    height: 64px; display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    }
+    .nav-logo { display: flex; align-items: center; }
+    /* Feather symbol in nav — tight crop, always symbol */
+    .nav-sym-dark  { display:block; height:36px; width:auto; }
+    .nav-sym-light { display:none;  height:36px; width:auto; }
+    [data-theme="light"] .nav-sym-dark  { display:none; }
+    [data-theme="light"] .nav-sym-light { display:block; }
+
+    .nav-links {
+    display: flex; align-items: center; gap: 38px; list-style: none;
+    justify-content: center;
+    }
+    .nav-links a {
+      font-size:0.78rem; letter-spacing:0.09em; text-transform:uppercase;
+      color:var(--text-2); transition:color 0.22s; font-weight:400; position:relative;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-3px; left:0; right:0;
+      height:1px; background:var(--gold);
+      transform:scaleX(0); transform-origin:left; transition:transform 0.28s var(--ease);
+    }
+    .nav-links a:hover { color:var(--text); }
+    .nav-links a:hover::after { transform:scaleX(1); }
+
+    .nav-right {
+    display: flex; align-items: center; gap: 18px;
+    justify-content: flex-end;
+    }
+    .mode-toggle {
+      width:46px; height:26px; background:var(--bg-3); border:1px solid var(--border);
+      border-radius:100px; cursor:pointer; position:relative;
+      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease); flex-shrink:0;
+    }
+    .toggle-knob {
+      position:absolute; top:3px; left:3px; width:18px; height:18px;
+      border-radius:50%; background:var(--gold);
+      transition:transform var(--dur) var(--ease);
+      display:flex; align-items:center; justify-content:center; font-size:9px;
+    }
+    [data-theme="light"] .toggle-knob { transform:translateX(20px); }
+    .btn-cta {
+      padding:9px 24px; background:var(--gold); color:var(--cta-text);
+      border-radius:3px; font-size:0.76rem; font-weight:500;
+      letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;
+      border:none; transition:transform 0.18s, box-shadow 0.22s;
+      white-space:nowrap; position:relative; overflow:hidden;
+    }
+    .btn-cta::before { content:''; position:absolute; inset:0; background:rgba(255,255,255,0); transition:background 0.2s; }
+    .btn-cta:hover::before { background:rgba(255,255,255,0.12); }
+    .btn-cta:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(200,169,110,0.28); }
+
+    /* ── LAYOUT ── */
+    .wrap { max-width:1320px; margin:0 auto; padding:0 52px; }
+    .section-tag {
+      font-family:'DM Mono',monospace; font-size:0.66rem;
+      letter-spacing:0.22em; text-transform:uppercase; color:var(--gold);
+      margin-bottom:20px; display:flex; align-items:center; gap:10px;
+    }
+    .section-tag::before { content:''; display:inline-block; width:20px; height:1px; background:var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: calc(100vh - 106px);
+      display: flex; align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding: 72px 0 96px;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse 80% 60% at 50% 55%, rgba(200,169,110,0.065) 0%, transparent 65%);
+      animation: breathe 8s ease-in-out infinite; pointer-events:none;
+    }
+    @keyframes breathe { 0%,100%{opacity:0.7;transform:scale(1)} 50%{opacity:1;transform:scale(1.05)} }
+
+    /* Two-column hero grid */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 72px;
+      align-items: center;
+      width: 100%;
+      position: relative;
+    }
+    .hero-left { display: flex; align-items: center; flex-direction: column; }
+
+    /* Full wordmark — file-path based, no black box */
+    .hero-logo-wrap {
+      margin-bottom: 48px;
+      
+    }
+    .hero-logo-img {
+      width: clamp(108px, 18vw, 200px);
+      height: auto;
+      display: block;
+      /* ensure transparency renders correctly */
+      background: transparent;
+      mix-blend-mode: normal;
+      animation: float 6s ease-in-out infinite alternate;
+    }
+    .hero-logo-dark  { display:block; }
+    .hero-logo-light { display:none; }
+    [data-theme="light"] .hero-logo-dark  { display:none; }
+    [data-theme="light"] .hero-logo-light { display:block; }
+
+    @keyframes float { from{transform:translateY(0)} to{transform:translateY(-10px)} }
+
+    .hero-eyebrow {
+      font-family:'DM Mono',monospace; font-size:0.68rem;
+      letter-spacing:0.24em; text-transform:uppercase; color:var(--gold);
+      margin-bottom:20px;
+      
+    }
+    .hero-headline {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(3.6rem,4.5vw,7rem);
+      line-height:1.0; font-weight:600; letter-spacing:-0.025em;
+      color:var(--text); margin-bottom:24px;
+      
+    }
+    .hero-headline em { font-style:italic; color:var(--gold); font-weight:300; }
+    .hero-sub {
+      font-size:1.05rem; line-height:1.78; color:var(--text-2);
+      max-width:560px; margin-bottom:14px; font-weight:300;
+      text-align: center;
+    }
+    .hero-trust {
+      font-family:'DM Mono',monospace; font-size:0.65rem;
+      letter-spacing:0.16em; text-transform:uppercase;
+      color:var(--text-3); margin-bottom:32px;
+      
+    }
+    .hero-actions {
+      display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap;
+      
+    }
+
+    .btn-primary {
+      padding:15px 36px; background:var(--gold); color:var(--cta-text);
+      border-radius:3px; font-size:0.8rem; font-weight:500;
+      letter-spacing:0.1em; text-transform:uppercase; cursor:pointer;
+      border:none; transition:transform 0.18s, box-shadow 0.22s;
+      position:relative; overflow:hidden;
+    }
+    .btn-primary::before { content:''; position:absolute; inset:0; background:rgba(255,255,255,0); transition:background 0.2s; }
+    .btn-primary:hover::before { background:rgba(255,255,255,0.1); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(200,169,110,0.3); }
+    .btn-outline {
+      padding:14px 36px; background:transparent; color:var(--text-2);
+      border:1px solid var(--border); border-radius:3px;
+      font-size:0.8rem; font-weight:400; letter-spacing:0.1em;
+      text-transform:uppercase; cursor:pointer;
+      transition:color 0.2s, border-color 0.2s, transform 0.18s;
+    }
+    .btn-outline:hover { color:var(--text); border-color:var(--gold-border); transform:translateY(-2px); }
+
+    /* ── MARQUEE ── */
+    .marquee-strip {
+      border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+      padding:13px 0; overflow:hidden; background:var(--bg-2);
+      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    }
+    .marquee-track { display:flex; width:max-content; animation:marquee 28s linear infinite; }
+    .marquee-item {
+      display:flex; align-items:center; gap:18px; padding:0 32px;
+      font-family:'DM Mono',monospace; font-size:0.64rem;
+      letter-spacing:0.18em; text-transform:uppercase; color:var(--text-3); white-space:nowrap;
+    }
+    .marquee-item span { color:var(--gold); font-size:0.5rem; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── SERVICES ── */
+    #services { padding:110px 0; border-bottom:1px solid var(--border); }
+    .services-header { display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-bottom:72px; align-items:end; }
+    .section-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.2rem,3.8vw,3.6rem);
+      font-weight:600; line-height:1.08; letter-spacing:-0.02em;
+    }
+    .section-intro { font-size:0.94rem; color:var(--text-2); line-height:1.82; font-weight:300; }
+    .services-list {
+      display:flex; flex-direction:column; gap:1px;
+      background:var(--border); border:1px solid var(--border);
+      border-radius:10px; overflow:hidden;
+    }
+    .service-row {
+      display:grid; grid-template-columns:64px 1fr 200px;
+      align-items:start; background:var(--card-bg);
+      padding:36px 44px; transition:background 0.28s;
+      position:relative; overflow:hidden;
+    }
+    .service-row::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+      background:var(--gold); transform:scaleY(0); transform-origin:bottom;
+      transition:transform 0.38s var(--ease);
+    }
+    .service-row:hover { background:var(--bg-3); }
+    .service-row:hover::before { transform:scaleY(1); }
+    .svc-num {
+      font-family:'Cormorant Garamond',serif; font-size:2.4rem;
+      font-weight:300; color:var(--text-3); line-height:1;
+      letter-spacing:-0.03em; transition:color 0.28s; padding-top:4px;
+    }
+    .service-row:hover .svc-num { color:var(--gold); }
+    .svc-body { padding-right:32px; }
+    .svc-name {
+      font-family:'Cormorant Garamond',serif; font-size:1.75rem;
+      font-weight:600; letter-spacing:-0.01em; color:var(--text); margin-bottom:8px;
+    }
+    .svc-desc { font-size:0.87rem; color:var(--text-2); line-height:1.72; font-weight:300; }
+    .svc-delivers { margin-top:16px; }
+    .svc-delivers-label {
+      font-family:'DM Mono',monospace; font-size:0.6rem;
+      letter-spacing:0.18em; text-transform:uppercase; color:var(--text-3); margin-bottom:8px;
+    }
+    .svc-deliver-item {
+      font-size:0.78rem; color:var(--text-2); line-height:1.7; font-weight:300;
+      padding-left:14px; position:relative; margin-bottom:2px;
+    }
+    .svc-deliver-item::before { content:'—'; position:absolute; left:0; color:var(--gold); font-size:0.7rem; }
+    .svc-meta { text-align:right; padding-top:6px; }
+    .svc-timeline {
+      font-family:'DM Mono',monospace; font-size:0.68rem;
+      letter-spacing:0.1em; color:var(--gold);
+      display:inline-block; padding:5px 12px;
+      border:1px solid var(--gold-border); border-radius:2px;
+      background:var(--gold-dim);
+    }
+
+    /* ── ABOUT ── */
+    #about { padding:110px 0; border-bottom:1px solid var(--border); }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:90px; align-items:start; }
+    .about-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.2rem,3.8vw,3.6rem);
+      font-weight:600; line-height:1.08; letter-spacing:-0.02em; margin-bottom:30px;
+    }
+    .about-body { font-size:0.94rem; color:var(--text-2); line-height:1.85; font-weight:300; margin-bottom:22px; }
+    .about-body strong { color:var(--text); font-weight:500; }
+    .cred-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top: 32px; }
+    .cred-card {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:8px; padding:22px 22px 20px;
+      transition:transform 0.22s; position:relative; overflow:hidden;
+    }
+    .cred-card::after {
+      content:''; position:absolute; bottom:0; left:0; right:0;
+      height:2px; background:linear-gradient(90deg, var(--gold), transparent);
+      opacity:0; transition:opacity 0.28s;
+    }
+    .cred-card:hover { transform:translateY(-3px); }
+    .cred-card:hover::after { opacity:1; }
+    .cred-tag { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+    .cred-title { font-size:0.9rem; font-weight:500; color:var(--text); margin-bottom:5px; }
+    .cred-desc { font-size:0.78rem; color:var(--text-2); line-height:1.55; font-weight:300; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials {
+      padding:110px 0; border-bottom:1px solid var(--border);
+      background:var(--bg-2); transition:background var(--dur) var(--ease);
+    }
+    .testi-header { margin-bottom:60px; }
+    .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+    .testi-card {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:10px; padding:36px 32px;
+      display:flex; flex-direction:column; gap:28px;
+      transition:transform 0.25s; position:relative;
+    }
+    .testi-card:hover { transform:translateY(-5px); }
+    .testi-card::before {
+      content:'“'; position:absolute; top:20px; right:26px;
+      font-family:'Cormorant Garamond',serif; font-size:5rem;
+      color:var(--gold-dim); line-height:1; pointer-events:none;
+    }
+    .testi-quote {
+      font-family:'Cormorant Garamond',serif; font-size:1.08rem;
+      line-height:1.72; color:var(--text); font-style:italic; flex:1;
+    }
+    .testi-author { display:flex; align-items:center; gap:12px; }
+    .author-init {
+      width:38px; height:38px; border-radius:50%;
+      background:var(--gold-dim); border:1px solid var(--gold-border);
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Cormorant Garamond',serif; font-size:1rem;
+      color:var(--gold); font-weight:600; flex-shrink:0;
+    }
+    .author-name { font-size:0.84rem; font-weight:500; color:var(--text); }
+    .author-role { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.1em; color:var(--text-3); margin-top:2px; }
+
+    /* ── FAQ ── */
+    #faq { padding:110px 0; border-bottom:1px solid var(--border); }
+    .faq-grid { max-width:720px; display:flex; flex-direction:column; gap:8px; }
+    .faq-item {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:6px; overflow:hidden; transition:background 0.25s;
+    }
+    .faq-question {
+      width:100%; background:none; border:none; cursor:pointer; color:var(--text);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:22px 28px; text-align:left; gap:16px;
+    }
+    .faq-question:hover { background:var(--bg-3); }
+    .faq-q-text { font-size:0.95rem; font-weight:500; line-height:1.4; color:var(--text); }
+    .faq-icon {
+      font-family:'DM Mono',monospace; font-size:1.2rem; color:var(--gold);
+      transition:transform 0.3s var(--ease); flex-shrink:0; line-height:1;
+    }
+    .faq-item.open .faq-icon { transform:rotate(45deg); }
+    .faq-answer {
+      max-height:0; overflow:hidden;
+      transition:max-height 0.4s var(--ease), padding 0.3s;
+      padding:0 28px;
+    }
+    .faq-item.open .faq-answer { max-height:200px; padding:0 28px 22px; }
+    .faq-answer p { font-size:0.88rem; color:var(--text-2); line-height:1.75; font-weight:300; }
+
+    /* ── BOOK ── */
+    #book { padding:110px 0; border-bottom:1px solid var(--border); }
+    .book-grid { display:grid; grid-template-columns:300px 1fr; gap:90px; align-items:center; }
+    .book-cover {
+      aspect-ratio:2/3; background:var(--bg-3); border:1px solid var(--border);
+      border-radius:6px; display:flex; align-items:center; justify-content:center;
+      padding:40px 32px; position:relative; overflow:hidden;
+    }
+    .book-cover::before { content:''; position:absolute; inset:0; background:linear-gradient(160deg, rgba(200,169,110,0.1) 0%, transparent 50%); pointer-events:none; }
+    .book-cover::after { content:''; position:absolute; left:0; top:0; bottom:0; width:6px; background:var(--gold); }
+    .book-cover-inner { position:relative; text-align:center; }
+    .bc-eyebrow { font-family:'DM Mono',monospace; font-size:0.56rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:24px; }
+    .bc-title { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; line-height:1.1; color:var(--text); margin-bottom:16px; }
+    .bc-rule { width:32px; height:1px; background:var(--gold); margin:0 auto 16px; }
+    .bc-sub { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.12em; color:var(--text-2); line-height:1.6; }
+    .bc-author { margin-top:32px; padding-top:20px; border-top:1px solid var(--border); font-family:'Cormorant Garamond',serif; font-size:0.9rem; font-style:italic; color:var(--text-3); }
+    .book-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,3.2vw,3rem); font-weight:600; line-height:1.1; letter-spacing:-0.02em; margin-bottom:22px; }
+    .book-title em { font-style:italic; color:var(--gold); font-weight:300; }
+    .book-desc { font-size:0.94rem; color:var(--text-2); line-height:1.82; font-weight:300; margin-bottom:36px; }
+    .book-stats { display:flex; gap:36px; margin-bottom:40px; padding-bottom:36px; border-bottom:1px solid var(--border); }
+    .bs-item { display:flex; flex-direction:column; gap:4px; }
+    .bs-val { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:600; color:var(--gold); letter-spacing:-0.02em; line-height:1; }
+    .bs-key { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-3); }
+
+    /* ── FOR YOU ── */
+    #for-you { padding:110px 0; border-bottom:1px solid var(--border); background:var(--bg-2); transition:background var(--dur) var(--ease); }
+    .for-you-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .for-you-list { display:flex; flex-direction:column; gap:16px; }
+    .for-you-item {
+      display:flex; gap:16px; align-items:flex-start;
+      padding:20px 24px; background:var(--card-bg);
+      border:1px solid var(--card-border); border-radius:8px;
+      transition:transform 0.22s, border-color 0.22s;
+    }
+    .for-you-item:hover { transform:translateX(4px); border-color:var(--gold-border); }
+    .for-you-bullet { color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:1.4rem; line-height:1; flex-shrink:0; padding-top:2px; }
+    .for-you-text { font-size:0.9rem; color:var(--text-2); line-height:1.7; font-weight:300; }
+    .for-you-text strong { color:var(--text); font-weight:500; }
+
+    /* ── CONTACT ── */
+    #contact { padding:110px 0 130px; position:relative; overflow:hidden; }
+    #contact::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse 70% 80% at 20% 60%, rgba(200,169,110,0.05) 0%, transparent 60%);
+      pointer-events:none;
+    }
+    .contact-inner { max-width:800px; position:relative; }
+    .contact-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.8rem,5vw,5rem); font-weight:600;
+      line-height:1.02; letter-spacing:-0.025em; margin-bottom:22px;
+    }
+    .contact-title em { font-style:italic; color:var(--gold); font-weight:300; }
+    .contact-sub { font-size:1rem; color:var(--text-2); line-height:1.78; font-weight:300; margin-bottom:48px; max-width:520px; }
+    .contact-actions { display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:44px; }
+    .contact-detail { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.1em; color:var(--text-3); display:flex; align-items:center; gap:14px; }
+    .contact-detail a { color:var(--gold); transition:opacity 0.2s; }
+    .contact-detail a:hover { opacity:0.75; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top:1px solid var(--border); background:var(--bg-2);
+      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    }
+    .footer-inner {
+      max-width:1320px; margin:0 auto; padding:36px 52px;
+      display:flex; flex-direction:column; align-items:center; gap:14px;
+    }
+    .footer-sym { opacity:0.60; transition:opacity 0.3s; }
+    .footer-sym:hover { opacity:0.85; }
+    .footer-sym-dark  { display:block; height:40px; width:auto; }
+    .footer-sym-light { display:none;  height:40px; width:auto; }
+    [data-theme="light"] .footer-sym-dark  { display:none; }
+    [data-theme="light"] .footer-sym-light { display:block; }
+    .footer-tagline { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-style:italic; color:var(--text-2); letter-spacing:0.04em; }
+    .footer-copy { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; color:var(--text-3); text-align:center; }
+
+    /* ── REVEAL ── */
+    ..visible { opacity:1; transform:translateY(0); }
+    . { transition-delay:0.1s; }
+    . { transition-delay:0.22s; }
+    . { transition-delay:0.34s; }
+    . { transition-delay:0.46s; }
+
+
+    /* ── HERO PANEL (right column) ── */
+    .hero-panel {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:10px; overflow:hidden;
+      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    }
+    .panel-header {
+      padding:18px 28px; border-bottom:1px solid var(--border);
+      display:flex; align-items:center; gap:8px;
+    }
+    .panel-dot { width:8px; height:8px; border-radius:50%; background:var(--gold-dim); border:1px solid var(--gold-border); }
+    .panel-dot:first-child { background:var(--gold); border-color:var(--gold); }
+    .panel-title { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-3); margin-left:6px; }
+    .panel-body { padding:28px; }
+    .stat-row {
+      display:flex; align-items:flex-start; gap:20px;
+      padding:18px 0; border-bottom:1px solid var(--border);
+      transition:border-color var(--dur) var(--ease);
+    }
+    .stat-row:first-child { padding-top:0; }
+    .stat-row:last-child { border-bottom:none; padding-bottom:0; }
+    .stat-val { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:600; color:var(--gold); line-height:1; min-width:64px; letter-spacing:-0.02em; }
+    .stat-label { font-size:0.86rem; font-weight:500; color:var(--text); margin-bottom:3px; }
+    .stat-sub { font-size:0.75rem; color:var(--text-2); line-height:1.5; font-weight:300; }
+    .panel-footer {
+      padding:18px 28px; border-top:1px solid var(--border);
+      background:var(--gold-dim);
+      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    }
+    .panel-footer-label { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-3); margin-bottom:12px; }
+    .who-tags { display:flex; flex-wrap:wrap; gap:7px; }
+    .who-tag {
+      padding:5px 11px; background:var(--bg-3); border:1px solid var(--border);
+      border-radius:2px; font-size:0.7rem; letter-spacing:0.05em;
+      color:var(--text-2); font-family:'DM Mono',monospace;
+      transition:color 0.2s, border-color 0.2s;
+    }
+    .who-tag:hover { color:var(--gold); border-color:var(--gold-border); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:1100px) {
+      .nav-inner,.wrap { padding:0 32px; }
+      .hero-grid { grid-template-columns:1fr; }
+      .hero-panel { display:none; }
+      .services-header { grid-template-columns:1fr; gap:20px; }
+      .service-row { grid-template-columns:48px 1fr; }
+      .svc-meta { display:none; }
+      .about-grid { grid-template-columns:1fr; gap:52px; }
+      .book-grid { grid-template-columns:1fr; gap:52px; }
+      .book-cover { max-width:260px; }
+      .testi-grid { grid-template-columns:1fr; }
+      .for-you-grid { grid-template-columns:1fr; gap:48px; }
+    }
+    @media (max-width:680px) {
+      .nav-inner,.wrap { padding:0 20px; }
+      .nav-links { display:none; }
+      .footer-inner { padding:28px 20px; }
+      .hero-headline { font-size:2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar">
+  <div class="ann-inner">
+    <span>New Release</span>
+    <div class="ann-dot"></div>
+    <span><em>Design AI Alchemy</em> &mdash; 75 prompts for UX designers</span>
+    <div class="ann-dot"></div>
+    <a href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank">Get the book &rarr;</a>
+  </div>
+</div>
+
+<!-- NAV — feather symbol only, always -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img class="nav-sym-dark"  src="./symbol-dark.png" alt="IDYeah Studio" />
+      <img class="nav-sym-light" src="./symbol-light.png" alt="IDYeah Studio" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#book">Book</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="mode-toggle" id="modeToggle" aria-label="Toggle theme">
+        <div class="toggle-knob"><span id="toggleIcon">&#9790;</span></div>
+      </button>
+      <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" class="btn-cta">Book a Call</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+
+      <!-- LEFT: logo + headline + actions -->
+      <div class="hero-left">
+        <div class="hero-logo-wrap">
+          <img class="hero-logo-img hero-logo-dark"
+               src="./logo-dark.png"
+               alt="IDYeah Studio — Beyond the Ordinary" />
+          <img class="hero-logo-img hero-logo-light"
+               src="./logo-light.png"
+               alt="IDYeah Studio — Beyond the Ordinary" />
+        </div>
+        <div class="hero-eyebrow">UX &amp; Brand Strategy Studio</div>
+        <h1 class="hero-headline">Clarity that <em>ships.</em></h1>
+        <p class="hero-sub">Strategic brand and UX direction for founders building real products. No bloat. Just the clarity you need to move forward.</p>
+        <p class="hero-trust">Trusted by founders at early and mid-stage startups</p>
+      </div>
+
+      <!-- RIGHT: Studio Profile panel -->
+      <div class="hero-panel">
+        <div class="panel-header">
+          <div class="panel-dot"></div>
+          <div class="panel-dot"></div>
+          <div class="panel-dot"></div>
+          <span class="panel-title">Studio profile</span>
+        </div>
+        <div class="panel-body">
+          <div class="stat-row">
+            <div class="stat-val">25+</div>
+            <div><div class="stat-label">Years of craft</div><div class="stat-sub">Software engineering, UX strategy &amp; brand</div></div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-val">ACM</div>
+            <div><div class="stat-label">ACM SIGCHI Member</div><div class="stat-sub">Human-computer interaction research community</div></div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-val">75</div>
+            <div><div class="stat-label">Published AI Prompts</div><div class="stat-sub"><em>Design AI Alchemy</em> &mdash; for UX designers</div></div>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="panel-footer-label">Who I work with</div>
+          <div class="who-tags">
+            <span class="who-tag">Founders</span>
+            <span class="who-tag">CPOs</span>
+            <span class="who-tag">Startup Teams</span>
+            <span class="who-tag">Design Leaders</span>
+            <span class="who-tag">Product Managers</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <div class="marquee-item">UX Strategy <span>&#9670;</span></div>
+    <div class="marquee-item">Pitch Decks <span>&#9670;</span></div>
+    <div class="marquee-item">Brand Positioning <span>&#9670;</span></div>
+    <div class="marquee-item">Product Design <span>&#9670;</span></div>
+    <div class="marquee-item">AI-Augmented Workflow <span>&#9670;</span></div>
+    <div class="marquee-item">Design Systems <span>&#9670;</span></div>
+    <div class="marquee-item">Beyond the Ordinary <span>&#9670;</span></div>
+    <div class="marquee-item">UX Strategy <span>&#9670;</span></div>
+    <div class="marquee-item">Pitch Decks <span>&#9670;</span></div>
+    <div class="marquee-item">Brand Positioning <span>&#9670;</span></div>
+    <div class="marquee-item">Product Design <span>&#9670;</span></div>
+    <div class="marquee-item">AI-Augmented Workflow <span>&#9670;</span></div>
+    <div class="marquee-item">Design Systems <span>&#9670;</span></div>
+    <div class="marquee-item">Beyond the Ordinary <span>&#9670;</span></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="services-header">
+      <div>
+        <div class="section-tag">What I do</div>
+        <h2 class="section-title">Three ways to<br>work together.</h2>
+      </div>
+      <p class="section-intro">Every engagement starts with one question: what does your audience need to believe? Precise, fast, and built around outcomes &mdash; not deliverables.</p>
+    </div>
+    <div class="services-list">
+      <div class="service-row">
+        <div class="svc-num">01</div>
+        <div class="svc-body">
+          <div class="svc-name">Pitch Deck</div>
+          <p class="svc-desc">Investor-ready presentations that tell a clear, visual story. From narrative architecture to final slide polish &mdash; structured to convert attention into conviction.</p>
+          <div class="svc-delivers">
+            <div class="svc-delivers-label">What you receive</div>
+            <div class="svc-deliver-item">Narrative structure &amp; slide flow</div>
+            <div class="svc-deliver-item">High-fidelity Keynote or Figma deck</div>
+            <div class="svc-deliver-item">2 rounds of revision</div>
+          </div>
+        </div>
+        <div class="svc-meta"><span class="svc-timeline">5&ndash;7 day turnaround</span></div>
+      </div>
+      <div class="service-row">
+        <div class="svc-num">02</div>
+        <div class="svc-body">
+          <div class="svc-name">Brand Sprint</div>
+          <p class="svc-desc">Positioning, messaging hierarchy, and visual identity direction. For early-stage teams who need clarity on what they stand for &mdash; and the confidence to say it.</p>
+          <div class="svc-delivers">
+            <div class="svc-delivers-label">What you receive</div>
+            <div class="svc-deliver-item">Positioning &amp; messaging framework</div>
+            <div class="svc-deliver-item">Visual identity direction</div>
+            <div class="svc-deliver-item">Prioritized action roadmap</div>
+          </div>
+        </div>
+        <div class="svc-meta"><span class="svc-timeline">2&ndash;3 week engagement</span></div>
+      </div>
+      <div class="service-row">
+        <div class="svc-num">03</div>
+        <div class="svc-body">
+          <div class="svc-name">Product UX</div>
+          <p class="svc-desc">End-to-end design &mdash; research, information architecture, high-fidelity UI, developer handoff. AI-augmented workflow for faster, sharper outcomes.</p>
+          <div class="svc-delivers">
+            <div class="svc-delivers-label">What you receive</div>
+            <div class="svc-deliver-item">Research synthesis &amp; IA</div>
+            <div class="svc-deliver-item">High-fidelity Figma UI &amp; prototype</div>
+            <div class="svc-deliver-item">Developer handoff + 2 weeks async support</div>
+          </div>
+        </div>
+        <div class="svc-meta"><span class="svc-timeline">Project or retainer</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div>
+        <div class="section-tag">About</div>
+        <h2 class="about-title">Vishal Mehta.</h2>
+        <p class="about-body">I&rsquo;m a UX design leader and strategist with <strong>25+ years of experience</strong> spanning software engineering, design systems, and AI-augmented product workflows. I founded IDYeah Studio to bring a different standard of craft to founders and product teams who deserve more than average.</p>
+        <p class="about-body">My practice sits at the intersection of <strong>design craft and business strategy</strong>. I don&rsquo;t just make things look good &mdash; I help teams figure out what they&rsquo;re actually saying, and how to say it with precision.</p>
+        <p class="about-body">Published author, <strong>ACM SIGCHI member</strong>, US Green Card for Extraordinary Ability (EB1A), and speaker at the World Usability Congress. My AI-augmented workflow ships production-ready React and design systems at a pace most teams don&rsquo;t expect.</p>
+      </div>
+      <div class="cred-grid">
+        <div class="cred-card"><div class="cred-tag">Recognition</div><div class="cred-title">EB1A Green Card</div><div class="cred-desc">US residency for extraordinary ability in design and technology</div></div>
+        <div class="cred-card"><div class="cred-tag">Community</div><div class="cred-title">ACM SIGCHI</div><div class="cred-desc">Human-computer interaction &mdash; the discipline behind meaningful design</div></div>
+        <div class="cred-card"><div class="cred-tag">Published</div><div class="cred-title">Design AI Alchemy</div><div class="cred-desc">75 AI prompts for UX designers &mdash; available on Gumroad</div></div>
+        <div class="cred-card"><div class="cred-tag">Speaking</div><div class="cred-title">World Usability Congress</div><div class="cred-desc">2025 speaker on AI-augmented design practice</div></div>
+        <div class="cred-card"><div class="cred-tag">Workflow</div><div class="cred-title">AI-Augmented Studio</div><div class="cred-desc">Ships production-ready React and design systems fast</div></div>
+        <div class="cred-card"><div class="cred-tag">App</div><div class="cred-title">Crit &mdash; getcrit.app</div><div class="cred-desc">AI-powered critique for pitch decks and case studies</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="testi-header">
+      <div class="section-tag">What clients say</div>
+      <h2 class="section-title">Results that speak.</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-quote">Vishal transformed our pitch deck from a cluttered slide dump into a clear, compelling story. We closed our seed round within weeks of working with him.</p>
+        <div class="testi-author"><div class="author-init">BP</div><div><div class="author-name">B. Patni</div><div class="author-role">Founder, Rialty</div></div></div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">The speed was remarkable &mdash; but not at the cost of quality. We got a production-ready design system and code in half the time we expected.</p>
+        <div class="testi-author"><div class="author-init">AA</div><div><div class="author-name">A. Adhikari</div><div class="author-role">CEO, Ionate, Inc.</div></div></div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">IDYeah Studio brought a level of strategic clarity we hadn&rsquo;t found anywhere else. The brand work anchored every decision we made for the next 18 months.</p>
+        <div class="testi-author"><div class="author-init">RD</div><div><div class="author-name">R. Giri</div><div class="author-role">CEO, Midas Touch Consultants</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-tag">Common questions</div>
+    <h2 class="section-title" style="margin-bottom:52px;">Before you reach out.</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <button class="faq-question"><span class="faq-q-text">What if I&rsquo;m pre-launch or very early stage?</span><span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Perfect. Early-stage is where strategic direction has the most impact. Many clients come before their first release to ensure they&rsquo;re building something clear and focused.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question"><span class="faq-q-text">Do you work with non-tech products?</span><span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Yes. While most of my work is in SaaS and digital products, the principles of clarity and trust apply universally. If you&rsquo;re building something real, we can work together.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question"><span class="faq-q-text">What format are the deliverables?</span><span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Strategy work is delivered as Notion documents with prioritized recommendations and next steps. Design work is shared via Figma. Everything is practical and actionable.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question"><span class="faq-q-text">How quickly can we start?</span><span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Typically within 1&ndash;2 weeks of our initial conversation. I keep my client load intentionally small to maintain quality and focus.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section id="book">
+  <div class="wrap">
+    <div class="book-grid">
+      <div class="book-cover">
+        <div class="book-cover-inner">
+          <div class="bc-eyebrow">Now Available</div>
+          <div class="bc-title">Design AI<br>Alchemy</div>
+          <div class="bc-rule"></div>
+          <div class="bc-sub">75 Prompts for<br>UX Designers</div>
+          <div class="bc-author">Vishal Mehta</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-tag">The Book</div>
+        <h2 class="book-title">AI isn&rsquo;t replacing designers.<br>It&rsquo;s <em>amplifying</em> the good ones.</h2>
+        <p class="book-desc">A practical playbook for UX designers who want to ship faster without losing craft. 75 battle-tested prompts, real workflows, and the thinking behind the tool &mdash; not just the tool. Written from practice, not theory.</p>
+        <div class="book-stats">
+          <div class="bs-item"><span class="bs-val">75</span><span class="bs-key">Prompts</span></div>
+          <div class="bs-item"><span class="bs-val">UX</span><span class="bs-key">Focused</span></div>
+          <div class="bs-item"><span class="bs-val">Now</span><span class="bs-key">Available</span></div>
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <a href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" class="btn-primary">Get the Book &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THIS IS FOR YOU -->
+<section id="for-you">
+  <div class="wrap">
+    <div class="for-you-grid">
+      <div>
+        <div class="section-tag">Is this right for you?</div>
+        <h2 class="section-title" style="margin-bottom:24px;">This works best<br>if you&rsquo;re&hellip;</h2>
+        <p class="section-intro">A founder or product leader who values craft but needs to move fast. No agencies, no six-month strategy sessions. Just someone who understands the work and can help you get unstuck &mdash; now.</p>
+      </div>
+      <div class="for-you-list">
+        <div class="for-you-item"><div class="for-you-bullet">&mdash;</div><div class="for-you-text"><strong>Shipping something real</strong> with constraints, not a hypothetical product with unlimited runway</div></div>
+        <div class="for-you-item"><div class="for-you-bullet">&mdash;</div><div class="for-you-text"><strong>Pre-launch or early stage</strong> and need clarity before you build the wrong thing</div></div>
+        <div class="for-you-item"><div class="for-you-bullet">&mdash;</div><div class="for-you-text"><strong>Already shipping</strong> but your positioning, UX, or brand feels inconsistent</div></div>
+        <div class="for-you-item"><div class="for-you-bullet">&mdash;</div><div class="for-you-text"><strong>Done with vague deliverables</strong> and want outcomes, not process theater</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-inner">
+      <div class="section-tag">Let&rsquo;s work together</div>
+      <h2 class="contact-title">Ready to make<br>something <em>worth<br>noticing?</em></h2>
+      <p class="contact-sub">30-minute intro call. Free. We&rsquo;ll discuss your product and whether working together makes sense &mdash; no pitch, no pressure.</p>
+      <div class="contact-actions">
+        <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" class="btn-primary">Book a Discovery Call</a>
+        <a id="email-cta" class="btn-outline">Send an Email</a>
+      </div>
+      <div class="contact-detail">
+        <a id="email-detail"></a>
+        <span style="color:var(--text-3)">·</span>
+        <a href="https://linkedin.com/in/vishalme" target="_blank" style="color:var(--gold); transition:opacity 0.2s;">LinkedIn</a>
+        <span style="color:var(--text-3)">·</span>
+        <span>Cupertino (US)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-sym">
+      <img class="footer-sym-dark"  src="./symbol-dark.png" alt="IDYeah Studio" />
+      <img class="footer-sym-light" src="./symbol-light.png" alt="IDYeah Studio" />
+    </div>
+    <span class="footer-tagline">Design for the real world.</span>
+    <span class="footer-copy">&copy; 2026 IDYeah Studio LLC &nbsp;&middot;&nbsp; All rights reserved</span>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle — localStorage wrapped in try/catch for sandboxed iframes
+  (function() {
+    var html = document.documentElement;
+    var saved = 'dark';
+    try { saved = localStorage.getItem('idyeah-theme') || 'dark'; } catch(e) {}
+    html.setAttribute('data-theme', saved);
+
+    var toggle = document.getElementById('modeToggle');
+    var icon   = document.getElementById('toggleIcon');
+    if (icon) icon.textContent = saved === 'dark' ? '☾' : '☀';
+
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        try { localStorage.setItem('idyeah-theme', next); } catch(e) {}
+        if (icon) icon.textContent = next === 'dark' ? '☾' : '☀';
+      });
+    }
+
+    var e = 'vishal' + '\u0040' + 'idyeah.studio';
+        document.querySelectorAll('#email-cta, #email-detail').forEach(function(el) {
+        el.href = 'mailto:' + e;
+        if (el.id === 'email-detail') el.textContent = e;
+    });
+
+    // FAQ accordion
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var item = btn.closest('.faq-item');
+          var isOpen = item.classList.contains('open');
+          document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
+          if (!isOpen) item.classList.add('open');
+        });
+      });
+    });
+  })();
+</script>
+</body>
