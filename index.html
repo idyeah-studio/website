@@ -111,10 +111,19 @@
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     }
-    .nav-logo { display: flex; align-items: center; }
+    .nav-logo {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid rgba(200,169,110,0.35);
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.nav-logo:hover {
+  border-color: rgba(200,169,110,0.7);
+  box-shadow: 0 0 12px rgba(200,169,110,0.15);
+}
     /* Feather symbol in nav — tight crop, always symbol */
-    .nav-sym-dark  { display:block; height:36px; width:auto; }
-    .nav-sym-light { display:none;  height:36px; width:auto; }
+    .nav-sym-dark  { display:block; height:28px; width:auto; filter: brightness(0) saturate(100%) invert(73%) sepia(30%) saturate(600%) hue-rotate(5deg) brightness(105%);}
+    .nav-sym-light { display:none;  height:28px; width:auto; filter: brightness(0) saturate(100%) invert(33%) sepia(60%) saturate(600%) hue-rotate(5deg) brightness(105%); }
     [data-theme="light"] .nav-sym-dark  { display:none; }
     [data-theme="light"] .nav-sym-light { display:block; }
 
