@@ -561,8 +561,42 @@
     .who-tag:hover { color:var(--gold); border-color:var(--gold-border); }
 
     /* ── INTRO VIDEO ── */
-    #intro-video { padding:96px 0 40px; }
-    .intro-wrap { max-width:960px; margin:0 auto; }
+    #intro-video { padding:96px 0 80px; position:relative; overflow:hidden; }
+    .intro-wrap { max-width:960px; margin:0 auto; position:relative; }
+    .intro-wrap::before {
+      content:"";
+      position:absolute;
+      left:50%; bottom:-14%;
+      width:130%; height:70%;
+      transform:translateX(-50%);
+      background:
+        radial-gradient(ellipse 55% 100% at 38% 55%,
+          color-mix(in srgb, var(--gold) 55%, transparent) 0%,
+          transparent 62%),
+        radial-gradient(ellipse 55% 100% at 62% 55%,
+          color-mix(in srgb, #b5763a 45%, transparent) 0%,
+          transparent 62%);
+      filter:blur(70px);
+      opacity:0.55;
+      pointer-events:none;
+      z-index:0;
+      animation:horizon-drift 11s ease-in-out infinite;
+    }
+    @keyframes horizon-drift {
+      0%, 100% {
+        opacity:0.48;
+        background-position: 0% 50%, 100% 50%;
+        transform:translateX(-50%) scaleX(1);
+      }
+      50% {
+        opacity:0.82;
+        background-position: 8% 50%, 92% 50%;
+        transform:translateX(-50%) scaleX(1.06);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .intro-wrap::before { animation:none; opacity:0.55; }
+    }
     .intro-eyebrow {
       font-family:'DM Mono',monospace; font-size:0.62rem;
       letter-spacing:0.2em; text-transform:uppercase;
@@ -578,6 +612,7 @@
     .video-frame {
       background:var(--card-bg); border:1px solid var(--card-border);
       border-radius:10px; overflow:hidden;
+      position:relative; z-index:1;
       transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
     }
     .video-frame .panel-title { text-transform:none; letter-spacing:0.12em; }
