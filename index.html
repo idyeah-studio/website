@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -375,6 +375,28 @@
     .cred-title { font-size:0.9rem; font-weight:500; color:var(--text); margin-bottom:5px; }
     .cred-desc { font-size:0.78rem; color:var(--text-2); line-height:1.55; font-weight:300; }
 
+    /* ── SHIPPING STRIP (inside About) ── */
+    .shipping-strip { margin-top:48px; padding-top:40px; border-top:1px solid var(--border); }
+    .shipping-label {
+      font-family:'DM Mono',monospace; font-size:0.62rem;
+      letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--text-3); margin-bottom:20px;
+    }
+    .shipping-row { display:flex; gap:16px; flex-wrap:wrap; }
+    .shipping-item {
+      display:flex; align-items:center; gap:10px;
+      padding:10px 18px;
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:6px; text-decoration:none;
+      transition:border-color 0.2s, transform 0.2s;
+    }
+    .shipping-item:hover { border-color:var(--gold-border); transform:translateY(-2px); }
+    .shipping-icon { display:flex; align-items:center; width:18px; height:18px; flex-shrink:0; }
+    .shipping-icon svg { width:100%; height:100%; fill:var(--text-2); transition:fill 0.2s; }
+    .shipping-item:hover .shipping-icon svg { fill:var(--gold); }
+    .shipping-name { font-size:0.78rem; font-weight:500; color:var(--text); letter-spacing:0.02em; }
+    .shipping-sub { font-size:0.65rem; color:var(--text-2); font-weight:300; }
+
     /* ── TESTIMONIALS ── */
     #testimonials {
       padding:110px 0; border-bottom:1px solid var(--border);
@@ -437,28 +459,79 @@
     .faq-answer p { font-size:0.88rem; color:var(--text-2); line-height:1.75; font-weight:300; }
 
     /* ── BOOK ── */
-    #book { padding:110px 0; border-bottom:1px solid var(--border); }
-    .book-grid { display:grid; grid-template-columns:300px 1fr; gap:90px; align-items:center; }
-    .book-cover {
-      aspect-ratio:2/3; background:var(--bg-3); border:1px solid var(--border);
-      border-radius:6px; display:flex; align-items:center; justify-content:center;
-      padding:40px 32px; position:relative; overflow:hidden;
+    /* ── KEYA TEASER ── */
+    #keya { padding:110px 0; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+    .keya-inner { max-width:960px; margin:0 auto; position:relative; }
+    .keya-inner::before {
+      content:"";
+      position:absolute;
+      left:50%; bottom:-10%;
+      width:140%; height:65%;
+      transform:translateX(-50%);
+      background:
+        radial-gradient(ellipse 50% 100% at 35% 55%,
+          color-mix(in srgb, var(--gold) 50%, transparent) 0%,
+          transparent 60%),
+        radial-gradient(ellipse 50% 100% at 65% 55%,
+          color-mix(in srgb, #b5763a 40%, transparent) 0%,
+          transparent 60%);
+      filter:blur(80px);
+      opacity:0.45;
+      pointer-events:none;
+      z-index:0;
+      animation:horizon-drift 11s ease-in-out infinite;
     }
-    .book-cover::before { content:''; position:absolute; inset:0; background:linear-gradient(160deg, rgba(200,169,110,0.1) 0%, transparent 50%); pointer-events:none; }
-    .book-cover::after { content:''; position:absolute; left:0; top:0; bottom:0; width:6px; background:var(--gold); }
-    .book-cover-inner { position:relative; text-align:center; }
-    .bc-eyebrow { font-family:'DM Mono',monospace; font-size:0.56rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:24px; }
-    .bc-title { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; line-height:1.1; color:var(--text); margin-bottom:16px; }
-    .bc-rule { width:32px; height:1px; background:var(--gold); margin:0 auto 16px; }
-    .bc-sub { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.12em; color:var(--text-2); line-height:1.6; }
-    .bc-author { margin-top:32px; padding-top:20px; border-top:1px solid var(--border); font-family:'Cormorant Garamond',serif; font-size:0.9rem; font-style:italic; color:var(--text-3); }
-    .book-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,3.2vw,3rem); font-weight:600; line-height:1.1; letter-spacing:-0.02em; margin-bottom:22px; }
-    .book-title em { font-style:italic; color:var(--gold); font-weight:300; }
-    .book-desc { font-size:0.94rem; color:var(--text-2); line-height:1.82; font-weight:300; margin-bottom:36px; }
-    .book-stats { display:flex; gap:36px; margin-bottom:40px; padding-bottom:36px; border-bottom:1px solid var(--border); }
-    .bs-item { display:flex; flex-direction:column; gap:4px; }
-    .bs-val { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:600; color:var(--gold); letter-spacing:-0.02em; line-height:1; }
-    .bs-key { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-3); }
+    @media (prefers-reduced-motion: reduce) {
+      .keya-inner::before { animation:none; opacity:0.4; }
+    }
+    .keya-header { text-align:center; margin-bottom:40px; position:relative; z-index:1; }
+    .keya-headline {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.4rem,4vw,3.6rem); font-weight:600;
+      line-height:1.08; letter-spacing:-0.02em;
+      margin-bottom:20px; color:var(--text);
+    }
+    .keya-sub {
+      font-size:0.94rem; color:var(--text-2); line-height:1.82;
+      font-weight:300; max-width:640px; margin:0 auto 10px;
+    }
+    .keya-video { position:relative; z-index:1; margin-bottom:48px; }
+    .keya-body { position:relative; z-index:1; margin-bottom:48px; }
+    .keya-copy { text-align:center; max-width:680px; margin:0 auto; }
+    .keya-copy-headline {
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.6rem; font-weight:500; line-height:1.2;
+      margin-bottom:20px; color:var(--text);
+    }
+    .keya-copy-headline em { font-style:italic; color:var(--gold); font-weight:300; }
+    .keya-copy p {
+      font-size:0.9rem; color:var(--text-2); line-height:1.85;
+      font-weight:300; margin-bottom:14px;
+    }
+    .keya-agents {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+      max-width:740px; margin:0 auto 48px;
+      position:relative; z-index:1;
+    }
+    .keya-agent {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:8px; padding:24px 20px; text-align:center;
+      transition:border-color 0.2s, transform 0.2s;
+    }
+    .keya-agent:hover { border-color:var(--gold-border); transform:translateY(-3px); }
+    .keya-agent-name {
+      font-family:'DM Mono',monospace; font-size:0.72rem;
+      letter-spacing:0.15em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:8px;
+    }
+    .keya-agent-desc {
+      font-size:0.82rem; color:var(--text-2); line-height:1.6; font-weight:300;
+    }
+    .keya-cta { text-align:center; position:relative; z-index:1; }
+    .keya-cta-sub {
+      font-size:0.82rem; color:var(--text-3); margin-bottom:18px;
+      font-family:'DM Mono',monospace; letter-spacing:0.05em;
+    }
 
     /* ── FOR YOU ── */
     #for-you { padding:110px 0; border-bottom:1px solid var(--border); background:var(--bg-2); transition:background var(--dur) var(--ease); }
@@ -630,8 +703,7 @@
   .service-row { grid-template-columns:48px 1fr; }
   .svc-meta { display:none; }
   .about-grid { grid-template-columns:1fr; gap:52px; }
-  .book-grid { grid-template-columns:1fr; gap:52px; }
-  .book-cover { max-width:260px; }
+  .keya-agents { grid-template-columns:1fr 1fr; }
   .testi-grid { grid-template-columns:1fr; }
   .for-you-grid { grid-template-columns:1fr; gap:48px; }
 }
@@ -658,7 +730,7 @@
 
   /* Section padding — 110px is too tall on mobile */
   #services, #about, #testimonials,
-  #faq, #book, #for-you { padding:64px 0; }
+  #faq, #keya, #for-you { padding:64px 0; }
   #contact { padding:64px 0 80px; }
 
   /* Services — tighter row padding */
@@ -668,8 +740,9 @@
   /* About — cred grid single column on phones */
   .cred-grid { grid-template-columns:1fr; }
 
-  /* Book cover — full width on mobile */
-  .book-cover { max-width:100%; }
+  /* Keya agents — single column on phones */
+  .keya-agents { grid-template-columns:1fr; }
+  .shipping-row { flex-direction:column; }
 
   /* Contact detail — stack vertically */
   .contact-detail { flex-direction:column; align-items:flex-start; gap:8px; }
@@ -692,11 +765,11 @@
 <!-- ANNOUNCEMENT BAR -->
 <div class="ann-bar">
   <div class="ann-inner">
-    <span>New Release</span>
+    <span>Coming Soon</span>
     <div class="ann-dot"></div>
-    <span><em>Design AI Alchemy</em> &mdash; 75 prompts for UX designers</span>
+    <span><em>keya.studio</em> &mdash; three AI agents for product builders</span>
     <div class="ann-dot"></div>
-    <a href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank">Get the book &rarr;</a>
+    <a href="https://keya.studio" target="_blank">Join the waitlist &rarr;</a>
   </div>
 </div>
 
@@ -708,9 +781,9 @@
       <img class="nav-sym-light" src="./symbol-light.png" alt="IDYeah Studio" />
     </a>
     <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
+      <li><a href="#keya">Product</a></li>
+      <li><a href="#services">Engage</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="#book">Book</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -762,8 +835,8 @@
             <div><div class="stat-label">ACM SIGCHI Member</div><div class="stat-sub">Human-computer interaction research community</div></div>
           </div>
           <div class="stat-row">
-            <div class="stat-val">75</div>
-            <div><div class="stat-label">Published AI Prompts</div><div class="stat-sub"><em>Design AI Alchemy</em> &mdash; for UX designers</div></div>
+            <div class="stat-val">3</div>
+            <div><div class="stat-label">AI Agents</div><div class="stat-sub"><em>keya.studio</em> &mdash; for product builders</div></div>
           </div>
         </div>
         <div class="panel-footer">
@@ -894,15 +967,30 @@
         <h2 class="about-title">Vishal Mehta.</h2>
         <p class="about-body">I&rsquo;m a UX design leader and strategist with <strong>25+ years of experience</strong> spanning software engineering, design systems, and AI-augmented product workflows. I founded IDYeah Studio to bring a different standard of craft to founders and product teams who deserve more than average.</p>
         <p class="about-body">My practice sits at the intersection of <strong>design craft and business strategy</strong>. I don&rsquo;t just make things look good &mdash; I help teams figure out what they&rsquo;re actually saying, and how to say it with precision.</p>
-        <p class="about-body">Published author, <strong>ACM SIGCHI member</strong>, US Green Card for Extraordinary Ability (EB1A), and speaker at the World Usability Congress. My AI-augmented workflow ships production-ready React and design systems at a pace most teams don&rsquo;t expect.</p>
+        <p class="about-body"><strong>ACM SIGCHI member</strong>, US Green Card for Extraordinary Ability (EB1A), and speaker at the World Usability Congress. My AI-augmented workflow ships production-ready React and design systems at a pace most teams don&rsquo;t expect.</p>
       </div>
       <div class="cred-grid">
         <div class="cred-card"><div class="cred-tag">Recognition</div><div class="cred-title">EB1A Green Card</div><div class="cred-desc">US residency for extraordinary ability in design and technology</div></div>
         <div class="cred-card"><div class="cred-tag">Community</div><div class="cred-title">ACM SIGCHI</div><div class="cred-desc">Human-computer interaction &mdash; the discipline behind meaningful design</div></div>
-        <div class="cred-card"><div class="cred-tag">Published</div><div class="cred-title">Design AI Alchemy</div><div class="cred-desc">75 AI prompts for UX designers &mdash; available on Gumroad</div></div>
         <div class="cred-card"><div class="cred-tag">Speaking</div><div class="cred-title">World Usability Congress</div><div class="cred-desc">2025 speaker on AI-augmented design practice</div></div>
         <div class="cred-card"><div class="cred-tag">Workflow</div><div class="cred-title">AI-Augmented Studio</div><div class="cred-desc">Ships production-ready React and design systems fast</div></div>
-        <div class="cred-card"><div class="cred-tag">App</div><div class="cred-title">Crit &mdash; getcrit.app</div><div class="cred-desc">AI-powered critique for pitch decks and case studies</div></div>
+      </div>
+      <div class="shipping-strip" style="grid-column:1/-1;">
+        <div class="shipping-label">Currently shipping</div>
+        <div class="shipping-row">
+          <a href="https://apps.apple.com/us/app/crit-ai-design-advisor/id6759672039" target="_blank" class="shipping-item">
+            <span class="shipping-icon"><svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></span>
+            <div><div class="shipping-name">Crit for iOS</div><div class="shipping-sub">AI design advisor</div></div>
+          </a>
+          <a href="https://www.figma.com/community/plugin/1621595778962170116" target="_blank" class="shipping-item">
+            <span class="shipping-icon"><svg viewBox="0 0 38 57" xmlns="http://www.w3.org/2000/svg"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19z"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg></span>
+            <div><div class="shipping-name">Crit for Figma</div><div class="shipping-sub">In-canvas critique plugin</div></div>
+          </a>
+          <a href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" class="shipping-item">
+            <span class="shipping-icon"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M50 0a50 50 0 1 0 0 100A50 50 0 0 0 50 0zm3 72c-13.8 0-23-9-23-22s9.2-22 23-22c8.8 0 15.7 4.1 19.5 10.6l-9.6 5.5C60.7 40.3 57.3 38 53 38c-7.5 0-12.5 5.2-12.5 12s5 12 12.5 12c4.5 0 8.3-2.6 10.3-6.2H54V48h21v4.5C75 63 66.8 72 53 72z"/></svg></span>
+            <div><div class="shipping-name">Design AI Alchemy</div><div class="shipping-sub">75 prompts for UX designers</div></div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -925,8 +1013,8 @@
         <div class="testi-author"><div class="author-init">AA</div><div><div class="author-name">A. Adhikari</div><div class="author-role">CEO, Ionate, Inc.</div></div></div>
       </div>
       <div class="testi-card">
-        <p class="testi-quote">IDYeah Studio brought a level of strategic clarity we hadn&rsquo;t found anywhere else. The brand work anchored every decision we made for the next 18 months.</p>
-        <div class="testi-author"><div class="author-init">RD</div><div><div class="author-name">R. Giri</div><div class="author-role">CEO, Midas Touch Consultants</div></div></div>
+        <p class="testi-quote">Transformed our pre-launch positioning. We went from explaining what we do to people getting it instantly.</p>
+        <div class="testi-author"><div class="author-init">&mdash;</div><div><div class="author-name">Founder</div><div class="author-role">Stealth Mode &middot; B2B SaaS</div></div></div>
       </div>
     </div>
   </div>
@@ -958,31 +1046,61 @@
   </div>
 </section>
 
-<!-- BOOK -->
-<section id="book">
+<!-- KEYA -->
+<section id="keya">
   <div class="wrap">
-    <div class="book-grid">
-      <div class="book-cover">
-        <div class="book-cover-inner">
-          <div class="bc-eyebrow">Now Available</div>
-          <div class="bc-title">Design AI<br>Alchemy</div>
-          <div class="bc-rule"></div>
-          <div class="bc-sub">75 Prompts for<br>UX Designers</div>
-          <div class="bc-author">Vishal Mehta</div>
+    <div class="keya-inner">
+      <div class="keya-header">
+        <div class="section-tag">From the studio</div>
+        <h2 class="keya-headline">Crit. Form. <em>Forge.</em></h2>
+        <p class="keya-sub">keya.studio is three AI agents made for product builders. One critiques your work. One designs what comes next. One codes what ships. Built on markdown. Tuned for taste.</p>
+      </div>
+
+      <div class="keya-video">
+        <div class="video-frame">
+          <div class="panel-header">
+            <div class="panel-dot"></div>
+            <div class="panel-dot"></div>
+            <div class="panel-dot"></div>
+            <span class="panel-title">keya.studio / teaser</span>
+          </div>
+          <video class="video-el"
+                 controls
+                 preload="none"
+                 playsinline
+                 poster="media/keya-intro-cover.png">
+            <source src="media/keya.studio.teaser.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
-      <div>
-        <div class="section-tag">The Book</div>
-        <h2 class="book-title">AI isn&rsquo;t replacing designers.<br>It&rsquo;s <em>amplifying</em> the good ones.</h2>
-        <p class="book-desc">A practical playbook for UX designers who want to ship faster without losing craft. 75 battle-tested prompts, real workflows, and the thinking behind the tool &mdash; not just the tool. Written from practice, not theory.</p>
-        <div class="book-stats">
-          <div class="bs-item"><span class="bs-val">75</span><span class="bs-key">Prompts</span></div>
-          <div class="bs-item"><span class="bs-val">UX</span><span class="bs-key">Focused</span></div>
-          <div class="bs-item"><span class="bs-val">Now</span><span class="bs-key">Available</span></div>
+
+      <div class="keya-body">
+        <div class="keya-copy">
+          <h3 class="keya-copy-headline">A studio, not a <em>chatbot.</em></h3>
+          <p>Most AI tools flood you with output and call it productivity. keya.studio does the opposite. Three agents. Each with a job. Each with an opinion worth listening to.</p>
+          <p>Built by IDYeah Studio. Designed for the way makers already work.</p>
         </div>
-        <div style="display:flex;gap:16px;flex-wrap:wrap;">
-          <a href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" class="btn-primary">Get the Book &rarr;</a>
+      </div>
+
+      <div class="keya-agents">
+        <div class="keya-agent">
+          <div class="keya-agent-name">Crit</div>
+          <div class="keya-agent-desc">Reads your work like a senior reviewer. Direct, specific, useful.</div>
         </div>
+        <div class="keya-agent">
+          <div class="keya-agent-name">Form</div>
+          <div class="keya-agent-desc">Turns rough thinking into structure. Wireframes, flows, bones.</div>
+        </div>
+        <div class="keya-agent">
+          <div class="keya-agent-name">Forge</div>
+          <div class="keya-agent-desc">Ships what you shaped. Real files, real components, yours to keep.</div>
+        </div>
+      </div>
+
+      <div class="keya-cta">
+        <p class="keya-cta-sub">Early access opens soon. The list is small on purpose.</p>
+        <a href="https://keya.studio" target="_blank" class="btn-primary">Join the Waitlist &rarr;</a>
       </div>
     </div>
   </div>
@@ -1045,8 +1163,8 @@
   // Theme toggle — localStorage wrapped in try/catch for sandboxed iframes
   (function() {
     var html = document.documentElement;
-    var saved = 'dark';
-    try { saved = localStorage.getItem('idyeah-theme') || 'dark'; } catch(e) {}
+    var saved = 'light';
+    try { saved = localStorage.getItem('idyeah-theme') || 'light'; } catch(e) {}
     html.setAttribute('data-theme', saved);
 
     var toggle = document.getElementById('modeToggle');
