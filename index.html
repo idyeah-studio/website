@@ -143,6 +143,48 @@
     .nav-links a:hover { color:var(--text); }
     .nav-links a:hover::after { transform:scaleX(1); }
 
+    /* ── HAMBURGER (mobile only) ── */
+    .nav-hamburger {
+      display:none; background:none; border:none; cursor:pointer;
+      width:44px; height:44px; border-radius:50%;
+      border:1px solid rgba(200,169,110,0.35);
+      align-items:center; justify-content:center;
+      transition:border-color 0.3s;
+      position:relative; z-index:201;
+    }
+    .nav-hamburger:hover { border-color:rgba(200,169,110,0.7); }
+    .ham-line {
+      display:block; width:18px; height:1.5px;
+      background:var(--text); border-radius:1px;
+      transition:transform 0.3s var(--ease), opacity 0.3s;
+    }
+    .ham-lines { display:flex; flex-direction:column; gap:4px; align-items:center; }
+    .nav-hamburger.open .ham-line:nth-child(1) { transform:translateY(5.5px) rotate(45deg); }
+    .nav-hamburger.open .ham-line:nth-child(2) { opacity:0; }
+    .nav-hamburger.open .ham-line:nth-child(3) { transform:translateY(-5.5px) rotate(-45deg); }
+
+    /* ── MOBILE MENU OVERLAY ── */
+    .mobile-menu {
+      display:none; position:fixed; inset:0; z-index:200;
+      background:var(--bg);
+      flex-direction:column; align-items:center; justify-content:center; gap:0;
+      opacity:0; pointer-events:none;
+      transition:opacity 0.35s var(--ease), background var(--dur) var(--ease);
+    }
+    .mobile-menu.open { display:flex; opacity:1; pointer-events:auto; }
+    .mobile-menu a {
+      display:block; padding:18px 0;
+      font-family:'DM Mono',monospace; font-size:0.82rem;
+      letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--text-2); transition:color 0.2s;
+      text-decoration:none;
+    }
+    .mobile-menu a:hover { color:var(--gold); }
+    .mobile-menu .btn-primary {
+      margin-top:28px; padding:14px 36px;
+      color:var(--cta-text);
+    }
+
     .nav-right {
     display: flex; align-items: center; gap: 18px;
     justify-content: flex-end;
@@ -712,6 +754,8 @@
   .nav-inner, .wrap { padding:0 20px; }
 .nav-inner { display:flex; justify-content:space-between; }
   .nav-links { display:none; }
+  .nav-logo { display:none; }
+  .nav-hamburger { display:flex; }
   .footer-inner { padding:28px 20px; }
   .hero-headline { font-size:2.8rem; }
 
@@ -725,8 +769,8 @@
   .intro-title { font-size:1.7rem; margin-bottom:24px; }
   .hero-logo-img { width: 160px; }
   .hero-logo-wrap { margin-bottom:28px; }
-  .hero-left { align-items:flex-start; }
-  .hero-sub { text-align:left; }
+  .hero-left { align-items:center; }
+  .hero-sub { text-align:center; }
 
   /* Section padding — 110px is too tall on mobile */
   #services, #about, #testimonials,
@@ -780,6 +824,13 @@
       <img class="nav-sym-dark"  src="./symbol-dark.png" alt="IDYeah Studio" />
       <img class="nav-sym-light" src="./symbol-light.png" alt="IDYeah Studio" />
     </a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+      <div class="ham-lines">
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+      </div>
+    </button>
     <ul class="nav-links">
       <li><a href="#keya">Product</a></li>
       <li><a href="#services">Engage</a></li>
@@ -795,6 +846,15 @@
     </div>
   </div>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#keya">Product</a>
+  <a href="#services">Engage</a>
+  <a href="#about">About</a>
+  <a href="#faq">FAQ</a>
+  <a href="#contact">Contact</a>
+  <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" class="btn-primary">Book a Call</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -1185,6 +1245,24 @@
         el.href = 'mailto:' + e;
         if (el.id === 'email-detail') el.textContent = e;
     });
+
+    // Mobile menu
+    var hamburger = document.getElementById('navHamburger');
+    var mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      });
+    }
 
     // FAQ accordion
     document.addEventListener('DOMContentLoaded', function() {
