@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IDYeah Studio — a working ledger.</title>
+
+  <meta name="description" content="The working ledger of a one-person UX and brand studio. Twenty-five years of practice, kept by hand. Pitch decks, brand sprints, product UX for founders building real products." />
+  <link rel="canonical" href="https://idyeah.studio/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://idyeah.studio/" />
+  <meta property="og:title" content="IDYeah Studio — a working ledger." />
+  <meta property="og:description" content="The working ledger of a one-person studio. Twenty-five years, kept by hand. Clarity that ships." />
+  <meta property="og:image" content="https://idyeah.studio/media/og-cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="IDYeah Studio — a working ledger." />
+  <meta name="twitter:description" content="The working ledger of a one-person studio. Kept by hand." />
+  <meta name="twitter:image" content="https://idyeah.studio/media/og-cover.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --paper:#ece4d3; --paper-2:#f1ebdd; --edge:#e2d8c2;
+      --ink:#211a10; --ink-2:rgba(33,26,16,.66); --ink-3:rgba(33,26,16,.40);
+      --wax:#7c2d24; --wax-2:#94392f;
+      --rule:rgba(33,26,16,.26); --hair:rgba(33,26,16,.14);
+      --book:'EB Garamond',Georgia,serif; --disp:'Cormorant Garamond',Georgia,serif; --rec:'DM Mono','SF Mono',monospace;
+      --col:1140px; --ease:cubic-bezier(.16,1,.3,1);
+    }
+    html[data-theme="dark"]{ --paper:#14110a; --paper-2:#1a160e; --edge:#241d12; --ink:#e8e0cf; --ink-2:rgba(232,224,207,.66); --ink-3:rgba(232,224,207,.40); --rule:rgba(232,224,207,.26); --hair:rgba(232,224,207,.14); }
+    html[data-theme="dark"] body{ background:var(--paper); background-image:radial-gradient(120% 120% at 50% -10%, rgba(72,62,44,.42), transparent 55%), radial-gradient(rgba(232,224,207,.02) 1px, transparent 1px); }
+    html[data-theme="dark"] .lockup img.sym{ filter:invert(1); }
+    .toggle{ width:36px; height:36px; border-radius:50%; border:1px solid var(--rule); background:none; color:var(--ink); cursor:pointer; display:grid; place-items:center; font-size:14px; }
+    *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+    body{ background:var(--paper); color:var(--ink); font-family:var(--book); font-size:19px; line-height:1.6; overflow-x:hidden;
+      background-image:radial-gradient(120% 120% at 50% -10%, rgba(255,253,247,.6), transparent 55%), radial-gradient(rgba(33,26,16,.018) 1px, transparent 1px);
+      background-size:auto, 4px 4px; }
+    @media(prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } html{ scroll-behavior:auto; } }
+    a{ color:inherit; text-decoration:none; }
+    ::selection{ background:var(--wax); color:var(--paper); }
+    :focus-visible{ outline:2px solid var(--wax); outline-offset:3px; }
+
+    .leaf{ max-width:var(--col); margin:0 auto; padding:0 8vw; position:relative; }
+    @media(min-width:1000px){ .leaf{ padding:0 96px; } }
+    .skip{ position:absolute; left:-999px; top:0; background:var(--ink); color:var(--paper); padding:12px 18px; z-index:200; }
+    .skip:focus{ left:12px; top:12px; }
+
+    .rec{ font-family:var(--rec); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); }
+    .wax-ink{ color:var(--wax); }
+
+    /* ===== letterhead ===== */
+    header{ position:sticky; top:0; z-index:50; background:color-mix(in srgb,var(--paper) 88%,transparent); backdrop-filter:blur(6px); border-bottom:1px solid var(--hair); }
+    .head{ max-width:var(--col); margin:0 auto; padding:15px 8vw; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    @media(min-width:1000px){ .head{ padding:16px 96px; } }
+    .lockup{ display:flex; align-items:center; gap:11px; }
+    .lockup img.sym{ width:28px; height:28px; }
+    .lockup .wm{ font-family:var(--disp); font-weight:600; font-size:17px; letter-spacing:.16em; }
+    .head nav{ display:none; gap:26px; font-family:var(--rec); font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+    .head nav a{ color:var(--ink-2); } .head nav a:hover{ color:var(--wax); }
+    @media(min-width:880px){ .head nav{ display:flex; } }
+    .commission{ font-family:var(--rec); font-size:12px; letter-spacing:.06em; text-transform:uppercase; border:1px solid var(--rule); padding:9px 16px; transition:.25s; }
+    .commission:hover{ background:var(--ink); color:var(--paper); }
+    .ham{ display:none; width:38px; height:38px; border:1px solid var(--rule); background:none; cursor:pointer; color:var(--ink); }
+    @media(max-width:879px){ .ham{ display:grid; place-items:center; } }
+
+    /* ===== title leaf ===== */
+    .title{ padding:13vh 0 9vh; position:relative; }
+    .title .meta{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--rule); padding-bottom:14px; margin-bottom:7vh; }
+    .title .meta .rec{ color:var(--ink-2); }
+    .title h1{ font-family:var(--disp); font-weight:500; font-size:clamp(58px,11vw,150px); line-height:.9; letter-spacing:-.01em; max-width:13ch; }
+    .title h1 em{ font-style:italic; color:var(--wax); }
+    .title .standfirst{ font-family:var(--book); font-style:italic; font-size:clamp(20px,2.4vw,28px); color:var(--ink-2); margin-top:34px; max-width:34ch; }
+    .title .actions{ margin-top:40px; display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+    .btn{ font-family:var(--rec); font-size:13px; letter-spacing:.04em; padding:12px 22px; background:var(--ink); color:var(--paper); transition:transform .25s var(--ease); }
+    .btn:hover{ transform:translateY(-2px); }
+    .btn.q{ background:none; color:var(--ink); border:1px solid var(--rule); }
+    /* the pressed specimen */
+    .specimen{ position:absolute; right:-2vw; top:6vh; width:min(30vw,300px); transform:rotate(4deg); filter:drop-shadow(0 14px 22px rgba(33,26,16,.22)); pointer-events:none; }
+    .specimen .cap{ position:absolute; bottom:-26px; right:8px; transform:rotate(-4deg); }
+    @media(max-width:860px){ .specimen{ position:static; width:160px; margin:40px 0 0 auto; display:block; } .specimen .cap{ position:static; transform:none; display:block; text-align:right; margin-top:6px; } }
+
+    /* ===== entries ===== */
+    .entry{ padding:9vh 0; border-top:1px solid var(--rule); position:relative; }
+    .entry > .head-line{ display:flex; align-items:baseline; gap:16px; margin-bottom:40px; }
+    .entry .no{ font-family:var(--rec); font-size:13px; color:var(--wax); letter-spacing:.08em; }
+    .entry h2{ font-family:var(--disp); font-weight:500; font-size:clamp(32px,5vw,62px); line-height:1; letter-spacing:-.01em; }
+    .entry .date{ font-family:var(--rec); font-size:12px; color:var(--ink-3); margin-left:auto; }
+    .folio{ position:absolute; bottom:3vh; right:0; font-family:var(--rec); font-size:12px; color:var(--ink-3); }
+
+    /* a block with a margin note (kept hand) */
+    .block{ display:grid; grid-template-columns:1fr; gap:18px; }
+    @media(min-width:900px){ .block{ grid-template-columns:minmax(0,1fr) clamp(170px,21vw,260px); gap:clamp(28px,4vw,60px); align-items:start; } }
+    .prose{ font-family:var(--book); font-size:clamp(21px,2.4vw,28px); line-height:1.5; max-width:30ch; }
+    .prose em{ font-style:italic; color:var(--wax); }
+    .gloss{ font-family:var(--book); font-style:italic; color:var(--wax); font-size:clamp(16px,1.5vw,19px); line-height:1.4; }
+    @media(max-width:899px){ .gloss{ border-left:2px solid var(--wax); padding-left:14px; } }
+
+    /* proofs */
+    .proof{ display:grid; grid-template-columns:1fr; gap:8px; padding:26px 0; border-top:1px solid var(--hair); }
+    @media(min-width:740px){ .proof{ grid-template-columns:1fr auto; align-items:end; } }
+    .proof q{ font-family:var(--disp); font-style:italic; font-size:clamp(23px,3.2vw,38px); line-height:1.15; max-width:26ch; }
+    .proof .src{ font-family:var(--rec); font-size:12px; color:var(--ink-2); }
+    @media(min-width:740px){ .proof .src{ text-align:right; } }
+    .specimens{ margin-top:46px; display:flex; flex-wrap:wrap; gap:12px; }
+    .spec{ font-family:var(--rec); font-size:12px; padding:10px 15px; border:1px solid var(--rule); transition:.25s; }
+    .spec:hover{ background:var(--ink); color:var(--paper); }
+    .spec small{ color:var(--ink-3); } .spec:hover small{ color:rgba(236,228,211,.6); }
+    .vid{ margin-top:54px; } .vid video{ width:100%; border:1px solid var(--rule); background:#000; display:block; } .vid .c{ font-family:var(--rec); font-size:11px; color:var(--ink-3); margin-top:10px; letter-spacing:.06em; }
+
+    /* engagements ledger */
+    .line{ display:grid; grid-template-columns:1fr; gap:10px; padding:34px 0; border-top:1px solid var(--hair); }
+    @media(min-width:820px){ .line{ grid-template-columns:1fr 1.3fr auto; gap:40px; align-items:baseline; } }
+    .line h3{ font-family:var(--disp); font-weight:500; font-size:clamp(28px,3.6vw,44px); line-height:1; }
+    .line h3 .it{ display:block; font-family:var(--book); font-style:italic; font-size:16px; color:var(--wax); margin-top:8px; }
+    .line .terms{ font-family:var(--book); font-size:17px; color:var(--ink-2); max-width:42ch; }
+    .line .terms ul{ list-style:none; margin-top:10px; display:flex; flex-wrap:wrap; gap:8px 16px; }
+    .line .terms li{ font-family:var(--rec); font-size:12px; color:var(--ink-3); }
+    .line .terms li::before{ content:"— "; color:var(--wax); }
+    .line .when{ font-family:var(--rec); font-size:12px; letter-spacing:.06em; color:var(--ink-2); white-space:nowrap; }
+
+    /* the hand (who) */
+    .hand{ display:grid; grid-template-columns:1fr; gap:40px; }
+    @media(min-width:880px){ .hand{ grid-template-columns:1.4fr .85fr; gap:6vw; } }
+    .hand p{ font-family:var(--book); font-size:clamp(21px,2.4vw,28px); line-height:1.5; margin-bottom:22px; }
+    .hand p em{ font-style:italic; color:var(--wax); }
+    .record .row{ display:flex; gap:16px; padding:14px 0; border-top:1px solid var(--hair); font-family:var(--rec); font-size:12px; }
+    .record .row b{ color:var(--wax); font-weight:400; min-width:58px; }
+    .record .row span{ color:var(--ink-2); }
+
+    /* reserved entry (keya) */
+    .reserved{ text-align:left; }
+    .reserved .big{ font-family:var(--disp); font-style:italic; font-size:clamp(26px,4vw,52px); color:var(--ink-2); line-height:1.1; max-width:20ch; }
+    .reserved .small{ font-family:var(--book); font-style:italic; color:var(--ink-3); margin-top:18px; max-width:30ch; }
+    .reserved a.q{ display:inline-block; margin-top:24px; font-family:var(--rec); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3); border-bottom:1px solid var(--rule); }
+    .reserved a.q:hover{ color:var(--wax); border-color:var(--wax); }
+
+    /* colophon / contact */
+    .colophon{ padding:12vh 0; border-top:2px solid var(--ink); position:relative; }
+    .colophon h2{ font-family:var(--disp); font-weight:500; font-size:clamp(44px,8vw,118px); line-height:.94; letter-spacing:-.01em; max-width:14ch; }
+    .colophon h2 em{ font-style:italic; color:var(--wax); }
+    .colophon .actions{ margin-top:42px; display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+    .colophon .set{ font-family:var(--rec); font-size:12px; color:var(--ink-3); margin-top:50px; line-height:1.8; letter-spacing:.04em; }
+    /* wax seal */
+    .seal{ width:84px; height:84px; border-radius:50%; display:grid; place-items:center; flex:none;
+      background:radial-gradient(circle at 38% 32%, var(--wax-2), var(--wax) 60%, #5e211a);
+      box-shadow:inset 0 2px 4px rgba(255,255,255,.18), inset 0 -4px 8px rgba(0,0,0,.35), 0 6px 14px rgba(33,26,16,.3); }
+    .seal span{ font-family:var(--disp); font-weight:600; font-size:24px; color:rgba(255,240,232,.85); letter-spacing:.04em; text-shadow:0 1px 1px rgba(0,0,0,.4); }
+
+    footer{ padding:30px 0 56px; }
+    .foot{ display:flex; flex-wrap:wrap; gap:14px 36px; justify-content:space-between; font-family:var(--rec); font-size:11px; color:var(--ink-3); letter-spacing:.04em; }
+    .foot a:hover{ color:var(--wax); }
+
+    .sheet{ position:fixed; inset:0; background:var(--paper); z-index:120; transform:translateY(-100%); transition:transform .4s var(--ease); display:grid; align-content:center; gap:6px; padding:0 10vw; }
+    .sheet.open{ transform:translateY(0); }
+    .sheet a{ font-family:var(--disp); font-size:40px; padding:7px 0; } .sheet a:hover{ color:var(--wax); }
+    .sheet .x{ position:absolute; top:22px; right:10vw; font-family:var(--rec); font-size:12px; background:none; border:none; color:var(--ink-2); cursor:pointer; }
+  </style>
+</head>
+<body>
+  <a href="#entry-1" class="skip">Skip to content</a>
+
+  <header>
+    <div class="head">
+      <a href="#top" class="lockup" aria-label="IDYeah Studio, home">
+        <img class="sym" src="/symbol-light.png" alt="" aria-hidden="true" />
+        <span class="wm">IDYEAH.STUDIO</span>
+      </a>
+      <nav aria-label="Primary">
+        <a href="#entry-1">Practice</a>
+        <a href="#entry-2">Proofs</a>
+        <a href="#entry-3">Engagements</a>
+        <a href="#entry-4">The hand</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="toggle" id="themeBtn" aria-label="Toggle light or dark theme">&#9790;</button>
+        <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="commission">Commission</a>
+        <button class="ham" id="hamBtn" aria-label="Open menu" aria-expanded="false">&equiv;</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sheet" id="sheet" aria-hidden="true">
+    <button class="x" id="closeBtn">close &times;</button>
+    <a href="#entry-1">Practice</a>
+    <a href="#entry-2">Proofs</a>
+    <a href="#entry-3">Engagements</a>
+    <a href="#entry-4">The hand</a>
+    <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener">Commission &rarr;</a>
+  </div>
+
+  <main id="top">
+
+    <!-- TITLE LEAF -->
+    <section class="title">
+      <div class="leaf">
+        <div class="meta">
+          <span class="rec">A working ledger of a one-person practice</span>
+          <span class="rec">Cupertino · est. MMXXV</span>
+        </div>
+        <img class="specimen" src="/media/feather.png" alt="">
+        <span class="specimen-hide"></span>
+        <h1>Clarity that <em>ships.</em></h1>
+        <p class="standfirst">Kept by hand since the year 2000. A record of saying what a product is, and designing the thing that proves it.</p>
+        <div class="actions">
+          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="btn">Commission work</a>
+          <a href="#entry-2" class="btn q">Read the proofs</a>
+          <span class="rec" style="margin-left:6px;">fol. i</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENTRY I -->
+    <section class="entry" id="entry-1">
+      <div class="leaf">
+        <div class="head-line"><span class="no">Entry I</span><h2>The practice.</h2><span class="date">recorded daily</span></div>
+        <div class="block">
+          <p class="prose">Founders ship faster than ever, and ship the <em>wrong thing</em> faster than ever. I help you say what the product actually does, then design the thing that proves it.</p>
+          <aside class="gloss">No agency. No account managers. One senior hand, an AI-fast workshop, and an opinion you can argue with.</aside>
+        </div>
+        <span class="folio">fol. ii</span>
+      </div>
+    </section>
+
+    <!-- ENTRY II -->
+    <section class="entry" id="entry-2">
+      <div class="leaf">
+        <div class="head-line"><span class="no">Entry II</span><h2>Proofs entered into the record.</h2></div>
+        <div class="proof"><q>Closed our seed round within weeks of working with him.</q><div class="src">B. Patni — Founder, Rialty</div></div>
+        <div class="proof"><q>A production-ready design system and code in half the time we expected.</q><div class="src">A. Adhikari — CEO, Ionate</div></div>
+        <div class="proof"><q>We went from explaining what we do to people getting it instantly.</q><div class="src">Founder — stealth, B2B SaaS</div></div>
+        <div class="specimens">
+          <a class="spec" href="https://apps.apple.com/us/app/crit-ai-design-advisor/id6759672039" target="_blank" rel="noopener">Crit for iOS <small>· AI design advisor</small></a>
+          <a class="spec" href="https://www.figma.com/community/plugin/1621595778962170116" target="_blank" rel="noopener">Crit for Figma <small>· in-canvas critique</small></a>
+          <a class="spec" href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" rel="noopener">Design AI Alchemy <small>· 75 prompt recipes</small></a>
+        </div>
+        <div class="vid">
+          <video controls preload="none" playsinline poster="/media/intro-cover.jpg" title="A 90-second introduction to IDYeah Studio">
+            <source src="/media/intro.mp4" type="video/mp4" />
+            Your browser does not support video.
+          </video>
+          <p class="c">Plate I — the studio, in ninety seconds.</p>
+        </div>
+        <span class="folio">fol. iii</span>
+      </div>
+    </section>
+
+    <!-- ENTRY III -->
+    <section class="entry" id="entry-3">
+      <div class="leaf">
+        <div class="head-line"><span class="no">Entry III</span><h2>Engagements &amp; terms.</h2></div>
+        <div class="line">
+          <h3>Pitch Deck<span class="it">attention into conviction</span></h3>
+          <div class="terms">An investor-ready narrative that tells one clear, visual story.<ul><li>Narrative + slide flow</li><li>Hi-fi Keynote / Figma</li><li>Two revisions</li></ul></div>
+          <div class="when">5–7 days</div>
+        </div>
+        <div class="line">
+          <h3>Brand Sprint<span class="it">know what you stand for</span></h3>
+          <div class="terms">Positioning, messaging hierarchy, and identity direction, with the confidence to say it out loud.<ul><li>Positioning framework</li><li>Identity direction</li><li>Action roadmap</li></ul></div>
+          <div class="when">2–3 weeks</div>
+        </div>
+        <div class="line">
+          <h3>Product UX<span class="it">research to handoff</span></h3>
+          <div class="terms">End-to-end design: research, IA, high-fidelity UI, developer handoff. AI-augmented.<ul><li>Research + IA</li><li>Hi-fi Figma + prototype</li><li>Dev handoff + 2wk support</li></ul></div>
+          <div class="when">Project / retainer</div>
+        </div>
+        <span class="folio">fol. iv</span>
+      </div>
+    </section>
+
+    <!-- ENTRY IV -->
+    <section class="entry" id="entry-4">
+      <div class="leaf">
+        <div class="head-line"><span class="no">Entry IV</span><h2>The hand that keeps it.</h2></div>
+        <div class="hand">
+          <div>
+            <p>I'm Vishal. <em>Twenty-five years</em> in the work: software engineering, design systems, and an AI-augmented practice that ships production-grade React and brand fast.</p>
+            <p>I don't only make things look good. I help teams find what they're actually saying, and say it with precision.</p>
+            <p>One person, on purpose. You work with the practitioner, not a deck about one.</p>
+          </div>
+          <div class="record">
+            <div class="row"><b>2000→</b><span>25+ yrs · engineering, UX strategy &amp; brand</span></div>
+            <div class="row"><b>ACM</b><span>SIGCHI member · human–computer interaction</span></div>
+            <div class="row"><b>EB1A</b><span>US Green Card, Extraordinary Ability</span></div>
+            <div class="row"><b>MMXXV</b><span>Speaker, World Usability Congress · studio founded</span></div>
+            <div class="row"><b>HQ</b><span>Cupertino, US</span></div>
+          </div>
+        </div>
+        <span class="folio">fol. v</span>
+      </div>
+    </section>
+
+    <!-- RESERVED ENTRY (keya) -->
+    <section class="entry">
+      <div class="leaf">
+        <div class="head-line"><span class="no">Entry VI</span><h2 style="color:var(--ink-3);">— reserved —</h2></div>
+        <div class="reserved">
+          <p class="big">Three agents are being made on the bench. One audits, one designs, one codes.</p>
+          <p class="small">It isn't ready to be entered into the record. When it is, you'll know.</p>
+          <a class="q" href="https://keya.studio" target="_blank" rel="noopener">ask to see it early</a>
+        </div>
+        <span class="folio">fol. vi</span>
+      </div>
+    </section>
+
+    <!-- COLOPHON / CONTACT -->
+    <section class="colophon" id="contact">
+      <div class="leaf">
+        <span class="rec wax-ink">Colophon</span>
+        <h2 style="margin-top:18px;">Make something <em>worth recording.</em></h2>
+        <div class="actions">
+          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="btn">Commission a call</a>
+          <a href="#" id="emailLink" class="btn q">Send a letter</a>
+          <div class="seal" aria-hidden="true"><span>IY</span></div>
+        </div>
+        <p class="set">Set in EB Garamond &amp; Cormorant. Kept in Cupertino by one hand.<br/>Built with AI. Every word it added was struck out before this was bound.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="leaf">
+      <div class="foot">
+        <span>IDYeah Studio · a working ledger</span>
+        <span><a href="https://linkedin.com/in/vishalme" target="_blank" rel="noopener">LinkedIn</a> · <span id="yr"></span></span>
+        <span>beyond the ordinary</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var root=document.documentElement, tBtn=document.getElementById('themeBtn');
+    function setTheme(t){ root.setAttribute('data-theme',t); tBtn.innerHTML=t==='dark'?'&#9728;':'&#9790;'; }
+    if(tBtn) tBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
+    var sheet=document.getElementById('sheet'), ham=document.getElementById('hamBtn'), close=document.getElementById('closeBtn');
+    function openSheet(o){ sheet.classList.toggle('open',o); ham.setAttribute('aria-expanded',o); sheet.setAttribute('aria-hidden',!o); }
+    ham.addEventListener('click',function(){ openSheet(true); });
+    close.addEventListener('click',function(){ openSheet(false); });
+    sheet.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ openSheet(false); }); });
+    var u='vishal', d='idyeah.studio';
+    document.getElementById('emailLink').href='mailto:'+u+'@'+d;
+    document.getElementById('yr').textContent='MMXXV';
+  </script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IDYeah Studio — from grey to shipped.</title>
+
+  <meta name="description" content="A one-person UX and brand studio. The machine's output is grey. I bring it to life. Pitch decks, brand sprints, product UX. Clarity that ships." />
+  <link rel="canonical" href="https://idyeah.studio/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://idyeah.studio/" />
+  <meta property="og:title" content="IDYeah Studio — from grey to shipped." />
+  <meta property="og:description" content="The machine's output is grey. I bring it to life. A one-person studio." />
+  <meta property="og:image" content="https://idyeah.studio/media/og-cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="IDYeah Studio — from grey to shipped." />
+  <meta name="twitter:description" content="The machine's output is grey. I bring it to life." />
+  <meta name="twitter:image" content="https://idyeah.studio/media/og-cover.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --disp:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif;
+      --ink:#1c1726; --paper:#fbf7f1; --max:1180px; --ease:cubic-bezier(.16,1,.3,1);
+    }
+    *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+    body{ color:var(--ink); font-family:var(--sans); line-height:1.55; overflow-x:hidden; background:#cfc9c2; }
+    @media(prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } html{ scroll-behavior:auto; } }
+    a{ color:inherit; text-decoration:none; }
+    :focus-visible{ outline:3px solid #fff; outline-offset:3px; }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 7vw; position:relative; z-index:2; }
+    @media(min-width:1000px){ .wrap{ padding:0 56px; } }
+    .skip{ position:absolute; left:-999px; top:0; background:#fff; color:var(--ink); padding:12px 18px; z-index:300; }
+    .skip:focus{ left:12px; top:12px; }
+    .kicker{ font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:.18em; text-transform:uppercase; opacity:.7; }
+
+    /* ===== header ===== */
+    header{ position:sticky; top:0; z-index:100; backdrop-filter:blur(10px); background:rgba(255,255,255,.18); border-bottom:1px solid rgba(255,255,255,.25); }
+    .bar{ max-width:var(--max); margin:0 auto; padding:15px 7vw; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    @media(min-width:1000px){ .bar{ padding:15px 56px; } }
+    .mark{ display:flex; align-items:center; gap:10px; } .mark .sym{ width:28px; height:28px; } .mark .wm{ height:10px; filter:invert(1); }
+    @media(max-width:520px){ .mark .wm{ display:none; } }
+    nav.links{ display:none; gap:26px; font-weight:500; font-size:14px; } nav.links a{ color:#fff; opacity:.85; } nav.links a:hover{ opacity:1; }
+    @media(min-width:880px){ nav.links{ display:flex; } }
+    .cta{ font-weight:600; font-size:14px; padding:10px 20px; background:#fff; color:var(--ink); border-radius:999px; white-space:nowrap; transition:transform .25s var(--ease); }
+    .cta:hover{ transform:translateY(-2px); }
+    .cta.ghost{ background:rgba(255,255,255,.16); color:#fff; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6); }
+    .ham{ display:none; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.5); color:#fff; cursor:pointer; }
+    @media(max-width:879px){ .ham{ display:grid; place-items:center; } }
+    header, header *{ color:#fff; }
+
+    /* ===== each scene = a colour-scripted world ===== */
+    .scene{ position:relative; padding:16vh 0; overflow:hidden; color:#fff; isolation:isolate; }
+    .scene .blob{ position:absolute; border-radius:50%; filter:blur(60px); z-index:0; animation:float 18s var(--ease) infinite alternate; }
+    @keyframes float{ to{ transform:translate(4vw,4vh) scale(1.18); } }
+
+    /* S0 — the grey machine world */
+    .s-grey{ background:linear-gradient(160deg,#8f8a84,#b4afa8 55%,#6f6b66); }
+    .s-grey .blob.a{ width:50vw;height:50vw;background:#a09a92;left:-8vw;top:-6vw;}
+    .s-grey .blob.b{ width:38vw;height:38vw;background:#76726d;right:-4vw;bottom:-8vw;animation-delay:-6s;}
+    /* S1 — dawn (the question) */
+    .s-dawn{ background:linear-gradient(160deg,#ff9e7d,#ffd29b 50%,#f5728a); }
+    .s-dawn .blob.a{ width:46vw;height:46vw;background:#ffb27a;left:-6vw;top:-4vw;}
+    .s-dawn .blob.b{ width:40vw;height:40vw;background:#ff6f91;right:-6vw;bottom:-10vw;animation-delay:-5s;}
+    /* S2 — jade (proof) */
+    .s-jade{ background:linear-gradient(160deg,#1fb89a,#7fd6a6 55%,#0c8f86); }
+    .s-jade .blob.a{ width:48vw;height:48vw;background:#37c9a8;left:-8vw;top:0;}
+    .s-jade .blob.b{ width:36vw;height:36vw;background:#0f9d92;right:-4vw;bottom:-6vw;animation-delay:-7s;}
+    /* S3 — golden hour (engage) */
+    .s-gold{ background:linear-gradient(160deg,#ff8f3f,#ffc24b 55%,#e85d3a); }
+    .s-gold .blob.a{ width:46vw;height:46vw;background:#ffac3f;left:-6vw;top:-4vw;}
+    .s-gold .blob.b{ width:40vw;height:40vw;background:#e25a36;right:-8vw;bottom:-8vw;animation-delay:-4s;}
+    /* S4 — twilight (who) */
+    .s-dusk{ background:linear-gradient(160deg,#6a52d6,#a07be8 55%,#3b3a8f); }
+    .s-dusk .blob.a{ width:46vw;height:46vw;background:#8366e6;left:-6vw;top:0;}
+    .s-dusk .blob.b{ width:38vw;height:38vw;background:#4b46a8;right:-6vw;bottom:-6vw;animation-delay:-9s;}
+    /* S5 — full technicolor (contact) */
+    .s-tech{ background:linear-gradient(135deg,#ff5e7e,#ff9a3d 30%,#39c6a8 60%,#6a6ce0); }
+    .s-tech .blob.a{ width:44vw;height:44vw;background:#ffd23f;left:-4vw;top:-6vw;}
+    .s-tech .blob.b{ width:40vw;height:40vw;background:#ff5e7e;right:-6vw;bottom:-8vw;animation-delay:-5s;}
+
+    /* ===== dark = nightfall over the same colour script ===== */
+    html[data-theme="dark"] body{ background:#141118; }
+    html[data-theme="dark"] .s-grey{ background:linear-gradient(160deg,#34322d,#46443f 55%,#23211d); }
+    html[data-theme="dark"] .s-grey .blob.a{ background:#3f3c37; } html[data-theme="dark"] .s-grey .blob.b{ background:#2a2723; }
+    html[data-theme="dark"] .s-dawn{ background:linear-gradient(160deg,#7a3a3f,#a05c46 50%,#5a2840); }
+    html[data-theme="dark"] .s-dawn .blob.a{ background:#8a4438; } html[data-theme="dark"] .s-dawn .blob.b{ background:#6a2c44; }
+    html[data-theme="dark"] .s-jade{ background:linear-gradient(160deg,#0c5a4e,#1a7560 55%,#063d39); }
+    html[data-theme="dark"] .s-jade .blob.a{ background:#16685a; } html[data-theme="dark"] .s-jade .blob.b{ background:#084f48; }
+    html[data-theme="dark"] .s-gold{ background:linear-gradient(160deg,#7a401a,#a0651f 55%,#5a2710); }
+    html[data-theme="dark"] .s-gold .blob.a{ background:#8a531c; } html[data-theme="dark"] .s-gold .blob.b{ background:#6a2c12; }
+    html[data-theme="dark"] .s-dusk{ background:linear-gradient(160deg,#2c2466,#463a82 55%,#191742); }
+    html[data-theme="dark"] .s-dusk .blob.a{ background:#3a2e78; } html[data-theme="dark"] .s-dusk .blob.b{ background:#211f55; }
+    html[data-theme="dark"] .s-tech{ background:linear-gradient(135deg,#5a263a,#6a3c1c 30%,#155a4c 60%,#2a2a66); }
+    html[data-theme="dark"] .s-tech .blob.a{ background:#7a611c; } html[data-theme="dark"] .s-tech .blob.b{ background:#5a283a; }
+    .toggle{ display:grid; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.5); color:#fff; cursor:pointer; place-items:center; font-size:14px; }
+
+    .big{ font-family:var(--disp); font-weight:500; font-size:clamp(48px,10vw,150px); line-height:.92; letter-spacing:-.02em; }
+    .big em{ font-style:italic; }
+    .lede{ font-family:var(--disp); font-size:clamp(24px,3.4vw,46px); line-height:1.12; max-width:22ch; font-weight:500; }
+    .lede em{ font-style:italic; }
+    .body{ font-size:clamp(16px,1.8vw,20px); line-height:1.65; max-width:46ch; margin-top:22px; opacity:.96; }
+    .acts{ margin-top:38px; display:flex; gap:13px; flex-wrap:wrap; }
+    .h2{ font-family:var(--disp); font-weight:500; font-size:clamp(36px,6vw,82px); line-height:.94; letter-spacing:-.02em; margin-bottom:36px; }
+    .h2 .k{ display:block; font-family:var(--sans); font-weight:600; font-size:13px; letter-spacing:.16em; text-transform:uppercase; opacity:.8; margin-bottom:14px; }
+
+    .feather{ position:absolute; right:4vw; top:8vh; width:min(26vw,260px); z-index:1; filter:brightness(0) invert(1) drop-shadow(0 10px 24px rgba(0,0,0,.3)); opacity:.92; animation:float 14s var(--ease) infinite alternate; }
+    @media(max-width:760px){ .feather{ width:120px; right:6vw; top:auto; bottom:6vh; opacity:.7; } }
+
+    .placard{ background:rgba(0,0,0,.14); border:1.5px solid rgba(255,255,255,.3); border-radius:18px; padding:18px; backdrop-filter:blur(4px); font-size:13px; line-height:1.5; }
+    .placard b{ font-weight:600; }
+
+    .proof{ padding:26px 0; border-top:1px solid rgba(255,255,255,.28); display:grid; grid-template-columns:1fr; gap:10px; }
+    @media(min-width:720px){ .proof{ grid-template-columns:1fr auto; align-items:end; } }
+    .proof q{ font-family:var(--disp); font-style:italic; font-size:clamp(22px,3vw,36px); line-height:1.15; max-width:24ch; }
+    .proof .src{ font-weight:500; font-size:13px; opacity:.85; }
+    @media(min-width:720px){ .proof .src{ text-align:right; } }
+    .chips{ margin-top:38px; display:flex; flex-wrap:wrap; gap:11px; }
+    .chip{ font-weight:500; font-size:13px; padding:10px 16px; border-radius:999px; background:rgba(255,255,255,.18); border:1.5px solid rgba(255,255,255,.45); transition:.2s; }
+    .chip:hover{ background:#fff; color:var(--ink); }
+
+    .tiles{ display:grid; grid-template-columns:1fr; gap:16px; margin-top:8px; }
+    @media(min-width:820px){ .tiles{ grid-template-columns:repeat(3,1fr); } }
+    .tile{ background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.4); border-radius:22px; padding:26px; backdrop-filter:blur(4px); transition:transform .3s var(--ease); }
+    .tile:hover{ transform:translateY(-6px); background:rgba(255,255,255,.24); }
+    .tile h3{ font-family:var(--disp); font-weight:500; font-size:clamp(26px,3.2vw,38px); }
+    .tile .it{ font-family:var(--disp); font-style:italic; font-size:16px; opacity:.92; margin:8px 0 14px; }
+    .tile p{ font-size:14px; opacity:.95; } .tile .when{ font-weight:600; font-size:12px; letter-spacing:.06em; text-transform:uppercase; margin-top:16px; opacity:.85; }
+
+    .who{ display:grid; grid-template-columns:1fr; gap:34px; }
+    @media(min-width:860px){ .who{ grid-template-columns:1.4fr .9fr; gap:6vw; } }
+    .who p{ font-family:var(--disp); font-size:clamp(21px,2.5vw,30px); line-height:1.38; margin-bottom:18px; }
+    .who p em{ font-style:italic; }
+    .rec .row{ display:flex; gap:14px; padding:12px 0; border-top:1px solid rgba(255,255,255,.28); font-weight:500; font-size:13px; }
+    .rec .row b{ font-weight:600; min-width:56px; } .rec .row span{ opacity:.9; }
+
+    .bench .line{ font-family:var(--disp); font-size:clamp(26px,3.8vw,46px); line-height:1.08; max-width:20ch; }
+    .bench .line em{ font-style:italic; } .bench .ag{ font-weight:500; font-size:14px; opacity:.9; margin-top:18px; }
+    .bench a.q{ display:inline-block; margin-top:22px; font-weight:500; font-size:14px; border-bottom:1.5px solid rgba(255,255,255,.5); }
+
+    .contact .h2{ font-size:clamp(44px,9vw,128px); }
+    footer{ background:var(--ink); color:rgba(255,255,255,.6); padding:34px 0 52px; }
+    .foot{ max-width:var(--max); margin:0 auto; padding:0 7vw; display:flex; flex-wrap:wrap; gap:14px 36px; justify-content:space-between; font-weight:500; font-size:12px; }
+    @media(min-width:1000px){ .foot{ padding:0 56px; } } .foot a{ color:#fff; }
+
+    .sheet{ position:fixed; inset:0; z-index:200; transform:translateY(-100%); transition:transform .4s var(--ease); display:grid; align-content:center; gap:4px; padding:0 9vw; color:#fff; background:linear-gradient(160deg,#6a52d6,#ff6f91); }
+    .sheet.open{ transform:translateY(0); }
+    .sheet a{ font-family:var(--disp); font-size:42px; padding:7px 0; } .sheet .x{ position:absolute; top:22px; right:9vw; font-weight:600; font-size:13px; background:none; border:none; color:#fff; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <a href="#dawn" class="skip">Skip to content</a>
+
+  <header>
+    <div class="bar">
+      <a href="#top" class="mark" aria-label="IDYeah Studio, home"><img class="sym" src="/symbol-dark.png" alt="" aria-hidden="true" /><img class="wm" src="/wordmark.png" alt="IDYeah Studio" /></a>
+      <nav class="links" aria-label="Primary"><a href="#dawn">Studio</a><a href="#jade">Work</a><a href="#gold">Engage</a><a href="#dusk">Vishal</a></nav>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a>
+        <button class="toggle" id="themeBtn" aria-label="Toggle light or dark theme">&#9790;</button>
+        <button class="ham" id="hamBtn" aria-label="Open menu" aria-expanded="false">&equiv;</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sheet" id="sheet" aria-hidden="true">
+    <button class="x" id="closeBtn">close &times;</button>
+    <a href="#dawn">Studio</a><a href="#jade">Work</a><a href="#gold">Engage</a><a href="#dusk">Vishal</a>
+    <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener">Book a call &rarr;</a>
+  </div>
+
+  <main id="top">
+
+    <!-- S0 GREY — the machine's world -->
+    <section class="scene s-grey">
+      <span class="blob a"></span><span class="blob b"></span>
+      <img class="feather" src="/media/feather.png" alt="" aria-hidden="true">
+      <div class="wrap">
+        <p class="kicker">Scene 0 · the machine's world is grey</p>
+        <h1 class="big" style="margin-top:24px;">AI gives everyone the same <em>grey</em> output.</h1>
+        <p class="body">Infinite, instant, lifeless. The quill is the only thing with colour in it. Scroll, and watch the world come alive.</p>
+        <div class="acts">
+          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a>
+          <a href="#dawn" class="cta ghost">Bring it to life ↓</a>
+        </div>
+        <div class="placard" style="max-width:330px;margin-top:42px;"><b>Note for review:</b> this is the <i>evoked</i> Disney version — choreographed colour + parallax. The truly cinematic cel art (a founder, a world) would be commissioned or generated and dropped into these scenes.</div>
+      </div>
+    </section>
+
+    <!-- S1 DAWN — the practice -->
+    <section class="scene s-dawn" id="dawn">
+      <span class="blob a"></span><span class="blob b"></span>
+      <div class="wrap">
+        <p class="h2"><span class="k">Scene 1 · first light</span>The practice.</p>
+        <p class="lede">Founders ship faster than ever, and ship the <em>wrong thing</em> faster than ever.</p>
+        <p class="body">I help you say what the product actually does, then design the thing that proves it. One senior hand, an AI-fast workshop, and an opinion you can argue with.</p>
+      </div>
+    </section>
+
+    <!-- S2 JADE — proof -->
+    <section class="scene s-jade" id="jade">
+      <span class="blob a"></span><span class="blob b"></span>
+      <div class="wrap">
+        <p class="h2"><span class="k">Scene 2 · it lives</span>Proof.</p>
+        <div class="proof"><q>Closed our seed round within weeks.</q><div class="src">B. Patni — Rialty</div></div>
+        <div class="proof"><q>A production-ready design system and code in half the time.</q><div class="src">A. Adhikari — Ionate</div></div>
+        <div class="proof"><q>From explaining what we do to people getting it instantly.</q><div class="src">Founder — stealth, B2B SaaS</div></div>
+        <div class="chips">
+          <a class="chip" href="https://apps.apple.com/us/app/crit-ai-design-advisor/id6759672039" target="_blank" rel="noopener">Crit for iOS</a>
+          <a class="chip" href="https://www.figma.com/community/plugin/1621595778962170116" target="_blank" rel="noopener">Crit for Figma</a>
+          <a class="chip" href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" rel="noopener">Design AI Alchemy</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 GOLD — engage -->
+    <section class="scene s-gold" id="gold">
+      <span class="blob a"></span><span class="blob b"></span>
+      <div class="wrap">
+        <p class="h2"><span class="k">Scene 3 · golden hour</span>Three ways in.</p>
+        <div class="tiles">
+          <div class="tile"><h3>Pitch Deck</h3><p class="it">attention into conviction</p><p>An investor-ready narrative, one clear visual story.</p><p class="when">5–7 days</p></div>
+          <div class="tile"><h3>Brand Sprint</h3><p class="it">know what you stand for</p><p>Positioning, messaging, identity direction.</p><p class="when">2–3 weeks</p></div>
+          <div class="tile"><h3>Product UX</h3><p class="it">research to handoff</p><p>Research, IA, hi-fi UI, developer handoff.</p><p class="when">project / retainer</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S4 DUSK — who -->
+    <section class="scene s-dusk" id="dusk">
+      <span class="blob a"></span><span class="blob b"></span>
+      <div class="wrap">
+        <p class="h2"><span class="k">Scene 4 · twilight</span>Who's behind it.</p>
+        <div class="who">
+          <div>
+            <p>I'm Vishal. <em>Twenty-five years</em> in the work: engineering, design systems, and an AI-augmented practice that ships production-grade React and brand fast.</p>
+            <p>One person, on purpose. You work with the practitioner, not a deck about one.</p>
+          </div>
+          <div class="rec">
+            <div class="row"><b>2000→</b><span>25+ yrs · engineering, UX &amp; brand</span></div>
+            <div class="row"><b>ACM</b><span>SIGCHI member · HCI</span></div>
+            <div class="row"><b>EB1A</b><span>US Green Card, Extraordinary Ability</span></div>
+            <div class="row"><b>2025</b><span>World Usability Congress · studio founded</span></div>
+            <div class="row"><b>HQ</b><span>Cupertino, US</span></div>
+          </div>
+        </div>
+        <div class="bench" style="margin-top:60px;">
+          <p class="line">On the bench: three agents, <em>each with an opinion.</em></p>
+          <p class="ag">one audits. one designs. one codes.</p>
+          <a class="q" href="https://keya.studio" target="_blank" rel="noopener">ask to see it early →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5 TECHNICOLOR — contact -->
+    <section class="scene s-tech contact" id="contact">
+      <span class="blob a"></span><span class="blob b"></span>
+      <div class="wrap">
+        <p class="kicker">Scene 5 · it ships, in full colour</p>
+        <p class="h2" style="margin-top:18px;">Make something <em>worth noticing.</em></p>
+        <div class="acts">
+          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a discovery call</a>
+          <a href="#" id="emailLink" class="cta ghost">Send an email</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <span>Built with AI. Aimed by 25 years. — V</span>
+      <span>Cupertino · <a href="https://linkedin.com/in/vishalme" target="_blank" rel="noopener">LinkedIn</a> · <span id="yr"></span></span>
+      <span>grey → shipped.</span>
+    </div>
+  </footer>
+
+  <script>
+    var root=document.documentElement, tBtn=document.getElementById('themeBtn');
+    function setTheme(t){ root.setAttribute('data-theme',t); tBtn.innerHTML=t==='dark'?'&#9728;':'&#9790;'; }
+    if(tBtn) tBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
+    var sheet=document.getElementById('sheet'), ham=document.getElementById('hamBtn'), close=document.getElementById('closeBtn');
+    function openSheet(o){ sheet.classList.toggle('open',o); ham.setAttribute('aria-expanded',o); sheet.setAttribute('aria-hidden',!o); }
+    ham.addEventListener('click',function(){ openSheet(true); });
+    close.addEventListener('click',function(){ openSheet(false); });
+    sheet.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ openSheet(false); }); });
+    var u='vishal', d='idyeah.studio';
+    document.getElementById('emailLink').href='mailto:'+u+'@'+d;
+    document.getElementById('yr').textContent='© '+new Date().getFullYear()+' IDYeah Studio';
+  </script>
+</body>
+</html>
