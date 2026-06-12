@@ -29,6 +29,14 @@
       --serif:'Cormorant Garamond',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --mono:'DM Mono','SF Mono',monospace;
       --max:1180px; --ease:cubic-bezier(.16,1,.3,1);
     }
+    html[data-theme="dark"]{
+      --paper:#15110b; --ink:#efe7d8; --ink-2:rgba(239,231,216,.66); --ink-3:rgba(239,231,216,.42);
+      --glass:rgba(56,44,32,.4); --glass-2:rgba(32,24,16,.72); --glass-edge:rgba(255,255,255,.14);
+    }
+    html[data-theme="dark"] body{ background:#15110b; }
+    html[data-theme="dark"] .mark .sym, html[data-theme="dark"] .mark .wm{ filter:invert(1); }
+    html[data-theme="dark"] .aurora{ filter:blur(70px) saturate(1.2) brightness(.85); }
+    .toggle{ width:38px; height:38px; border-radius:50%; border:1px solid var(--glass-edge); background:rgba(255,255,255,.28); color:var(--ink); cursor:pointer; display:grid; place-items:center; font-size:14px; }
     *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
     html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
     body{ color:var(--ink); font-family:var(--sans); line-height:1.55; overflow-x:hidden; background:var(--paper); }
@@ -167,6 +175,7 @@
       </a>
       <nav class="links" aria-label="Primary"><a href="#pitch">Studio</a><a href="#work">Work</a><a href="#offers">Engage</a><a href="#who">Vishal</a></nav>
       <div style="display:flex;align-items:center;gap:12px;">
+        <button class="toggle" id="themeBtn" aria-label="Toggle light or dark theme">&#9790;</button>
         <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a>
         <button class="ham" id="hamBtn" aria-label="Open menu" aria-expanded="false">&equiv;</button>
       </div>
@@ -262,6 +271,9 @@
   </footer>
 
   <script>
+    var root=document.documentElement, tBtn=document.getElementById('themeBtn');
+    function setTheme(t){ root.setAttribute('data-theme',t); tBtn.innerHTML=t==='dark'?'&#9728;':'&#9790;'; }
+    if(tBtn) tBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
     var sheet=document.getElementById('sheet'), ham=document.getElementById('hamBtn'), close=document.getElementById('closeBtn');
     function openSheet(o){ sheet.classList.toggle('open',o); ham.setAttribute('aria-expanded',o); sheet.setAttribute('aria-hidden',!o); }
     ham.addEventListener('click',function(){ openSheet(true); });
