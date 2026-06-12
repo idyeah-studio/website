@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IDYeah Studio — Clarity that ships.</title>
+
+  <meta name="description" content="A one-person UX and brand strategy studio for founders building real products. Pitch decks, brand sprints, and product UX with 25 years of senior craft. Clarity that ships." />
+  <link rel="canonical" href="https://idyeah.studio/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://idyeah.studio/" />
+  <meta property="og:title" content="IDYeah Studio — Clarity that ships." />
+  <meta property="og:description" content="Strategic brand and UX direction for founders building real products. Built with AI, aimed by 25 years of judgment." />
+  <meta property="og:image" content="https://idyeah.studio/media/og-cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="IDYeah Studio — Clarity that ships." />
+  <meta name="twitter:description" content="Strategic brand and UX direction for founders building real products." />
+  <meta name="twitter:image" content="https://idyeah.studio/media/og-cover.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    [data-theme="light"]{
+      --bg:#f5f1ea; --bg-2:#faf8f4;
+      --text:#18130e; --text-2:rgba(24,19,14,.66); --text-3:rgba(24,19,14,.40);
+      --gold:#7a5520; --line:rgba(24,19,14,.14); --hair:rgba(24,19,14,.10);
+      --cta-bg:#18130e; --cta-text:#f5f1ea;
+    }
+    [data-theme="dark"]{
+      --bg:#0b0a09; --bg-2:#121110;
+      --text:#ede9e2; --text-2:rgba(237,233,226,.64); --text-3:rgba(237,233,226,.40);
+      --gold:#c8a96e; --line:rgba(237,233,226,.16); --hair:rgba(237,233,226,.10);
+      --cta-bg:#ede9e2; --cta-text:#0b0a09;
+    }
+    :root{
+      --coral:#E0603A;
+      --serif:'Cormorant Garamond',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --mono:'DM Mono','SF Mono',monospace;
+      --max:1180px; --ease:cubic-bezier(.16,1,.3,1);
+    }
+
+    *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+    body{ background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.5; transition:background .4s var(--ease),color .4s var(--ease); overflow-x:hidden; }
+    @media (prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } html{ scroll-behavior:auto; } }
+    a{ color:inherit; text-decoration:none; }
+    ::selection{ background:var(--coral); color:#fff; }
+    :focus-visible{ outline:2px solid var(--coral); outline-offset:3px; border-radius:2px; }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 7vw; }
+    @media(min-width:1000px){ .wrap{ padding:0 64px; } }
+    .skip{ position:absolute; left:-999px; top:0; background:var(--cta-bg); color:var(--cta-text); padding:12px 18px; z-index:200; }
+    .skip:focus{ left:12px; top:12px; }
+
+    /* ===== the three voices ===== */
+    /* machine = mono/faded ; pen = coral ; final = serif */
+    .mono{ font-family:var(--mono); }
+    .label{ font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-3); }
+
+    /* the pen: a struck-out (rejected) phrase */
+    .s{ color:var(--text-3); text-decoration:line-through; text-decoration-color:var(--coral); text-decoration-style:wavy; text-decoration-thickness:2px; }
+    /* the pen: a circled word */
+    .circ{ position:relative; white-space:nowrap; }
+    .circ::before{ content:""; position:absolute; inset:-6px -13px -8px -13px; border:2.5px solid var(--coral); border-radius:47% 53% 50% 50% / 62% 56% 44% 50%; transform:rotate(-1.4deg); pointer-events:none; }
+    /* the pen: the inserted/approved word */
+    .fix{ font-family:var(--serif); font-style:italic; color:var(--gold); }
+    /* a margin note in the pen's hand */
+    .note{ font-family:var(--serif); font-style:italic; color:var(--coral); font-size:clamp(16px,1.5vw,20px); line-height:1.32; }
+    .note::before{ content:"✎  "; font-style:normal; opacity:.7; }
+
+    /* ===== HEADER ===== */
+    header{ position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 90%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--hair); }
+    .bar{ max-width:var(--max); margin:0 auto; padding:16px 7vw; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    @media(min-width:1000px){ .bar{ padding:18px 64px; } }
+    .mark{ display:flex; align-items:center; gap:11px; }
+    .mark .sym{ width:31px; height:31px; }
+    [data-theme="light"] .mark .sym-on-dark{ display:none; }
+    [data-theme="dark"]  .mark .sym-on-light{ display:none; }
+    .mark .wordmark-img{ height:11px; width:auto; display:block; }
+    [data-theme="dark"] .mark .wordmark-img{ filter:invert(1); }
+    @media(max-width:520px){ .mark .wordmark-img{ display:none; } }
+    nav.links{ display:none; gap:30px; font-family:var(--mono); font-size:13px; letter-spacing:.04em; }
+    nav.links a{ color:var(--text-2); transition:color .25s; } nav.links a:hover{ color:var(--coral); }
+    @media(min-width:860px){ nav.links{ display:flex; } }
+    .head-right{ display:flex; align-items:center; gap:14px; }
+    .toggle{ width:38px; height:38px; border:1px solid var(--line); border-radius:50%; background:none; color:var(--text); cursor:pointer; font-size:15px; display:grid; place-items:center; }
+    .cta{ font-family:var(--mono); font-size:13px; letter-spacing:.03em; padding:11px 20px; background:var(--cta-bg); color:var(--cta-text); border-radius:999px; white-space:nowrap; transition:transform .25s var(--ease); }
+    .cta:hover{ transform:translateY(-2px); }
+    .cta.ghost{ background:none; color:var(--text); border:1px solid var(--line); }
+    .ham{ display:none; width:38px; height:38px; border:1px solid var(--line); border-radius:50%; background:none; cursor:pointer; color:var(--text); }
+    @media(max-width:859px){ .ham{ display:grid; place-items:center; } }
+
+    /* ===== document rhythm ===== */
+    section{ padding:12vh 0; border-top:1px solid var(--hair); position:relative; }
+    .draft-tag{ font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-3); margin-bottom:42px; }
+    .draft-tag b{ color:var(--coral); font-weight:500; }
+
+    /* two-column correction block: draft + a pen note in the margin */
+    .block{ display:grid; grid-template-columns:1fr; gap:18px; }
+    @media(min-width:880px){ .block{ grid-template-columns:minmax(0,1fr) clamp(170px,21vw,270px); gap:clamp(28px,4vw,56px); align-items:start; } }
+    @media(max-width:879px){ .block .note{ border-left:2px solid var(--coral); padding-left:14px; } }
+
+    .draft{ font-family:var(--serif); font-size:clamp(24px,3vw,40px); line-height:1.32; color:var(--text-3); }
+    .fixline{ font-family:var(--serif); font-size:clamp(28px,3.6vw,52px); line-height:1.12; color:var(--text); margin-top:26px; max-width:22ch; }
+    .fixline em{ font-style:italic; color:var(--gold); }
+    .arrow{ display:block; font-family:var(--mono); color:var(--coral); font-size:14px; letter-spacing:.1em; margin-top:22px; }
+
+    /* ===== HERO ===== */
+    .hero{ padding:12vh 0 8vh; border-top:none; }
+    .eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--coral); margin-bottom:30px; }
+    .hero-h{ font-family:var(--serif); font-weight:500; }
+    .hero-h .pre{ display:block; font-size:clamp(30px,5vw,58px); line-height:1.1; color:var(--text-3); }
+    .hero-h .pre .keep{ color:var(--text); }
+    .hero-h .ships{ display:block; font-style:italic; color:var(--gold); font-weight:600; font-size:clamp(96px,24vw,340px); line-height:.82; margin-left:-.03em; margin-top:6px; white-space:nowrap; }
+    .hero-sub{ font-family:var(--serif); font-size:clamp(22px,3vw,34px); line-height:1.35; max-width:20ch; margin-top:40px; }
+    .hero-note{ margin-top:24px; max-width:34ch; }
+    .hero-actions{ margin-top:42px; display:flex; gap:14px; flex-wrap:wrap; }
+
+    /* ===== section heads ===== */
+    .sec-head{ display:flex; align-items:baseline; gap:18px; margin-bottom:14px; }
+    .sec-head .num{ font-family:var(--mono); font-size:13px; color:var(--coral); }
+    .sec-head h2{ font-family:var(--serif); font-weight:500; font-size:clamp(34px,5vw,64px); line-height:1; letter-spacing:-.01em; }
+
+    /* ===== EVIDENCE ===== */
+    .quote{ padding:36px 0; border-top:1px solid var(--hair); display:grid; grid-template-columns:1fr; gap:12px; }
+    @media(min-width:760px){ .quote{ grid-template-columns:1fr auto; align-items:end; } }
+    .quote q{ font-family:var(--serif); font-style:italic; font-size:clamp(24px,3.2vw,38px); line-height:1.2; max-width:24ch; }
+    .quote .who{ font-family:var(--mono); font-size:13px; color:var(--text-2); }
+    @media(min-width:760px){ .quote .who{ text-align:right; } }
+    .shipping{ margin-top:50px; display:flex; flex-wrap:wrap; gap:14px; }
+    .chip{ font-family:var(--mono); font-size:13px; padding:10px 16px; border:1px solid var(--line); border-radius:999px; color:var(--text-2); transition:.25s; }
+    .chip:hover{ border-color:var(--coral); color:var(--coral); }
+    .chip span{ color:var(--text-3); }
+    .video-block{ margin-top:60px; }
+    .video-el{ width:100%; display:block; border:1px solid var(--line); border-radius:4px; background:#000; }
+    .video-cap{ font-family:var(--mono); font-size:12px; color:var(--text-3); margin-top:12px; letter-spacing:.04em; }
+
+    /* ===== OFFERS (clean ledger) ===== */
+    .offer{ padding:44px 0; border-top:1px solid var(--hair); display:grid; grid-template-columns:1fr; gap:20px; }
+    @media(min-width:840px){ .offer{ grid-template-columns:.85fr 1.15fr; gap:60px; } }
+    .offer h3{ font-family:var(--serif); font-weight:500; font-size:clamp(32px,4.2vw,52px); line-height:1; }
+    .offer .lead{ font-family:var(--serif); font-style:italic; color:var(--gold); font-size:18px; margin-top:12px; }
+    .offer p{ color:var(--text-2); font-size:16px; max-width:46ch; }
+    .offer ul{ list-style:none; margin-top:16px; display:grid; gap:8px; }
+    .offer li{ font-family:var(--mono); font-size:13px; color:var(--text-2); padding-left:18px; position:relative; }
+    .offer li::before{ content:"·"; position:absolute; left:4px; color:var(--coral); }
+    .offer .when{ font-family:var(--mono); font-size:12px; color:var(--text-3); text-transform:uppercase; letter-spacing:.1em; margin-top:16px; }
+
+    /* ===== PERSON ===== */
+    .person{ display:grid; grid-template-columns:1fr; gap:40px; align-items:start; }
+    @media(min-width:860px){ .person{ grid-template-columns:1.4fr .9fr; gap:70px; } }
+    .person p{ font-family:var(--serif); font-size:clamp(22px,2.6vw,30px); line-height:1.4; margin-bottom:22px; }
+    .person p em{ font-style:italic; color:var(--gold); }
+    .creds .row{ display:flex; gap:16px; padding:15px 0; border-top:1px solid var(--hair); font-family:var(--mono); font-size:13px; }
+    .creds .row b{ color:var(--coral); font-weight:400; min-width:64px; }
+    .creds .row span{ color:var(--text-2); }
+    .feather{ position:absolute; right:-2vw; top:7vh; width:min(33vw,340px); opacity:.5; pointer-events:none; mix-blend-mode:multiply; }
+    [data-theme="dark"] .feather{ mix-blend-mode:screen; opacity:.32; }
+
+    /* ===== KEYA teaser ===== */
+    .bench .line{ font-family:var(--serif); font-size:clamp(28px,4vw,52px); line-height:1.1; max-width:20ch; }
+    .bench .line em{ font-style:italic; color:var(--gold); }
+    .bench .agents{ font-family:var(--mono); font-size:14px; color:var(--text-2); letter-spacing:.04em; margin-top:22px; }
+    .bench a.quiet{ display:inline-block; margin-top:26px; font-family:var(--mono); font-size:13px; color:var(--text-3); border-bottom:1px solid var(--line); padding-bottom:2px; }
+    .bench a.quiet:hover{ color:var(--coral); border-color:var(--coral); }
+
+    /* ===== CONTACT (the corrected close) ===== */
+    .contact h2{ font-family:var(--serif); font-weight:500; font-size:clamp(44px,8vw,116px); line-height:.96; letter-spacing:-.01em; margin-top:20px; }
+    .contact h2 em{ font-style:italic; color:var(--gold); }
+    .contact .actions{ margin-top:44px; display:flex; gap:14px; flex-wrap:wrap; }
+
+    footer{ border-top:1px solid var(--hair); padding:40px 0 60px; }
+    .foot{ display:flex; flex-wrap:wrap; gap:16px 40px; align-items:center; justify-content:space-between; font-family:var(--mono); font-size:12px; color:var(--text-3); }
+    .foot a:hover{ color:var(--coral); }
+    .foot .home{ font-family:var(--serif); font-style:italic; font-size:16px; color:var(--text-2); }
+
+    .sheet{ position:fixed; inset:0; background:var(--bg); z-index:150; transform:translateY(-100%); transition:transform .45s var(--ease); display:grid; align-content:center; gap:6px; padding:0 9vw; }
+    .sheet.open{ transform:translateY(0); }
+    .sheet a{ font-family:var(--serif); font-size:38px; padding:8px 0; }
+    .sheet .close{ position:absolute; top:22px; right:9vw; font-family:var(--mono); font-size:13px; background:none; border:none; color:var(--text-2); cursor:pointer; }
+  </style>
+</head>
+<body>
+  <a href="#pitch" class="skip">Skip to content</a>
+
+  <header>
+    <div class="bar">
+      <a href="#top" class="mark" aria-label="IDYeah Studio, home">
+        <img class="sym sym-on-light" src="/symbol-light.png" alt="" aria-hidden="true" />
+        <img class="sym sym-on-dark" src="/symbol-dark.png" alt="" aria-hidden="true" />
+        <img class="wordmark-img" src="/wordmark.png" alt="IDYeah Studio" />
+      </a>
+      <nav class="links" aria-label="Primary">
+        <a href="#pitch">Studio</a>
+        <a href="#work">Work</a>
+        <a href="#offers">Engage</a>
+        <a href="#person">Vishal</a>
+      </nav>
+      <div class="head-right">
+        <button class="toggle" id="themeBtn" aria-label="Toggle light or dark theme">&#9790;</button>
+        <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a>
+        <button class="ham" id="hamBtn" aria-label="Open menu" aria-expanded="false">&equiv;</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sheet" id="sheet" aria-hidden="true">
+    <button class="close" id="closeBtn">close &times;</button>
+    <a href="#pitch">Studio</a>
+    <a href="#work">Work</a>
+    <a href="#offers">Engage</a>
+    <a href="#person">Vishal</a>
+    <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener">Book a call &rarr;</a>
+  </div>
+
+  <main id="top">
+
+    <!-- HERO — the headline, corrected -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">First draft, generated. Then aimed.</p>
+        <h1 class="hero-h">
+          <span class="pre"><span class="keep">Clarity that</span> <span class="s">leverages cutting-edge synergies</span></span>
+          <span class="ships">ships.</span>
+        </h1>
+        <p class="hero-sub">UX and brand strategy for founders building real products.</p>
+        <p class="hero-note note">The machine wrote the whole line. I kept one word of it.</p>
+        <div class="hero-actions">
+          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a>
+          <a href="#work" class="cta ghost">See the work</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PITCH — the studio, as the machine described it, then corrected -->
+    <section id="pitch">
+      <div class="wrap">
+        <p class="draft-tag">Exhibit A &middot; <b>the studio, as the machine wrote it</b></p>
+        <div class="block">
+          <p class="draft">"We are a <span class="s">world-class</span>, <span class="s">innovative</span> studio that <span class="s">empowers</span> founders to <span class="s">unleash their potential</span> and <span class="s">disrupt</span> their markets with <span class="s">cutting-edge solutions</span>."</p>
+          <aside class="note">Six adjectives. Zero claims. Strike all of it.</aside>
+        </div>
+        <p class="arrow">↓ what it actually is</p>
+        <p class="fixline">I help founders say what their product does. Then I design the thing that <em>proves</em> it.</p>
+      </div>
+    </section>
+
+    <!-- EVIDENCE -->
+    <section id="work">
+      <div class="wrap">
+        <div class="sec-head"><span class="num">B</span><h2>Proof the machine couldn't fake.</h2></div>
+        <div class="block" style="margin-top:8px;">
+          <p class="draft" style="font-size:clamp(20px,2.4vw,30px);">"<span class="s">Trusted by industry-leading innovators worldwide.</span>"</p>
+          <aside class="note">Name them, or it didn't happen.</aside>
+        </div>
+        <div style="margin-top:26px;">
+          <div class="quote"><q>Closed our seed round within weeks of working with him.</q><div class="who">B. Patni<br/>Founder, Rialty</div></div>
+          <div class="quote"><q>A production-ready design system and code in half the time we expected.</q><div class="who">A. Adhikari<br/>CEO, Ionate</div></div>
+          <div class="quote"><q>We went from explaining what we do to people getting it instantly.</q><div class="who">Founder<br/>Stealth · B2B SaaS</div></div>
+        </div>
+        <div class="shipping">
+          <a class="chip" href="https://apps.apple.com/us/app/crit-ai-design-advisor/id6759672039" target="_blank" rel="noopener">Crit for iOS <span>· AI design advisor</span></a>
+          <a class="chip" href="https://www.figma.com/community/plugin/1621595778962170116" target="_blank" rel="noopener">Crit for Figma <span>· in-canvas critique</span></a>
+          <a class="chip" href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" rel="noopener">Design AI Alchemy <span>· 75 prompt recipes</span></a>
+        </div>
+        <div class="video-block">
+          <video class="video-el" controls preload="none" playsinline poster="/media/intro-cover.jpg" title="A 90-second introduction to IDYeah Studio">
+            <source src="/media/intro.mp4" type="video/mp4" />
+            Your browser does not support video.
+          </video>
+          <p class="video-cap">// meet the studio. 90 seconds.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OFFERS -->
+    <section id="offers">
+      <div class="wrap">
+        <div class="sec-head"><span class="num">C</span><h2>Three ways in.</h2></div>
+        <div class="offer">
+          <div><h3>Pitch Deck</h3><p class="lead">Attention into conviction.</p></div>
+          <div>
+            <p>An investor-ready narrative that tells one clear, visual story. From the architecture of the argument to the final slide.</p>
+            <ul><li>Narrative structure &amp; slide flow</li><li>High-fidelity Keynote or Figma deck</li><li>Two rounds of revision</li></ul>
+            <p class="when">5–7 day turnaround</p>
+          </div>
+        </div>
+        <div class="offer">
+          <div><h3>Brand Sprint</h3><p class="lead">Know what you stand for.</p></div>
+          <div>
+            <p>Positioning, messaging hierarchy, and visual identity direction for early teams who need clarity, and the confidence to say it out loud.</p>
+            <ul><li>Positioning &amp; messaging framework</li><li>Visual identity direction</li><li>Prioritized action roadmap</li></ul>
+            <p class="when">2–3 week engagement</p>
+          </div>
+        </div>
+        <div class="offer">
+          <div><h3>Product UX</h3><p class="lead">Research to handoff.</p></div>
+          <div>
+            <p>End-to-end design: research, information architecture, high-fidelity UI, developer handoff. An AI-augmented workflow for faster, sharper outcomes.</p>
+            <ul><li>Research synthesis &amp; IA</li><li>High-fidelity Figma UI &amp; prototype</li><li>Developer handoff + 2 weeks async support</li></ul>
+            <p class="when">Project or retainer</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERSON -->
+    <section id="person" style="position:relative;">
+      <img class="feather" src="/media/feather.png" alt="" aria-hidden="true" />
+      <div class="wrap">
+        <div class="sec-head"><span class="num">D</span><h2>Who's holding the pen.</h2></div>
+        <div class="person">
+          <div>
+            <p>I'm Vishal. The machine wanted to call me a <span class="s">design ninja</span> <span class="circ">practitioner</span> with <em>twenty-five years</em> in the work: software engineering, design systems, and an AI-augmented practice that ships production-grade React and brand fast.</p>
+            <p>I don't just make things look good. I help teams figure out what they're actually saying, and how to say it with precision.</p>
+            <p>I keep the studio one person, <em>on purpose.</em> You work with the practitioner, not an account manager.</p>
+          </div>
+          <div class="creds">
+            <div class="row"><b>2000→</b><span>25+ years across engineering, UX strategy &amp; brand</span></div>
+            <div class="row"><b>ACM</b><span>SIGCHI member · human–computer interaction</span></div>
+            <div class="row"><b>EB1A</b><span>US Green Card for Extraordinary Ability</span></div>
+            <div class="row"><b>2025</b><span>Speaker, World Usability Congress · studio founded</span></div>
+            <div class="row"><b>HQ</b><span>Cupertino, US</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEYA teaser -->
+    <section id="bench">
+      <div class="wrap">
+        <p class="label" style="margin-bottom:32px;">From the bench</p>
+        <p class="bench line">Something is coming from the studio. Three agents, <em>each with an opinion.</em></p>
+        <p class="bench agents">one audits.&nbsp;&nbsp;one designs.&nbsp;&nbsp;one codes.&nbsp;&nbsp;built on markdown, tuned for taste.</p>
+        <a class="bench quiet" href="https://keya.studio" target="_blank" rel="noopener">ask to see it early &rarr;</a>
+      </div>
+    </section>
+
+    <!-- CONTACT — the corrected close -->
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <p class="draft-tag">The machine's call to action</p>
+        <div class="block">
+          <p class="draft" style="font-size:clamp(20px,2.4vw,30px);">"<span class="s">Let's hop on a quick call to explore synergies and unlock value!</span>"</p>
+          <aside class="note">Or we just talk, like people.</aside>
+        </div>
+        <h2>Make something <em>worth noticing.</em></h2>
+        <div class="actions">
+          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a discovery call</a>
+          <a href="#" id="emailLink" class="cta ghost">Send an email</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <span class="home">Built with AI. Every word it added, I took out. &mdash; V</span>
+        <span>Cupertino · <a href="https://linkedin.com/in/vishalme" target="_blank" rel="noopener">LinkedIn</a> · <span id="yr"></span></span>
+        <span>// designed for the real world.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var root=document.documentElement, tBtn=document.getElementById('themeBtn');
+    function setTheme(t){ root.setAttribute('data-theme',t); tBtn.innerHTML = t==='dark' ? '&#9728;' : '&#9790;'; }
+    tBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
+
+    var sheet=document.getElementById('sheet'), ham=document.getElementById('hamBtn'), close=document.getElementById('closeBtn');
+    function openSheet(o){ sheet.classList.toggle('open',o); ham.setAttribute('aria-expanded',o); sheet.setAttribute('aria-hidden',!o); }
+    ham.addEventListener('click',function(){ openSheet(true); });
+    close.addEventListener('click',function(){ openSheet(false); });
+    sheet.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ openSheet(false); }); });
+
+    var u='vishal', d='idyeah.studio';
+    document.getElementById('emailLink').href='mailto:'+u+'@'+d;
+    document.getElementById('yr').textContent='© '+new Date().getFullYear()+' IDYeah Studio';
+  </script>
+</body>
+</html>
