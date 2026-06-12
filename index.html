@@ -1,1280 +1,314 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IDYeah Studio — Beyond the Ordinary</title>
+  <title>IDYeah Studio — a solo exhibition.</title>
+
+  <meta name="description" content="A one-person UX and brand studio, hung as a solo exhibition. The subject of every piece is clarity. Pitch decks, brand sprints, product UX. 25 years of craft." />
+  <link rel="canonical" href="https://idyeah.studio/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://idyeah.studio/" />
+  <meta property="og:title" content="IDYeah Studio — a solo exhibition." />
+  <meta property="og:description" content="A one-person studio, hung as a solo exhibition. The subject of every piece is clarity." />
+  <meta property="og:image" content="https://idyeah.studio/media/og-cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="IDYeah Studio — a solo exhibition." />
+  <meta name="twitter:description" content="A one-person studio, hung as a solo exhibition." />
+  <meta name="twitter:image" content="https://idyeah.studio/media/og-cover.jpg" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
   <style>
-    :root {
-      --ease: cubic-bezier(0.16, 1, 0.3, 1);
-      --dur: 0.55s;
+    :root{
+      --wall:#efe9dc; --wall-2:#e7e0d0; --plaster:#f4efe4;
+      --ink:#241d14; --ink-2:rgba(36,29,20,.7); --ink-3:rgba(36,29,20,.64);
+      --sepia:#8b6f47; --ochre:#b07d35; --oxblood:#7c2d24;
+      --leaf:linear-gradient(105deg,#b8923f,#e7c878 40%,#9a6f2e 70%,#d8b15a);
+      --serif:'Cormorant Garamond',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif;
+      --max:1200px; --ease:cubic-bezier(.16,1,.3,1);
     }
+    html[data-theme="dark"]{ --wall:#16130d; --wall-2:#1c1810; --plaster:#221c13; --ink:#ece4d3; --ink-2:rgba(236,228,211,.64); --ink-3:rgba(236,228,211,.56); --oxblood:#cf6a45; }
+    html[data-theme="dark"] body{ background:var(--wall); }
+    html[data-theme="dark"] .mk .sym, html[data-theme="dark"] .mk .wm{ filter:invert(1); }
+    html[data-theme="dark"] header{ border-bottom-color:rgba(236,228,211,.14); }
+    html[data-theme="dark"] .hang, html[data-theme="dark"] .series, html[data-theme="dark"] .commissions, html[data-theme="dark"] .artist, html[data-theme="dark"] .pf, html[data-theme="dark"] .comm, html[data-theme="dark"] .cv .row{ border-top-color:rgba(236,228,211,.14); }
+    html[data-theme="dark"] .frame{ box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 30px 60px rgba(0,0,0,.55); border-color:rgba(236,228,211,.14); }
+    html[data-theme="dark"] .frame::after{ border-color:rgba(236,228,211,.18); }
+    html[data-theme="dark"] .chip{ border-color:rgba(236,228,211,.3); }
+    html[data-theme="dark"] .visit, html[data-theme="dark"] .ham, html[data-theme="dark"] .btn.q{ border-color:rgba(236,228,211,.4); }
+    html[data-theme="dark"] .visit-sec{ border-top-color:rgba(236,228,211,.6); }
+    .toggle{ width:36px; height:36px; border-radius:50%; border:1px solid rgba(36,29,20,.4); background:none; color:var(--ink); cursor:pointer; display:grid; place-items:center; font-size:14px; }
+    html[data-theme="dark"] .toggle{ border-color:rgba(236,228,211,.4); }
+    *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+    body{ background:var(--wall); color:var(--ink); font-family:var(--sans); line-height:1.6; overflow-x:hidden;
+      background-image:radial-gradient(130% 90% at 50% 0%, var(--plaster), transparent 60%), radial-gradient(rgba(36,29,20,.02) 1px, transparent 1px);
+      background-size:auto, 4px 4px; }
+    @media(prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } html{ scroll-behavior:auto; } }
+    a{ color:inherit; text-decoration:none; }
+    ::selection{ background:var(--oxblood); color:var(--wall); }
+    :focus-visible{ outline:2px solid var(--ochre); outline-offset:3px; }
 
-    /* ── DARK MODE TOKENS (contrast-audited) ─── */
-    [data-theme="dark"] {
-      --bg:          #080808;
-      --bg-2:        #0f0f0f;
-      --bg-3:        #181818;
-      --border:      rgba(255,255,255,0.07);
-      --text:        #ede9e2;          /* 16.5:1 ✓ */
-      --text-2:      rgba(237,233,226,0.60); /* bumped 0.52→0.60, ~5.8:1 ✓ */
-      --text-3:      rgba(237,233,226,0.36); /* decorative only */
-      --gold:        #c8a96e;          /* 8.9:1 on dark ✓ */
-      --gold-bright: #e2c28a;
-      --gold-dim:    rgba(200,169,110,0.10);
-      --gold-border: rgba(200,169,110,0.22);
-      --nav-bg:      rgba(8,8,8,0.92);
-      --card-bg:     #111111;
-      --card-border: rgba(255,255,255,0.055);
-      --ann-bg:      #c8a96e;
-      --ann-text:    #080808;          /* 8.9:1 ✓ */
-      --cta-text:    #080808;          /* 8.9:1 ✓ */
-    }
+    .room{ max-width:var(--max); margin:0 auto; padding:0 8vw; }
+    @media(min-width:1000px){ .room{ padding:0 80px; } }
+    .skip{ position:absolute; left:-999px; top:0; background:var(--ink); color:var(--wall); padding:12px 18px; z-index:200; }
+    .skip:focus{ left:12px; top:12px; }
 
-    /* ── LIGHT MODE TOKENS (contrast-audited) ─── */
-    [data-theme="light"] {
-      --bg:          #f5f1ea;
-      --bg-2:        #faf8f4;
-      --bg-3:        #ede8df;
-      --border:      rgba(0,0,0,0.07);
-      --text:        #18130e;          /* 16.4:1 ✓ */
-      --text-2:      rgba(24,19,14,0.65); /* bumped 0.52→0.65, ~5.5:1 ✓ */
-      --text-3:      rgba(24,19,14,0.36); /* decorative only */
-      --gold:        #7a5520;          /* darkened for 6:1 ✓ on light bg */
-      --gold-bright: #9a6f2e;
-      --gold-dim:    rgba(122,85,32,0.10);
-      --gold-border: rgba(122,85,32,0.22);
-      --nav-bg:      rgba(245,241,234,0.92);
-      --card-bg:     #faf8f4;
-      --card-border: rgba(0,0,0,0.055);
-      --ann-bg:      #18130e;
-      --ann-text:    #f5f1ea;          /* 16.4:1 ✓ */
-      --cta-text:    #f5f1ea;          /* 8.9:1 ✓ */
-    }
+    .vitrine{ font-family:var(--sans); font-weight:500; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3); }
+    .leaf{ background:var(--leaf); -webkit-background-clip:text; background-clip:text; color:transparent; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: 0.02;
-      pointer-events: none;
-      z-index: 9999;
-      mix-blend-mode: overlay;
-    }
-    a { color: inherit; text-decoration: none; }
+    /* ===== gallery header ===== */
+    header{ position:sticky; top:0; z-index:60; background:color-mix(in srgb,var(--wall) 90%,transparent); backdrop-filter:blur(6px); border-bottom:1px solid rgba(36,29,20,.12); }
+    .bar{ max-width:var(--max); margin:0 auto; padding:14px 8vw; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    @media(min-width:1000px){ .bar{ padding:15px 80px; } }
+    .mk{ display:flex; align-items:center; gap:11px; } .mk .sym{ width:27px; height:27px; } .mk .wm{ height:10px; }
+    @media(max-width:520px){ .mk .wm{ display:none; } }
+    .bar nav{ display:none; gap:26px; font-weight:500; font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+    .bar nav a{ color:var(--ink-2); } .bar nav a:hover{ color:var(--oxblood); }
+    @media(min-width:880px){ .bar nav{ display:flex; } }
+    .visit{ font-weight:500; font-size:12px; letter-spacing:.06em; text-transform:uppercase; border:1px solid rgba(36,29,20,.4); padding:9px 16px; transition:.2s; }
+    .visit:hover{ background:var(--ink); color:var(--wall); }
+    .ham{ display:none; width:38px; height:38px; border:1px solid rgba(36,29,20,.4); background:none; color:var(--ink); cursor:pointer; }
+    @media(max-width:879px){ .ham{ display:grid; place-items:center; } }
 
-    /* ── ANNOUNCEMENT BAR ── */
-    .ann-bar {
-      background: var(--ann-bg); color: var(--ann-text);
-      text-align: center; padding: 11px 24px;
-      font-family: 'DM Mono', monospace; font-size: 0.7rem;
-      letter-spacing: 0.13em; text-transform: uppercase;
-      transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
-      position: relative; overflow: hidden;
-    }
-    .ann-bar::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(200,169,110,0.18) 50%, transparent);
-      animation: shimmer 4s ease-in-out infinite;
-    }
-    @keyframes shimmer { 0%,100%{transform:translateX(-100%);opacity:0} 50%{transform:translateX(100%);opacity:1} }
-    .ann-inner { display:flex; align-items:center; justify-content:center; gap:18px; position:relative; }
-    .ann-dot { width:4px; height:4px; border-radius:50%; background:currentColor; opacity:0.3; flex-shrink:0; }
-    .ann-bar a { color:currentColor; border-bottom:1px solid currentColor; padding-bottom:1px; opacity:0.8; transition:opacity 0.2s; }
-    .ann-bar a:hover { opacity:1; }
+    /* ===== entrance / intro panel ===== */
+    .entrance{ padding:14vh 0 6vh; text-align:center; }
+    .entrance .show{ font-family:var(--serif); font-weight:500; font-size:clamp(52px,9vw,128px); line-height:.94; letter-spacing:-.01em; }
+    .entrance .show em{ font-style:italic; }
+    .entrance .dates{ margin-top:24px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; font-size:12px; color:var(--ink-2); }
+    .entrance .panel{ max-width:50ch; margin:46px auto 0; font-family:var(--serif); font-size:clamp(20px,2.3vw,27px); line-height:1.5; color:var(--ink-2); }
+    .entrance .panel em{ font-style:italic; color:var(--oxblood); }
 
-    /* ── NAVBAR ── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: var(--nav-bg);
-      backdrop-filter: blur(24px) saturate(1.4);
-      -webkit-backdrop-filter: blur(24px) saturate(1.4);
-      border-bottom: 1px solid var(--border);
-      transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
-    }
-    .nav-inner {
-    max-width: 1320px; margin: 0 auto; padding: 0 52px;
-    height: 64px; display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    }
-    .nav-logo {
-  width: 44px; height: 44px; border-radius: 50%;
-  border: 1px solid rgba(200,169,110,0.35);
-  display: flex; align-items: center; justify-content: center;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-.nav-logo:hover {
-  border-color: rgba(200,169,110,0.7);
-  box-shadow: 0 0 12px rgba(200,169,110,0.15);
-}
-    /* Feather symbol in nav — tight crop, always symbol */
-    .nav-sym-dark  { display:block; height:28px; width:auto; filter: brightness(0) saturate(100%) invert(73%) sepia(30%) saturate(600%) hue-rotate(5deg) brightness(105%);}
-    .nav-sym-light { display:none;  height:28px; width:auto; filter: brightness(0) saturate(100%) invert(33%) sepia(60%) saturate(600%) hue-rotate(5deg) brightness(105%); }
-    [data-theme="light"] .nav-sym-dark  { display:none; }
-    [data-theme="light"] .nav-sym-light { display:block; }
+    /* a hung work */
+    .hang{ padding:8vh 0; border-top:1px solid rgba(36,29,20,.12); display:grid; grid-template-columns:1fr; gap:40px; align-items:center; }
+    @media(min-width:880px){ .hang{ grid-template-columns:1.05fr .95fr; gap:7vw; } }
+    .hang.flip > .frame-wrap{ order:2; }
+    .frame-wrap{ display:flex; flex-direction:column; align-items:center; gap:20px; }
+    .frame{ background:var(--plaster); padding:clamp(22px,4vw,46px); box-shadow:0 2px 0 rgba(255,255,255,.6) inset, 0 30px 60px rgba(36,29,20,.18); border:1px solid rgba(36,29,20,.12); position:relative; width:100%; }
+    .frame::after{ content:""; position:absolute; inset:10px; border:1px solid rgba(36,29,20,.16); pointer-events:none; }
+    .frame img{ width:100%; display:block; }
+    .frame.empty{ aspect-ratio:4/5; display:grid; place-items:center; }
+    .frame.empty span{ font-weight:500; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); text-align:center; line-height:1.8; }
+    /* museum label */
+    .placard{ align-self:flex-start; max-width:44ch; }
+    .placard .t{ font-family:var(--serif); font-style:italic; font-size:19px; }
+    .placard .m{ font-size:12px; color:var(--ink-2); margin-top:5px; line-height:1.7; }
+    .placard .m b{ color:var(--ink); font-weight:600; }
 
-    .nav-links {
-    display: flex; align-items: center; gap: 38px; list-style: none;
-    justify-content: center;
-    }
-    .nav-links a {
-      font-size:0.78rem; letter-spacing:0.09em; text-transform:uppercase;
-      color:var(--text-2); transition:color 0.22s; font-weight:400; position:relative;
-    }
-    .nav-links a::after {
-      content:''; position:absolute; bottom:-3px; left:0; right:0;
-      height:1px; background:var(--gold);
-      transform:scaleX(0); transform-origin:left; transition:transform 0.28s var(--ease);
-    }
-    .nav-links a:hover { color:var(--text); }
-    .nav-links a:hover::after { transform:scaleX(1); }
+    .worktext h2{ font-family:var(--serif); font-weight:500; font-size:clamp(34px,5vw,64px); line-height:1; letter-spacing:-.01em; margin-bottom:24px; }
+    .worktext h2 em{ font-style:italic; color:var(--oxblood); }
+    .worktext p{ font-family:var(--serif); font-size:clamp(20px,2.3vw,28px); line-height:1.45; color:var(--ink); max-width:30ch; }
+    .worktext p em{ font-style:italic; color:var(--oxblood); }
+    .worktext .sm{ font-family:var(--sans); font-size:15px; color:var(--ink-2); margin-top:18px; max-width:42ch; }
 
-    /* ── HAMBURGER (mobile only) ── */
-    .nav-hamburger {
-      display:none; background:none; border:none; cursor:pointer;
-      width:44px; height:44px; border-radius:50%;
-      border:1px solid rgba(200,169,110,0.35);
-      align-items:center; justify-content:center;
-      transition:border-color 0.3s;
-      position:relative; z-index:201;
-    }
-    .nav-hamburger:hover { border-color:rgba(200,169,110,0.7); }
-    .ham-line {
-      display:block; width:18px; height:1.5px;
-      background:var(--text); border-radius:1px;
-      transition:transform 0.3s var(--ease), opacity 0.3s;
-    }
-    .ham-lines { display:flex; flex-direction:column; gap:4px; align-items:center; }
-    .nav-hamburger.open .ham-line:nth-child(1) { transform:translateY(5.5px) rotate(45deg); }
-    .nav-hamburger.open .ham-line:nth-child(2) { opacity:0; }
-    .nav-hamburger.open .ham-line:nth-child(3) { transform:translateY(-5.5px) rotate(-45deg); }
+    /* a series (proofs) */
+    .series{ padding:8vh 0; border-top:1px solid rgba(36,29,20,.12); }
+    .series h2{ font-family:var(--serif); font-weight:500; font-size:clamp(32px,5vw,60px); margin-bottom:8px; }
+    .series .cap{ font-weight:500; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); margin-bottom:40px; }
+    .pf{ padding:26px 0; border-top:1px solid rgba(36,29,20,.1); display:grid; grid-template-columns:1fr; gap:8px; }
+    @media(min-width:720px){ .pf{ grid-template-columns:1fr auto; align-items:end; } }
+    .pf q{ font-family:var(--serif); font-style:italic; font-size:clamp(22px,3vw,36px); line-height:1.16; max-width:25ch; }
+    .pf .src{ font-weight:500; font-size:12px; color:var(--ink-2); letter-spacing:.04em; }
+    @media(min-width:720px){ .pf .src{ text-align:right; } }
+    .chips{ margin-top:44px; display:flex; flex-wrap:wrap; gap:11px; }
+    .chip{ font-weight:500; font-size:12px; letter-spacing:.04em; padding:10px 15px; border:1px solid rgba(36,29,20,.3); transition:.2s; }
+    .chip:hover{ background:var(--ink); color:var(--wall); }
+    .vid{ margin-top:50px; } .vid .frame img{ width:100%; } .vid video{ width:100%; display:block; }
 
-    /* ── MOBILE MENU OVERLAY ── */
-    .mobile-menu {
-      display:none; position:fixed; inset:0; z-index:200;
-      background:var(--bg);
-      flex-direction:column; align-items:center; justify-content:center; gap:0;
-      opacity:0; pointer-events:none;
-      transition:opacity 0.35s var(--ease), background var(--dur) var(--ease);
-    }
-    .mobile-menu.open { display:flex; opacity:1; pointer-events:auto; }
-    .mobile-menu a {
-      display:block; padding:18px 0;
-      font-family:'DM Mono',monospace; font-size:0.82rem;
-      letter-spacing:0.18em; text-transform:uppercase;
-      color:var(--text-2); transition:color 0.2s;
-      text-decoration:none;
-    }
-    .mobile-menu a:hover { color:var(--gold); }
-    .mobile-menu .btn-primary {
-      margin-top:28px; padding:14px 36px;
-      color:var(--cta-text);
-    }
+    /* commissions (offers) */
+    .commissions{ padding:8vh 0; border-top:1px solid rgba(36,29,20,.12); }
+    .commissions > h2{ font-family:var(--serif); font-weight:500; font-size:clamp(32px,5vw,60px); margin-bottom:6px; }
+    .commissions > .cap{ font-weight:500; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); margin-bottom:36px; }
+    .comm{ display:grid; grid-template-columns:1fr; gap:8px; padding:30px 0; border-top:1px solid rgba(36,29,20,.1); }
+    @media(min-width:780px){ .comm{ grid-template-columns:1.1fr 1.4fr auto; gap:40px; align-items:baseline; } }
+    .comm h3{ font-family:var(--serif); font-weight:500; font-size:clamp(26px,3.2vw,40px); line-height:1; }
+    .comm h3 .med{ display:block; font-style:italic; font-size:15px; color:var(--ink-2); margin-top:8px; }
+    .comm p{ font-family:var(--serif); font-size:18px; color:var(--ink-2); max-width:44ch; }
+    .comm .price{ font-weight:500; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--oxblood); white-space:nowrap; }
 
-    .nav-right {
-    display: flex; align-items: center; gap: 18px;
-    justify-content: flex-end;
-    }
-    .mode-toggle {
-      width:46px; height:26px; background:var(--bg-3); border:1px solid var(--border);
-      border-radius:100px; cursor:pointer; position:relative;
-      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease); flex-shrink:0;
-    }
-    .toggle-knob {
-      position:absolute; top:3px; left:3px; width:18px; height:18px;
-      border-radius:50%; background:var(--gold);
-      transition:transform var(--dur) var(--ease);
-      display:flex; align-items:center; justify-content:center; font-size:9px;
-    }
-    [data-theme="light"] .toggle-knob { transform:translateX(20px); }
-    .btn-cta {
-      padding:9px 24px; background:var(--gold); color:var(--cta-text);
-      border-radius:3px; font-size:0.76rem; font-weight:500;
-      letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;
-      border:none; transition:transform 0.18s, box-shadow 0.22s;
-      white-space:nowrap; position:relative; overflow:hidden;
-    }
-    .btn-cta::before { content:''; position:absolute; inset:0; background:rgba(255,255,255,0); transition:background 0.2s; }
-    .btn-cta:hover::before { background:rgba(255,255,255,0.12); }
-    .btn-cta:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(200,169,110,0.28); }
+    /* the artist */
+    .artist{ padding:8vh 0; border-top:1px solid rgba(36,29,20,.12); display:grid; grid-template-columns:1fr; gap:36px; }
+    @media(min-width:860px){ .artist{ grid-template-columns:1.4fr .85fr; gap:7vw; } }
+    .artist p{ font-family:var(--serif); font-size:clamp(21px,2.4vw,29px); line-height:1.42; margin-bottom:20px; }
+    .artist p em{ font-style:italic; color:var(--oxblood); }
+    .cv .row{ display:flex; gap:14px; padding:13px 0; border-top:1px solid rgba(36,29,20,.1); font-weight:500; font-size:12px; }
+    .cv .row b{ color:var(--oxblood); font-weight:600; min-width:56px; } .cv .row span{ color:var(--ink-2); }
 
-    /* ── LAYOUT ── */
-    .wrap { max-width:1320px; margin:0 auto; padding:0 52px; }
-    .section-tag {
-      font-family:'DM Mono',monospace; font-size:0.66rem;
-      letter-spacing:0.22em; text-transform:uppercase; color:var(--gold);
-      margin-bottom:20px; display:flex; align-items:center; gap:10px;
-    }
-    .section-tag::before { content:''; display:inline-block; width:20px; height:1px; background:var(--gold); }
+    /* forthcoming + visit */
+    .visit-sec{ padding:11vh 0; border-top:2px solid var(--ink); text-align:center; }
+    .visit-sec .cap{ font-weight:500; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); }
+    .visit-sec h2{ font-family:var(--serif); font-weight:500; font-size:clamp(40px,7vw,104px); line-height:.96; letter-spacing:-.01em; margin-top:14px; }
+    .visit-sec h2 em{ font-style:italic; color:var(--oxblood); }
+    .visit-sec .acts{ margin-top:38px; display:flex; gap:13px; justify-content:center; flex-wrap:wrap; }
+    .btn{ font-weight:500; font-size:13px; letter-spacing:.04em; text-transform:uppercase; padding:13px 24px; background:var(--ink); color:var(--wall); transition:transform .25s var(--ease); }
+    .btn:hover{ transform:translateY(-2px); } .btn.q{ background:none; color:var(--ink); border:1px solid rgba(36,29,20,.4); }
+    .forth{ max-width:46ch; margin:0 auto 60px; font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,28px); color:var(--ink-2); }
+    .forth b{ font-style:normal; }
 
-    /* ── HERO ── */
-    #hero {
-      min-height: calc(100vh - 106px);
-      display: flex; align-items: center;
-      border-bottom: 1px solid var(--border);
-      padding: 72px 0 96px;
-      position: relative; overflow: hidden;
-    }
-    #hero::before {
-      content:''; position:absolute; inset:0;
-      background: radial-gradient(ellipse 80% 60% at 50% 55%, rgba(200,169,110,0.065) 0%, transparent 65%);
-      animation: breathe 8s ease-in-out infinite; pointer-events:none;
-    }
-    @keyframes breathe { 0%,100%{opacity:0.7;transform:scale(1)} 50%{opacity:1;transform:scale(1.05)} }
+    footer{ padding:30px 0 56px; }
+    .foot{ display:flex; flex-wrap:wrap; gap:14px 36px; justify-content:space-between; font-weight:500; font-size:11px; letter-spacing:.06em; color:var(--ink-3); }
+    .foot a:hover{ color:var(--oxblood); }
 
-    /* Two-column hero grid */
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 400px;
-      gap: 72px;
-      align-items: center;
-      width: 100%;
-      position: relative;
-    }
-    .hero-left { display: flex; align-items: center; flex-direction: column; }
-
-    /* Full wordmark — file-path based, no black box */
-    .hero-logo-wrap {
-      margin-bottom: 48px;
-      
-    }
-    .hero-logo-img {
-      width: clamp(108px, 18vw, 200px);
-      height: auto;
-      display: block;
-      /* ensure transparency renders correctly */
-      background: transparent;
-      mix-blend-mode: normal;
-      animation: float 6s ease-in-out infinite alternate;
-    }
-    .hero-logo-dark  { display:block; }
-    .hero-logo-light { display:none; }
-    [data-theme="light"] .hero-logo-dark  { display:none; }
-    [data-theme="light"] .hero-logo-light { display:block; }
-
-    @keyframes float { from{transform:translateY(0)} to{transform:translateY(-10px)} }
-
-    .hero-eyebrow {
-      font-family:'DM Mono',monospace; font-size:0.68rem;
-      letter-spacing:0.24em; text-transform:uppercase; color:var(--gold);
-      margin-bottom:20px;
-      
-    }
-    .hero-headline {
-      font-family:'Cormorant Garamond',serif;
-      font-size:clamp(3.6rem,4.5vw,7rem);
-      line-height:1.0; font-weight:600; letter-spacing:-0.025em;
-      color:var(--text); margin-bottom:24px;
-      
-    }
-    .hero-headline em { font-style:italic; color:var(--gold); font-weight:300; }
-    .hero-sub {
-      font-size:1.05rem; line-height:1.78; color:var(--text-2);
-      max-width:560px; margin-bottom:14px; font-weight:300;
-      text-align: center;
-    }
-    .hero-trust {
-      font-family:'DM Mono',monospace; font-size:0.65rem;
-      letter-spacing:0.16em; text-transform:uppercase;
-      color:var(--text-3); margin-bottom:32px;
-      
-    }
-    .hero-actions {
-      display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap;
-      
-    }
-
-    .btn-primary {
-      padding:15px 36px; background:var(--gold); color:var(--cta-text);
-      border-radius:3px; font-size:0.8rem; font-weight:500;
-      letter-spacing:0.1em; text-transform:uppercase; cursor:pointer;
-      border:none; transition:transform 0.18s, box-shadow 0.22s;
-      position:relative; overflow:hidden;
-    }
-    .btn-primary::before { content:''; position:absolute; inset:0; background:rgba(255,255,255,0); transition:background 0.2s; }
-    .btn-primary:hover::before { background:rgba(255,255,255,0.1); }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(200,169,110,0.3); }
-    .btn-outline {
-      padding:14px 36px; background:transparent; color:var(--text-2);
-      border:1px solid var(--border); border-radius:3px;
-      font-size:0.8rem; font-weight:400; letter-spacing:0.1em;
-      text-transform:uppercase; cursor:pointer;
-      transition:color 0.2s, border-color 0.2s, transform 0.18s;
-    }
-    .btn-outline:hover { color:var(--text); border-color:var(--gold-border); transform:translateY(-2px); }
-
-    /* ── MARQUEE ── */
-    .marquee-strip {
-      border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-      padding:13px 0; overflow:hidden; background:var(--bg-2);
-      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
-    }
-    .marquee-track { display:flex; width:max-content; animation:marquee 28s linear infinite; }
-    .marquee-item {
-      display:flex; align-items:center; gap:18px; padding:0 32px;
-      font-family:'DM Mono',monospace; font-size:0.64rem;
-      letter-spacing:0.18em; text-transform:uppercase; color:var(--text-3); white-space:nowrap;
-    }
-    .marquee-item span { color:var(--gold); font-size:0.5rem; }
-    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-
-    /* ── SERVICES ── */
-    #services { padding:110px 0; border-bottom:1px solid var(--border); }
-    .services-header { display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-bottom:72px; align-items:end; }
-    .section-title {
-      font-family:'Cormorant Garamond',serif;
-      font-size:clamp(2.2rem,3.8vw,3.6rem);
-      font-weight:600; line-height:1.08; letter-spacing:-0.02em;
-    }
-    .section-intro { font-size:0.94rem; color:var(--text-2); line-height:1.82; font-weight:300; }
-    .services-list {
-      display:flex; flex-direction:column; gap:1px;
-      background:var(--border); border:1px solid var(--border);
-      border-radius:10px; overflow:hidden;
-    }
-    .service-row {
-      display:grid; grid-template-columns:64px 1fr 200px;
-      align-items:start; background:var(--card-bg);
-      padding:36px 44px; transition:background 0.28s;
-      position:relative; overflow:hidden;
-    }
-    .service-row::before {
-      content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
-      background:var(--gold); transform:scaleY(0); transform-origin:bottom;
-      transition:transform 0.38s var(--ease);
-    }
-    .service-row:hover { background:var(--bg-3); }
-    .service-row:hover::before { transform:scaleY(1); }
-    .svc-num {
-      font-family:'Cormorant Garamond',serif; font-size:2.4rem;
-      font-weight:300; color:var(--text-3); line-height:1;
-      letter-spacing:-0.03em; transition:color 0.28s; padding-top:4px;
-    }
-    .service-row:hover .svc-num { color:var(--gold); }
-    .svc-body { padding-right:32px; }
-    .svc-name {
-      font-family:'Cormorant Garamond',serif; font-size:1.75rem;
-      font-weight:600; letter-spacing:-0.01em; color:var(--text); margin-bottom:8px;
-    }
-    .svc-desc { font-size:0.87rem; color:var(--text-2); line-height:1.72; font-weight:300; }
-    .svc-delivers { margin-top:16px; }
-    .svc-delivers-label {
-      font-family:'DM Mono',monospace; font-size:0.6rem;
-      letter-spacing:0.18em; text-transform:uppercase; color:var(--text-3); margin-bottom:8px;
-    }
-    .svc-deliver-item {
-      font-size:0.78rem; color:var(--text-2); line-height:1.7; font-weight:300;
-      padding-left:14px; position:relative; margin-bottom:2px;
-    }
-    .svc-deliver-item::before { content:'—'; position:absolute; left:0; color:var(--gold); font-size:0.7rem; }
-    .svc-meta { text-align:right; padding-top:6px; }
-    .svc-timeline {
-      font-family:'DM Mono',monospace; font-size:0.68rem;
-      letter-spacing:0.1em; color:var(--gold);
-      display:inline-block; padding:5px 12px;
-      border:1px solid var(--gold-border); border-radius:2px;
-      background:var(--gold-dim);
-    }
-
-    /* ── ABOUT ── */
-    #about { padding:110px 0; border-bottom:1px solid var(--border); }
-    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:90px; align-items:start; }
-    .about-title {
-      font-family:'Cormorant Garamond',serif;
-      font-size:clamp(2.2rem,3.8vw,3.6rem);
-      font-weight:600; line-height:1.08; letter-spacing:-0.02em; margin-bottom:30px;
-    }
-    .about-body { font-size:0.94rem; color:var(--text-2); line-height:1.85; font-weight:300; margin-bottom:22px; }
-    .about-body strong { color:var(--text); font-weight:500; }
-    .cred-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top: 32px; }
-    .cred-card {
-      background:var(--card-bg); border:1px solid var(--card-border);
-      border-radius:8px; padding:22px 22px 20px;
-      transition:transform 0.22s; position:relative; overflow:hidden;
-    }
-    .cred-card::after {
-      content:''; position:absolute; bottom:0; left:0; right:0;
-      height:2px; background:linear-gradient(90deg, var(--gold), transparent);
-      opacity:0; transition:opacity 0.28s;
-    }
-    .cred-card:hover { transform:translateY(-3px); }
-    .cred-card:hover::after { opacity:1; }
-    .cred-tag { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
-    .cred-title { font-size:0.9rem; font-weight:500; color:var(--text); margin-bottom:5px; }
-    .cred-desc { font-size:0.78rem; color:var(--text-2); line-height:1.55; font-weight:300; }
-
-    /* ── SHIPPING STRIP (inside About) ── */
-    .shipping-strip { margin-top:48px; padding-top:40px; border-top:1px solid var(--border); }
-    .shipping-label {
-      font-family:'DM Mono',monospace; font-size:0.62rem;
-      letter-spacing:0.2em; text-transform:uppercase;
-      color:var(--text-3); margin-bottom:20px;
-    }
-    .shipping-row { display:flex; gap:16px; flex-wrap:wrap; }
-    .shipping-item {
-      display:flex; align-items:center; gap:10px;
-      padding:10px 18px;
-      background:var(--card-bg); border:1px solid var(--card-border);
-      border-radius:6px; text-decoration:none;
-      transition:border-color 0.2s, transform 0.2s;
-    }
-    .shipping-item:hover { border-color:var(--gold-border); transform:translateY(-2px); }
-    .shipping-icon { display:flex; align-items:center; width:18px; height:18px; flex-shrink:0; }
-    .shipping-icon svg { width:100%; height:100%; fill:var(--text-2); transition:fill 0.2s; }
-    .shipping-item:hover .shipping-icon svg { fill:var(--gold); }
-    .shipping-name { font-size:0.78rem; font-weight:500; color:var(--text); letter-spacing:0.02em; }
-    .shipping-sub { font-size:0.65rem; color:var(--text-2); font-weight:300; }
-
-    /* ── TESTIMONIALS ── */
-    #testimonials {
-      padding:110px 0; border-bottom:1px solid var(--border);
-      background:var(--bg-2); transition:background var(--dur) var(--ease);
-    }
-    .testi-header { margin-bottom:60px; }
-    .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
-    .testi-card {
-      background:var(--card-bg); border:1px solid var(--card-border);
-      border-radius:10px; padding:36px 32px;
-      display:flex; flex-direction:column; gap:28px;
-      transition:transform 0.25s; position:relative;
-    }
-    .testi-card:hover { transform:translateY(-5px); }
-    .testi-card::before {
-      content:'“'; position:absolute; top:20px; right:26px;
-      font-family:'Cormorant Garamond',serif; font-size:5rem;
-      color:var(--gold-dim); line-height:1; pointer-events:none;
-    }
-    .testi-quote {
-      font-family:'Cormorant Garamond',serif; font-size:1.08rem;
-      line-height:1.72; color:var(--text); font-style:italic; flex:1;
-    }
-    .testi-author { display:flex; align-items:center; gap:12px; }
-    .author-init {
-      width:38px; height:38px; border-radius:50%;
-      background:var(--gold-dim); border:1px solid var(--gold-border);
-      display:flex; align-items:center; justify-content:center;
-      font-family:'Cormorant Garamond',serif; font-size:1rem;
-      color:var(--gold); font-weight:600; flex-shrink:0;
-    }
-    .author-name { font-size:0.84rem; font-weight:500; color:var(--text); }
-    .author-role { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.1em; color:var(--text-3); margin-top:2px; }
-
-    /* ── FAQ ── */
-    #faq { padding:110px 0; border-bottom:1px solid var(--border); }
-    .faq-grid { max-width:720px; display:flex; flex-direction:column; gap:8px; }
-    .faq-item {
-      background:var(--card-bg); border:1px solid var(--card-border);
-      border-radius:6px; overflow:hidden; transition:background 0.25s;
-    }
-    .faq-question {
-      width:100%; background:none; border:none; cursor:pointer; color:var(--text);
-      display:flex; align-items:center; justify-content:space-between;
-      padding:22px 28px; text-align:left; gap:16px;
-    }
-    .faq-question:hover { background:var(--bg-3); }
-    .faq-q-text { font-size:0.95rem; font-weight:500; line-height:1.4; color:var(--text); }
-    .faq-icon {
-      font-family:'DM Mono',monospace; font-size:1.2rem; color:var(--gold);
-      transition:transform 0.3s var(--ease); flex-shrink:0; line-height:1;
-    }
-    .faq-item.open .faq-icon { transform:rotate(45deg); }
-    .faq-answer {
-      max-height:0; overflow:hidden;
-      transition:max-height 0.4s var(--ease), padding 0.3s;
-      padding:0 28px;
-    }
-    .faq-item.open .faq-answer { max-height:200px; padding:0 28px 22px; }
-    .faq-answer p { font-size:0.88rem; color:var(--text-2); line-height:1.75; font-weight:300; }
-
-    /* ── BOOK ── */
-    /* ── KEYA TEASER ── */
-    #keya { padding:110px 0; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
-    .keya-inner { max-width:960px; margin:0 auto; position:relative; }
-    .keya-inner::before {
-      content:"";
-      position:absolute;
-      left:50%; bottom:-10%;
-      width:140%; height:65%;
-      transform:translateX(-50%);
-      background:
-        radial-gradient(ellipse 50% 100% at 35% 55%,
-          color-mix(in srgb, var(--gold) 50%, transparent) 0%,
-          transparent 60%),
-        radial-gradient(ellipse 50% 100% at 65% 55%,
-          color-mix(in srgb, #b5763a 40%, transparent) 0%,
-          transparent 60%);
-      filter:blur(80px);
-      opacity:0.45;
-      pointer-events:none;
-      z-index:0;
-      animation:horizon-drift 11s ease-in-out infinite;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .keya-inner::before { animation:none; opacity:0.4; }
-    }
-    .keya-header { text-align:center; margin-bottom:40px; position:relative; z-index:1; }
-    .keya-headline {
-      font-family:'Cormorant Garamond',serif;
-      font-size:clamp(2.4rem,4vw,3.6rem); font-weight:600;
-      line-height:1.08; letter-spacing:-0.02em;
-      margin-bottom:20px; color:var(--text);
-    }
-    .keya-sub {
-      font-size:0.94rem; color:var(--text-2); line-height:1.82;
-      font-weight:300; max-width:640px; margin:0 auto 10px;
-    }
-    .keya-video { position:relative; z-index:1; margin-bottom:48px; }
-    .keya-body { position:relative; z-index:1; margin-bottom:48px; }
-    .keya-copy { text-align:center; max-width:680px; margin:0 auto; }
-    .keya-copy-headline {
-      font-family:'Cormorant Garamond',serif;
-      font-size:1.6rem; font-weight:500; line-height:1.2;
-      margin-bottom:20px; color:var(--text);
-    }
-    .keya-copy-headline em { font-style:italic; color:var(--gold); font-weight:300; }
-    .keya-copy p {
-      font-size:0.9rem; color:var(--text-2); line-height:1.85;
-      font-weight:300; margin-bottom:14px;
-    }
-    .keya-agents {
-      display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
-      max-width:740px; margin:0 auto 48px;
-      position:relative; z-index:1;
-    }
-    .keya-agent {
-      background:var(--card-bg); border:1px solid var(--card-border);
-      border-radius:8px; padding:24px 20px; text-align:center;
-      transition:border-color 0.2s, transform 0.2s;
-    }
-    .keya-agent:hover { border-color:var(--gold-border); transform:translateY(-3px); }
-    .keya-agent-name {
-      font-family:'DM Mono',monospace; font-size:0.72rem;
-      letter-spacing:0.15em; text-transform:uppercase;
-      color:var(--gold); margin-bottom:8px;
-    }
-    .keya-agent-desc {
-      font-size:0.82rem; color:var(--text-2); line-height:1.6; font-weight:300;
-    }
-    .keya-cta { text-align:center; position:relative; z-index:1; padding-top:16px; }
-    .keya-cta-sub {
-      font-size:0.82rem; color:var(--text-3); margin-bottom:32px;
-      font-family:'DM Mono',monospace; letter-spacing:0.05em;
-    }
-
-    /* ── FOR YOU ── */
-    #for-you { padding:110px 0; border-bottom:1px solid var(--border); background:var(--bg-2); transition:background var(--dur) var(--ease); }
-    .for-you-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
-    .for-you-list { display:flex; flex-direction:column; gap:16px; }
-    .for-you-item {
-      display:flex; gap:16px; align-items:flex-start;
-      padding:20px 24px; background:var(--card-bg);
-      border:1px solid var(--card-border); border-radius:8px;
-      transition:transform 0.22s, border-color 0.22s;
-    }
-    .for-you-item:hover { transform:translateX(4px); border-color:var(--gold-border); }
-    .for-you-bullet { color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:1.4rem; line-height:1; flex-shrink:0; padding-top:2px; }
-    .for-you-text { font-size:0.9rem; color:var(--text-2); line-height:1.7; font-weight:300; }
-    .for-you-text strong { color:var(--text); font-weight:500; }
-
-    /* ── CONTACT ── */
-    #contact { padding:110px 0 130px; position:relative; overflow:hidden; }
-    #contact::before {
-      content:''; position:absolute; inset:0;
-      background:radial-gradient(ellipse 70% 80% at 20% 60%, rgba(200,169,110,0.05) 0%, transparent 60%);
-      pointer-events:none;
-    }
-    .contact-inner { max-width:800px; position:relative; }
-    .contact-title {
-      font-family:'Cormorant Garamond',serif;
-      font-size:clamp(2.8rem,5vw,5rem); font-weight:600;
-      line-height:1.02; letter-spacing:-0.025em; margin-bottom:22px;
-    }
-    .contact-title em { font-style:italic; color:var(--gold); font-weight:300; }
-    .contact-sub { font-size:1rem; color:var(--text-2); line-height:1.78; font-weight:300; margin-bottom:48px; max-width:520px; }
-    .contact-actions { display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:44px; }
-    .contact-detail { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.1em; color:var(--text-3); display:flex; align-items:center; gap:14px; }
-    .contact-detail a { color:var(--gold); transition:opacity 0.2s; }
-    .contact-detail a:hover { opacity:0.75; }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top:1px solid var(--border); background:var(--bg-2);
-      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
-    }
-    .footer-inner {
-      max-width:1320px; margin:0 auto; padding:36px 52px;
-      display:flex; flex-direction:column; align-items:center; gap:14px;
-    }
-    .footer-sym { opacity:0.60; transition:opacity 0.3s; }
-    .footer-sym:hover { opacity:0.85; }
-    .footer-sym-dark  { display:block; height:40px; width:auto; }
-    .footer-sym-light { display:none;  height:40px; width:auto; }
-    [data-theme="light"] .footer-sym-dark  { display:none; }
-    [data-theme="light"] .footer-sym-light { display:block; }
-    .footer-tagline { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-style:italic; color:var(--text-2); letter-spacing:0.04em; }
-    .footer-copy { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; color:var(--text-3); text-align:center; }
-
-    /* ── REVEAL ── */
-    ..visible { opacity:1; transform:translateY(0); }
-    . { transition-delay:0.1s; }
-    . { transition-delay:0.22s; }
-    . { transition-delay:0.34s; }
-    . { transition-delay:0.46s; }
-
-
-    /* ── HERO PANEL (right column) ── */
-    .hero-panel {
-      background:var(--card-bg); border:1px solid var(--card-border);
-      border-radius:10px; overflow:hidden;
-      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
-    }
-    .panel-header {
-      padding:18px 28px; border-bottom:1px solid var(--border);
-      display:flex; align-items:center; gap:8px;
-    }
-    .panel-dot { width:8px; height:8px; border-radius:50%; background:var(--gold-dim); border:1px solid var(--gold-border); }
-    .panel-dot:first-child { background:var(--gold); border-color:var(--gold); }
-    .panel-title { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-3); margin-left:6px; }
-    .panel-body { padding:28px; }
-    .stat-row {
-      display:flex; align-items:flex-start; gap:20px;
-      padding:18px 0; border-bottom:1px solid var(--border);
-      transition:border-color var(--dur) var(--ease);
-    }
-    .stat-row:first-child { padding-top:0; }
-    .stat-row:last-child { border-bottom:none; padding-bottom:0; }
-    .stat-val { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:600; color:var(--gold); line-height:1; min-width:64px; letter-spacing:-0.02em; }
-    .stat-label { font-size:0.86rem; font-weight:500; color:var(--text); margin-bottom:3px; }
-    .stat-sub { font-size:0.75rem; color:var(--text-2); line-height:1.5; font-weight:300; }
-    .panel-footer {
-      padding:18px 28px; border-top:1px solid var(--border);
-      background:var(--gold-dim);
-      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
-    }
-    .panel-footer-label { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-3); margin-bottom:12px; }
-    .who-tags { display:flex; flex-wrap:wrap; gap:7px; }
-    .who-tag {
-      padding:5px 11px; background:var(--bg-3); border:1px solid var(--border);
-      border-radius:2px; font-size:0.7rem; letter-spacing:0.05em;
-      color:var(--text-2); font-family:'DM Mono',monospace;
-      transition:color 0.2s, border-color 0.2s;
-    }
-    .who-tag:hover { color:var(--gold); border-color:var(--gold-border); }
-
-    /* ── INTRO VIDEO ── */
-    #intro-video { padding:96px 0 80px; position:relative; overflow:hidden; }
-    .intro-wrap { max-width:960px; margin:0 auto; position:relative; }
-    .intro-wrap::before {
-      content:"";
-      position:absolute;
-      left:50%; bottom:-14%;
-      width:130%; height:70%;
-      transform:translateX(-50%);
-      background:
-        radial-gradient(ellipse 55% 100% at 38% 55%,
-          color-mix(in srgb, var(--gold) 55%, transparent) 0%,
-          transparent 62%),
-        radial-gradient(ellipse 55% 100% at 62% 55%,
-          color-mix(in srgb, #b5763a 45%, transparent) 0%,
-          transparent 62%);
-      filter:blur(70px);
-      opacity:0.55;
-      pointer-events:none;
-      z-index:0;
-      animation:horizon-drift 11s ease-in-out infinite;
-    }
-    @keyframes horizon-drift {
-      0%, 100% {
-        opacity:0.48;
-        background-position: 0% 50%, 100% 50%;
-        transform:translateX(-50%) scaleX(1);
-      }
-      50% {
-        opacity:0.82;
-        background-position: 8% 50%, 92% 50%;
-        transform:translateX(-50%) scaleX(1.06);
-      }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .intro-wrap::before { animation:none; opacity:0.55; }
-    }
-    .intro-eyebrow {
-      font-family:'DM Mono',monospace; font-size:0.62rem;
-      letter-spacing:0.2em; text-transform:uppercase;
-      color:var(--text-3); text-align:center; margin-bottom:14px;
-    }
-    .intro-title {
-      font-family:'Cormorant Garamond',serif;
-      font-size:2.2rem; font-weight:500; line-height:1.15;
-      text-align:center; margin:0 0 36px; color:var(--text);
-      letter-spacing:-0.01em;
-    }
-    .intro-title em { font-style:italic; color:var(--gold); font-weight:300; }
-    .video-frame {
-      background:var(--card-bg); border:1px solid var(--card-border);
-      border-radius:10px; overflow:hidden;
-      position:relative; z-index:1;
-      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
-    }
-    .video-frame .panel-title { text-transform:none; letter-spacing:0.12em; }
-    .video-el {
-      display:block; width:100%; height:auto;
-      aspect-ratio:16 / 9; background:#000;
-    }
-
-    /* ── RESPONSIVE ── */
-@media (max-width:1100px) {
-  .nav-inner,.wrap { padding:0 32px; }
-  .hero-grid { grid-template-columns:1fr; }
-  .hero-panel { display:none; }
-  .services-header { grid-template-columns:1fr; gap:20px; }
-  .service-row { grid-template-columns:48px 1fr; }
-  .svc-meta { display:none; }
-  .about-grid { grid-template-columns:1fr; gap:52px; }
-  .keya-agents { grid-template-columns:1fr 1fr; }
-  .testi-grid { grid-template-columns:1fr; }
-  .for-you-grid { grid-template-columns:1fr; gap:48px; }
-}
-
-@media (max-width:680px) {
-  .nav-inner, .wrap { padding:0 20px; }
-.nav-inner { display:flex; justify-content:space-between; }
-  .nav-links { display:none; }
-  .nav-logo { display:none; }
-  .nav-hamburger { display:flex; }
-  .footer-inner { padding:28px 20px; }
-  .hero-headline { font-size:2.8rem; }
-
-  /* Announcement bar — hide dots, tighten gap */
-  .ann-dot { display:none; }
-  .ann-inner { gap:8px; flex-wrap:wrap; justify-content:center; }
-
-  /* Hero — reduce vertical space */
-  #hero { padding:48px 0 60px; min-height:unset; }
-  #intro-video { padding:56px 0 24px; }
-  .intro-title { font-size:1.7rem; margin-bottom:24px; }
-  .hero-logo-img { width: 160px; }
-  .hero-logo-wrap { margin-bottom:28px; }
-  .hero-left { align-items:center; }
-  .hero-sub { text-align:center; }
-
-  /* Section padding — 110px is too tall on mobile */
-  #services, #about, #testimonials,
-  #faq, #keya, #for-you { padding:64px 0; }
-  #contact { padding:64px 0 80px; }
-
-  /* Services — tighter row padding */
-  .service-row { padding:24px 20px; }
-  .svc-body { padding-right:0; }
-
-  /* About — cred grid single column on phones */
-  .cred-grid { grid-template-columns:1fr; }
-
-  /* Keya agents — single column on phones */
-  .keya-agents { grid-template-columns:1fr; }
-  .shipping-row { flex-direction:column; }
-
-  /* Contact detail — stack vertically */
-  .contact-detail { flex-direction:column; align-items:flex-start; gap:8px; }
-
-  /* Nav button — smaller on mobile */
-  .btn-cta { padding:8px 14px; font-size:0.7rem; }
-}
-
-@media (max-width:400px) {
-  .hero-headline { font-size:2.2rem; }
-
-  /* Contact actions — full width stacked buttons */
-  .contact-actions { flex-direction:column; }
-  .btn-primary, .btn-outline { width:100%; text-align:center; }
-} 
+    .sheet{ position:fixed; inset:0; background:var(--wall); z-index:120; transform:translateY(-100%); transition:transform .4s var(--ease); display:grid; align-content:center; gap:6px; padding:0 10vw; }
+    .sheet.open{ transform:translateY(0); } .sheet a{ font-family:var(--serif); font-size:40px; padding:7px 0; } .sheet a:hover{ color:var(--oxblood); }
+    .sheet .x{ position:absolute; top:22px; right:10vw; font-weight:500; font-size:12px; background:none; border:none; color:var(--ink-2); cursor:pointer; }
   </style>
 </head>
 <body>
+  <a href="#statement" class="skip">Skip to content</a>
 
-<!-- ANNOUNCEMENT BAR -->
-<div class="ann-bar">
-  <div class="ann-inner">
-    <span>Coming Soon</span>
-    <div class="ann-dot"></div>
-    <span><em>keya.studio</em> &mdash; three AI agents for product builders</span>
-    <div class="ann-dot"></div>
-    <a href="https://keya.studio" target="_blank">Join the waitlist &rarr;</a>
-  </div>
-</div>
-
-<!-- NAV — feather symbol only, always -->
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">
-      <img class="nav-sym-dark"  src="./symbol-dark.png" alt="IDYeah Studio" />
-      <img class="nav-sym-light" src="./symbol-light.png" alt="IDYeah Studio" />
-    </a>
-    <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
-      <div class="ham-lines">
-        <span class="ham-line"></span>
-        <span class="ham-line"></span>
-        <span class="ham-line"></span>
+  <header>
+    <div class="bar">
+      <a href="#top" class="mk" aria-label="IDYeah Studio, home"><img class="sym" src="./symbol-light.png" alt="" aria-hidden="true" /><img class="wm" src="./wordmark.png" alt="IDYeah Studio" /></a>
+      <nav aria-label="Primary"><a href="#statement">Statement</a><a href="#proofs">Proofs</a><a href="#commissions">Commissions</a><a href="#artist">The artist</a></nav>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="toggle" id="themeBtn" aria-label="Toggle light or dark theme">&#9790;</button>
+        <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="visit">Visit / book</a>
+        <button class="ham" id="hamBtn" aria-label="Open menu" aria-expanded="false">&equiv;</button>
       </div>
-    </button>
-    <ul class="nav-links">
-      <li><a href="#keya">Product</a></li>
-      <li><a href="#services">Engage</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-right">
-      <button class="mode-toggle" id="modeToggle" aria-label="Toggle theme">
-        <div class="toggle-knob"><span id="toggleIcon">&#9790;</span></div>
-      </button>
-      <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" class="btn-cta">Book a Call</a>
     </div>
+  </header>
+
+  <div class="sheet" id="sheet" aria-hidden="true">
+    <button class="x" id="closeBtn">close &times;</button>
+    <a href="#statement">Statement</a><a href="#proofs">Proofs</a><a href="#commissions">Commissions</a><a href="#artist">The artist</a>
+    <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener">Visit / book &rarr;</a>
   </div>
-</nav>
 
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#keya">Product</a>
-  <a href="#services">Engage</a>
-  <a href="#about">About</a>
-  <a href="#faq">FAQ</a>
-  <a href="#contact">Contact</a>
-  <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" class="btn-primary">Book a Call</a>
-</div>
+  <main id="top">
 
-<!-- HERO -->
-<section id="hero">
-  <div class="wrap">
-    <div class="hero-grid">
-
-      <!-- LEFT: logo + headline + actions -->
-      <div class="hero-left">
-        <div class="hero-logo-wrap">
-          <img class="hero-logo-img hero-logo-dark"
-               src="./logo-dark.png"
-               alt="IDYeah Studio — Beyond the Ordinary" />
-          <img class="hero-logo-img hero-logo-light"
-               src="./logo-light.png"
-               alt="IDYeah Studio — Beyond the Ordinary" />
-        </div>
-        <div class="hero-eyebrow">UX &amp; Brand Strategy Studio</div>
-        <h1 class="hero-headline">Clarity that <em>ships.</em></h1>
-        <p class="hero-sub">Strategic brand and UX direction for founders building real products. No bloat. Just the clarity you need to move forward.</p>
-        <p class="hero-trust">Trusted by founders at early and mid-stage startups</p>
+    <!-- ENTRANCE -->
+    <section class="entrance">
+      <div class="room">
+        <p class="vitrine">A solo exhibition · one practitioner</p>
+        <h1 class="show"><span class="leaf">Clarity</span> <em>that ships.</em></h1>
+        <p class="dates">Cupertino · ongoing since MMXXV</p>
+        <p class="panel">Twenty-five works and one subject: saying what a product is, and making the thing that <em>proves</em> it. Built with AI; every piece aimed by hand.</p>
       </div>
+    </section>
 
-      <!-- RIGHT: Studio Profile panel -->
-      <div class="hero-panel">
-        <div class="panel-header">
-          <div class="panel-dot"></div>
-          <div class="panel-dot"></div>
-          <div class="panel-dot"></div>
-          <span class="panel-title">Studio profile</span>
-        </div>
-        <div class="panel-body">
-          <div class="stat-row">
-            <div class="stat-val">25+</div>
-            <div><div class="stat-label">Years of craft</div><div class="stat-sub">Software engineering, UX strategy &amp; brand</div></div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-val">ACM</div>
-            <div><div class="stat-label">ACM SIGCHI Member</div><div class="stat-sub">Human-computer interaction research community</div></div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-val">3</div>
-            <div><div class="stat-label">AI Agents</div><div class="stat-sub"><em>keya.studio</em> &mdash; for product builders</div></div>
+    <!-- WORK 01 — the feather (real piece) + statement -->
+    <section class="hang" id="statement">
+      <div class="room" style="display:contents;">
+        <div class="frame-wrap">
+          <div class="frame"><img src="media/feather.png" alt="Hand-painted feather, the studio's mark"></div>
+          <div class="placard">
+            <p class="t">Untitled (the quill)</p>
+            <p class="m"><b>watercolour &amp; ink on paper</b> · the studio's mark · 2025 · not for sale</p>
           </div>
         </div>
-        <div class="panel-footer">
-          <div class="panel-footer-label">Who I work with</div>
-          <div class="who-tags">
-            <span class="who-tag">Founders</span>
-            <span class="who-tag">CPOs</span>
-            <span class="who-tag">Startup Teams</span>
-            <span class="who-tag">Design Leaders</span>
-            <span class="who-tag">Product Managers</span>
+        <div class="worktext">
+          <h2>The practice.</h2>
+          <p>Founders ship faster than ever, and ship the <em>wrong thing</em> faster than ever.</p>
+          <p class="sm">I help you say what the product actually does, then design the thing that proves it. One senior hand, an AI-fast workshop, and an opinion you can argue with.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK 02 — empty frame placeholder (commissioned painting) -->
+    <section class="hang flip">
+      <div class="room" style="display:contents;">
+        <div class="frame-wrap">
+          <div class="frame empty"><span>[ Plate II — work to be hung ]<br/>a commissioned / generated painting<br/>goes here</span></div>
+          <div class="placard">
+            <p class="t">The first screen</p>
+            <p class="m"><b>brief on canvas</b> · what a stranger believes in five seconds · 2025</p>
           </div>
         </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- INTRO VIDEO -->
-<section id="intro-video">
-  <div class="wrap">
-    <div class="intro-wrap">
-      <div class="intro-eyebrow">A 90-second intro</div>
-      <h2 class="intro-title">Meet the <em>studio.</em></h2>
-      <div class="video-frame">
-        <div class="panel-header">
-          <div class="panel-dot"></div>
-          <div class="panel-dot"></div>
-          <div class="panel-dot"></div>
-          <span class="panel-title">idyeah.studio / intro.mp4</span>
-        </div>
-        <video class="video-el"
-               controls
-               preload="none"
-               playsinline
-               poster="media/intro-cover.jpg">
-          <source src="media/intro.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-strip">
-  <div class="marquee-track">
-    <div class="marquee-item">UX Strategy <span>&#9670;</span></div>
-    <div class="marquee-item">Pitch Decks <span>&#9670;</span></div>
-    <div class="marquee-item">Brand Positioning <span>&#9670;</span></div>
-    <div class="marquee-item">Product Design <span>&#9670;</span></div>
-    <div class="marquee-item">AI-Augmented Workflow <span>&#9670;</span></div>
-    <div class="marquee-item">Design Systems <span>&#9670;</span></div>
-    <div class="marquee-item">Beyond the Ordinary <span>&#9670;</span></div>
-    <div class="marquee-item">UX Strategy <span>&#9670;</span></div>
-    <div class="marquee-item">Pitch Decks <span>&#9670;</span></div>
-    <div class="marquee-item">Brand Positioning <span>&#9670;</span></div>
-    <div class="marquee-item">Product Design <span>&#9670;</span></div>
-    <div class="marquee-item">AI-Augmented Workflow <span>&#9670;</span></div>
-    <div class="marquee-item">Design Systems <span>&#9670;</span></div>
-    <div class="marquee-item">Beyond the Ordinary <span>&#9670;</span></div>
-  </div>
-</div>
-
-<!-- SERVICES -->
-<section id="services">
-  <div class="wrap">
-    <div class="services-header">
-      <div>
-        <div class="section-tag">What I do</div>
-        <h2 class="section-title">Three ways to<br>work together.</h2>
-      </div>
-      <p class="section-intro">Every engagement starts with one question: what does your audience need to believe? Precise, fast, and built around outcomes &mdash; not deliverables.</p>
-    </div>
-    <div class="services-list">
-      <div class="service-row">
-        <div class="svc-num">01</div>
-        <div class="svc-body">
-          <div class="svc-name">Pitch Deck</div>
-          <p class="svc-desc">Investor-ready presentations that tell a clear, visual story. From narrative architecture to final slide polish &mdash; structured to convert attention into conviction.</p>
-          <div class="svc-delivers">
-            <div class="svc-delivers-label">What you receive</div>
-            <div class="svc-deliver-item">Narrative structure &amp; slide flow</div>
-            <div class="svc-deliver-item">High-fidelity Keynote or Figma deck</div>
-            <div class="svc-deliver-item">2 rounds of revision</div>
-          </div>
-        </div>
-        <div class="svc-meta"><span class="svc-timeline">5&ndash;7 day turnaround</span></div>
-      </div>
-      <div class="service-row">
-        <div class="svc-num">02</div>
-        <div class="svc-body">
-          <div class="svc-name">Brand Sprint</div>
-          <p class="svc-desc">Positioning, messaging hierarchy, and visual identity direction. For early-stage teams who need clarity on what they stand for &mdash; and the confidence to say it.</p>
-          <div class="svc-delivers">
-            <div class="svc-delivers-label">What you receive</div>
-            <div class="svc-deliver-item">Positioning &amp; messaging framework</div>
-            <div class="svc-deliver-item">Visual identity direction</div>
-            <div class="svc-deliver-item">Prioritized action roadmap</div>
-          </div>
-        </div>
-        <div class="svc-meta"><span class="svc-timeline">2&ndash;3 week engagement</span></div>
-      </div>
-      <div class="service-row">
-        <div class="svc-num">03</div>
-        <div class="svc-body">
-          <div class="svc-name">Product UX</div>
-          <p class="svc-desc">End-to-end design &mdash; research, information architecture, high-fidelity UI, developer handoff. AI-augmented workflow for faster, sharper outcomes.</p>
-          <div class="svc-delivers">
-            <div class="svc-delivers-label">What you receive</div>
-            <div class="svc-deliver-item">Research synthesis &amp; IA</div>
-            <div class="svc-deliver-item">High-fidelity Figma UI &amp; prototype</div>
-            <div class="svc-deliver-item">Developer handoff + 2 weeks async support</div>
-          </div>
-        </div>
-        <div class="svc-meta"><span class="svc-timeline">Project or retainer</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="wrap">
-    <div class="about-grid">
-      <div>
-        <div class="section-tag">About</div>
-        <h2 class="about-title">Vishal Mehta.</h2>
-        <p class="about-body">I&rsquo;m a UX design leader and strategist with <strong>25+ years of experience</strong> spanning software engineering, design systems, and AI-augmented product workflows. I founded IDYeah Studio to bring a different standard of craft to founders and product teams who deserve more than average.</p>
-        <p class="about-body">My practice sits at the intersection of <strong>design craft and business strategy</strong>. I don&rsquo;t just make things look good &mdash; I help teams figure out what they&rsquo;re actually saying, and how to say it with precision.</p>
-        <p class="about-body"><strong>ACM SIGCHI member</strong>, US Green Card for Extraordinary Ability (EB1A), and speaker at the World Usability Congress. My AI-augmented workflow ships production-ready React and design systems at a pace most teams don&rsquo;t expect.</p>
-      </div>
-      <div class="cred-grid">
-        <div class="cred-card"><div class="cred-tag">Recognition</div><div class="cred-title">EB1A Green Card</div><div class="cred-desc">US residency for extraordinary ability in design and technology</div></div>
-        <div class="cred-card"><div class="cred-tag">Community</div><div class="cred-title">ACM SIGCHI</div><div class="cred-desc">Human-computer interaction &mdash; the discipline behind meaningful design</div></div>
-        <div class="cred-card"><div class="cred-tag">Speaking</div><div class="cred-title">World Usability Congress</div><div class="cred-desc">2025 speaker on AI-augmented design practice</div></div>
-        <div class="cred-card"><div class="cred-tag">Workflow</div><div class="cred-title">AI-Augmented Studio</div><div class="cred-desc">Ships production-ready React and design systems fast</div></div>
-      </div>
-      <div class="shipping-strip" style="grid-column:1/-1;">
-        <div class="shipping-label">Currently shipping</div>
-        <div class="shipping-row">
-          <a href="https://apps.apple.com/us/app/crit-ai-design-advisor/id6759672039" target="_blank" class="shipping-item">
-            <span class="shipping-icon"><svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></span>
-            <div><div class="shipping-name">Crit for iOS</div><div class="shipping-sub">AI design advisor</div></div>
-          </a>
-          <a href="https://www.figma.com/community/plugin/1621595778962170116" target="_blank" class="shipping-item">
-            <span class="shipping-icon"><svg viewBox="0 0 38 57" xmlns="http://www.w3.org/2000/svg"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19z"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg></span>
-            <div><div class="shipping-name">Crit for Figma</div><div class="shipping-sub">In-canvas critique plugin</div></div>
-          </a>
-          <a href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" class="shipping-item">
-            <span class="shipping-icon"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M50 0a50 50 0 1 0 0 100A50 50 0 0 0 50 0zm3 72c-13.8 0-23-9-23-22s9.2-22 23-22c8.8 0 15.7 4.1 19.5 10.6l-9.6 5.5C60.7 40.3 57.3 38 53 38c-7.5 0-12.5 5.2-12.5 12s5 12 12.5 12c4.5 0 8.3-2.6 10.3-6.2H54V48h21v4.5C75 63 66.8 72 53 72z"/></svg></span>
-            <div><div class="shipping-name">Design AI Alchemy</div><div class="shipping-sub">75 prompts for UX designers</div></div>
-          </a>
+        <div class="worktext">
+          <h2>What I'm <em>for.</em></h2>
+          <p>Clarity is mostly what you remove.</p>
+          <p class="sm"><b>Note for review:</b> the painterly hero works (like this one) are where the show becomes <i>stunning</i> — and need real paint. You provide them, or we generate them with an image tool you switch on, and I mount each in its frame with a label. Faking watercolour in code is the exact "smells AI" trap.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="wrap">
-    <div class="testi-header">
-      <div class="section-tag">What clients say</div>
-      <h2 class="section-title">Results that speak.</h2>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card">
-        <p class="testi-quote">Vishal transformed our pitch deck from a cluttered slide dump into a clear, compelling story. We closed our seed round within weeks of working with him.</p>
-        <div class="testi-author"><div class="author-init">BP</div><div><div class="author-name">B. Patni</div><div class="author-role">Founder, Rialty</div></div></div>
+    <!-- PROOFS as a series -->
+    <section class="series" id="proofs">
+      <div class="room">
+        <h2>Proofs.</h2>
+        <p class="cap">a series · collected statements · 2025</p>
+        <div class="pf"><q>Closed our seed round within weeks of working with him.</q><div class="src">B. Patni — Rialty</div></div>
+        <div class="pf"><q>A production-ready design system and code in half the time we expected.</q><div class="src">A. Adhikari — Ionate</div></div>
+        <div class="pf"><q>We went from explaining what we do to people getting it instantly.</q><div class="src">Founder — stealth, B2B SaaS</div></div>
+        <div class="chips">
+          <a class="chip" href="https://apps.apple.com/us/app/crit-ai-design-advisor/id6759672039" target="_blank" rel="noopener">Crit for iOS</a>
+          <a class="chip" href="https://www.figma.com/community/plugin/1621595778962170116" target="_blank" rel="noopener">Crit for Figma</a>
+          <a class="chip" href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" rel="noopener">Design AI Alchemy</a>
+        </div>
+        <div class="vid"><div class="frame"><video controls preload="none" playsinline poster="media/intro-cover.jpg" title="A 90-second introduction"><source src="media/intro.mp4" type="video/mp4" />Your browser does not support video.</video></div>
+          <div class="placard" style="margin-top:18px;"><p class="t">The studio, moving</p><p class="m"><b>film</b> · ninety seconds · 2025</p></div></div>
       </div>
-      <div class="testi-card">
-        <p class="testi-quote">The speed was remarkable &mdash; but not at the cost of quality. We got a production-ready design system and code in half the time we expected.</p>
-        <div class="testi-author"><div class="author-init">AA</div><div><div class="author-name">A. Adhikari</div><div class="author-role">CEO, Ionate, Inc.</div></div></div>
-      </div>
-      <div class="testi-card">
-        <p class="testi-quote">Transformed our pre-launch positioning. We went from explaining what we do to people getting it instantly.</p>
-        <div class="testi-author"><div class="author-init">&mdash;</div><div><div class="author-name">Founder</div><div class="author-role">Stealth Mode &middot; B2B SaaS</div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- FAQ -->
-<section id="faq">
-  <div class="wrap">
-    <div class="section-tag">Common questions</div>
-    <h2 class="section-title" style="margin-bottom:52px;">Before you reach out.</h2>
-    <div class="faq-grid">
-      <div class="faq-item">
-        <button class="faq-question"><span class="faq-q-text">What if I&rsquo;m pre-launch or very early stage?</span><span class="faq-icon">+</span></button>
-        <div class="faq-answer"><p>Perfect. Early-stage is where strategic direction has the most impact. Many clients come before their first release to ensure they&rsquo;re building something clear and focused.</p></div>
+    <!-- COMMISSIONS (offers, as editioned works) -->
+    <section class="commissions" id="commissions">
+      <div class="room">
+        <h2>Commissions available.</h2>
+        <p class="cap">three works · made to order</p>
+        <div class="comm"><h3>Pitch Deck<span class="med">narrative on paper</span></h3><p>An investor-ready narrative that tells one clear, visual story.</p><span class="price">5–7 days</span></div>
+        <div class="comm"><h3>Brand Sprint<span class="med">positioning &amp; pigment</span></h3><p>Positioning, messaging hierarchy, identity direction, and the confidence to say it.</p><span class="price">2–3 weeks</span></div>
+        <div class="comm"><h3>Product UX<span class="med">research to handoff</span></h3><p>End-to-end design: research, IA, hi-fi UI, developer handoff. AI-augmented.</p><span class="price">project / retainer</span></div>
       </div>
-      <div class="faq-item">
-        <button class="faq-question"><span class="faq-q-text">Do you work with non-tech products?</span><span class="faq-icon">+</span></button>
-        <div class="faq-answer"><p>Yes. While most of my work is in SaaS and digital products, the principles of clarity and trust apply universally. If you&rsquo;re building something real, we can work together.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question"><span class="faq-q-text">What format are the deliverables?</span><span class="faq-icon">+</span></button>
-        <div class="faq-answer"><p>Strategy work is delivered as Notion documents with prioritized recommendations and next steps. Design work is shared via Figma. Everything is practical and actionable.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question"><span class="faq-q-text">How quickly can we start?</span><span class="faq-icon">+</span></button>
-        <div class="faq-answer"><p>Typically within 1&ndash;2 weeks of our initial conversation. I keep my client load intentionally small to maintain quality and focus.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- KEYA -->
-<section id="keya">
-  <div class="wrap">
-    <div class="keya-inner">
-      <div class="keya-header">
-        <div class="section-tag">From the studio</div>
-        <h2 class="keya-headline">Crit. Form. <em>Forge.</em></h2>
-        <p class="keya-sub">keya.studio is three AI agents made for product builders. One critiques your work. One designs what comes next. One codes what ships. Built on markdown. Tuned for taste.</p>
-      </div>
-
-      <div class="keya-video">
-        <div class="video-frame">
-          <div class="panel-header">
-            <div class="panel-dot"></div>
-            <div class="panel-dot"></div>
-            <div class="panel-dot"></div>
-            <span class="panel-title">keya.studio / teaser</span>
-          </div>
-          <video class="video-el"
-                 controls
-                 preload="none"
-                 playsinline
-                 poster="media/keya-intro-cover.png">
-            <source src="media/keya.studio.teaser.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+    <!-- THE ARTIST -->
+    <section class="artist" id="artist">
+      <div class="room" style="display:contents;">
+        <div>
+          <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(32px,5vw,58px);margin-bottom:26px;">The artist.</h2>
+          <p>I'm Vishal. <em>Twenty-five years</em> in the work: software engineering, design systems, and an AI-augmented practice that ships production-grade React and brand fast.</p>
+          <p>One person, on purpose. You work with the practitioner, not a deck about one.</p>
+        </div>
+        <div class="cv">
+          <div class="row"><b>2000→</b><span>25+ yrs · engineering, UX strategy &amp; brand</span></div>
+          <div class="row"><b>ACM</b><span>SIGCHI member · HCI</span></div>
+          <div class="row"><b>EB1A</b><span>US Green Card, Extraordinary Ability</span></div>
+          <div class="row"><b>2025</b><span>Speaker, World Usability Congress · studio founded</span></div>
+          <div class="row"><b>HQ</b><span>Cupertino, US</span></div>
         </div>
       </div>
+    </section>
 
-      <div class="keya-body">
-        <div class="keya-copy">
-          <h3 class="keya-copy-headline">A studio, not a <em>chatbot.</em></h3>
-          <p>Most AI tools flood you with output and call it productivity. keya.studio does the opposite. Three agents. Each with a job. Each with an opinion worth listening to.</p>
-          <p>Built by IDYeah Studio. Designed for the way makers already work.</p>
+    <!-- FORTHCOMING + VISIT -->
+    <section class="visit-sec" id="contact">
+      <div class="room">
+        <p class="forth"><b>Forthcoming —</b> three agents. one audits, one designs, one codes. Not yet hung. <a href="https://keya.studio" target="_blank" rel="noopener" style="border-bottom:1px solid rgba(36,29,20,.3);">ask for a preview</a>.</p>
+        <p class="cap">Visitor information</p>
+        <h2>Make something <em>worth hanging.</em></h2>
+        <div class="acts">
+          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="btn">Book a viewing</a>
+          <a href="#" id="emailLink" class="btn q">Write to the studio</a>
         </div>
       </div>
+    </section>
+  </main>
 
-      <div class="keya-agents">
-        <div class="keya-agent">
-          <div class="keya-agent-name">Crit</div>
-          <div class="keya-agent-desc">Reads your work like a senior reviewer. Direct, specific, useful.</div>
-        </div>
-        <div class="keya-agent">
-          <div class="keya-agent-name">Form</div>
-          <div class="keya-agent-desc">Turns rough thinking into structure. Wireframes, flows, bones.</div>
-        </div>
-        <div class="keya-agent">
-          <div class="keya-agent-name">Forge</div>
-          <div class="keya-agent-desc">Ships what you shaped. Real files, real components, yours to keep.</div>
-        </div>
-      </div>
-
-      <div class="keya-cta">
-        <p class="keya-cta-sub">Early access opens soon. The list is small on purpose.</p>
-        <a href="https://keya.studio" target="_blank" class="btn-primary">Join the Waitlist &rarr;</a>
+  <footer>
+    <div class="room">
+      <div class="foot">
+        <span>IDYeah Studio · a solo exhibition</span>
+        <span><a href="https://linkedin.com/in/vishalme" target="_blank" rel="noopener">LinkedIn</a> · Cupertino · <span id="yr"></span></span>
+        <span>beyond the ordinary</span>
       </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- THIS IS FOR YOU -->
-<section id="for-you">
-  <div class="wrap">
-    <div class="for-you-grid">
-      <div>
-        <div class="section-tag">Is this right for you?</div>
-        <h2 class="section-title" style="margin-bottom:24px;">This works best<br>if you&rsquo;re&hellip;</h2>
-        <p class="section-intro">A founder or product leader who values craft but needs to move fast. No agencies, no six-month strategy sessions. Just someone who understands the work and can help you get unstuck &mdash; now.</p>
-      </div>
-      <div class="for-you-list">
-        <div class="for-you-item"><div class="for-you-bullet">&mdash;</div><div class="for-you-text"><strong>Shipping something real</strong> with constraints, not a hypothetical product with unlimited runway</div></div>
-        <div class="for-you-item"><div class="for-you-bullet">&mdash;</div><div class="for-you-text"><strong>Pre-launch or early stage</strong> and need clarity before you build the wrong thing</div></div>
-        <div class="for-you-item"><div class="for-you-bullet">&mdash;</div><div class="for-you-text"><strong>Already shipping</strong> but your positioning, UX, or brand feels inconsistent</div></div>
-        <div class="for-you-item"><div class="for-you-bullet">&mdash;</div><div class="for-you-text"><strong>Done with vague deliverables</strong> and want outcomes, not process theater</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="wrap">
-    <div class="contact-inner">
-      <div class="section-tag">Let&rsquo;s work together</div>
-      <h2 class="contact-title">Ready to make<br>something <em>worth<br>noticing?</em></h2>
-      <p class="contact-sub">30-minute intro call. Free. We&rsquo;ll discuss your product and whether working together makes sense &mdash; no pitch, no pressure.</p>
-      <div class="contact-actions">
-        <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" class="btn-primary">Book a Discovery Call</a>
-        <a id="email-cta" class="btn-outline">Send an Email</a>
-      </div>
-      <div class="contact-detail">
-        <a id="email-detail"></a>
-        <span style="color:var(--text-3)">·</span>
-        <a href="https://linkedin.com/in/vishalme" target="_blank" style="color:var(--gold); transition:opacity 0.2s;">LinkedIn</a>
-        <span style="color:var(--text-3)">·</span>
-        <span>Cupertino (US)</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-sym">
-      <img class="footer-sym-dark"  src="./symbol-dark.png" alt="IDYeah Studio" />
-      <img class="footer-sym-light" src="./symbol-light.png" alt="IDYeah Studio" />
-    </div>
-    <span class="footer-tagline">Design for the real world.</span>
-    <span class="footer-copy">&copy; 2026 IDYeah Studio LLC &nbsp;&middot;&nbsp; All rights reserved</span>
-  </div>
-</footer>
-
-<script>
-  // Theme toggle — localStorage wrapped in try/catch for sandboxed iframes
-  (function() {
-    var html = document.documentElement;
-    var saved = 'light';
-    try { saved = localStorage.getItem('idyeah-theme') || 'light'; } catch(e) {}
-    html.setAttribute('data-theme', saved);
-
-    var toggle = document.getElementById('modeToggle');
-    var icon   = document.getElementById('toggleIcon');
-    if (icon) icon.textContent = saved === 'dark' ? '☾' : '☀';
-
-    if (toggle) {
-      toggle.addEventListener('click', function() {
-        var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', next);
-        try { localStorage.setItem('idyeah-theme', next); } catch(e) {}
-        if (icon) icon.textContent = next === 'dark' ? '☾' : '☀';
-      });
-    }
-
-    var e = 'vishal' + '\u0040' + 'idyeah.studio';
-        document.querySelectorAll('#email-cta, #email-detail').forEach(function(el) {
-        el.href = 'mailto:' + e;
-        if (el.id === 'email-detail') el.textContent = e;
-    });
-
-    // Mobile menu
-    var hamburger = document.getElementById('navHamburger');
-    var mobileMenu = document.getElementById('mobileMenu');
-    if (hamburger && mobileMenu) {
-      hamburger.addEventListener('click', function() {
-        hamburger.classList.toggle('open');
-        mobileMenu.classList.toggle('open');
-        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-      });
-      mobileMenu.querySelectorAll('a').forEach(function(link) {
-        link.addEventListener('click', function() {
-          hamburger.classList.remove('open');
-          mobileMenu.classList.remove('open');
-          document.body.style.overflow = '';
-        });
-      });
-    }
-
-    // FAQ accordion
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.faq-question').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          var item = btn.closest('.faq-item');
-          var isOpen = item.classList.contains('open');
-          document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
-          if (!isOpen) item.classList.add('open');
-        });
-      });
-    });
-  })();
-</script>
+  <script>
+    var root=document.documentElement, tBtn=document.getElementById('themeBtn');
+    function setTheme(t){ root.setAttribute('data-theme',t); tBtn.innerHTML=t==='dark'?'&#9728;':'&#9790;'; }
+    if(tBtn) tBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
+    var sheet=document.getElementById('sheet'), ham=document.getElementById('hamBtn'), close=document.getElementById('closeBtn');
+    function openSheet(o){ sheet.classList.toggle('open',o); ham.setAttribute('aria-expanded',o); sheet.setAttribute('aria-hidden',!o); }
+    ham.addEventListener('click',function(){ openSheet(true); });
+    close.addEventListener('click',function(){ openSheet(false); });
+    sheet.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ openSheet(false); }); });
+    var u='vishal', d='idyeah.studio';
+    document.getElementById('emailLink').href='mailto:'+u+'@'+d;
+    document.getElementById('yr').textContent='© '+new Date().getFullYear()+' IDYeah Studio';
+  </script>
 </body>
+</html>
