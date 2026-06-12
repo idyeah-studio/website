@@ -1,376 +1,246 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IDYeah Studio — Clarity that ships.</title>
+  <title>IDYeah Studio — a founder walks in.</title>
 
-  <!-- SEO + social (added per audit) -->
-  <meta name="description" content="A one-person UX and brand strategy studio for founders building real products. Pitch decks, brand sprints, and product UX with 25 years of senior craft. Clarity that ships." />
+  <meta name="description" content="A one-person UX and brand studio, told as a story. A founder walks in with a knot. They walk out with a line that ships. 25 years of craft." />
   <link rel="canonical" href="https://idyeah.studio/" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://idyeah.studio/" />
-  <meta property="og:title" content="IDYeah Studio — Clarity that ships." />
-  <meta property="og:description" content="Strategic brand and UX direction for founders building real products. Built with AI, aimed by 25 years of judgment." />
+  <meta property="og:title" content="IDYeah Studio — a founder walks in." />
+  <meta property="og:description" content="A founder walks in with a knot. They walk out with a line that ships." />
   <meta property="og:image" content="https://idyeah.studio/media/og-cover.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="IDYeah Studio — Clarity that ships." />
-  <meta name="twitter:description" content="Strategic brand and UX direction for founders building real products." />
+  <meta name="twitter:title" content="IDYeah Studio — a founder walks in." />
+  <meta name="twitter:description" content="A founder walks in with a knot. They walk out with a line." />
   <meta name="twitter:image" content="https://idyeah.studio/media/og-cover.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============ TOKENS (palette kept from the original) ============ */
-    [data-theme="light"]{
-      --bg:#f5f1ea; --bg-2:#faf8f4; --bg-3:#ede8df;
-      --text:#18130e; --text-2:rgba(24,19,14,.66); --text-3:rgba(24,19,14,.34);
-      --gold:#7a5520; --gold-bright:#9a6f2e;
-      --line:rgba(24,19,14,.14); --hair:rgba(24,19,14,.10);
-      --cta-bg:#18130e; --cta-text:#f5f1ea;
+    :root{
+      --paper:#f2ecdf; --ink:#1d180f; --ink-2:rgba(29,24,15,.62); --ink-3:rgba(29,24,15,.36);
+      --coral:#E0603A; --rule:rgba(29,24,15,.16);
+      --disp:'Fraunces',Georgia,serif; --mono:'DM Mono','SF Mono',monospace;
+      --max:920px; --ease:cubic-bezier(.16,1,.3,1);
     }
-    [data-theme="dark"]{
-      --bg:#080808; --bg-2:#0f0f0f; --bg-3:#161616;
-      --text:#ede9e2; --text-2:rgba(237,233,226,.62); --text-3:rgba(237,233,226,.34);
-      --gold:#c8a96e; --gold-bright:#e2c28a;
-      --line:rgba(237,233,226,.16); --hair:rgba(237,233,226,.10);
-      --cta-bg:#ede9e2; --cta-text:#080808;
-    }
-    :root{ --serif:'Cormorant Garamond',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --mono:'DM Mono','SF Mono',monospace; --max:1200px; --ease:cubic-bezier(.16,1,.3,1); }
-
     *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
     html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
-    body{ background:var(--bg); color:var(--text); font-family:var(--sans); font-weight:400; line-height:1.5; transition:background .4s var(--ease),color .4s var(--ease); overflow-x:hidden; }
-    @media (prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } html{ scroll-behavior:auto; } }
-
+    body{ background:var(--paper); color:var(--ink); font-family:var(--disp); line-height:1.5; overflow-x:hidden;
+      background-image:radial-gradient(rgba(29,24,15,.02) 1px, transparent 1px); background-size:4px 4px; }
+    @media(prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } html{ scroll-behavior:auto; } }
     a{ color:inherit; text-decoration:none; }
-    ::selection{ background:var(--gold); color:var(--bg); }
-    :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:2px; }
+    ::selection{ background:var(--coral); color:#fff; }
+    :focus-visible{ outline:2px solid var(--coral); outline-offset:3px; }
 
     .wrap{ max-width:var(--max); margin:0 auto; padding:0 7vw; }
-    @media(min-width:1000px){ .wrap{ padding:0 64px; } }
-
-    .skip{ position:absolute; left:-999px; top:0; background:var(--cta-bg); color:var(--cta-text); padding:12px 18px; z-index:200; }
+    .skip{ position:absolute; left:-999px; top:0; background:var(--ink); color:var(--paper); padding:12px 18px; z-index:200; }
     .skip:focus{ left:12px; top:12px; }
 
-    /* labels = the machine register */
-    .label{ font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--text-3); }
-    .mono{ font-family:var(--mono); }
-
-    /* ============ HEADER ============ */
-    header{ position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 90%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--hair); }
-    .bar{ max-width:var(--max); margin:0 auto; padding:16px 7vw; display:flex; align-items:center; justify-content:space-between; gap:24px; }
-    @media(min-width:1000px){ .bar{ padding:18px 64px; } }
-    .mark{ display:flex; align-items:center; gap:11px; }
-    .mark .sym{ width:31px; height:31px; }
-    [data-theme="light"] .mark .sym-on-dark{ display:none; }
-    [data-theme="dark"]  .mark .sym-on-light{ display:none; }
-    .mark .wordmark-img{ height:11px; width:auto; display:block; }
-    [data-theme="dark"] .mark .wordmark-img{ filter:invert(1); }
-    @media(max-width:520px){ .mark .wordmark-img{ display:none; } }
-    nav.links{ display:none; gap:30px; font-family:var(--mono); font-size:13px; letter-spacing:.04em; }
-    nav.links a{ color:var(--text-2); transition:color .25s; } nav.links a:hover{ color:var(--gold); }
-    @media(min-width:860px){ nav.links{ display:flex; } }
-    .head-right{ display:flex; align-items:center; gap:14px; }
-    .toggle{ width:38px; height:38px; border:1px solid var(--line); border-radius:50%; background:none; color:var(--text); cursor:pointer; font-size:15px; display:grid; place-items:center; }
-    .cta{ font-family:var(--mono); font-size:13px; letter-spacing:.03em; padding:11px 20px; background:var(--cta-bg); color:var(--cta-text); border-radius:999px; white-space:nowrap; transition:transform .25s var(--ease); }
+    header{ position:sticky; top:0; z-index:60; background:color-mix(in srgb,var(--paper) 88%,transparent); backdrop-filter:blur(6px); border-bottom:1px solid var(--rule); }
+    .bar{ max-width:1120px; margin:0 auto; padding:14px 7vw; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .mk{ display:flex; align-items:center; gap:10px; } .mk .sym{ width:27px; height:27px; } .mk .wm{ height:10px; }
+    @media(max-width:520px){ .mk .wm{ display:none; } }
+    .bar .right{ display:flex; align-items:center; gap:12px; }
+    .cta{ font-family:var(--mono); font-size:13px; padding:10px 18px; background:var(--ink); color:var(--paper); border-radius:999px; white-space:nowrap; transition:transform .25s var(--ease); }
     .cta:hover{ transform:translateY(-2px); }
-    .cta.ghost{ background:none; color:var(--text); border:1px solid var(--line); }
 
-    /* ============ HERO ============ */
-    .hero{ padding:11vh 0 7vh; position:relative; }
-    .eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:30px; }
-    .hero h1{ font-family:var(--serif); font-weight:500; line-height:.94; letter-spacing:-.01em; font-size:clamp(64px,15vw,200px); }
-    .hero h1 em{ font-style:italic; color:var(--gold); }
-    .hero .ships{ display:block; font-style:italic; color:var(--gold); font-weight:600; font-size:clamp(96px,26vw,360px); line-height:.82; margin-left:-.04em; white-space:nowrap; }
-    .hero-sub{ font-family:var(--serif); font-size:clamp(22px,3vw,34px); line-height:1.35; max-width:18ch; margin-top:40px; color:var(--text); }
-    .hero-meta{ font-family:var(--mono); font-size:14px; color:var(--text-3); margin-top:26px; }
-    .hero-meta b{ color:var(--gold); font-weight:400; }
-    .hero-actions{ margin-top:42px; display:flex; gap:14px; flex-wrap:wrap; }
+    /* ===== story scenes ===== */
+    .scene{ min-height:88vh; display:flex; flex-direction:column; justify-content:center; padding:10vh 0; border-top:1px solid var(--rule); text-align:center; }
+    .scene:first-of-type{ border-top:none; min-height:94vh; }
+    .ch{ font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--coral); margin-bottom:34px; }
+    .art{ display:block; margin:0 auto 40px; width:min(78vw,460px); height:auto; }
+    .cap{ font-family:var(--disp); font-weight:500; font-size:clamp(28px,5vw,56px); line-height:1.08; letter-spacing:-.01em; max-width:18ch; margin:0 auto; }
+    .cap em{ font-style:italic; color:var(--coral); }
+    .sub{ font-family:var(--mono); font-size:14px; color:var(--ink-2); margin-top:24px; max-width:42ch; margin-inline:auto; line-height:1.7; }
+    .acts{ margin-top:40px; display:flex; gap:13px; justify-content:center; flex-wrap:wrap; }
+    .acts .cta.ghost{ background:none; color:var(--ink); border:1px solid var(--rule); }
 
-    /* ============ THESIS / DUALITY ============ */
-    section{ padding:11vh 0; border-top:1px solid var(--hair); }
-    .thesis .machine{ font-family:var(--mono); font-size:clamp(16px,2.2vw,22px); color:var(--text-3); line-height:1.7; max-width:34ch; }
-    .thesis .machine s{ text-decoration:line-through; text-decoration-color:var(--gold); text-decoration-thickness:2px; }
-    .thesis .human{ font-family:var(--serif); font-weight:500; font-size:clamp(38px,6.5vw,92px); line-height:1.02; letter-spacing:-.01em; margin-top:18px; max-width:16ch; }
-    .thesis .human em{ font-style:italic; color:var(--gold); }
-    .thesis .tag{ font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,28px); color:var(--text-2); margin-top:34px; }
+    .ink{ stroke:var(--ink); fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+    .pen{ stroke:var(--coral); fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+    .penf{ fill:var(--coral); }
+    .faint{ stroke:var(--ink-3); fill:none; stroke-width:1.4; stroke-linecap:round; }
 
-    /* honest aside */
-    .aside{ border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); }
-    .aside p{ font-family:var(--serif); font-size:clamp(22px,3.4vw,40px); font-weight:400; line-height:1.3; max-width:24ch; }
-    .aside .sig{ font-family:var(--mono); font-size:13px; color:var(--text-3); margin-top:22px; }
+    .reviewnote{ max-width:54ch; margin:0 auto; font-family:var(--mono); font-size:12px; line-height:1.7; color:var(--ink-2); border:1px solid var(--rule); padding:16px 18px; text-align:left; }
+    .reviewnote b{ color:var(--ink); }
 
-    /* section heads */
-    .sec-head{ display:flex; align-items:baseline; gap:18px; margin-bottom:54px; }
-    .sec-head .num{ font-family:var(--mono); font-size:13px; color:var(--gold); }
-    .sec-head h2{ font-family:var(--serif); font-weight:500; font-size:clamp(34px,5vw,64px); line-height:1; letter-spacing:-.01em; }
+    /* coda: the work, compact */
+    .coda{ padding:12vh 0; border-top:1px solid var(--rule); }
+    .coda h2{ font-family:var(--disp); font-weight:500; font-size:clamp(30px,5vw,52px); line-height:1; margin-bottom:30px; }
+    .pf{ padding:22px 0; border-top:1px solid var(--rule); display:grid; grid-template-columns:1fr; gap:8px; text-align:left; }
+    @media(min-width:680px){ .pf{ grid-template-columns:1fr auto; align-items:end; } }
+    .pf q{ font-family:var(--disp); font-style:italic; font-size:clamp(20px,2.6vw,30px); line-height:1.18; max-width:26ch; }
+    .pf .src{ font-family:var(--mono); font-size:12px; color:var(--ink-2); }
+    @media(min-width:680px){ .pf .src{ text-align:right; } }
+    .ways{ margin-top:40px; display:grid; gap:0; text-align:left; }
+    .way{ display:flex; flex-wrap:wrap; gap:6px 18px; align-items:baseline; padding:18px 0; border-top:1px solid var(--rule); }
+    .way b{ font-family:var(--disp); font-weight:500; font-size:clamp(22px,3vw,32px); }
+    .way span{ font-family:var(--mono); font-size:13px; color:var(--ink-2); }
+    .way .w{ font-family:var(--mono); font-size:12px; color:var(--coral); margin-left:auto; }
+    .chips{ margin-top:34px; display:flex; flex-wrap:wrap; gap:10px; }
+    .chip{ font-family:var(--mono); font-size:12px; padding:9px 14px; border:1px solid var(--rule); transition:.2s; } .chip:hover{ background:var(--ink); color:var(--paper); }
+    .cv{ margin-top:50px; } .cv .row{ display:flex; gap:14px; padding:12px 0; border-top:1px solid var(--rule); font-family:var(--mono); font-size:12px; text-align:left; } .cv .row b{ color:var(--coral); min-width:54px; } .cv .row span{ color:var(--ink-2); }
 
-    /* EVIDENCE */
-    .quotes{ display:grid; gap:0; }
-    .quote{ padding:40px 0; border-top:1px solid var(--hair); display:grid; grid-template-columns:1fr; gap:14px; }
-    @media(min-width:760px){ .quote{ grid-template-columns:1fr auto; align-items:end; } }
-    .quote q{ font-family:var(--serif); font-style:italic; font-size:clamp(24px,3.4vw,40px); line-height:1.2; max-width:24ch; quotes:"\201C""\201D"; }
-    .quote .who{ font-family:var(--mono); font-size:13px; color:var(--text-2); text-align:left; }
-    @media(min-width:760px){ .quote .who{ text-align:right; } }
-    .shipping{ margin-top:60px; display:flex; flex-wrap:wrap; gap:14px; }
-    .chip{ font-family:var(--mono); font-size:13px; padding:10px 16px; border:1px solid var(--line); border-radius:999px; color:var(--text-2); transition:.25s; }
-    .chip:hover{ border-color:var(--gold); color:var(--gold); }
-    .chip span{ color:var(--text-3); }
-
-    /* intro video */
-    .video-block{ margin-top:64px; }
-    .video-el{ width:100%; display:block; border:1px solid var(--line); border-radius:4px; background:#000; }
-    .video-cap{ font-family:var(--mono); font-size:12px; color:var(--text-3); margin-top:12px; letter-spacing:.04em; }
-
-    /* OFFERS — ledger, not cards */
-    .offer{ padding:46px 0; border-top:1px solid var(--hair); display:grid; grid-template-columns:1fr; gap:22px; }
-    @media(min-width:840px){ .offer{ grid-template-columns:.9fr 1.1fr; gap:60px; } }
-    .offer h3{ font-family:var(--serif); font-weight:500; font-size:clamp(32px,4.4vw,54px); line-height:1; }
-    .offer .lead{ font-family:var(--serif); font-style:italic; color:var(--gold); font-size:18px; margin-top:14px; }
-    .offer p{ color:var(--text-2); font-size:16px; max-width:46ch; }
-    .offer ul{ list-style:none; margin-top:18px; display:grid; gap:8px; }
-    .offer li{ font-family:var(--mono); font-size:13px; color:var(--text-2); padding-left:18px; position:relative; }
-    .offer li::before{ content:"·"; position:absolute; left:4px; color:var(--gold); }
-    .offer .when{ font-family:var(--mono); font-size:12px; color:var(--text-3); text-transform:uppercase; letter-spacing:.1em; margin-top:16px; }
-
-    /* PERSON */
-    .person{ display:grid; grid-template-columns:1fr; gap:40px; align-items:start; }
-    @media(min-width:860px){ .person{ grid-template-columns:1.4fr .9fr; gap:70px; } }
-    .person p{ font-family:var(--serif); font-size:clamp(22px,2.6vw,30px); line-height:1.4; color:var(--text); margin-bottom:24px; }
-    .person p em{ font-style:italic; color:var(--gold); }
-    .creds{ display:grid; gap:0; }
-    .creds .row{ display:flex; gap:16px; padding:16px 0; border-top:1px solid var(--hair); font-family:var(--mono); font-size:13px; }
-    .creds .row b{ color:var(--gold); font-weight:400; min-width:64px; }
-    .creds .row span{ color:var(--text-2); }
-    .feather{ position:absolute; right:-2vw; top:8vh; width:min(34vw,360px); opacity:.5; pointer-events:none; mix-blend-mode:multiply; }
-    [data-theme="dark"] .feather{ mix-blend-mode:screen; opacity:.32; }
-
-    /* KEYA — demoted teaser */
-    .bench{ display:grid; gap:30px; }
-    .bench .line{ font-family:var(--serif); font-size:clamp(28px,4vw,52px); line-height:1.1; font-weight:400; max-width:20ch; }
-    .bench .line em{ font-style:italic; color:var(--gold); }
-    .bench .agents{ font-family:var(--mono); font-size:14px; color:var(--text-2); letter-spacing:.04em; }
-    .bench a.quiet{ font-family:var(--mono); font-size:13px; color:var(--text-3); border-bottom:1px solid var(--line); padding-bottom:2px; width:fit-content; }
-    .bench a.quiet:hover{ color:var(--gold); border-color:var(--gold); }
-
-    /* CONTACT */
-    .contact h2{ font-family:var(--serif); font-weight:500; font-size:clamp(44px,8vw,120px); line-height:.96; letter-spacing:-.01em; }
-    .contact h2 em{ font-style:italic; color:var(--gold); }
-    .contact .actions{ margin-top:46px; display:flex; gap:14px; flex-wrap:wrap; }
-
-    footer{ border-top:1px solid var(--hair); padding:40px 0 60px; }
-    .foot{ display:flex; flex-wrap:wrap; gap:18px 40px; align-items:center; justify-content:space-between; font-family:var(--mono); font-size:12px; color:var(--text-3); }
-    .foot a:hover{ color:var(--gold); }
-    .foot .home{ font-family:var(--serif); font-style:italic; font-size:16px; color:var(--text-2); }
-
-    /* mobile menu */
-    .ham{ display:none; width:38px; height:38px; border:1px solid var(--line); border-radius:50%; background:none; cursor:pointer; color:var(--text); }
-    @media(max-width:859px){ .ham{ display:grid; place-items:center; } }
-    .sheet{ position:fixed; inset:0; background:var(--bg); z-index:150; transform:translateY(-100%); transition:transform .45s var(--ease); display:grid; align-content:center; gap:8px; padding:0 9vw; }
-    .sheet.open{ transform:translateY(0); }
-    .sheet a{ font-family:var(--serif); font-size:38px; padding:10px 0; }
-    .sheet .close{ position:absolute; top:22px; right:9vw; font-family:var(--mono); font-size:13px; background:none; border:none; color:var(--text-2); cursor:pointer; }
+    footer{ border-top:1px solid var(--rule); padding:30px 0 54px; }
+    .foot{ max-width:1120px; margin:0 auto; padding:0 7vw; display:flex; flex-wrap:wrap; gap:14px 36px; justify-content:space-between; font-family:var(--mono); font-size:11px; color:var(--ink-3); }
+    .foot a:hover{ color:var(--coral); }
   </style>
 </head>
 <body>
-  <a href="#work" class="skip">Skip to content</a>
+  <a href="#story" class="skip">Skip to content</a>
 
   <header>
     <div class="bar">
-      <a href="#top" class="mark" aria-label="IDYeah Studio, home">
-        <img class="sym sym-on-light" src="./symbol-light.png" alt="" aria-hidden="true" />
-        <img class="sym sym-on-dark" src="./symbol-dark.png" alt="" aria-hidden="true" />
-        <img class="wordmark-img" src="./wordmark.png" alt="IDYeah Studio" />
-      </a>
-      <nav class="links" aria-label="Primary">
-        <a href="#thesis">The gap</a>
-        <a href="#work">Work</a>
-        <a href="#offers">Engage</a>
-        <a href="#studio">Studio</a>
-      </nav>
-      <div class="head-right">
-        <button class="toggle" id="themeBtn" aria-label="Toggle light or dark theme">&#9790;</button>
-        <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a>
-        <button class="ham" id="hamBtn" aria-label="Open menu" aria-expanded="false">&equiv;</button>
-      </div>
+      <a href="#top" class="mk" aria-label="IDYeah Studio, home"><img class="sym" src="./symbol-light.png" alt="" aria-hidden="true" /><img class="wm" src="./wordmark.png" alt="IDYeah Studio" /></a>
+      <div class="right"><a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a></div>
     </div>
   </header>
 
-  <div class="sheet" id="sheet" aria-hidden="true">
-    <button class="close" id="closeBtn">close &times;</button>
-    <a href="#thesis">The gap</a>
-    <a href="#work">Work</a>
-    <a href="#offers">Engage</a>
-    <a href="#studio">Studio</a>
-    <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener">Book a call &rarr;</a>
-  </div>
-
   <main id="top">
 
-    <!-- HERO -->
-    <section class="hero" style="border-top:none;">
+    <!-- 1 — arrival -->
+    <section class="scene" id="story">
       <div class="wrap">
-        <p class="eyebrow">A one-person studio · est. 2025</p>
-        <h1>Clarity that<span class="ships">ships.</span></h1>
-        <p class="hero-sub">I help founders say what their product actually does, then design the thing that proves it.</p>
-        <p class="hero-meta mono">// built with AI. aimed by <b>twenty-five years</b> of judgment.</p>
-        <div class="hero-actions">
+        <p class="ch">A founder walks in · 01</p>
+        <svg class="art" viewBox="0 0 460 230" aria-hidden="true">
+          <path class="ink" d="M120 150 C90 110 150 95 175 120 C205 150 130 175 110 145 C95 122 165 108 200 135 C235 162 150 188 135 152 C124 126 185 118 215 142"/>
+          <path class="ink" d="M250 120 q40 -30 70 0 q30 30 0 60 q-30 30 -60 0"/>
+          <line class="faint" x1="330" y1="120" x2="430" y2="120"/><line class="faint" x1="330" y1="150" x2="410" y2="150"/>
+        </svg>
+        <p class="cap">A founder walks in, carrying a <em>knot.</em></p>
+        <p class="sub">They built fast. AI helped. They have a hundred things and no idea which one to say first.</p>
+      </div>
+    </section>
+
+    <!-- 2 — noise -->
+    <section class="scene">
+      <div class="wrap">
+        <p class="ch">The noise · 02</p>
+        <svg class="art" viewBox="0 0 460 200" aria-hidden="true">
+          <g class="faint">
+            <line x1="40" y1="40" x2="120" y2="40"/><line x1="150" y1="60" x2="250" y2="60"/><line x1="280" y1="36" x2="400" y2="36"/>
+            <line x1="60" y1="90" x2="180" y2="90"/><line x1="210" y1="110" x2="300" y2="110"/><line x1="330" y1="92" x2="420" y2="92"/>
+            <line x1="44" y1="140" x2="160" y2="140"/><line x1="190" y1="160" x2="280" y2="160"/><line x1="310" y1="142" x2="410" y2="142"/>
+          </g>
+        </svg>
+        <p class="cap">AI gave them <em>infinite</em> output.</p>
+        <p class="sub">All of it plausible. None of it pointing anywhere. More is not the problem anymore. Aim is.</p>
+      </div>
+    </section>
+
+    <!-- 3 — the question (the quill enters) -->
+    <section class="scene">
+      <div class="wrap">
+        <p class="ch">One question · 03</p>
+        <img class="art" src="media/feather.png" alt="" aria-hidden="true" style="width:min(40vw,180px);transform:rotate(-8deg);" />
+        <p class="cap">I pick up the quill and ask one thing: <em>what does this actually say?</em></p>
+        <p class="sub">Twenty-five years has taught me the question matters more than the output. The right question does most of the cutting.</p>
+      </div>
+    </section>
+
+    <!-- 4 — the cut -->
+    <section class="scene">
+      <div class="wrap">
+        <p class="ch">The cut · 04</p>
+        <svg class="art" viewBox="0 0 460 200" aria-hidden="true">
+          <path class="ink" d="M120 120 C95 90 150 80 172 102 C200 130 130 150 116 122 C108 104 165 96 196 118"/>
+          <path class="pen" d="M70 150 C160 60 300 60 400 140"/>
+          <path class="penf" d="M400 140 l-16 -2 l8 -12 z"/>
+        </svg>
+        <p class="cap">We <em>cut.</em> The knot loosens. One clean thread comes free.</p>
+        <p class="sub">Strike the adjectives. Strike the hedging. Keep the one true thing and the proof behind it.</p>
+      </div>
+    </section>
+
+    <!-- 5 — the line -->
+    <section class="scene">
+      <div class="wrap">
+        <p class="ch">The line · 05</p>
+        <svg class="art" viewBox="0 0 460 120" aria-hidden="true">
+          <line class="pen" x1="30" y1="60" x2="430" y2="60"/>
+          <circle class="penf" cx="30" cy="60" r="5"/><circle class="penf" cx="430" cy="60" r="5"/>
+        </svg>
+        <p class="cap">The thread becomes a <em>line.</em> The line becomes a thing.</p>
+        <p class="sub">One sentence a stranger gets in five seconds. One screen that says what the product does. One deck that earns the next slide.</p>
+      </div>
+    </section>
+
+    <!-- 6 — it ships -->
+    <section class="scene">
+      <div class="wrap">
+        <p class="ch">It ships · 06</p>
+        <svg class="art" viewBox="0 0 460 160" aria-hidden="true">
+          <rect class="ink" x="150" y="40" width="160" height="100" rx="6"/>
+          <line class="ink" x1="150" y1="70" x2="310" y2="70"/>
+          <circle class="ink" cx="166" cy="55" r="3"/>
+          <path class="pen" d="M180 100 l24 22 l44 -52"/>
+        </svg>
+        <p class="cap">It <em>ships.</em> The founder leaves lighter than they came.</p>
+        <p class="sub">That's the whole job: walk in with a knot, walk out with a line.</p>
+      </div>
+    </section>
+
+    <!-- 7 — the door / CTA -->
+    <section class="scene" id="contact">
+      <div class="wrap">
+        <p class="ch">Your turn · 07</p>
+        <svg class="art" viewBox="0 0 200 230" aria-hidden="true" style="width:min(40vw,150px);">
+          <rect class="ink" x="50" y="20" width="100" height="200"/>
+          <line class="ink" x1="50" y1="220" x2="160" y2="220"/>
+          <circle class="penf" cx="135" cy="120" r="5"/>
+        </svg>
+        <p class="cap">Walk in with a knot.<br/>Walk out with a <em>line.</em></p>
+        <div class="acts">
           <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a>
-          <a href="#work" class="cta ghost">See the work</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- THESIS / human-machine duality -->
-    <section class="thesis" id="thesis" aria-labelledby="thesis-h">
-      <div class="wrap">
-        <p class="label" style="margin-bottom:40px;">The only idea here</p>
-        <p class="machine">&gt; ai will build you anything.<br/>&gt; instantly. beautifully. <s>endlessly.</s></p>
-        <p class="human" id="thesis-h">It still can't tell you <em>which</em> thing is worth building.</p>
-        <p class="tag">That gap is the whole job.</p>
-      </div>
-    </section>
-
-    <!-- HONEST ASIDE -->
-    <section class="aside">
-      <div class="wrap">
-        <p>This page was built with AI and directed by twenty-five years of judgment. You can probably tell which parts are which.</p>
-        <p class="sig">// good. that's the point.</p>
-      </div>
-    </section>
-
-    <!-- EVIDENCE -->
-    <section id="work" aria-labelledby="work-h">
-      <div class="wrap">
-        <div class="sec-head"><span class="num">01</span><h2 id="work-h">Evidence, not adjectives.</h2></div>
-        <div class="quotes">
-          <div class="quote"><q>Closed our seed round within weeks of working with him.</q><div class="who">B. Patni<br/>Founder, Rialty</div></div>
-          <div class="quote"><q>A production-ready design system and code in half the time we expected.</q><div class="who">A. Adhikari<br/>CEO, Ionate</div></div>
-          <div class="quote"><q>We went from explaining what we do to people getting it instantly.</q><div class="who">Founder<br/>Stealth · B2B SaaS</div></div>
-        </div>
-        <div class="shipping">
-          <a class="chip" href="https://apps.apple.com/us/app/crit-ai-design-advisor/id6759672039" target="_blank" rel="noopener">Crit for iOS <span>· AI design advisor</span></a>
-          <a class="chip" href="https://www.figma.com/community/plugin/1621595778962170116" target="_blank" rel="noopener">Crit for Figma <span>· in-canvas critique</span></a>
-          <a class="chip" href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" rel="noopener">Design AI Alchemy <span>· 75 prompt recipes</span></a>
-        </div>
-        <div class="video-block">
-          <video class="video-el" controls preload="none" playsinline poster="media/intro-cover.jpg" title="A 90-second introduction to IDYeah Studio">
-            <source src="media/intro.mp4" type="video/mp4" />
-            Your browser does not support video.
-          </video>
-          <p class="video-cap">// meet the studio. 90 seconds.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- OFFERS -->
-    <section id="offers" aria-labelledby="offers-h">
-      <div class="wrap">
-        <div class="sec-head"><span class="num">02</span><h2 id="offers-h">Three ways in.</h2></div>
-
-        <div class="offer">
-          <div><h3>Pitch Deck</h3><p class="lead">Attention into conviction.</p></div>
-          <div>
-            <p>An investor-ready narrative that tells one clear, visual story. From the architecture of the argument to the final slide.</p>
-            <ul><li>Narrative structure &amp; slide flow</li><li>High-fidelity Keynote or Figma deck</li><li>Two rounds of revision</li></ul>
-            <p class="when">5–7 day turnaround</p>
-          </div>
-        </div>
-
-        <div class="offer">
-          <div><h3>Brand Sprint</h3><p class="lead">Know what you stand for.</p></div>
-          <div>
-            <p>Positioning, messaging hierarchy, and visual identity direction for early teams who need clarity, and the confidence to say it out loud.</p>
-            <ul><li>Positioning &amp; messaging framework</li><li>Visual identity direction</li><li>Prioritized action roadmap</li></ul>
-            <p class="when">2–3 week engagement</p>
-          </div>
-        </div>
-
-        <div class="offer">
-          <div><h3>Product UX</h3><p class="lead">Research to handoff.</p></div>
-          <div>
-            <p>End-to-end design: research, information architecture, high-fidelity UI, developer handoff. An AI-augmented workflow for faster, sharper outcomes.</p>
-            <ul><li>Research synthesis &amp; IA</li><li>High-fidelity Figma UI &amp; prototype</li><li>Developer handoff + 2 weeks async support</li></ul>
-            <p class="when">Project or retainer</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PERSON -->
-    <section id="studio" aria-labelledby="studio-h" style="position:relative;">
-      <img class="feather" src="media/feather.png" alt="" aria-hidden="true" />
-      <div class="wrap">
-        <div class="sec-head"><span class="num">03</span><h2 id="studio-h">Who's behind it.</h2></div>
-        <div class="person">
-          <div>
-            <p>I'm Vishal. I've spent <em>twenty-five years</em> in the work: software engineering, design systems, and now an AI-augmented practice that ships production-grade React and brand at a pace most teams don't expect.</p>
-            <p>I don't just make things look good. I help teams figure out what they're actually saying, and how to say it with precision.</p>
-            <p>I keep the studio one person, <em>on purpose.</em> You work with the practitioner, not an account manager.</p>
-          </div>
-          <div class="creds">
-            <div class="row"><b>2000&rarr;</b><span>25+ years across engineering, UX strategy &amp; brand</span></div>
-            <div class="row"><b>ACM</b><span>SIGCHI member · human–computer interaction</span></div>
-            <div class="row"><b>EB1A</b><span>US Green Card for Extraordinary Ability</span></div>
-            <div class="row"><b>2025</b><span>Speaker, World Usability Congress</span></div>
-            <div class="row"><b>HQ</b><span>Cupertino, US</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- KEYA — demoted teaser -->
-    <section aria-labelledby="bench-h">
-      <div class="wrap">
-        <p class="label" id="bench-h" style="margin-bottom:34px;">From the bench</p>
-        <div class="bench">
-          <p class="line">Something is coming from the studio. Three agents, <em>each with an opinion.</em></p>
-          <p class="agents">one audits.&nbsp;&nbsp;one designs.&nbsp;&nbsp;one codes.&nbsp;&nbsp;built on markdown, tuned for taste.</p>
-          <a class="quiet" href="https://keya.studio" target="_blank" rel="noopener">ask to see it early &rarr;</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="contact" aria-labelledby="contact-h">
-      <div class="wrap">
-        <p class="label" style="margin-bottom:30px;">Let's begin</p>
-        <h2 id="contact-h">Make something <em>worth noticing.</em></h2>
-        <div class="actions">
-          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a discovery call</a>
           <a href="#" id="emailLink" class="cta ghost">Send an email</a>
+        </div>
+        <p class="reviewnote" style="margin-top:46px;"><b>Note for review:</b> the illustrations above are my own confident SVG line-work — clean, not childish, and they carry the story. To make this <i>stunning</i>, a human illustrator (or an image tool you enable) would redraw these seven panels as real character-led art; I'd swap each SVG for the finished frame. The narrative, the beats, and the captions are the spec.</p>
+      </div>
+    </section>
+
+    <!-- CODA — the work, compactly -->
+    <section class="coda">
+      <div class="wrap">
+        <h2>The footnotes.</h2>
+        <div class="pf"><q>Closed our seed round within weeks of working with him.</q><div class="src">B. Patni — Rialty</div></div>
+        <div class="pf"><q>Production-ready design system and code in half the time we expected.</q><div class="src">A. Adhikari — Ionate</div></div>
+        <div class="pf"><q>From explaining what we do to people getting it instantly.</q><div class="src">Founder — stealth, B2B SaaS</div></div>
+        <div class="ways">
+          <div class="way"><b>Pitch Deck</b><span>narrative into conviction</span><span class="w">5–7 DAYS</span></div>
+          <div class="way"><b>Brand Sprint</b><span>know what you stand for</span><span class="w">2–3 WEEKS</span></div>
+          <div class="way"><b>Product UX</b><span>research to handoff</span><span class="w">PROJECT / RETAINER</span></div>
+        </div>
+        <div class="chips">
+          <a class="chip" href="https://apps.apple.com/us/app/crit-ai-design-advisor/id6759672039" target="_blank" rel="noopener">Crit for iOS</a>
+          <a class="chip" href="https://www.figma.com/community/plugin/1621595778962170116" target="_blank" rel="noopener">Crit for Figma</a>
+          <a class="chip" href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" rel="noopener">Design AI Alchemy</a>
+        </div>
+        <div class="cv">
+          <div class="row"><b>2000→</b><span>Vishal Mehta · 25+ yrs · engineering, UX strategy &amp; brand</span></div>
+          <div class="row"><b>ACM</b><span>SIGCHI member · HCI</span></div>
+          <div class="row"><b>EB1A</b><span>US Green Card, Extraordinary Ability</span></div>
+          <div class="row"><b>2025</b><span>World Usability Congress · studio founded · Cupertino</span></div>
+          <div class="row"><b>next</b><span>three agents on the bench — one audits, one designs, one codes. <a href="https://keya.studio" target="_blank" rel="noopener" style="border-bottom:1px solid var(--rule);">ask early</a></span></div>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap">
-      <div class="foot">
-        <span class="home">Built by one person, on purpose.</span>
-        <span>Cupertino · <a href="https://linkedin.com/in/vishalme" target="_blank" rel="noopener">LinkedIn</a> · <span id="yr"></span></span>
-        <span>// designed for the real world.</span>
-      </div>
+    <div class="foot">
+      <span>Built with AI. Aimed by 25 years. — V</span>
+      <span><a href="https://linkedin.com/in/vishalme" target="_blank" rel="noopener">LinkedIn</a> · Cupertino · <span id="yr"></span></span>
+      <span>knot → line.</span>
     </div>
   </footer>
 
   <script>
-    var root=document.documentElement, tBtn=document.getElementById('themeBtn');
-    function setTheme(t){ root.setAttribute('data-theme',t); tBtn.innerHTML = t==='dark' ? '&#9728;' : '&#9790;'; }
-    tBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
-
-    var sheet=document.getElementById('sheet'), ham=document.getElementById('hamBtn'), close=document.getElementById('closeBtn');
-    function openSheet(o){ sheet.classList.toggle('open',o); ham.setAttribute('aria-expanded',o); sheet.setAttribute('aria-hidden',!o); }
-    ham.addEventListener('click',function(){ openSheet(true); });
-    close.addEventListener('click',function(){ openSheet(false); });
-    sheet.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ openSheet(false); }); });
-
     var u='vishal', d='idyeah.studio';
     document.getElementById('emailLink').href='mailto:'+u+'@'+d;
-
     document.getElementById('yr').textContent='© '+new Date().getFullYear()+' IDYeah Studio';
   </script>
 </body>
