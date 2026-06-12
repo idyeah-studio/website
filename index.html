@@ -84,6 +84,22 @@
     .s-tech .blob.a{ width:44vw;height:44vw;background:#ffd23f;left:-4vw;top:-6vw;}
     .s-tech .blob.b{ width:40vw;height:40vw;background:#ff5e7e;right:-6vw;bottom:-8vw;animation-delay:-5s;}
 
+    /* ===== dark = nightfall over the same colour script ===== */
+    html[data-theme="dark"] body{ background:#141118; }
+    html[data-theme="dark"] .s-grey{ background:linear-gradient(160deg,#34322d,#46443f 55%,#23211d); }
+    html[data-theme="dark"] .s-grey .blob.a{ background:#3f3c37; } html[data-theme="dark"] .s-grey .blob.b{ background:#2a2723; }
+    html[data-theme="dark"] .s-dawn{ background:linear-gradient(160deg,#7a3a3f,#a05c46 50%,#5a2840); }
+    html[data-theme="dark"] .s-dawn .blob.a{ background:#8a4438; } html[data-theme="dark"] .s-dawn .blob.b{ background:#6a2c44; }
+    html[data-theme="dark"] .s-jade{ background:linear-gradient(160deg,#0c5a4e,#1a7560 55%,#063d39); }
+    html[data-theme="dark"] .s-jade .blob.a{ background:#16685a; } html[data-theme="dark"] .s-jade .blob.b{ background:#084f48; }
+    html[data-theme="dark"] .s-gold{ background:linear-gradient(160deg,#7a401a,#a0651f 55%,#5a2710); }
+    html[data-theme="dark"] .s-gold .blob.a{ background:#8a531c; } html[data-theme="dark"] .s-gold .blob.b{ background:#6a2c12; }
+    html[data-theme="dark"] .s-dusk{ background:linear-gradient(160deg,#2c2466,#463a82 55%,#191742); }
+    html[data-theme="dark"] .s-dusk .blob.a{ background:#3a2e78; } html[data-theme="dark"] .s-dusk .blob.b{ background:#211f55; }
+    html[data-theme="dark"] .s-tech{ background:linear-gradient(135deg,#5a263a,#6a3c1c 30%,#155a4c 60%,#2a2a66); }
+    html[data-theme="dark"] .s-tech .blob.a{ background:#7a611c; } html[data-theme="dark"] .s-tech .blob.b{ background:#5a283a; }
+    .toggle{ display:grid; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.5); color:#fff; cursor:pointer; place-items:center; font-size:14px; }
+
     .big{ font-family:var(--disp); font-weight:500; font-size:clamp(48px,10vw,150px); line-height:.92; letter-spacing:-.02em; }
     .big em{ font-style:italic; }
     .lede{ font-family:var(--disp); font-size:clamp(24px,3.4vw,46px); line-height:1.12; max-width:22ch; font-weight:500; }
@@ -146,6 +162,7 @@
       <nav class="links" aria-label="Primary"><a href="#dawn">Studio</a><a href="#jade">Work</a><a href="#gold">Engage</a><a href="#dusk">Vishal</a></nav>
       <div style="display:flex;align-items:center;gap:12px;">
         <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a>
+        <button class="toggle" id="themeBtn" aria-label="Toggle light or dark theme">&#9790;</button>
         <button class="ham" id="hamBtn" aria-label="Open menu" aria-expanded="false">&equiv;</button>
       </div>
     </div>
@@ -263,6 +280,9 @@
   </footer>
 
   <script>
+    var root=document.documentElement, tBtn=document.getElementById('themeBtn');
+    function setTheme(t){ root.setAttribute('data-theme',t); tBtn.innerHTML=t==='dark'?'&#9728;':'&#9790;'; }
+    if(tBtn) tBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
     var sheet=document.getElementById('sheet'), ham=document.getElementById('hamBtn'), close=document.getElementById('closeBtn');
     function openSheet(o){ sheet.classList.toggle('open',o); ham.setAttribute('aria-expanded',o); sheet.setAttribute('aria-hidden',!o); }
     ham.addEventListener('click',function(){ openSheet(true); });
