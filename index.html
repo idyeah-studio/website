@@ -63,9 +63,12 @@
     header{ position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 90%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--hair); }
     .bar{ max-width:var(--max); margin:0 auto; padding:16px 7vw; display:flex; align-items:center; justify-content:space-between; gap:24px; }
     @media(min-width:1000px){ .bar{ padding:18px 64px; } }
-    .mark{ display:flex; align-items:center; gap:12px; }
-    .mark img{ width:26px; height:26px; }
-    .mark .wordmark{ font-family:var(--serif); font-size:21px; font-weight:600; letter-spacing:.01em; }
+    .mark{ display:flex; align-items:center; gap:11px; }
+    .mark .sym{ width:25px; height:25px; }
+    [data-theme="light"] .mark .sym-on-dark{ display:none; }
+    [data-theme="dark"]  .mark .sym-on-light{ display:none; }
+    .mark .wordmark{ font-family:var(--serif); font-size:16px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; }
+    @media(max-width:520px){ .mark .wordmark{ display:none; } }
     nav.links{ display:none; gap:30px; font-family:var(--mono); font-size:13px; letter-spacing:.04em; }
     nav.links a{ color:var(--text-2); transition:color .25s; } nav.links a:hover{ color:var(--gold); }
     @media(min-width:860px){ nav.links{ display:flex; } }
@@ -177,11 +180,12 @@
   <header>
     <div class="bar">
       <a href="#top" class="mark" aria-label="IDYeah Studio, home">
-        <img src="./symbol-dark.png" alt="" aria-hidden="true" />
-        <span class="wordmark">IDYeah</span>
+        <img class="sym sym-on-light" src="./symbol-light.png" alt="" aria-hidden="true" />
+        <img class="sym sym-on-dark" src="./symbol-dark.png" alt="" aria-hidden="true" />
+        <span class="wordmark">IDYEAH.STUDIO</span>
       </a>
       <nav class="links" aria-label="Primary">
-        <a href="#thesis">Thesis</a>
+        <a href="#thesis">The gap</a>
         <a href="#work">Work</a>
         <a href="#offers">Engage</a>
         <a href="#studio">Studio</a>
@@ -196,7 +200,7 @@
 
   <div class="sheet" id="sheet" aria-hidden="true">
     <button class="close" id="closeBtn">close &times;</button>
-    <a href="#thesis">Thesis</a>
+    <a href="#thesis">The gap</a>
     <a href="#work">Work</a>
     <a href="#offers">Engage</a>
     <a href="#studio">Studio</a>
@@ -208,7 +212,7 @@
     <!-- HERO -->
     <section class="hero" style="border-top:none;">
       <div class="wrap">
-        <p class="eyebrow">A one-person studio · since 2000</p>
+        <p class="eyebrow">A one-person studio · est. 2025</p>
         <h1>Clarity that<span class="ships">ships.</span></h1>
         <p class="hero-sub">I help founders say what their product actually does, then design the thing that proves it.</p>
         <p class="hero-meta mono">// built with AI. aimed by <b>twenty-five years</b> of judgment.</p>
