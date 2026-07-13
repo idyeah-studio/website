@@ -89,6 +89,7 @@
     .head-right{ display:flex; align-items:center; gap:14px; }
     .toggle{ width:38px; height:38px; border:1px solid var(--line); border-radius:50%; background:none; color:var(--text); cursor:pointer; font-size:15px; display:grid; place-items:center; }
     .cta{ font-family:var(--mono); font-size:13px; letter-spacing:.03em; padding:11px 20px; background:var(--cta-bg); color:var(--cta-text); border-radius:999px; white-space:nowrap; transition:transform .25s var(--ease); }
+    .bar .cta{ padding:7px 16px; }
     .cta:hover{ transform:translateY(-2px); }
     .cta.ghost{ background:none; color:var(--text); border:1px solid var(--line); }
     .ham{ display:none; width:38px; height:38px; border:1px solid var(--line); border-radius:50%; background:none; cursor:pointer; color:var(--text); }
@@ -115,13 +116,12 @@
     .hero-h{ font-family:var(--serif); font-weight:500; }
     .hero-h .pre{ display:block; font-size:clamp(30px,5vw,58px); line-height:1.1; color:var(--text-3); }
     .hero-h .pre .keep{ color:var(--text); }
-    .hero-h .ships{ display:block; font-style:italic; color:var(--gold); font-weight:600; font-size:clamp(96px,24vw,340px); line-height:.82; margin-left:-.03em; margin-top:6px; white-space:nowrap; }
+    .hero-h .ships-row{ display:flex; align-items:baseline; gap:24px; flex-wrap:wrap; margin-top:6px; }
+    .hero-h .ships{ font-style:italic; color:var(--gold); font-weight:600; font-size:clamp(96px,24vw,340px); line-height:.82; margin-left:-.03em; white-space:nowrap; }
     .hero-sub{ font-family:var(--serif); font-size:clamp(22px,3vw,34px); line-height:1.35; max-width:20ch; margin-top:clamp(48px,6vw,72px); }
-    .hero-note{ margin-top:24px; max-width:34ch; }
-    .hero-actions{ margin-top:42px; display:flex; gap:14px; flex-wrap:wrap; }
 
     /* ===== section heads ===== */
-    .sec-head{ display:flex; align-items:baseline; gap:18px; margin-bottom:14px; }
+    .sec-head{ display:flex; align-items:baseline; gap:18px; margin-bottom:48px; }
     .sec-head .num{ font-family:var(--mono); font-size:13px; color:var(--coral); }
     .sec-head h2{ font-family:var(--serif); font-weight:500; font-size:clamp(34px,5vw,64px); line-height:1; letter-spacing:-.01em; }
 
@@ -142,7 +142,7 @@
     /* ===== OFFERS (clean ledger) ===== */
     .offer{ padding:44px 0; border-top:1px solid var(--hair); display:grid; grid-template-columns:1fr; gap:20px; }
     @media(min-width:840px){ .offer{ grid-template-columns:.85fr 1.15fr; gap:60px; } }
-    .offer h3{ font-family:var(--serif); font-weight:500; font-size:clamp(32px,4.2vw,52px); line-height:1; }
+    .offer h3{ font-family:var(--serif); font-weight:500; font-size:clamp(24px,3.2vw,38px); line-height:1; }
     .offer .lead{ font-family:var(--serif); font-style:italic; color:var(--gold); font-size:18px; margin-top:12px; }
     .offer p{ color:var(--text-2); font-size:16px; max-width:46ch; }
     .offer ul{ list-style:none; margin-top:16px; display:grid; gap:8px; }
@@ -174,7 +174,7 @@
     .keya-cap{ font-family:var(--mono); font-size:12px; color:var(--text-3); margin-top:12px; letter-spacing:.04em; }
 
     /* ===== CONTACT (the corrected close) ===== */
-    .contact h2{ font-family:var(--serif); font-weight:500; font-size:clamp(44px,8vw,116px); line-height:.96; letter-spacing:-.01em; margin-top:20px; }
+    .contact h2{ font-family:var(--serif); font-weight:500; font-size:clamp(34px,5vw,64px); line-height:1; letter-spacing:-.01em; margin-top:20px; }
     .contact h2 em{ font-style:italic; color:var(--gold); }
     .contact .actions{ margin-top:44px; display:flex; gap:14px; flex-wrap:wrap; }
 
@@ -242,15 +242,10 @@
       <div class="wrap">
         <p class="eyebrow">First draft, generated. Then aimed.</p>
         <h1 class="hero-h">
-          <span class="pre"><span class="keep">Clarity that</span> <span class="s">leverages cutting-edge synergies</span></span>
-          <span class="ships">ships.</span>
+          <span class="pre"><span class="keep">Clarity that</span> <span class="s">empowers transformative product experiences</span></span>
+          <span class="ships-row"><span class="ships">ships.</span><span class="note" style="white-space:nowrap;">The machine wrote the line. I kept one word.</span></span>
         </h1>
-        <p class="hero-sub">I help founders say what their product does, then design the thing that proves it.</p>
-        <p class="hero-note note">The machine wrote the line. I kept one word.</p>
-        <div class="hero-actions">
-          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a>
-          <a href="#work" class="cta ghost">What founders say</a>
-        </div>
+        <p class="hero-sub">AI builds, I aim.</p>
       </div>
     </section>
 
@@ -377,7 +372,7 @@
     <section id="contact" class="contact">
       <div class="wrap">
         <h2>Make something <em>worth noticing.</em></h2>
-        <p class="hero-sub" style="margin-top:12px;">No pitch. No pressure. Just a conversation.</p>
+        <p class="hero-sub" style="margin-top:12px;max-width:none;">No pitch. No pressure. Just a conversation.</p>
         <div class="actions">
           <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a discovery call</a>
           <a href="#" id="emailLink" class="cta ghost">Send an email</a>
