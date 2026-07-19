@@ -69,7 +69,7 @@
     /* the pen: the inserted/approved word */
     .fix{ font-family:var(--serif); font-style:italic; color:var(--gold); }
     /* a margin note in the pen's hand */
-    .note{ font-family:var(--serif); font-style:italic; color:var(--coral); font-size:clamp(16px,1.5vw,20px); line-height:1.32; }
+    .note{ font-family:var(--serif); font-style:italic; font-weight:500; color:var(--coral); font-size:clamp(16px,1.5vw,20px); line-height:1.32; letter-spacing:.015em; }
     .note::before{ content:"✎  "; font-style:normal; opacity:.7; }
 
     /* ===== HEADER ===== */
@@ -127,14 +127,28 @@
 
     /* ===== EVIDENCE ===== */
     .quote{ padding:36px 0; border-top:1px solid var(--hair); display:grid; grid-template-columns:1fr; gap:12px; }
-    @media(min-width:760px){ .quote{ grid-template-columns:1fr auto; align-items:end; } }
-    .quote q{ font-family:var(--serif); font-style:italic; font-size:clamp(24px,3.2vw,38px); line-height:1.2; max-width:24ch; }
+    @media(min-width:760px){ .quote{ grid-template-columns:1fr auto; align-items:center; } }
+    .quote q{ font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(20px,2.4vw,28px); line-height:1.3; max-width:38ch; letter-spacing:.015em; }
     .quote .who{ font-family:var(--mono); font-size:13px; color:var(--text-2); }
+    .quote .pill{ font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--gold); border:1px solid var(--gold); border-radius:999px; padding:4px 10px; display:inline-block; margin-right:6px; margin-bottom:6px; }
+    .quote q{ display:block; }
+    .quote .pill:first-of-type{ margin-top:14px; }
     @media(min-width:760px){ .quote .who{ text-align:right; } }
-    .shipping{ margin-top:50px; display:flex; flex-wrap:wrap; gap:14px; }
-    .chip{ font-family:var(--mono); font-size:13px; padding:10px 16px; border:1px solid var(--line); border-radius:999px; color:var(--text-2); transition:.25s; }
-    .chip:hover{ border-color:var(--coral); color:var(--coral); }
-    .chip span{ color:var(--text-3); }
+    /* ===== BOOK ===== */
+    .book-grid{ display:grid; grid-template-columns:1fr; gap:40px; align-items:center; }
+    @media(min-width:760px){ .book-grid{ grid-template-columns:auto 1fr 1fr; gap:48px; } }
+    .book-grid img{ width:200px; border-radius:4px; box-shadow:0 8px 40px rgba(0,0,0,.4); }
+    @media(max-width:759px){ .book-grid img{ width:160px; } }
+    .book-grid .book-copy{ max-width:480px; }
+    .book-grid .book-title{ font-family:var(--serif); font-size:clamp(24px,3vw,34px); font-weight:500; line-height:1.1; }
+    .book-grid .book-title em{ font-style:italic; color:var(--gold); }
+    .book-grid .book-sub{ font-family:var(--mono); font-size:13px; color:var(--text-3); letter-spacing:.04em; margin-top:8px; }
+    .book-stars{ color:var(--gold); font-size:14px; letter-spacing:2px; margin-top:20px; }
+    .book-stars span{ font-family:var(--mono); font-size:12px; color:var(--text-3); letter-spacing:.04em; margin-left:8px; }
+    .book-quote{ font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(17px,1.8vw,22px); line-height:1.4; color:var(--text-2); letter-spacing:.015em; }
+    .book-quote cite{ font-family:var(--mono); font-style:normal; font-size:12px; color:var(--text-3); display:block; margin-top:8px; }
+    .book-grid a.quiet{ display:inline-block; margin-top:22px; font-family:var(--mono); font-size:13px; color:var(--text-3); border-bottom:1px solid var(--line); padding-bottom:2px; }
+    .book-grid a.quiet:hover{ color:var(--coral); border-color:var(--coral); }
     .video-block{ margin-top:60px; }
     .video-el{ width:100%; display:block; border:1px solid var(--line); border-radius:4px; background:#000; }
     .video-cap{ font-family:var(--mono); font-size:12px; color:var(--text-3); margin-top:12px; letter-spacing:.04em; }
@@ -143,7 +157,7 @@
     .offer{ padding:44px 0; border-top:1px solid var(--hair); display:grid; grid-template-columns:1fr; gap:20px; }
     @media(min-width:840px){ .offer{ grid-template-columns:.85fr 1.15fr; gap:60px; } }
     .offer h3{ font-family:var(--serif); font-weight:500; font-size:clamp(24px,3.2vw,38px); line-height:1; }
-    .offer .lead{ font-family:var(--serif); font-style:italic; color:var(--gold); font-size:18px; margin-top:12px; }
+    .offer .lead{ font-family:var(--serif); font-style:italic; font-weight:500; color:var(--gold); font-size:18px; margin-top:12px; letter-spacing:.015em; }
     .offer p{ color:var(--text-2); font-size:16px; max-width:46ch; }
     .offer ul{ list-style:none; margin-top:16px; display:grid; gap:8px; }
     .offer li{ font-family:var(--mono); font-size:13px; color:var(--text-2); padding-left:18px; position:relative; }
@@ -181,7 +195,7 @@
     footer{ border-top:1px solid var(--hair); padding:40px 0 60px; }
     .foot{ display:flex; flex-wrap:wrap; gap:16px 40px; align-items:center; justify-content:space-between; font-family:var(--mono); font-size:12px; color:var(--text-3); }
     .foot a:hover{ color:var(--coral); }
-    .foot .home{ font-family:var(--serif); font-style:italic; font-size:16px; color:var(--text-2); }
+    .foot .home{ font-family:var(--serif); font-style:italic; font-weight:500; font-size:16px; color:var(--text-2); letter-spacing:.015em; }
 
     .sheet{ position:fixed; inset:0; background:var(--bg); z-index:150; transform:translateY(-100%); transition:transform .45s var(--ease); display:grid; align-content:center; gap:6px; padding:0 9vw; }
     .sheet.open{ transform:translateY(0); }
@@ -199,7 +213,7 @@
 </head>
 <body>
   <aside class="titleblock" aria-hidden="true">
-    <div><span>DRAFT</span><b>47</b></div>
+    <div><span>DRAFT</span><b>48</b></div>
     <div><span>STATUS</span><b>shipped</b></div>
     <div><span>PEN</span><b>Vishal</b></div>
   </aside>
@@ -267,14 +281,10 @@
       <div class="wrap">
         <div class="sec-head"><span class="num">B</span><h2>In their words, not mine.</h2></div>
         <div style="margin-top:26px;">
-          <div class="quote"><q>Closed our seed round within weeks of working with him.</q><div class="who">B. Patni<br/>Founder, Rialty</div></div>
-          <div class="quote"><q>A production-ready design system and code in half the time we expected.</q><div class="who">A. Adhikari<br/>CEO, Ionate</div></div>
-          <div class="quote"><q>We went from explaining what we do to people getting it instantly.</q><div class="who">Founder<br/>Stealth · B2B SaaS</div></div>
-        </div>
-        <div class="shipping">
-          <a class="chip" href="https://apps.apple.com/us/app/crit-ai-design-advisor/id6759672039" target="_blank" rel="noopener">Crit for iOS <span>· AI design advisor</span></a>
-          <a class="chip" href="https://www.figma.com/community/plugin/1621595778962170116" target="_blank" rel="noopener">Crit for Figma <span>· in-canvas critique</span></a>
-          <a class="chip" href="https://idyeah.gumroad.com/l/design-ai-alchemy" target="_blank" rel="noopener">Design AI Alchemy <span>· 75 prompt recipes</span></a>
+          <div class="quote"><div><q>The audit was uncomfortably honest. It was also the most useful thing anyone&rsquo;s handed us.</q><span class="pill">Independent Audit</span></div><div class="who">M. Wend<br/>Marketing Director, Benevolve</div></div>
+          <div class="quote"><div><q>Honestly, we didn&rsquo;t think onboarding was the problem. It was.</q><span class="pill">Onboarding Experience</span></div><div class="who">Founder<br/>Stealth · B2B SaaS</div></div>
+          <div class="quote"><div><q>A production-ready design system and code in half the time we expected.</q><span class="pill">Product Design</span> <span class="pill">Pitch Deck</span></div><div class="who">A. Adhikari<br/>CEO, Ionate</div></div>
+          <div class="quote"><div><q>Investors finally got what we were building. The deck did the talking for us.</q><span class="pill">Brand Strategy</span> <span class="pill">Product Design</span> <span class="pill">Pitch Deck</span> <span class="pill">Marketing Collaterals</span></div><div class="who">B. Patni<br/>Founder, Rialty</div></div>
         </div>
         <div class="video-block">
           <video class="video-el" controls preload="none" playsinline poster="media/intro-cover.jpg" title="A 90-second introduction to IDYeah Studio">
@@ -342,6 +352,25 @@
             <div class="row"><b>EB1A</b><span>US Green Card for Extraordinary Ability</span></div>
             <div class="row"><b>2025</b><span>Speaker, World Usability Congress · studio founded</span></div>
             <div class="row"><b>HQ</b><span>Cupertino, US</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOK -->
+    <section>
+      <div class="wrap">
+        <p class="label" style="margin-bottom:32px;">From the studio</p>
+        <div class="book-grid">
+          <img src="media/book-cover.png" alt="Design AI Alchemy — book cover" />
+          <div class="book-copy">
+            <div class="book-title">Design <em>AI</em> Alchemy</div>
+            <p class="book-sub">75 Prompts for UX Designers</p>
+            <div class="book-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>5.0 average rating</span></div>
+            <a class="quiet" href="https://cookbook.idyeah.studio" target="_blank" rel="noopener">get the book &rarr;</a>
+          </div>
+          <div>
+            <p class="book-quote">&ldquo;This is one of those resources that&rsquo;s actually useful no matter where you are in your design career. This book helps you sort out your thinking and turn fuzzy ideas into clear, usable prompts.&rdquo;<cite>&mdash; Xing Li</cite></p>
           </div>
         </div>
       </div>
