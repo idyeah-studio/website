@@ -31,7 +31,7 @@
     }
     [data-theme="dark"]{
       --bg:#0b0a09; --bg-2:#121110;
-      --text:#ede9e2; --text-2:rgba(237,233,226,.64); --text-3:rgba(237,233,226,.56);
+      --text:#ede9e2; --text-2:rgba(237,233,226,.64); --text-3:rgba(237,233,226,.64);
       --gold:#c8a96e; --line:rgba(237,233,226,.16); --hair:rgba(237,233,226,.10);
       --cta-bg:#ede9e2; --cta-text:#0b0a09;
       --dot:rgba(237,233,226,.02);
@@ -73,7 +73,7 @@
     .note::before{ content:"✎  "; font-style:normal; opacity:.7; }
 
     /* ===== HEADER ===== */
-    header{ position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 90%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--hair); }
+    header{ position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 90%,transparent); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-bottom:1px solid var(--hair); }
     .bar{ max-width:var(--max); margin:0 auto; padding:16px 7vw; display:flex; align-items:center; justify-content:space-between; gap:24px; }
     @media(min-width:1000px){ .bar{ padding:18px 64px; } }
     .mark{ display:flex; align-items:center; gap:11px; }
@@ -137,7 +137,7 @@
     /* ===== BOOK ===== */
     .book-grid{ display:grid; grid-template-columns:1fr; gap:40px; align-items:center; }
     @media(min-width:760px){ .book-grid{ grid-template-columns:auto 1fr 1fr; gap:48px; } }
-    .book-grid img{ width:200px; border-radius:4px; box-shadow:0 8px 40px rgba(0,0,0,.4); }
+    .book-grid img{ width:200px; height:auto; border-radius:4px; box-shadow:0 8px 40px rgba(0,0,0,.4); }
     @media(max-width:759px){ .book-grid img{ width:160px; } }
     .book-grid .book-copy{ max-width:480px; }
     .book-grid .book-title{ font-family:var(--serif); font-size:clamp(24px,3vw,34px); font-weight:500; line-height:1.1; }
@@ -172,7 +172,7 @@
     .creds .row{ display:flex; gap:16px; padding:15px 0; border-top:1px solid var(--hair); font-family:var(--mono); font-size:13px; }
     .creds .row b{ color:var(--coral); font-weight:400; min-width:64px; }
     .creds .row span{ color:var(--text-2); }
-    .feather{ position:absolute; right:-2vw; top:7vh; width:min(33vw,340px); opacity:.5; pointer-events:none; mix-blend-mode:multiply; }
+    .feather{ position:absolute; right:-2vw; top:7vh; width:min(33vw,340px); height:auto; opacity:.5; pointer-events:none; mix-blend-mode:multiply; }
     [data-theme="dark"] .feather{ mix-blend-mode:screen; opacity:.32; }
 
     /* ===== KEYA teaser ===== */
@@ -222,9 +222,9 @@
   <header>
     <div class="bar">
       <a href="#top" class="mark" aria-label="IDYeah Studio, home">
-        <img class="sym sym-on-light" src="./symbol-light.png" alt="" aria-hidden="true" />
-        <img class="sym sym-on-dark" src="./symbol-dark.png" alt="" aria-hidden="true" />
-        <img class="wordmark-img" src="./wordmark.png" alt="IDYeah Studio" />
+        <img class="sym sym-on-light" src="./symbol-light.png" alt="" aria-hidden="true" width="404" height="500" />
+        <img class="sym sym-on-dark" src="./symbol-dark.png" alt="" aria-hidden="true" width="404" height="500" />
+        <img class="wordmark-img" src="./wordmark.png" alt="IDYeah Studio" width="1182" height="97" />
       </a>
       <nav class="links" aria-label="Primary">
         <a href="#pitch">Studio</a>
@@ -273,6 +273,7 @@
         </div>
         <p class="arrow">↓ what it actually is</p>
         <p class="fixline">I help founders say what their product does. Then I design the thing that <em>proves</em> it.</p>
+        <a href="#offers" class="arrow" style="display:inline-block;margin-top:28px;border-bottom:1px solid var(--line);padding-bottom:2px;">Start with a $250 audit — back in 2–3 days &rarr;</a>
       </div>
     </section>
 
@@ -343,7 +344,7 @@
 
     <!-- PERSON -->
     <section id="person" style="position:relative;">
-      <img class="feather" src="media/feather.png" alt="" aria-hidden="true" />
+      <img class="feather" src="media/feather.png" alt="" aria-hidden="true" loading="lazy" width="2500" height="3000" />
       <div class="wrap">
         <div class="sec-head"><span class="num">D</span><h2>Who's holding the pen.</h2></div>
         <div class="person">
@@ -368,7 +369,7 @@
       <div class="wrap">
         <p class="label" style="margin-bottom:32px;">From the studio</p>
         <div class="book-grid">
-          <img src="media/book-cover.png" alt="Design AI Alchemy — book cover" />
+          <img src="media/book-cover.png" alt="Design AI Alchemy — book cover" loading="lazy" width="881" height="1140" />
           <div class="book-copy">
             <div class="book-title">Design <em>AI</em> Alchemy</div>
             <p class="book-sub">75 Prompts for UX Designers</p>
@@ -428,7 +429,7 @@
 
   <script>
     var root=document.documentElement, tBtn=document.getElementById('themeBtn');
-    function setTheme(t){ root.setAttribute('data-theme',t); tBtn.innerHTML = t==='dark' ? '&#9728;' : '&#9790;'; }
+    function setTheme(t){ root.setAttribute('data-theme',t); tBtn.innerHTML = t==='dark' ? '&#9728;' : '&#9790;'; tBtn.setAttribute('aria-label', t==='dark' ? 'Switch to light theme' : 'Switch to dark theme'); }
     tBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
     setTheme(root.getAttribute('data-theme')||'dark');
 
