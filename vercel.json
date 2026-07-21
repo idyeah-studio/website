@@ -1,11 +1,12 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
+      "src": "/(.*)",
       "has": [{ "type": "host", "value": "sap.idyeah.studio" }],
-      "destination": "/sap/$1"
+      "dest": "/sap/$1",
+      "check": true
     }
   ]
 }
