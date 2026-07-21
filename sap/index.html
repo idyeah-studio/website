@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IDYeah Studio — SAP UX · Authorized Synactive Reseller</title>
+
+  <meta name="description" content="Simplify SAP screens with tools already shipped in your SAP GUI. Authorized US reseller for Synactive GmbH. GuiXT, InputAssistant, S10, CIS mobile — no ABAP changes." />
+  <meta name="theme-color" content="#0c0b0a" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f3f0e8" media="(prefers-color-scheme: light)" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== TOKENS ===== */
+    [data-theme="light"]{
+      --bg:#f3f0e8; --bg-2:#eae7df;
+      --text:#18130e; --text-2:rgba(24,19,14,.62); --text-3:rgba(24,19,14,.61);
+      --gold:#7a5520; --gold-soft:rgba(122,85,32,.10);
+      --line:rgba(24,19,14,.12); --hair:rgba(24,19,14,.08);
+      --cta-bg:#18130e; --cta-text:#f3f0e8;
+      --dot:rgba(24,19,14,.018);
+      --card-bg:#fff; --card-border:rgba(24,19,14,.10);
+      --grp-simplify:#347b54; --grp-extend:#4a7fa8; --grp-measure:#9a8030;
+      --free-bg:rgba(52,123,84,.10); --free-text:#347b54;
+      --compare-before:#d8d4cc; --compare-after:var(--gold);
+    }
+    [data-theme="dark"]{
+      --bg:#0c0b0a; --bg-2:#141312;
+      --text:#ede9e2; --text-2:rgba(237,233,226,.62); --text-3:rgba(237,233,226,.50);
+      --gold:#c8a96e; --gold-soft:rgba(200,169,110,.08);
+      --line:rgba(237,233,226,.12); --hair:rgba(237,233,226,.08);
+      --cta-bg:#ede9e2; --cta-text:#0c0b0a;
+      --dot:rgba(237,233,226,.015);
+      --card-bg:#161514; --card-border:rgba(237,233,226,.08);
+      --grp-simplify:#5cb88a; --grp-extend:#6b9ec4; --grp-measure:#c4a24b;
+      --free-bg:rgba(92,184,138,.08); --free-text:#5cb88a;
+      --compare-before:#333; --compare-after:var(--gold);
+    }
+    :root{
+      --serif:'Cormorant Garamond',Georgia,serif;
+      --sans:'DM Sans',system-ui,sans-serif;
+      --mono:'DM Mono','SF Mono',monospace;
+      --max:1080px; --ease:cubic-bezier(.16,1,.3,1);
+    }
+
+    /* ===== RESET ===== */
+    *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+    body{ background:var(--bg); background-image:radial-gradient(var(--dot) 1px, transparent 1px); background-size:4px 4px; color:var(--text); font-family:var(--sans); font-size:16px; line-height:1.55; transition:background .4s var(--ease),color .4s var(--ease); overflow-x:hidden; }
+    @media(prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } html{ scroll-behavior:auto; } }
+    a{ color:inherit; text-decoration:none; }
+    ::selection{ background:var(--gold); color:#fff; }
+    :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:2px; }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 7vw; }
+    @media(min-width:960px){ .wrap{ padding:0 56px; } }
+    .skip{ position:absolute; left:-999px; top:0; background:var(--cta-bg); color:var(--cta-text); padding:12px 18px; z-index:200; font-family:var(--mono); font-size:13px; }
+    .skip:focus{ left:12px; top:12px; }
+
+    /* ===== TYPOGRAPHY ===== */
+    .mono{ font-family:var(--mono); }
+    .label{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-3); }
+
+    /* ===== HEADER ===== */
+    header{ position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 92%,transparent); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-bottom:1px solid var(--hair); }
+    .bar{ max-width:var(--max); margin:0 auto; padding:14px 7vw; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    @media(min-width:960px){ .bar{ padding:14px 56px; } }
+    .bar-left{ display:flex; align-items:center; gap:10px; }
+    .bar-left .sym{ width:28px; height:28px; }
+    [data-theme="light"] .bar-left .sym-on-dark{ display:none; }
+    [data-theme="dark"] .bar-left .sym-on-light{ display:none; }
+    .bar-left .site-label{ font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--text-2); border-left:1px solid var(--line); padding-left:10px; }
+    nav.links{ display:none; gap:24px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+    nav.links a{ color:var(--text-2); transition:color .25s; padding:4px 0; } nav.links a:hover{ color:var(--gold); }
+    nav.links a.active{ color:var(--text); }
+    @media(min-width:860px){ nav.links{ display:flex; } }
+    .head-right{ display:flex; align-items:center; gap:12px; }
+    .toggle{ width:34px; height:34px; border:1px solid var(--line); border-radius:50%; background:none; color:var(--text); cursor:pointer; font-size:14px; display:grid; place-items:center; }
+    .cta-btn{ font-family:var(--mono); font-size:12px; letter-spacing:.03em; padding:8px 18px; background:var(--cta-bg); color:var(--cta-text); border-radius:999px; white-space:nowrap; transition:transform .25s var(--ease); }
+    .cta-btn:hover{ transform:translateY(-2px); }
+    .ham{ display:none; width:34px; height:34px; border:1px solid var(--line); border-radius:50%; background:none; cursor:pointer; color:var(--text); }
+    @media(max-width:859px){ .ham{ display:grid; place-items:center; } .head-right .cta-btn{ display:none; } }
+
+    /* ===== SECTIONS ===== */
+    section{ padding:10vh 0; border-top:1px solid var(--hair); }
+    section:first-of-type{ border-top:none; }
+
+    /* ===== HERO ===== */
+    .hero{ padding:12vh 0 8vh; border-top:none; }
+    .hero .wrap{ display:grid; grid-template-columns:1fr; gap:48px; align-items:center; }
+    @media(min-width:860px){ .hero .wrap{ grid-template-columns:1fr 1fr; } }
+    .hero-copy{ }
+    .hero-eyebrow{ font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-3); margin-bottom:32px; display:flex; align-items:center; gap:12px; }
+    .hero-eyebrow .shipped{ color:var(--grp-simplify); }
+    .hero h1{ font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.6vw,52px); line-height:1.08; max-width:18ch; }
+    .hero h1 em{ font-style:italic; color:var(--gold); }
+    .hero .hero-sub{ font-family:var(--mono); font-size:clamp(15px,1.8vw,18px); color:var(--text-2); margin-top:24px; max-width:48ch; line-height:1.5; }
+    .hero .hero-sub strong{ color:var(--grp-simplify); font-weight:500; }
+    .hero .hero-cta{ display:inline-block; margin-top:40px; }
+
+    /* ===== HERO SCRIPT ILLUSTRATION ===== */
+    .hero-script{ border:1px solid var(--line); border-radius:4px; padding:0; overflow:hidden; font-family:var(--mono); font-size:13px; line-height:1.7; position:relative; }
+    .hero-script-header{ display:flex; align-items:center; gap:8px; padding:10px 16px; border-bottom:1px solid var(--hair); background:var(--bg-2); }
+    .hero-script-header span{ font-size:11px; letter-spacing:.06em; color:var(--text-3); }
+    .hero-script-header .dot{ width:6px; height:6px; border-radius:50%; background:var(--gold); opacity:.5; }
+    .hero-script-body{ padding:16px 0; counter-reset:line; }
+    .script-line{ display:flex; gap:4px; padding:0 16px; opacity:0; animation:scriptIn .4s var(--ease) forwards; }
+    .script-line:nth-child(1){ animation-delay:.3s; }
+    .script-line:nth-child(2){ animation-delay:.6s; }
+    .script-line:nth-child(3){ animation-delay:.9s; }
+    .script-line:nth-child(4){ animation-delay:1.2s; }
+    .script-line:nth-child(5){ animation-delay:1.5s; }
+    .script-line:nth-child(6){ animation-delay:1.9s; }
+    .script-line:nth-child(7){ animation-delay:2.2s; }
+    .script-line:nth-child(8){ animation-delay:2.5s; }
+    .script-line:nth-child(9){ animation-delay:2.8s; }
+    .script-line .ln{ color:var(--gold); opacity:.45; min-width:24px; text-align:right; margin-right:16px; user-select:none; font-size:12px; }
+    .script-line .cmd{ color:var(--gold); font-weight:500; }
+    .script-line .field{ color:var(--text); }
+    .script-line .coord{ color:var(--text-3); }
+    .script-line .comment{ color:var(--text-3); font-style:italic; font-weight:300; }
+    .script-line.is-del .field{ position:relative; }
+    .script-line.is-del .field::after{ content:''; position:absolute; left:0; top:50%; height:1px; background:var(--gold); width:0; animation:strike .3s var(--ease) forwards; }
+    .script-line:nth-child(2).is-del .field::after{ animation-delay:.85s; }
+    .script-line:nth-child(3).is-del .field::after{ animation-delay:1.15s; }
+    .script-line:nth-child(4).is-del .field::after{ animation-delay:1.45s; }
+    .hero-script-footer{ padding:10px 16px; border-top:1px solid var(--hair); display:flex; justify-content:space-between; }
+    .hero-script-footer span{ font-size:10px; letter-spacing:.06em; color:var(--text-3); }
+    .hero-script-footer .saved{ color:var(--grp-simplify); opacity:0; animation:scriptIn .3s var(--ease) 3.2s forwards; }
+    @keyframes scriptIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
+    @keyframes strike{ to{ width:100%; } }
+    @media(max-width:859px){ .hero-script{ margin-top:8px; } }
+
+    /* ===== PROBLEM ===== */
+    .problem-grid{ display:grid; grid-template-columns:1fr; gap:32px; margin-top:40px; }
+    @media(min-width:700px){ .problem-grid{ grid-template-columns:repeat(3,1fr); } }
+    .stat-card{ border:1px solid var(--card-border); padding:28px 24px; background:var(--card-bg); }
+    .stat-card .num{ font-family:var(--serif); font-size:clamp(36px,4vw,52px); font-weight:600; line-height:1; color:var(--gold); }
+    .stat-card p{ font-family:var(--mono); font-size:13px; color:var(--text-2); margin-top:12px; line-height:1.5; }
+
+    /* ===== REVEAL ===== */
+    .reveal-block{ display:grid; grid-template-columns:1fr; gap:40px; margin-top:40px; }
+    @media(min-width:760px){ .reveal-block{ grid-template-columns:1.2fr .8fr; gap:56px; align-items:start; } }
+    .reveal-block .body p{ font-size:15px; color:var(--text-2); margin-bottom:16px; line-height:1.6; }
+    .reveal-block .body p:last-child{ margin-bottom:0; }
+    .trust-badge{ font-family:var(--mono); font-size:12px; letter-spacing:.06em; display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border:1px solid var(--grp-simplify); color:var(--grp-simplify); margin-top:24px; }
+    .trust-badge::before{ content:"✓"; font-weight:700; }
+    .reveal-aside{ border:1px solid var(--card-border); padding:24px; background:var(--card-bg); }
+    .reveal-aside .aside-label{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-3); margin-bottom:16px; }
+    .reveal-aside ul{ list-style:none; }
+    .reveal-aside li{ font-family:var(--mono); font-size:13px; color:var(--text-2); padding:8px 0; border-top:1px solid var(--hair); line-height:1.5; }
+    .reveal-aside li:first-child{ border-top:none; padding-top:0; }
+
+    /* ===== PRODUCTS ===== */
+    .tab-bar{ display:flex; gap:0; border-bottom:1px solid var(--line); margin-bottom:40px; overflow-x:auto; position:relative; -webkit-overflow-scrolling:touch; }
+    @media(max-width:599px){ .tab-bar button{ padding:12px 14px; font-size:11px; } }
+    .tab-bar button{ font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; padding:12px 20px; background:none; border:none; border-bottom:2px solid transparent; color:var(--text-3); cursor:pointer; white-space:nowrap; transition:color .2s, border-color .2s; }
+    .tab-bar button:hover{ color:var(--text); }
+    .tab-bar button[aria-selected="true"]{ color:var(--text); border-bottom-color:var(--gold); }
+    .tab-panel{ display:none; }
+    .tab-panel.active{ display:block; }
+    .tab-panel .group-intro{ font-family:var(--mono); font-size:13px; color:var(--text-2); margin-bottom:32px; max-width:80ch; }
+    .product-cards{ display:grid; grid-template-columns:1fr; gap:16px; }
+    .product-card{ border:1px solid var(--card-border); border-left:2px solid var(--grp-simplify); background:var(--card-bg); overflow:hidden; }
+    .tab-panel[data-group="extend"] .product-card{ border-left-color:var(--grp-extend); }
+    .tab-panel[data-group="measure"] .product-card{ border-left-color:var(--grp-measure); }
+    .product-card .card-head{ display:flex; align-items:center; justify-content:space-between; padding:20px 24px; cursor:pointer; gap:16px; }
+    .product-card .card-head h4{ font-family:var(--mono); font-size:14px; font-weight:500; letter-spacing:.02em; }
+    .product-card .card-head .price{ font-family:var(--mono); font-size:12px; color:var(--text-3); font-variant-numeric:tabular-nums; }
+    .product-card .card-head .free-tag{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--free-text); background:var(--free-bg); padding:3px 8px; font-weight:500; }
+    .product-card .card-head .toggle-icon{ font-size:14px; color:var(--text-3); transition:transform .2s var(--ease); flex-shrink:0; }
+    .product-card.open .card-head .toggle-icon{ transform:rotate(45deg); }
+    .product-card .card-body{ display:none; padding:0 24px 24px; }
+    .product-card.open .card-body{ display:block; }
+    .product-card .card-body .value-prop{ font-family:var(--sans); font-size:15px; font-weight:500; color:var(--text); margin-bottom:12px; }
+    .product-card .card-body p{ font-size:14px; color:var(--text-2); line-height:1.6; }
+
+    /* ===== COMPARE ===== */
+    .compare-wrap{ margin-top:40px; }
+    .compare-pair{ display:grid; grid-template-columns:1fr; gap:24px; }
+    @media(min-width:700px){ .compare-pair{ grid-template-columns:1fr 1fr; } }
+    .compare-frame{ border:1px solid var(--card-border); overflow:hidden; }
+    .compare-frame .frame-label{ font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3); padding:8px 16px; border-bottom:1px solid var(--hair); background:var(--bg-2); display:flex; justify-content:space-between; }
+    .compare-frame .frame-label .tag{ color:var(--compare-after); }
+    .compare-screen{ padding:16px; font-family:var(--mono); font-size:11px; line-height:1.7; background:var(--card-bg); min-height:200px; }
+    .compare-screen .field-row{ display:flex; gap:8px; align-items:center; padding:3px 0; }
+    .compare-screen .field-label{ color:var(--text-3); min-width:120px; }
+    .compare-screen .field-input{ flex:1; border:1px solid var(--hair); padding:3px 8px; background:var(--bg); color:var(--text); font-family:var(--mono); font-size:11px; }
+    .compare-screen .field-input.active{ border-color:var(--gold); background:var(--gold-soft); }
+    .compare-screen .field-row.hidden{ opacity:.25; text-decoration:line-through; }
+    .compare-screen .field-row.gone{ display:none; }
+    .compare-screen .section-label{ font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); padding:8px 0 4px; margin-top:8px; border-top:1px solid var(--hair); }
+    .compare-caption{ font-family:var(--mono); font-size:12px; color:var(--text-3); margin-top:16px; text-align:center; }
+
+    /* ===== HOW WE WORK ===== */
+    .steps{ display:grid; grid-template-columns:1fr; gap:24px; margin-top:40px; counter-reset:step; }
+    @media(min-width:768px){ .steps{ grid-template-columns:repeat(3,1fr); } }
+    .step{ border:1px solid var(--card-border); padding:28px 24px; background:var(--card-bg); counter-increment:step; }
+    .step::before{ content:counter(step,decimal-leading-zero); font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--gold); display:block; margin-bottom:16px; }
+    .step h4{ font-family:var(--mono); font-size:14px; font-weight:500; margin-bottom:12px; }
+    .step p{ font-size:14px; color:var(--text-2); line-height:1.6; }
+    .step .timeline{ font-family:var(--mono); font-size:11px; color:var(--text-3); margin-top:16px; text-transform:uppercase; letter-spacing:.08em; }
+    .oneliner{ font-family:var(--mono); font-size:14px; color:var(--text-2); margin-top:32px; max-width:80ch; }
+
+    /* ===== TRUST ===== */
+    .trust-rows{ margin-top:40px; }
+    .trust-row{ display:flex; gap:16px; padding:14px 0; border-top:1px solid var(--hair); font-family:var(--mono); font-size:13px; }
+    .trust-row .key{ color:var(--gold); font-weight:500; min-width:100px; font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+    @media(max-width:599px){ .trust-row{ flex-direction:column; gap:4px; } .trust-row .key{ min-width:unset; } }
+    .trust-row .val{ color:var(--text-2); }
+
+    /* ===== CONTACT ===== */
+    .contact h2{ font-family:var(--serif); font-weight:500; font-size:clamp(28px,4vw,48px); line-height:1.08; }
+    .contact .contact-sub{ font-family:var(--mono); font-size:14px; color:var(--text-2); margin-top:16px; max-width:80ch; }
+    .contact .actions{ margin-top:40px; display:flex; gap:16px; flex-wrap:wrap; }
+    .cta-ghost{ font-family:var(--mono); font-size:12px; letter-spacing:.03em; padding:8px 18px; background:none; color:var(--text); border:1px solid var(--line); border-radius:999px; white-space:nowrap; transition:transform .25s var(--ease); }
+    .cta-ghost:hover{ transform:translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    footer{ border-top:1px solid var(--hair); padding:32px 0 48px; }
+    .foot{ display:flex; flex-wrap:wrap; gap:16px 40px; align-items:center; justify-content:space-between; font-family:var(--mono); font-size:11px; color:var(--text-3); letter-spacing:.04em; }
+    .foot a:hover{ color:var(--gold); }
+
+    /* ===== TITLEBLOCK ===== */
+    .titleblock{ display:none; }
+    @media(min-width:1100px){
+      .titleblock{ display:block; position:fixed; right:18px; bottom:18px; z-index:40; border:1px solid var(--hair); background:color-mix(in srgb,var(--bg) 92%,transparent); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--text-3); }
+      .titleblock div{ padding:5px 10px; border-bottom:1px solid var(--hair); display:flex; justify-content:space-between; gap:16px; }
+      .titleblock div:last-child{ border-bottom:none; }
+      .titleblock b{ color:var(--text-2); font-weight:400; }
+    }
+
+    /* ===== MOBILE SHEET ===== */
+    .sheet{ position:fixed; inset:0; background:var(--bg); z-index:150; transform:translateY(-100%); transition:transform .45s var(--ease); display:grid; align-content:center; gap:6px; padding:0 9vw; }
+    .sheet.open{ transform:translateY(0); }
+    .sheet a{ font-family:var(--mono); font-size:20px; padding:8px 0; letter-spacing:.04em; }
+    .sheet .close{ position:absolute; top:22px; right:9vw; font-family:var(--mono); font-size:13px; background:none; border:none; color:var(--text-2); cursor:pointer; }
+  </style>
+</head>
+<body>
+  <aside class="titleblock" aria-hidden="true">
+    <div><span>REV</span><b>1.0</b></div>
+    <div><span>PARTNER</span><b>Synactive GmbH</b></div>
+    <div><span>REGION</span><b>US</b></div>
+  </aside>
+  <a href="#hero" class="skip">Skip to content</a>
+
+  <header>
+    <div class="bar">
+      <a href="https://idyeah.studio" class="bar-left" aria-label="IDYeah Studio">
+        <img class="sym sym-on-light" src="../symbol-light.png" alt="" aria-hidden="true" width="404" height="500" />
+        <img class="sym sym-on-dark" src="../symbol-dark.png" alt="" aria-hidden="true" width="404" height="500" />
+        <span class="site-label">SAP UX</span>
+      </a>
+      <nav class="links" aria-label="Primary">
+        <a href="#products">Products</a>
+        <a href="#compare">Before / After</a>
+        <a href="#how">How we work</a>
+        <a href="#trust">Why us</a>
+      </nav>
+      <div class="head-right">
+        <button class="toggle" id="themeBtn" aria-label="Toggle theme">&#9790;</button>
+        <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta-btn">Book an assessment</a>
+        <button class="ham" id="hamBtn" aria-label="Open menu" aria-expanded="false">&equiv;</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
+    <button class="close" id="closeBtn">close &times;</button>
+    <a href="#products">Products</a>
+    <a href="#compare">Before / After</a>
+    <a href="#how">How we work</a>
+    <a href="#trust">Why us</a>
+    <a href="#contact">Book an assessment &rarr;</a>
+  </div>
+
+  <main id="hero">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-copy">
+          <p class="hero-eyebrow"><span class="shipped">Shipped with SAP</span> · Not a third-party tool</p>
+          <h1>Your SAP screens cost you hours. <em>The fix is already in your license.</em></h1>
+          <p class="hero-sub">GuiXT ships free with every SAP GUI and S/4HANA installation. We activate it, configure it, and build from there.</p>
+          <a href="#contact" class="cta-btn hero-cta">See what GuiXT can do on your screens</a>
+        </div>
+        <div class="hero-script" aria-hidden="true">
+          <div class="hero-script-header">
+            <span class="dot"></span>
+            <span>mm01.guixt</span>
+          </div>
+          <div class="hero-script-body">
+            <div class="script-line"><span class="ln">1</span><span class="comment">// Material Master — simplified</span></div>
+            <div class="script-line is-del"><span class="ln">2</span><span class="cmd">del&nbsp;</span> <span class="field">F[Industry sector]</span></div>
+            <div class="script-line is-del"><span class="ln">3</span><span class="cmd">del&nbsp;</span> <span class="field">F[Change number]</span></div>
+            <div class="script-line is-del"><span class="ln">4</span><span class="cmd">del&nbsp;</span> <span class="field">F[Revision level]</span></div>
+            <div class="script-line"><span class="ln">5</span><span class="comment"></span></div>
+            <div class="script-line"><span class="ln">6</span><span class="cmd">pos&nbsp;</span> <span class="field">F[Material]</span> <span class="coord">&nbsp;(1,1)</span></div>
+            <div class="script-line"><span class="ln">7</span><span class="cmd">pos&nbsp;</span> <span class="field">F[Description]</span> <span class="coord">&nbsp;(2,1)</span></div>
+            <div class="script-line"><span class="ln">8</span><span class="cmd">pos&nbsp;</span> <span class="field">F[Plant]</span> <span class="coord">&nbsp;(3,1)</span></div>
+            <div class="script-line"><span class="ln">9</span><span class="cmd">pos&nbsp;</span> <span class="field">F[MRP Type]</span> <span class="coord">&nbsp;(4,1)</span></div>
+          </div>
+          <div class="hero-script-footer">
+            <span>9 lines · 4 fields remain</span>
+            <span class="saved">✓ Applied</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE PROBLEM -->
+    <section id="problem">
+      <div class="wrap">
+        <p class="label">The problem</p>
+        <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;">SAP was built for data. Not for people.</h2>
+        <div class="problem-grid">
+          <div class="stat-card">
+            <div class="num">48</div>
+            <p>fields on a single purchase order screen. Your team uses 17 of them.</p>
+          </div>
+          <div class="stat-card">
+            <div class="num">6–8</div>
+            <p>weeks to onboard a new hire on SAP navigation that hasn't changed since 1992.</p>
+          </div>
+          <div class="stat-card">
+            <div class="num">$0</div>
+            <p>spent on the screen customization tool already installed on every workstation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE REVEAL -->
+    <section id="reveal">
+      <div class="wrap">
+        <p class="label">What nobody told you</p>
+        <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;">You already own the fix.</h2>
+        <div class="reveal-block">
+          <div class="body">
+            <p>It can hide fields your team never uses. Rearrange layouts by role. Add input validation before data hits the backend. No ABAP changes. No transport requests. No basis team bottleneck.</p>
+            <p>Most SAP customers don't know it exists. The ones who do aren't sure how to configure it. So it sits there. Unused.</p>
+            <p style="color:var(--text);font-weight:500;">We change that.</p>
+          </div>
+          <aside class="reveal-aside">
+            <div class="aside-label">What GuiXT does</div>
+            <ul>
+              <li>Hide unused fields and tabs</li>
+              <li>Rearrange screen layouts by role</li>
+              <li>Add dropdowns, buttons, validation</li>
+              <li>Merge multiple transactions into one view</li>
+              <li>Deploy instantly — no transports</li>
+              <li>Works with S/4HANA and all Business Suite releases</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEFORE / AFTER -->
+    <section id="compare">
+      <div class="wrap">
+        <p class="label">The difference</p>
+        <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;">Same transaction. Different century.</h2>
+        <div class="compare-wrap">
+          <div class="compare-pair">
+            <div class="compare-frame">
+              <div class="frame-label"><span>Before · Standard SAP GUI</span><span>MM01</span></div>
+              <div class="compare-screen">
+                <div class="section-label">Material Master — Basic Data</div>
+                <div class="field-row"><span class="field-label">Material</span><span class="field-input"></span></div>
+                <div class="field-row"><span class="field-label">Industry sector</span><span class="field-input"></span></div>
+                <div class="field-row"><span class="field-label">Material type</span><span class="field-input"></span></div>
+                <div class="field-row hidden"><span class="field-label">Change number</span><span class="field-input"></span></div>
+                <div class="field-row hidden"><span class="field-label">Revision level</span><span class="field-input"></span></div>
+                <div class="section-label">Organizational Levels</div>
+                <div class="field-row"><span class="field-label">Plant</span><span class="field-input"></span></div>
+                <div class="field-row"><span class="field-label">Stor. location</span><span class="field-input"></span></div>
+                <div class="field-row hidden"><span class="field-label">Warehouse no.</span><span class="field-input"></span></div>
+                <div class="field-row hidden"><span class="field-label">Storage type</span><span class="field-input"></span></div>
+                <div class="field-row hidden"><span class="field-label">Sales org.</span><span class="field-input"></span></div>
+                <div class="field-row hidden"><span class="field-label">Distr. channel</span><span class="field-input"></span></div>
+                <div class="field-row hidden"><span class="field-label">Division</span><span class="field-input"></span></div>
+              </div>
+            </div>
+            <div class="compare-frame" style="border-color:var(--gold);">
+              <div class="frame-label"><span>After · With GuiXT</span><span class="tag">Customized</span></div>
+              <div class="compare-screen">
+                <div class="section-label">Create Material — Warehouse Role</div>
+                <div class="field-row"><span class="field-label">Material</span><span class="field-input active"></span></div>
+                <div class="field-row"><span class="field-label">Material type</span><span class="field-input active"></span></div>
+                <div class="field-row"><span class="field-label">Plant</span><span class="field-input active"></span></div>
+                <div class="field-row"><span class="field-label">Stor. location</span><span class="field-input active"></span></div>
+              </div>
+            </div>
+          </div>
+          <p class="compare-caption">12 fields → 4 fields. Same transaction. Zero ABAP changes. Configured in under an hour.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="products">
+      <div class="wrap">
+        <p class="label">The suite</p>
+        <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;margin-bottom:8px;">Eight tools. Three problems.</h2>
+        <p style="font-family:var(--mono);font-size:13px;color:var(--text-3);margin-bottom:32px;">All built by Synactive GmbH, Germany.</p>
+
+        <div class="tab-bar" role="tablist" aria-label="Product groups">
+          <button role="tab" aria-selected="true" aria-controls="panel-simplify" id="tab-simplify">Simplify</button>
+          <button role="tab" aria-selected="false" aria-controls="panel-extend" id="tab-extend">Extend</button>
+          <button role="tab" aria-selected="false" aria-controls="panel-measure" id="tab-measure">Measure &amp; Mobilize</button>
+        </div>
+
+        <!-- SIMPLIFY -->
+        <div class="tab-panel active" id="panel-simplify" role="tabpanel" aria-labelledby="tab-simplify" data-group="simplify">
+          <p class="group-intro">Strip your screens down to what each role actually needs. No backend changes. No dev cycles.</p>
+          <div class="product-cards">
+            <div class="product-card open">
+              <div class="card-head" aria-expanded="true" role="button" tabindex="0">
+                <h4>GuiXT <span class="free-tag">Free</span></h4>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="card-body">
+                <p class="value-prop">Simplify any SAP screen in minutes, without touching ABAP.</p>
+                <p>Customize screen layouts, hide unused fields, add buttons, restructure tabs — all through simple scripting on the frontend. Changes deploy to users instantly with no transport requests.</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="card-head" aria-expanded="false" role="button" tabindex="0">
+                <h4>InputAssistant</h4>
+                <div><span class="price">from $8,500</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+              </div>
+              <div class="card-body">
+                <p class="value-prop">Cut SAP data entry time in half with autocomplete, templates, and built-in lookups.</p>
+                <p>Adds type-ahead suggestions, frequently-used-value lists, and configurable entry templates to any SAP input field. Eliminates the toggle-between-screens ritual your team does hundreds of times a day. Pays for itself the month your warehouse team stops fat-fingering material numbers.</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="card-head" aria-expanded="false" role="button" tabindex="0">
+                <h4>Script Editor Pro</h4>
+                <div><span class="price">from $2,000</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+              </div>
+              <div class="card-body">
+                <p class="value-prop">Build and debug GuiXT scripts in a real IDE instead of Notepad.</p>
+                <p>Syntax highlighting, autocomplete, live preview, and step-through debugging. The professional tooling that turns ad-hoc screen tweaks into maintainable, version-controlled customization code. Essential when scaling GuiXT beyond a single department.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXTEND -->
+        <div class="tab-panel" id="panel-extend" role="tabpanel" aria-labelledby="tab-extend" data-group="extend">
+          <p class="group-intro">When simplification isn't enough. Build what SAP doesn't offer.</p>
+          <div class="product-cards">
+            <div class="product-card">
+              <div class="card-head" aria-expanded="false" role="button" tabindex="0">
+                <h4>Controls</h4>
+                <div><span class="price">from $5,700</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+              </div>
+              <div class="card-body">
+                <p class="value-prop">Embed .NET components, HTML panels, and ActiveX controls directly inside SAP screens.</p>
+                <p>Bridges the gap between what SAP's native UI can render and what your users actually need — dashboards, interactive charts, document viewers, custom data grids. Your developers work in VB.NET or HTML/JavaScript; SAP handles the data; Controls handles the integration.</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="card-head" aria-expanded="false" role="button" tabindex="0">
+                <h4>S10 Framework</h4>
+                <div><span class="price">from $5,200</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+              </div>
+              <div class="card-body">
+                <p class="value-prop">Ship Fiori-quality web and mobile SAP apps in weeks, not quarters.</p>
+                <p>A rapid application framework that generates responsive, browser-based SAP interfaces from ABAP classes. Native SAP integration with no middleware, no API layer to maintain. Your ABAP developers can build modern front-end output without learning JavaScript frameworks.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MEASURE & MOBILIZE -->
+        <div class="tab-panel" id="panel-measure" role="tabpanel" aria-labelledby="tab-measure" data-group="measure">
+          <p class="group-intro">Know how your screens are actually used. Then take SAP into the field.</p>
+          <div class="product-cards">
+            <div class="product-card">
+              <div class="card-head" aria-expanded="false" role="button" tabindex="0">
+                <h4>UI Log</h4>
+                <div><span class="price">$3,900</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+              </div>
+              <div class="card-body">
+                <p class="value-prop">See exactly which SAP screens and fields your people actually use — and which they skip.</p>
+                <p>Records real user interactions: click paths, field usage, time-on-screen, navigation patterns. Hard data for simplification decisions instead of guesswork. Run it before a GuiXT project to know where to cut, or before an S/4HANA migration to identify which custom transactions your org actually depends on.</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="card-head" aria-expanded="false" role="button" tabindex="0">
+                <h4>CIS mobile</h4>
+                <div><span class="price">from $6,500/yr</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+              </div>
+              <div class="card-body">
+                <p class="value-prop">Give field teams full SAP access on any mobile device, with offline mode that actually works.</p>
+                <p>Renders SAP transactions as native-feeling mobile interfaces — inventory counts, service orders, time entry, inspections. Local data caching so work continues in warehouses, job sites, and plant floors where Wi-Fi doesn't. Data syncs automatically when the device reconnects.</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="card-head" aria-expanded="false" role="button" tabindex="0">
+                <h4>Service Scheduler</h4>
+                <div><span class="price">$650/yr per user</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+              </div>
+              <div class="card-body">
+                <p class="value-prop">Dispatch, route, and track field service teams from a single SAP-connected calendar.</p>
+                <p>Drag-and-drop scheduling board that writes directly to SAP service orders. Technicians get a mobile app with the day's route, job details, and parts lists. Replaces the spreadsheet-and-phone-call workflow most SAP service shops still run.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW WE WORK -->
+    <section id="how">
+      <div class="wrap">
+        <p class="label">The implementation layer</p>
+        <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;">Tools are only as good as the person configuring them.</h2>
+        <div class="steps">
+          <div class="step">
+            <h4>Screen Audit</h4>
+            <p>We log into your system. Document every transaction your team runs daily. Map the fields they use, the ones they skip, and where errors concentrate.</p>
+            <div class="timeline">2–3 days</div>
+          </div>
+          <div class="step">
+            <h4>Configure &amp; Build</h4>
+            <p>GuiXT scripts. InputAssistant rules. Custom controls if the workflow demands it. Each screen reconfigured for the role that uses it.</p>
+            <div class="timeline">1–2 weeks</div>
+          </div>
+          <div class="step">
+            <h4>Train &amp; Optimize</h4>
+            <p>Your team gets hands-on training with the new layouts. Power users learn to make adjustments. We refine until the system is theirs.</p>
+            <div class="timeline">On demand</div>
+          </div>
+        </div>
+        <p class="oneliner">One person. No layers. You work directly with the practitioner who audits your screens, writes the scripts, and trains your team.</p>
+      </div>
+    </section>
+
+    <!-- TRUST -->
+    <section id="trust">
+      <div class="wrap">
+        <p class="label">Why us</p>
+        <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;">German engineering. American experience.</h2>
+        <div class="trust-rows">
+          <div class="trust-row"><span class="key">Authorized</span><span class="val">US reseller for <a href="https://www.synactive.com/index_e.html" target="_blank" rel="noopener" style="color:var(--text);border-bottom:1px solid var(--line);">Synactive GmbH</a> — the German engineering company behind GuiXT. Building SAP UI tools since 1997. Not affiliated with any other US entity.</span></div>
+          <div class="trust-row"><span class="key">Product</span><span class="val">GuiXT ships with SAP — not a third-party tool. In production since 1997.</span></div>
+          <div class="trust-row"><span class="key">Engineering</span><span class="val">25 years — software architecture, UX design, SAP implementation</span></div>
+          <div class="trust-row"><span class="key">Direct</span><span class="val">One practitioner. No account managers. No handoffs. US-based, same timezone.</span></div>
+          <div class="trust-row"><span class="key">Pricing</span><span class="val">Permanent licenses. Own it, don't rent it. 15% annual maintenance.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <h2>Your team used SAP today. It took longer than it should have.</h2>
+        <p class="contact-sub">We'll simplify one live transaction together — so you can see the impact before you spend a dollar. No pitch deck. No procurement process.</p>
+        <div class="actions">
+          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta-btn">Book a free 45-minute power session</a>
+          <a href="#" id="emailLink" class="cta-ghost">Send a note</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <span>&copy; <script>document.write(new Date().getFullYear())</script> <a href="https://idyeah.studio" target="_blank" rel="noopener" style="border-bottom:1px solid var(--line)">IDYeah Studio</a> · Authorized Synactive GmbH Reseller · Cupertino, CA</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var root=document.documentElement, tBtn=document.getElementById('themeBtn');
+    var saved=localStorage.getItem('sap-theme');
+    if(saved) root.setAttribute('data-theme',saved);
+    else if(window.matchMedia('(prefers-color-scheme:light)').matches) root.setAttribute('data-theme','light');
+    function setTheme(t){ root.setAttribute('data-theme',t); localStorage.setItem('sap-theme',t); tBtn.innerHTML=t==='dark'?'&#9728;':'&#9790;'; tBtn.setAttribute('aria-label',t==='dark'?'Switch to light theme':'Switch to dark theme'); }
+    tBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
+    setTheme(root.getAttribute('data-theme')||'dark');
+
+    // Mobile menu
+    var sheet=document.getElementById('sheet'),ham=document.getElementById('hamBtn'),closeB=document.getElementById('closeBtn');
+    function openSheet(o){
+      sheet.classList.toggle('open',o); ham.setAttribute('aria-expanded',o); sheet.setAttribute('aria-hidden',!o);
+      if(o){closeB.focus();document.addEventListener('keydown',trapFocus);}
+      else{ham.focus();document.removeEventListener('keydown',trapFocus);}
+    }
+    function trapFocus(e){
+      if(e.key==='Escape'){openSheet(false);return;}
+      if(e.key!=='Tab')return;
+      var f=sheet.querySelectorAll('button,a[href]'),first=f[0],last=f[f.length-1];
+      if(e.shiftKey){if(document.activeElement===first){e.preventDefault();last.focus();}}
+      else{if(document.activeElement===last){e.preventDefault();first.focus();}}
+    }
+    ham.addEventListener('click',function(){openSheet(true);});
+    closeB.addEventListener('click',function(){openSheet(false);});
+    sheet.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){openSheet(false);});});
+
+    // Tabs
+    var tabs=document.querySelectorAll('[role="tab"]'),panels=document.querySelectorAll('.tab-panel');
+    tabs.forEach(function(tab){
+      tab.addEventListener('click',function(){
+        tabs.forEach(function(t){t.setAttribute('aria-selected','false');});
+        panels.forEach(function(p){p.classList.remove('active');});
+        tab.setAttribute('aria-selected','true');
+        document.getElementById(tab.getAttribute('aria-controls')).classList.add('active');
+      });
+      tab.addEventListener('keydown',function(e){
+        var idx=Array.from(tabs).indexOf(tab);
+        if(e.key==='ArrowRight'){e.preventDefault();tabs[(idx+1)%tabs.length].focus();tabs[(idx+1)%tabs.length].click();}
+        if(e.key==='ArrowLeft'){e.preventDefault();tabs[(idx-1+tabs.length)%tabs.length].focus();tabs[(idx-1+tabs.length)%tabs.length].click();}
+      });
+    });
+
+    // Product card expand/collapse
+    document.querySelectorAll('.product-card .card-head').forEach(function(head){
+      head.addEventListener('click',function(){
+        var card=head.parentElement,wasOpen=card.classList.contains('open');
+        card.parentElement.querySelectorAll('.product-card').forEach(function(c){c.classList.remove('open');c.querySelector('.card-head').setAttribute('aria-expanded','false');});
+        if(!wasOpen){card.classList.add('open');head.setAttribute('aria-expanded','true');}
+      });
+      head.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();head.click();}});
+    });
+
+    // Active nav on scroll
+    var sections=document.querySelectorAll('section[id]'),navLinks=document.querySelectorAll('nav.links a');
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          navLinks.forEach(function(l){l.classList.remove('active');});
+          var link=document.querySelector('nav.links a[href="#'+e.target.id+'"]');
+          if(link)link.classList.add('active');
+        }
+      });
+    },{rootMargin:'-30% 0px -70% 0px'});
+    sections.forEach(function(s){obs.observe(s);});
+
+    // Email obfuscation
+    var u='sap',d='idyeah.studio';
+    document.getElementById('emailLink').href='mailto:'+u+'@'+d+'?subject=SAP%20UI%20Tools%20%E2%80%93%20inquiry';
+  </script>
+</body>
+</html>
