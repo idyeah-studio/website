@@ -144,13 +144,13 @@
     .stat-card p{ font-family:var(--mono); font-size:13px; color:var(--text-2); margin-top:12px; line-height:1.5; }
 
     /* ===== REVEAL ===== */
-    .reveal-block{ display:grid; grid-template-columns:1fr; gap:40px; margin-top:40px; }
+    .reveal-block{ display:grid; grid-template-columns:1fr; gap:40px; }
     @media(min-width:760px){ .reveal-block{ grid-template-columns:1.2fr .8fr; gap:56px; align-items:start; } }
     .reveal-block .body p{ font-size:15px; color:var(--text-2); margin-bottom:16px; line-height:1.6; }
     .reveal-block .body p:last-child{ margin-bottom:0; }
     .trust-badge{ font-family:var(--mono); font-size:12px; letter-spacing:.06em; display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border:1px solid var(--grp-simplify); color:var(--grp-simplify); margin-top:24px; }
     .trust-badge::before{ content:"✓"; font-weight:700; }
-    .reveal-aside{ border:1px solid var(--card-border); padding:24px; background:var(--card-bg); }
+    .reveal-aside{ border:1px solid var(--card-border); padding:24px; background:var(--card-bg); align-self:start; }
     .reveal-aside .aside-label{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-3); margin-bottom:16px; }
     .reveal-aside ul{ list-style:none; }
     .reveal-aside li{ font-family:var(--mono); font-size:13px; color:var(--text-2); padding:8px 0; border-top:1px solid var(--hair); line-height:1.5; }
@@ -212,6 +212,10 @@
     .trust-row{ display:flex; gap:16px; padding:14px 0; border-top:1px solid var(--hair); font-family:var(--mono); font-size:13px; }
     .trust-row .key{ color:var(--gold); font-weight:500; min-width:100px; font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
     @media(max-width:599px){ .trust-row{ flex-direction:column; gap:4px; } .trust-row .key{ min-width:unset; } }
+    .products-head{ display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:32px; flex-wrap:wrap; }
+    .tools-by{ display:flex; align-items:baseline; gap:8px; }
+    .tools-by-label{ font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--text-3); }
+    .tools-by-name{ font-family:Arial,Helvetica,sans-serif; font-weight:700; color:#5B7AAF; font-size:20px; }
     .trust-row .val{ color:var(--text-2); }
 
     /* ===== CONTACT ===== */
@@ -363,10 +367,10 @@
     <!-- THE REVEAL -->
     <section id="reveal">
       <div class="wrap">
-        <p class="label">What nobody told you</p>
-        <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;">You already own the fix.</h2>
         <div class="reveal-block">
           <div class="body">
+            <p class="label">What nobody told you</p>
+            <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;margin-bottom:24px;">You already own the fix.</h2>
             <p>It can hide fields your team never uses. Rearrange layouts by role. Add input validation before data hits the backend. No ABAP changes. No transport requests. No basis team bottleneck.</p>
             <p>Most SAP customers don't know it exists. The ones who do aren't sure how to configure it. So it sits there. Unused.</p>
             <p style="color:var(--text);font-weight:500;">We change that.</p>
@@ -432,8 +436,10 @@
     <section id="products">
       <div class="wrap">
         <p class="label">The suite</p>
-        <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;margin-bottom:8px;">Eight tools. Three problems.</h2>
-        <p style="font-family:var(--mono);font-size:13px;color:var(--text-3);margin-bottom:32px;">All built by Synactive GmbH, Germany.</p>
+        <div class="products-head">
+          <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;">Eight tools. Three problems.</h2>
+          <div class="tools-by"><span class="tools-by-label">by</span> <a href="https://www.synactive.com/index_e.html" target="_blank" rel="noopener" class="tools-by-name">Synactive</a></div>
+        </div>
 
         <div class="tab-bar" role="tablist" aria-label="Product groups">
           <button role="tab" aria-selected="true" aria-controls="panel-simplify" id="tab-simplify">Simplify</button>
