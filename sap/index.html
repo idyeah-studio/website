@@ -26,6 +26,7 @@
       --grp-simplify:#347b54; --grp-extend:#4a7fa8; --grp-measure:#9a8030;
       --free-bg:rgba(52,123,84,.10); --free-text:#347b54;
       --compare-before:#d8d4cc; --compare-after:var(--gold);
+      --coral:#c45a3c;
     }
     [data-theme="dark"]{
       --bg:#0c0b0a; --bg-2:#141312;
@@ -38,6 +39,7 @@
       --grp-simplify:#5cb88a; --grp-extend:#6b9ec4; --grp-measure:#c4a24b;
       --free-bg:rgba(92,184,138,.08); --free-text:#5cb88a;
       --compare-before:#333; --compare-after:var(--gold);
+      --coral:#e07a5f;
     }
     :root{
       --serif:'Cormorant Garamond',Georgia,serif;
@@ -118,7 +120,7 @@
     .script-line:nth-child(8){ animation-delay:2.5s; }
     .script-line:nth-child(9){ animation-delay:2.8s; }
     .script-line .ln{ color:var(--gold); opacity:.45; min-width:24px; text-align:right; margin-right:16px; user-select:none; font-size:12px; }
-    .script-line .cmd{ color:var(--gold); font-weight:500; }
+    .script-line .cmd{ color:var(--coral); font-weight:500; }
     .script-line .field{ color:var(--text); }
     .script-line .coord{ color:var(--text-3); }
     .script-line .comment{ color:var(--text-3); font-style:italic; font-weight:300; }
@@ -129,7 +131,7 @@
     .script-line:nth-child(4).is-del .field::after{ animation-delay:1.45s; }
     .hero-script-footer{ padding:10px 16px; border-top:1px solid var(--hair); display:flex; justify-content:space-between; }
     .hero-script-footer span{ font-size:10px; letter-spacing:.06em; color:var(--text-3); }
-    .hero-script-footer .saved{ color:var(--grp-simplify); opacity:0; animation:scriptIn .3s var(--ease) 3.2s forwards; }
+    .hero-script-footer .saved{ color:var(--coral); opacity:0; animation:scriptIn .3s var(--ease) 3.2s forwards; }
     @keyframes scriptIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
     @keyframes strike{ to{ width:100%; } }
     @media(max-width:859px){ .hero-script{ margin-top:8px; } }
@@ -286,8 +288,8 @@
         <div class="hero-copy">
           <p class="hero-eyebrow"><span class="shipped">Shipped with SAP</span> · Not a third-party tool</p>
           <h1>Your SAP screens cost you hours. <em>The fix is already in your license.</em></h1>
-          <p class="hero-sub">GuiXT ships free with every SAP GUI and S/4HANA installation. We activate it, configure it, and build from there.</p>
-          <a href="#contact" class="cta-btn hero-cta">See what GuiXT can do on your screens</a>
+          <p class="hero-sub"><span style="color:var(--coral)">GuiXT</span> ships free with every SAP GUI and S/4HANA installation. We activate it, configure it, and build from there.</p>
+          <a href="#contact" class="cta-btn hero-cta">See what <span style="color:var(--coral)">GuiXT</span> can do on your screens</a>
         </div>
         <div class="hero-script" aria-hidden="true">
           <div class="hero-script-header">
@@ -347,7 +349,7 @@
             <p style="color:var(--text);font-weight:500;">We change that.</p>
           </div>
           <aside class="reveal-aside">
-            <div class="aside-label">What GuiXT does</div>
+            <div class="aside-label" style="color:var(--coral)">What GuiXT does</div>
             <ul>
               <li>Hide unused fields and tabs</li>
               <li>Rearrange screen layouts by role</li>
@@ -552,7 +554,7 @@
         <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.08;margin-top:16px;">German engineering. American experience.</h2>
         <div class="trust-rows">
           <div class="trust-row"><span class="key">Authorized</span><span class="val">US reseller for <a href="https://www.synactive.com/index_e.html" target="_blank" rel="noopener" style="color:var(--text);border-bottom:1px solid var(--line);">Synactive GmbH</a> — the German engineering company behind GuiXT. Building SAP UI tools since 1997. Not affiliated with any other US entity.</span></div>
-          <div class="trust-row"><span class="key">Product</span><span class="val">GuiXT ships with SAP — not a third-party tool. In production since 1997.</span></div>
+          <div class="trust-row"><span class="key">Product</span><span class="val"><span style="color:var(--coral)">GuiXT</span> ships with SAP — not a third-party tool. In production since 1997.</span></div>
           <div class="trust-row"><span class="key">Engineering</span><span class="val">25 years — software architecture, UX design, SAP implementation</span></div>
           <div class="trust-row"><span class="key">Direct</span><span class="val">One practitioner. No account managers. No handoffs. US-based, same timezone.</span></div>
           <div class="trust-row"><span class="key">Pricing</span><span class="val">Permanent licenses. Own it, don't rent it. 15% annual maintenance.</span></div>
