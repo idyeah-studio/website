@@ -161,18 +161,18 @@
     @media(max-width:599px){ .tab-bar button{ padding:12px 14px; font-size:11px; } }
     .tab-bar button{ font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; padding:12px 20px; background:none; border:none; border-bottom:2px solid transparent; color:var(--text-3); cursor:pointer; white-space:nowrap; transition:color .2s, border-color .2s; }
     .tab-bar button:hover{ color:var(--text); }
-    .tab-bar button[aria-selected="true"]{ color:var(--text); border-bottom-color:var(--gold); }
+    .tab-bar button[aria-selected="true"]{ color:var(--text); border-bottom-color:var(--text); }
     .tab-panel{ display:none; }
     .tab-panel.active{ display:block; }
-    .tab-panel .group-intro{ font-family:var(--mono); font-size:13px; color:var(--text-2); margin-bottom:32px; max-width:80ch; }
+    .tab-panel .group-intro{ font-family:var(--mono); font-size:13px; color:var(--text-2); margin-bottom:32px; }
     .product-cards{ display:grid; grid-template-columns:1fr; gap:16px; }
-    .product-card{ border:1px solid var(--card-border); border-left:2px solid var(--grp-simplify); background:var(--card-bg); overflow:hidden; }
-    .tab-panel[data-group="extend"] .product-card{ border-left-color:var(--grp-extend); }
-    .tab-panel[data-group="measure"] .product-card{ border-left-color:var(--grp-measure); }
+    .product-card{ border:1px solid var(--card-border); border-left:2px solid var(--gold); background:var(--card-bg); overflow:hidden; }
+    .product-card.guixt-card{ border-left-color:var(--coral); }
     .product-card .card-head{ display:flex; align-items:center; justify-content:space-between; padding:20px 24px; cursor:pointer; gap:16px; }
     .product-card .card-head h4{ font-family:var(--mono); font-size:14px; font-weight:500; letter-spacing:.02em; }
-    .product-card .card-head .price{ font-family:var(--mono); font-size:12px; color:var(--text-3); font-variant-numeric:tabular-nums; }
-    .product-card .card-head .free-tag{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--free-text); background:var(--free-bg); padding:3px 8px; font-weight:500; }
+    .product-card .card-head .price{ font-family:var(--mono); font-size:12px; color:var(--text); font-weight:500; font-variant-numeric:tabular-nums; }
+    .product-card .card-head .price .tier{ color:var(--text-2); font-weight:300; }
+    .product-card .card-head .free-tag{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--coral); background:none; padding:3px 8px; font-weight:500; }
     .product-card .card-head .toggle-icon{ font-size:14px; color:var(--text-3); transition:transform .2s var(--ease); flex-shrink:0; }
     .product-card.open .card-head .toggle-icon{ transform:rotate(45deg); }
     .product-card .card-body{ display:none; padding:0 24px 24px; }
@@ -220,6 +220,29 @@
     .contact .actions{ margin-top:40px; display:flex; gap:16px; flex-wrap:wrap; }
     .cta-ghost{ font-family:var(--mono); font-size:12px; letter-spacing:.03em; padding:8px 18px; background:none; color:var(--text); border:1px solid var(--line); border-radius:999px; white-space:nowrap; transition:transform .25s var(--ease); }
     .cta-ghost:hover{ transform:translateY(-2px); }
+
+    /* ===== PRICING OVERLAY ===== */
+    .pricing-trigger{ font-family:var(--mono); font-size:12px; color:var(--gold); margin-top:32px; cursor:pointer; background:none; border:none; border-bottom:1px solid var(--gold); padding:0 0 2px; transition:opacity .2s; }
+    .pricing-trigger:hover{ opacity:.75; }
+    .pricing-overlay{ position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center; padding:24px; }
+    .pricing-overlay.open{ display:grid; }
+    .pricing-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.7); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); }
+    .pricing-modal{ position:relative; background:var(--bg); border:1px solid var(--line); max-width:860px; width:100%; max-height:85vh; overflow-y:auto; padding:40px; }
+    .pricing-modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; }
+    .pricing-modal-head h3{ font-family:var(--serif); font-weight:500; font-size:24px; }
+    .pricing-close{ font-family:var(--mono); font-size:13px; background:none; border:none; color:var(--text-2); cursor:pointer; padding:4px 8px; }
+    .pricing-close:hover{ color:var(--text); }
+    .pricing-table{ width:100%; border-collapse:collapse; font-family:var(--mono); font-size:12px; }
+    .pricing-table th{ text-align:left; padding:10px 12px; border-bottom:2px solid var(--line); color:var(--text-2); font-weight:400; letter-spacing:.06em; text-transform:uppercase; font-size:10px; }
+    .pricing-table th:last-child{ text-align:right; }
+    .pricing-table td{ padding:10px 12px; border-bottom:1px solid var(--hair); vertical-align:top; }
+    .pricing-table td:first-child{ font-weight:500; color:var(--gold); white-space:nowrap; }
+    .pricing-table td:last-child{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .pricing-table tr.product-row td{ padding-top:18px; }
+    .pricing-table tr.sub-row td:first-child{ padding-left:24px; font-weight:300; color:var(--text-2); }
+    .pricing-table .note{ font-size:11px; color:var(--text-3); font-style:italic; padding-top:4px; }
+    .pricing-table .free-label{ color:var(--coral); font-weight:500; }
+    @media(max-width:599px){ .pricing-modal{ padding:24px 16px; } .pricing-table{ font-size:11px; } .pricing-table td,.pricing-table th{ padding:8px 6px; } }
 
     /* ===== FOOTER ===== */
     footer{ border-top:1px solid var(--hair); padding:32px 0 48px; }
@@ -422,9 +445,9 @@
         <div class="tab-panel active" id="panel-simplify" role="tabpanel" aria-labelledby="tab-simplify" data-group="simplify">
           <p class="group-intro">Strip your screens down to what each role actually needs. No backend changes. No dev cycles.</p>
           <div class="product-cards">
-            <div class="product-card open">
+            <div class="product-card guixt-card open">
               <div class="card-head" aria-expanded="true" role="button" tabindex="0">
-                <h4>GuiXT <span class="free-tag">Free</span></h4>
+                <h4 class="guixt-name">GuiXT <span class="free-tag">Free</span></h4>
                 <span class="toggle-icon">+</span>
               </div>
               <div class="card-body">
@@ -435,7 +458,7 @@
             <div class="product-card">
               <div class="card-head" aria-expanded="false" role="button" tabindex="0">
                 <h4>InputAssistant</h4>
-                <div><span class="price">from $8,500</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+                <div><span class="price">from $8,500 <span class="tier">/ 50 users</span></span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
               </div>
               <div class="card-body">
                 <p class="value-prop">Cut SAP data entry time in half with autocomplete, templates, and built-in lookups.</p>
@@ -445,7 +468,7 @@
             <div class="product-card">
               <div class="card-head" aria-expanded="false" role="button" tabindex="0">
                 <h4>Script Editor Pro</h4>
-                <div><span class="price">from $2,000</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+                <div><span class="price">from $2,000 <span class="tier">/ developer</span></span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
               </div>
               <div class="card-body">
                 <p class="value-prop">Build and debug GuiXT scripts in a real IDE instead of Notepad.</p>
@@ -462,7 +485,7 @@
             <div class="product-card">
               <div class="card-head" aria-expanded="false" role="button" tabindex="0">
                 <h4>Controls</h4>
-                <div><span class="price">from $5,700</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+                <div><span class="price">from $5,700 <span class="tier">/ 50 users</span></span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
               </div>
               <div class="card-body">
                 <p class="value-prop">Embed .NET components, HTML panels, and ActiveX controls directly inside SAP screens.</p>
@@ -472,7 +495,7 @@
             <div class="product-card">
               <div class="card-head" aria-expanded="false" role="button" tabindex="0">
                 <h4>S10 Framework</h4>
-                <div><span class="price">from $5,200</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+                <div><span class="price">from $5,200 <span class="tier">/ 50 users</span></span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
               </div>
               <div class="card-body">
                 <p class="value-prop">Ship Fiori-quality web and mobile SAP apps in weeks, not quarters.</p>
@@ -489,7 +512,7 @@
             <div class="product-card">
               <div class="card-head" aria-expanded="false" role="button" tabindex="0">
                 <h4>UI Log</h4>
-                <div><span class="price">$3,900</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+                <div><span class="price">$3,900 <span class="tier">/ company-wide</span></span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
               </div>
               <div class="card-body">
                 <p class="value-prop">See exactly which SAP screens and fields your people actually use — and which they skip.</p>
@@ -499,7 +522,7 @@
             <div class="product-card">
               <div class="card-head" aria-expanded="false" role="button" tabindex="0">
                 <h4>CIS mobile</h4>
-                <div><span class="price">from $6,500/yr</span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
+                <div><span class="price">from $6,500/yr <span class="tier">/ 20 users</span></span><span class="toggle-icon" style="margin-left:12px;">+</span></div>
               </div>
               <div class="card-body">
                 <p class="value-prop">Give field teams full SAP access on any mobile device, with offline mode that actually works.</p>
@@ -518,8 +541,49 @@
             </div>
           </div>
         </div>
+        <button class="pricing-trigger" id="pricingOpen">See full pricing grid &rarr;</button>
       </div>
     </section>
+
+    <!-- PRICING OVERLAY -->
+    <div class="pricing-overlay" id="pricingOverlay" aria-hidden="true">
+      <div class="pricing-backdrop" id="pricingBackdrop"></div>
+      <div class="pricing-modal" role="dialog" aria-label="Full pricing grid">
+        <div class="pricing-modal-head">
+          <h3>Pricing</h3>
+          <button class="pricing-close" id="pricingClose">close &times;</button>
+        </div>
+        <p style="font-family:var(--mono);font-size:12px;color:var(--text-3);margin-bottom:24px;">Permanent licenses unless noted. First year maintenance included. 15% annual maintenance after year one. Prices in USD.</p>
+        <div style="overflow-x:auto;">
+        <table class="pricing-table">
+          <thead>
+            <tr><th>Product</th><th>Tier</th><th>Price</th></tr>
+          </thead>
+          <tbody>
+            <tr class="product-row"><td><span class="free-label">GuiXT</span></td><td>Included with SAP GUI &amp; S/4HANA</td><td>Free</td></tr>
+            <tr class="product-row"><td>InputAssistant</td><td>Up to 50 users</td><td>$8,500</td></tr>
+            <tr class="sub-row"><td></td><td>Up to 100 users</td><td>$9,800</td></tr>
+            <tr class="sub-row"><td></td><td>Each additional user</td><td>$70</td></tr>
+            <tr class="product-row"><td>Script Editor Pro</td><td>1 developer / 1 machine</td><td>$2,000</td></tr>
+            <tr class="sub-row"><td></td><td>2 developers / 2 machines</td><td>$3,100</td></tr>
+            <tr class="sub-row"><td></td><td>Each additional machine</td><td>$430</td></tr>
+            <tr class="product-row"><td>Controls</td><td>Up to 50 users</td><td>$5,700</td></tr>
+            <tr class="sub-row"><td></td><td>Up to 100 users</td><td>$6,600</td></tr>
+            <tr class="sub-row"><td></td><td>Each additional user</td><td>$48</td></tr>
+            <tr class="product-row"><td>S10 Framework</td><td>Up to 50 users</td><td>$5,200</td></tr>
+            <tr class="sub-row"><td></td><td>Each additional user</td><td>$54</td></tr>
+            <tr class="product-row"><td>UI Log</td><td>Company-wide</td><td>$3,900</td></tr>
+            <tr class="sub-row"><td></td><td colspan="2" class="note">Free with active InputAssistant maintenance</td></tr>
+            <tr class="product-row"><td>CIS mobile</td><td>Up to 20 users</td><td>$6,500/yr</td></tr>
+            <tr class="sub-row"><td></td><td>Up to 100 users</td><td>$21,500/yr</td></tr>
+            <tr class="sub-row"><td></td><td>Each additional user</td><td>$260/yr</td></tr>
+            <tr class="product-row"><td>Service Scheduler</td><td>Per user</td><td>$650/yr</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p style="font-family:var(--mono);font-size:11px;color:var(--text-3);margin-top:24px;">Volume discounts available for multi-product or 100+ user purchases. <a href="#contact" id="pricingContact" style="color:var(--text);border-bottom:1px solid var(--line);">Contact us</a> for a custom quote.</p>
+      </div>
+    </div>
 
     <!-- HOW WE WORK -->
     <section id="how">
@@ -648,6 +712,15 @@
       });
     },{rootMargin:'-30% 0px -70% 0px'});
     sections.forEach(function(s){obs.observe(s);});
+
+    // Pricing overlay
+    var pOverlay=document.getElementById('pricingOverlay');
+    document.getElementById('pricingOpen').addEventListener('click',function(){pOverlay.classList.add('open');pOverlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';});
+    function closePricing(){pOverlay.classList.remove('open');pOverlay.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+    document.getElementById('pricingClose').addEventListener('click',closePricing);
+    document.getElementById('pricingBackdrop').addEventListener('click',closePricing);
+    document.getElementById('pricingContact').addEventListener('click',closePricing);
+    pOverlay.addEventListener('keydown',function(e){if(e.key==='Escape')closePricing();});
 
     // Email obfuscation
     var u='sap',d='idyeah.studio';
