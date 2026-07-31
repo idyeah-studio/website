@@ -140,16 +140,17 @@
     .logo-strip::before,.logo-strip::after{ content:""; position:absolute; top:0; bottom:0; width:80px; z-index:2; pointer-events:none; }
     .logo-strip::before{ left:0; background:linear-gradient(to right,var(--bg),transparent); }
     .logo-strip::after{ right:0; background:linear-gradient(to left,var(--bg),transparent); }
-    .logo-track{ display:flex; align-items:center; width:max-content; animation:logo-scroll 35s linear infinite; }
+    .logo-track{ display:flex; align-items:center; width:max-content; animation:logo-scroll var(--scroll-duration,35s) linear infinite; }
     .logo-track span{ margin-right:64px; }
     .logo-track img{ height:26px; width:auto; opacity:.4; }
     .logo-track .logo-sm img{ height:21px; }
     .logo-track .logo-lg img{ height:39px; }
+    .logo-track .logo-bright img{ opacity:.55; }
     [data-theme="light"] .logo-track .logo-dark img{ filter:grayscale(1); }
     [data-theme="light"] .logo-track .logo-light img{ filter:grayscale(1) invert(1); }
     [data-theme="dark"] .logo-track .logo-dark img{ filter:grayscale(1) invert(1); }
     [data-theme="dark"] .logo-track .logo-light img{ filter:grayscale(1); }
-    @keyframes logo-scroll{ to{ transform:translateX(-25%); } }
+    @keyframes logo-scroll{ to{ transform:translateX(var(--scroll-dist,-25%)); } }
 
     /* ===== BOOK ===== */
     .book-grid{ display:grid; grid-template-columns:1fr; gap:40px; align-items:center; }
@@ -301,8 +302,8 @@
     <div class="logo-strip">
       <div class="logo-track">
         <span class="logo-dark logo-sm"><img src="media/logos/ionate.png" alt="Ionate" /></span>
-        <span class="logo-dark"><img src="media/logos/mosaix.png" alt="Mosaix" /></span>
-        <span class="logo-light logo-sm"><img src="media/logos/midas-touch.png" alt="Midas Touch" /></span>
+        <span class="logo-dark logo-bright"><img src="media/logos/mosaix.png" alt="Mosaix" /></span>
+        <span class="logo-light logo-sm logo-bright"><img src="media/logos/midas-touch.png" alt="Midas Touch" /></span>
         <span class="logo-light logo-sm"><img src="media/logos/mira.png" alt="Mira" /></span>
         <span class="logo-light logo-sm"><img src="media/logos/rialty.png" alt="Rialty" /></span>
         <span class="logo-dark logo-sm"><img src="media/logos/benevolve.png" alt="Benevolve" /></span>
@@ -478,6 +479,14 @@
     document.getElementById('emailLink').href='mailto:'+u+'@'+d;
     document.getElementById('auditLink').href='mailto:'+u+'@'+d+'?subject=Independent%20Audit%20%E2%80%93%20interested';
     document.getElementById('yr').textContent='© '+new Date().getFullYear()+' IDYeah Studio';
+
+    (function(){
+      var track=document.querySelector('.logo-track');
+      if(!track) return;
+      var w=track.scrollWidth/4;
+      track.style.setProperty('--scroll-dist','-'+w+'px');
+      track.style.setProperty('--scroll-duration',(w/40)+'s');
+    })();
   </script>
 </body>
 </html>
