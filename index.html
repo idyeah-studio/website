@@ -136,7 +136,7 @@
     @media(min-width:760px){ .quote .who{ text-align:right; } }
 
     /* ===== CLIENT LOGO STRIP ===== */
-    .logo-strip{ overflow:hidden; padding:48px 0; border-top:1px solid var(--hair); position:relative; }
+    .logo-strip{ overflow:hidden; padding:48px 0; border-top:1px solid var(--hair); position:relative; background:radial-gradient(ellipse 60% 100% at 50% 50%,color-mix(in srgb,var(--text) 4%,var(--bg)),var(--bg)); }
     .logo-strip::before,.logo-strip::after{ content:""; position:absolute; top:0; bottom:0; width:80px; z-index:2; pointer-events:none; }
     .logo-strip::before{ left:0; background:linear-gradient(to right,var(--bg),transparent); }
     .logo-strip::after{ right:0; background:linear-gradient(to left,var(--bg),transparent); }
@@ -483,9 +483,18 @@
     (function(){
       var track=document.querySelector('.logo-track');
       if(!track) return;
-      var w=track.scrollWidth/4;
-      track.style.setProperty('--scroll-dist','-'+w+'px');
-      track.style.setProperty('--scroll-duration',(w/40)+'s');
+      track.style.animationPlayState='paused';
+      var imgs=track.querySelectorAll('img'), loaded=0, total=imgs.length;
+      function measure(){
+        var w=Math.round(track.scrollWidth/4);
+        track.style.setProperty('--scroll-dist','-'+w+'px');
+        track.style.setProperty('--scroll-duration',(w/40)+'s');
+        track.style.animationPlayState='running';
+      }
+      imgs.forEach(function(img){
+        if(img.complete) { loaded++; if(loaded===total) measure(); }
+        else img.addEventListener('load',function(){ loaded++; if(loaded===total) measure(); });
+      });
     })();
   </script>
 </body>
