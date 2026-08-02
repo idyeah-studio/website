@@ -4,9 +4,21 @@
   "routes": [
     {
       "src": "/(.*)",
+      "has": [{ "type": "host", "value": "mosaix.idyeah.studio" }],
+      "dest": "/mosaix/$1",
+      "check": true
+    },
+    {
+      "src": "/(.*)",
       "has": [{ "type": "host", "value": "sap.idyeah.studio" }],
       "dest": "/sap/$1",
       "check": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/mosaix/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     }
   ]
 }
