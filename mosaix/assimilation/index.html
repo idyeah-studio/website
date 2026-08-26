@@ -1589,6 +1589,203 @@ a { color: inherit; text-decoration: none; }
 /* ── Util ── */
 .hidden { display: none !important; }
 .fade-locked { opacity: .45; }
+
+/* ── Welcome Splash ── */
+.tour-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.70);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.tour-splash.hidden { display: none; }
+.tour-splash-card {
+  width: 440px;
+  padding: 40px 44px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #FFF 0%, #FBF7FF 100%);
+  border: 1px solid #E7DBFF;
+  box-shadow: 0 20px 60px rgba(33, 30, 25, 0.25);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.tour-splash-eyebrow {
+  color: #6D28D9;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.tour-splash-title {
+  color: #211E19;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 0.24px;
+}
+.tour-splash-body {
+  color: #5C554B;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0.14px;
+  max-width: 360px;
+  margin-bottom: 12px;
+}
+.tour-splash-cta {
+  display: inline-flex;
+  padding: 12px 32px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  background: #5B21B6;
+  color: #FFF;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 14px rgba(109, 40, 217, 0.4);
+  cursor: pointer;
+  border: none;
+}
+.tour-splash-cta:hover { background: #4C1D95; }
+.tour-splash-skip {
+  color: #9E998E;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 8px;
+  margin-top: 4px;
+}
+.tour-splash-skip:hover { color: #5C554B; }
+
+/* ── Walkthrough Tour ── */
+.tour-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: none;
+  pointer-events: none;
+}
+.tour-overlay.active { display: block; }
+.tour-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+.tour-highlight {
+  position: absolute;
+  border-radius: 16px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+  z-index: 9001;
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tour-tooltip {
+  position: absolute;
+  z-index: 9002;
+  width: 320px;
+  padding: 20px 24px;
+  border-radius: 18px;
+  background: #FFF;
+  border: 1px solid #ECE8E1;
+  box-shadow: 0 10px 40px rgba(33, 30, 25, 0.18);
+  pointer-events: auto;
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tour-tooltip-step {
+  color: #6D28D9;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.tour-tooltip-title {
+  color: #211E19;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  margin-bottom: 6px;
+}
+.tour-tooltip-body {
+  color: #5C554B;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0.13px;
+  margin-bottom: 16px;
+}
+.tour-tooltip-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tour-btn-next {
+  display: flex;
+  padding: 6px 18px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  background: #5B21B6;
+  color: #FFF;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.26px;
+  box-shadow: 0 2px 6px rgba(109, 40, 217, 0.3);
+  cursor: pointer;
+}
+.tour-btn-next:hover { background: #4C1D95; }
+.tour-btn-skip {
+  color: #9E998E;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px 8px;
+}
+.tour-btn-skip:hover { color: #5C554B; }
+.tour-dots {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+.tour-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #DEDAD3;
+}
+.tour-dot.active { background: #6D28D9; }
+.tour-start-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #E7DBFF;
+  background: #F3EEFF;
+  color: #6D28D9;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.22px;
+  margin-top: 12px;
+}
+.tour-start-btn:hover { background: #E7DBFF; }
 </style>
 </head>
 <body>
@@ -1603,6 +1800,10 @@ a { color: inherit; text-decoration: none; }
       <svg viewBox="0 0 20.6738 19.2676" fill="currentColor" style="opacity:.7"><path d="M1.10352 18.8867C1.34766 18.8867 1.60156 18.7988 1.91406 18.623L6.88477 15.9473L12.2852 18.9746C12.6367 19.1699 13.0176 19.2676 13.3789 19.2676C13.7207 19.2676 14.0625 19.1797 14.3555 19.0137L19.4629 16.1133C20.0488 15.791 20.3125 15.3223 20.3125 14.668L20.3125 1.51367C20.3125 0.791016 19.9121 0.390625 19.209 0.390625C18.9648 0.390625 18.7109 0.46875 18.3887 0.644531L13.2129 3.52539L7.91016 0.273438C7.60742 0.0976562 7.26562 0 6.92383 0C6.57227 0 6.2207 0.0976562 5.91797 0.273438L0.839844 3.16406C0.263672 3.49609 0 3.96484 0 4.61914L0 17.7539C0 18.4766 0.400391 18.8867 1.10352 18.8867ZM6.25 14.3945L1.8457 16.8164C1.79688 16.8359 1.74805 16.8652 1.69922 16.8652C1.62109 16.8652 1.57227 16.8066 1.57227 16.709L1.57227 5C1.57227 4.76562 1.66016 4.59961 1.89453 4.46289L5.89844 2.11914C6.02539 2.05078 6.13281 1.99219 6.25 1.92383ZM7.82227 14.5508L7.82227 2.12891C7.91992 2.1875 8.03711 2.24609 8.13477 2.30469L12.4902 4.96094L12.4902 17.168C12.3535 17.0898 12.207 17.0215 12.0605 16.9434ZM14.0625 17.3438L14.0625 4.86328L18.4668 2.46094C18.5156 2.43164 18.5645 2.41211 18.6035 2.41211C18.6914 2.41211 18.7402 2.4707 18.7402 2.56836L18.7402 14.2773C18.7402 14.5215 18.6426 14.6875 18.418 14.8242L14.502 17.0996C14.3555 17.1875 14.209 17.2754 14.0625 17.3438Z"/></svg>
       Assimilation
     </div>
+    <button class="tour-start-btn" onclick="startTour()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6D28D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Prototype tour
+    </button>
     <div class="sidebar-spacer"></div>
     <div class="sidebar-section-label">Quick Links</div>
     <div class="sidebar-link">
@@ -1677,6 +1878,33 @@ a { color: inherit; text-decoration: none; }
       <div class="main-rail" id="mainRail">
         <!-- Benny + People rendered by JS -->
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Welcome Splash -->
+<div class="tour-splash" id="tourSplash">
+  <div class="tour-splash-card">
+    <div class="tour-splash-eyebrow">MOSAIX ASSIMILATION</div>
+    <div class="tour-splash-title">Interactive prototype</div>
+    <div class="tour-splash-body">A quick walkthrough of the interface before you explore.</div>
+    <button class="tour-splash-cta" onclick="dismissSplash(true)">Start walkthrough</button>
+    <button class="tour-splash-skip" onclick="dismissSplash(false)">Skip</button>
+  </div>
+</div>
+
+<!-- Walkthrough Tour -->
+<div class="tour-overlay" id="tourOverlay">
+  <div class="tour-scrim" onclick="endTour()"></div>
+  <div class="tour-highlight" id="tourHighlight"></div>
+  <div class="tour-tooltip" id="tourTooltip">
+    <div class="tour-tooltip-step" id="tourStep"></div>
+    <div class="tour-tooltip-title" id="tourTitle"></div>
+    <div class="tour-tooltip-body" id="tourBody"></div>
+    <div class="tour-tooltip-actions">
+      <button class="tour-btn-next" id="tourNext" onclick="nextTourStep()">Next</button>
+      <button class="tour-btn-skip" onclick="endTour()">Skip tour</button>
+      <div class="tour-dots" id="tourDots"></div>
     </div>
   </div>
 </div>
@@ -2540,6 +2768,135 @@ document.addEventListener('keydown', e => {
       state.dayPickerOpen = false;
       document.getElementById('dayPicker').classList.remove('open');
     }
+  }
+});
+
+/* ══════════════════════════════════════════════
+   WALKTHROUGH TOUR
+   ══════════════════════════════════════════════ */
+const TOUR_STEPS = [
+  {
+    target: '.header',
+    title: 'Employee progress at a glance',
+    body: 'The header shows where the employee is in their journey: their name, how far along they are, and which phase they are currently in.',
+    pos: 'below'
+  },
+  {
+    target: '.butterfly-wrap',
+    title: 'The butterfly',
+    body: 'The butterfly fills in as the employee completes items. It starts as a faint outline and becomes whole by the end of their six-month journey.',
+    pos: 'below-left'
+  },
+  {
+    target: '#dayToggle',
+    title: 'Preview different stages',
+    body: 'This is a prototype tool, not part of the real product. Use it to jump between days and see how the interface looks at different points in the six-month journey.',
+    pos: 'below-left'
+  },
+  {
+    target: '.tabs',
+    title: 'Plan and Resources',
+    body: 'The Plan tab lists every onboarding item: compliance tasks, courses, people to meet, and assessments. Resources holds reference material the employee can revisit anytime.',
+    pos: 'below'
+  },
+  {
+    target: '.view-toggle',
+    title: 'This week vs. all six months',
+    body: 'The employee defaults to "This Week" which surfaces only what is due soon. "All Six Months" shows the full plan across every phase.',
+    pos: 'below'
+  },
+  {
+    target: '#mainRail',
+    title: 'Benny, the AI assistant',
+    body: 'Benny lives in the right rail and adapts to context. It greets new hires, nudges when things are overdue, and celebrates milestones. Below Benny, the People card shows who the employee will be meeting.',
+    pos: 'left'
+  },
+  {
+    target: '.item-row',
+    title: 'Click any row for details',
+    body: 'Every item opens a detail panel with context, steps, and actions. Try clicking a row after this tour ends.',
+    pos: 'below'
+  }
+];
+
+let tourStep = 0;
+
+function dismissSplash(startTourAfter) {
+  document.getElementById('tourSplash').classList.add('hidden');
+  if (startTourAfter) startTour();
+}
+
+function startTour() {
+  tourStep = 0;
+  document.getElementById('tourOverlay').classList.add('active');
+  showTourStep();
+}
+
+function endTour() {
+  document.getElementById('tourOverlay').classList.remove('active');
+}
+
+function nextTourStep() {
+  tourStep++;
+  if (tourStep >= TOUR_STEPS.length) { endTour(); return; }
+  showTourStep();
+}
+
+function showTourStep() {
+  const step = TOUR_STEPS[tourStep];
+  const el = document.querySelector(step.target);
+  if (!el) { nextTourStep(); return; }
+
+  const r = el.getBoundingClientRect();
+  const pad = 10;
+
+  const hl = document.getElementById('tourHighlight');
+  hl.style.top = (r.top - pad) + 'px';
+  hl.style.left = (r.left - pad) + 'px';
+  hl.style.width = (r.width + pad * 2) + 'px';
+  hl.style.height = (r.height + pad * 2) + 'px';
+
+  document.getElementById('tourStep').textContent = 'Step ' + (tourStep + 1) + ' of ' + TOUR_STEPS.length;
+  document.getElementById('tourTitle').textContent = step.title;
+  document.getElementById('tourBody').textContent = step.body;
+  document.getElementById('tourNext').textContent = tourStep === TOUR_STEPS.length - 1 ? 'Finish' : 'Next';
+
+  let dotsH = '';
+  for (let i = 0; i < TOUR_STEPS.length; i++) {
+    dotsH += `<div class="tour-dot${i === tourStep ? ' active' : ''}"></div>`;
+  }
+  document.getElementById('tourDots').innerHTML = dotsH;
+
+  const tt = document.getElementById('tourTooltip');
+  const tw = 320;
+  let tx, ty;
+
+  if (step.pos === 'below') {
+    tx = r.left;
+    ty = r.bottom + 16;
+  } else if (step.pos === 'below-left') {
+    tx = r.right - tw;
+    ty = r.bottom + 16;
+  } else if (step.pos === 'left') {
+    tx = r.left - tw - 20;
+    ty = r.top;
+  } else {
+    tx = r.left;
+    ty = r.bottom + 16;
+  }
+
+  if (tx < 16) tx = 16;
+  if (tx + tw > 1440) tx = 1440 - tw - 16;
+  if (ty + 200 > window.innerHeight) ty = r.top - 200;
+
+  tt.style.left = tx + 'px';
+  tt.style.top = ty + 'px';
+}
+
+document.addEventListener('keydown', e => {
+  if (document.getElementById('tourOverlay').classList.contains('active')) {
+    if (e.key === 'Escape') endTour();
+    if (e.key === 'ArrowRight' || e.key === 'Enter') nextTourStep();
   }
 });
 
