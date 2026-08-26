@@ -380,9 +380,9 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 8px 24px rgba(0,0,0,.12);
   padding: 12px;
   z-index: var(--z-dropdown);
-  display: none;
+  pointer-events: none;
 }
-.day-picker.open { display: block; }
+.day-picker.open { pointer-events: auto; }
 .day-picker-label {
   font-size: 11px;
   font-weight: 600;
@@ -419,6 +419,7 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 1px solid #E3E4E5;
   margin-top: 20px;
   flex-shrink: 0;
+  position: relative;
 }
 .tab {
   padding: 10px 16px;
@@ -428,7 +429,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 400;
   line-height: 20px;
   cursor: pointer;
-  transition: color .15s;
+  transition: color .2s ease, font-weight .2s ease;
   position: relative;
 }
 .tab:hover { color: #211E19; }
@@ -436,15 +437,13 @@ a { color: inherit; text-decoration: none; }
   color: #211E19;
   font-weight: 600;
 }
-.tab.active::after {
-  content: '';
+.tab-indicator {
   position: absolute;
   bottom: -1px;
-  left: 0;
-  right: 0;
   height: 3px;
   background: #6D28D9;
   border-radius: 2px 2px 0 0;
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Toolbar ── */
@@ -461,6 +460,7 @@ a { color: inherit; text-decoration: none; }
   align-items: flex-start;
   border-radius: 999px;
   background: #ECE8E1;
+  position: relative;
 }
 .view-btn {
   display: flex;
@@ -469,18 +469,28 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 4px;
   border-radius: 999px;
-  background: #EDEAE4;
+  background: transparent;
   font-size: 12px;
   font-weight: 400;
   color: #3D3832;
   white-space: nowrap;
   line-height: 20px;
-  transition: all .15s;
+  transition: color 0.25s ease, font-weight 0.25s ease;
+  position: relative;
+  z-index: 1;
 }
 .view-btn.active {
-  border: 1px solid #211E19;
-  background: #211E19;
   color: #fff;
+  font-weight: 500;
+}
+.view-pill {
+  position: absolute;
+  top: 2px;
+  height: 24px;
+  border-radius: 999px;
+  background: #211E19;
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
 }
 .toolbar-spacer { flex: 1; }
 .toolbar-select {
@@ -821,7 +831,7 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 1px solid #ECE8E1;
   background: #FFF;
   cursor: pointer;
-  transition: background .1s;
+  transition: background 0.2s ease;
 }
 .item-row:hover { background: #F3EEFF; }
 .item-row.locked { opacity: .5; }
@@ -1313,10 +1323,10 @@ a { color: inherit; text-decoration: none; }
   position: fixed;
   inset: 0;
   z-index: var(--z-scrim);
-  display: none;
   width: 1440px;
+  pointer-events: none;
 }
-.detail-overlay.open { display: block; }
+.detail-overlay.open { pointer-events: auto; }
 .detail-scrim {
   position: absolute;
   inset: 0;
@@ -1566,18 +1576,21 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   line-height: 20px;
   letter-spacing: 0.28px;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
 }
+.detail-btn:active { transform: scale(0.97); }
 .detail-btn.primary {
   background: #5B21B6;
   color: #FFF;
   box-shadow: 0 2px 6px 0 rgba(109, 40, 217, 0.35);
 }
-.detail-btn.primary:hover { background: #4C1D95; }
+.detail-btn.primary:hover { background: #4C1D95; box-shadow: 0 4px 12px 0 rgba(109, 40, 217, 0.45); }
 .detail-btn.secondary {
   border: 1px solid var(--line);
   color: var(--ink);
 }
-.detail-btn.secondary:hover { border-color: var(--ink-2); }
+.detail-btn.secondary:hover { border-color: var(--ink-2); background: rgba(0,0,0,0.02); }
 
 /* ── Phase chip colors ── */
 .phase-chip.assimilate { background: rgba(231, 219, 255, 0.80); color: #6D28D9; }
@@ -1585,6 +1598,104 @@ a { color: inherit; text-decoration: none; }
 .phase-chip.assess { background: var(--phase-assess-bg); color: var(--phase-assess-text); }
 .phase-chip.assess-gradient { background: linear-gradient(90deg, rgba(109, 40, 217, 0.40) 0%, rgba(249, 115, 22, 0.40) 100%); color: #8A3E05; }
 .phase-chip.complete-phase { background: rgba(33, 179, 43, 0.15); color: #196D0D; }
+
+/* ── Animations ── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Detail panel slide */
+.detail-overlay {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.25s ease, visibility 0s 0.25s;
+}
+.detail-overlay.open {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.25s ease, visibility 0s 0s;
+}
+.detail-panel {
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.detail-overlay.open .detail-panel {
+  transform: translateX(0);
+}
+
+/* Day picker drop */
+.day-picker {
+  opacity: 0;
+  transform: scale(0.95) translateY(-4px);
+  transform-origin: top right;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 0.2s;
+}
+.day-picker.open {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  visibility: visible;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 0s;
+}
+
+/* Content fade on render */
+.content-fade {
+  animation: fadeIn 0.2s ease;
+}
+
+/* Hero cards entrance */
+.hero-card {
+  animation: fadeSlideUp 0.35s ease both;
+}
+
+/* Banners entrance */
+.banner-warn, .banner-info {
+  animation: fadeSlideUp 0.3s ease both;
+}
+
+/* Table row stagger */
+.item-row {
+  animation: fadeSlideUp 0.3s ease both;
+}
+.item-row:nth-child(1) { animation-delay: 0s; }
+.item-row:nth-child(2) { animation-delay: 0.03s; }
+.item-row:nth-child(3) { animation-delay: 0.06s; }
+.item-row:nth-child(4) { animation-delay: 0.09s; }
+.item-row:nth-child(5) { animation-delay: 0.12s; }
+.item-row:nth-child(6) { animation-delay: 0.15s; }
+.item-row:nth-child(7) { animation-delay: 0.18s; }
+.item-row:nth-child(8) { animation-delay: 0.21s; }
+.item-row:nth-child(9) { animation-delay: 0.24s; }
+.item-row:nth-child(10) { animation-delay: 0.27s; }
+.item-row:nth-child(n+11) { animation-delay: 0.3s; }
+
+/* Rail card entrance */
+.benny-card { animation: fadeSlideUp 0.35s ease 0.1s both; }
+.people-card { animation: fadeSlideUp 0.35s ease 0.2s both; }
+.recent-card { animation: fadeSlideUp 0.35s ease 0.3s both; }
+
+/* Checkbox tick */
+.detail-checkbox input { transition: transform 0.15s ease; }
+.detail-checkbox input:checked { transform: scale(1.1); }
+
+/* Scrim fade */
+.detail-scrim {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.detail-overlay.open .detail-scrim {
+  opacity: 1;
+}
+
+/* Tour splash entrance */
+.tour-splash-card {
+  animation: fadeSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
 
 /* ── Util ── */
 .hidden { display: none !important; }
@@ -1867,13 +1978,13 @@ a { color: inherit; text-decoration: none; }
 
     <div class="main-scroll">
       <div class="main-content">
-        <div class="tabs">
+        <div class="tabs" id="tabBar">
           <div class="tab active" data-tab="plan" onclick="switchTab('plan')">Plan</div>
           <div class="tab" data-tab="resources" onclick="switchTab('resources')">Resources</div>
+          <div class="tab-indicator" id="tabIndicator"></div>
         </div>
-        <div id="mainContent">
-          <!-- Toolbar + list rendered by JS -->
-        </div>
+        <div id="mainToolbar"></div>
+        <div id="mainContent"></div>
       </div>
       <div class="main-rail" id="mainRail">
         <!-- Benny + People rendered by JS -->
@@ -2124,6 +2235,10 @@ function render() {
     renderResourcesContent();
   }
   renderRail();
+  requestAnimationFrame(() => {
+    moveTabIndicator();
+    document.querySelectorAll('.view-toggle').forEach(moveViewPill);
+  });
 }
 
 function updateHeader() {
@@ -2160,11 +2275,7 @@ function updateButterfly() {
 }
 
 function renderPlanContent() {
-  const mc = document.getElementById('mainContent');
-  let h = '';
-
-  // Toolbar
-  h += `<div class="toolbar">
+  document.getElementById('mainToolbar').innerHTML = `<div class="toolbar">
     <div class="view-toggle">
       <button class="view-btn${state.view==='week'?' active':''}" onclick="setView('week')">This week</button>
       <button class="view-btn${state.view==='full'?' active':''}" onclick="setView('full')">All six months</button>
@@ -2189,24 +2300,22 @@ function renderPlanContent() {
     </select>
     <input class="toolbar-search" type="text" placeholder="Search" value="${state.search}" oninput="state.search=this.value;render()">
   </div>`;
+  renderPlanList();
+}
 
+function renderPlanList() {
+  const mc = document.getElementById('mainContent');
   const filtered = ITEMS.filter(i => {
     if (state.typeFilter !== 'All' && i.type !== state.typeFilter) return false;
     if (state.statusFilter !== 'All' && getStatus(i, state.today) !== state.statusFilter) return false;
     if (state.search && !i.title.toLowerCase().includes(state.search.toLowerCase())) return false;
     return true;
   });
-
   const totalDone = getDoneCount(ITEMS, state.today);
   const overdueCount = getOverdueCount(ITEMS, state.today);
-
-  if (state.view === 'week') {
-    h += renderWeekView(filtered, totalDone, overdueCount);
-  } else {
-    h += renderFullView(filtered, totalDone, overdueCount);
-  }
-
-  mc.innerHTML = h;
+  mc.innerHTML = state.view === 'week'
+    ? renderWeekView(filtered, totalDone, overdueCount)
+    : renderFullView(filtered, totalDone, overdueCount);
 }
 
 function renderWeekView(filtered, totalDone, overdueCount) {
@@ -2386,10 +2495,7 @@ function renderRow(item) {
 }
 
 function renderResourcesContent() {
-  const mc = document.getElementById('mainContent');
-  let h = '';
-
-  h += `<div class="toolbar">
+  document.getElementById('mainToolbar').innerHTML = `<div class="toolbar">
     <div class="view-toggle">
       <button class="view-btn${!state.favoritesOnly?' active':''}" onclick="state.favoritesOnly=false;render()">All</button>
       <button class="view-btn${state.favoritesOnly?' active':''}" onclick="state.favoritesOnly=true;render()">Favorites</button>
@@ -2405,6 +2511,9 @@ function renderResourcesContent() {
     </select>
     <input class="toolbar-search" type="text" placeholder="Search" value="${state.search}" oninput="state.search=this.value;render()">
   </div>`;
+
+  const mc = document.getElementById('mainContent');
+  let h = '';
 
   h += `<div class="res-col-headers"><span style="flex:1">RESOURCE</span><span style="width:100px;flex-shrink:0">FORMAT</span><span style="width:80px;flex-shrink:0">ESTIMATE</span><span style="width:100px;flex-shrink:0"></span></div>`;
 
@@ -2728,14 +2837,70 @@ function setDay(d) {
 
 function setView(v) {
   state.view = v;
-  render();
+  const toggle = document.querySelector('#mainToolbar .view-toggle');
+  if (toggle) {
+    toggle.querySelectorAll('.view-btn').forEach(btn => {
+      const text = btn.textContent.trim();
+      btn.classList.toggle('active',
+        (v === 'week' && text === 'This week') || (v === 'full' && text === 'All six months'));
+    });
+    moveViewPill(toggle);
+  }
+  const mc = document.getElementById('mainContent');
+  mc.style.opacity = '0';
+  mc.style.transform = 'translateY(6px)';
+  renderPlanList();
+  requestAnimationFrame(() => {
+    mc.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+    mc.style.opacity = '1';
+    mc.style.transform = 'translateY(0)';
+  });
 }
 
 function switchTab(t) {
   state.tab = t;
   state.search = '';
   document.querySelectorAll('.tab').forEach(el => el.classList.toggle('active', el.dataset.tab === t));
+  moveTabIndicator();
+  const mc = document.getElementById('mainContent');
+  mc.style.opacity = '0';
+  mc.style.transform = 'translateY(6px)';
   render();
+  requestAnimationFrame(() => {
+    mc.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+    mc.style.opacity = '1';
+    mc.style.transform = 'translateY(0)';
+  });
+}
+
+function moveTabIndicator() {
+  const bar = document.getElementById('tabBar');
+  const active = bar.querySelector('.tab.active');
+  const ind = document.getElementById('tabIndicator');
+  if (!active || !ind) return;
+  ind.style.left = active.offsetLeft + 'px';
+  ind.style.width = active.offsetWidth + 'px';
+}
+
+function moveViewPill(container) {
+  if (!container) return;
+  const active = container.querySelector('.view-btn.active');
+  let pill = container.querySelector('.view-pill');
+  if (!active) { if (pill) pill.style.opacity = '0'; return; }
+  const isNew = !pill;
+  if (isNew) {
+    pill = document.createElement('div');
+    pill.className = 'view-pill';
+    pill.style.transition = 'none';
+    container.appendChild(pill);
+  }
+  pill.style.left = (active.offsetLeft) + 'px';
+  pill.style.width = active.offsetWidth + 'px';
+  pill.style.opacity = '1';
+  if (isNew) {
+    pill.offsetWidth;
+    pill.style.transition = '';
+  }
 }
 
 function toggleSection(id) {
