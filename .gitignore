@@ -16,6 +16,9 @@ dist-ssr/
 !.vscode/extensions.json
 .idea
 
+# Claude Code local config
+.claude/
+
 # OS files
 .DS_Store
 *.swp

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /mosaix/
+
+Sitemap: https://www.idyeah.studio/sitemap.xml

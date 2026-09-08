@@ -1,5 +1,10 @@
 (() => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  // Older Safari (pre-14) lacks MediaQueryList.addEventListener.
+  const onReducedChange = fn => {
+    if (reduced.addEventListener) reduced.addEventListener('change', fn);
+    else if (reduced.addListener) reduced.addListener(fn);
+  };
   const reveals = [...document.querySelectorAll('.reveal')];
   const proof = document.querySelector('.proof');
   const voices = proof.querySelector('.voices');
@@ -17,7 +22,7 @@
   function schedule() {
     clearTimeout(timer);
     if (!paused && !expanded && inView && (explicitPlay || (!hovered && !focused)) && !document.hidden) {
-      timer = setTimeout(() => { current = (current + 1) % figures.length; render(); }, 12000);
+      timer = setTimeout(() => { current = (current + 1) % figures.length; render(); }, 8000);
     }
   }
   function render(announce = false) {
@@ -33,11 +38,11 @@
     readAll.setAttribute('aria-expanded', String(expanded));
     readAll.textContent = expanded ? 'Show one at a time' : 'Read all';
     previous.disabled = next.disabled = rotation.disabled = expanded;
-    counter.textContent = String(current + 1).padStart(2, '0') + ' / 04';
-    counter.setAttribute('aria-label', 'Testimonial ' + (current + 1) + ' of 4');
+    counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(figures.length).padStart(2, '0');
+    counter.setAttribute('aria-label', 'Testimonial ' + (current + 1) + ' of ' + figures.length);
     rotation.textContent = paused ? 'Play' : 'Pause';
     rotation.setAttribute('aria-label', paused ? 'Play automatic testimonials' : 'Pause automatic testimonials');
-    if (announce) status.textContent = expanded ? 'All four testimonials are displayed.' : 'Testimonial ' + (current + 1) + ' of 4. ' + figures[current].querySelector('blockquote').textContent + ' ' + figures[current].querySelector('figcaption').firstChild.textContent + ', ' + figures[current].querySelector('figcaption span').textContent;
+    if (announce) status.textContent = expanded ? 'All ' + figures.length + ' testimonials are displayed.' : 'Testimonial ' + (current + 1) + ' of ' + figures.length + '. ' + figures[current].querySelector('blockquote').textContent + ' ' + figures[current].querySelector('figcaption').firstChild.textContent + ', ' + figures[current].querySelector('figcaption span').textContent;
     schedule();
   }
 
@@ -57,7 +62,7 @@
     const visibility = new IntersectionObserver(entries => { inView = entries[0].isIntersecting; schedule(); }, {threshold: .25});
     visibility.observe(proof);
   }
-  reduced.addEventListener('change', () => { if (reduced.matches) { paused = true; render(); } });
+  onReducedChange(() => { if (reduced.matches) { paused = true; render(); } });
 
   if (!reduced.matches && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => entries.forEach(entry => {
@@ -65,7 +70,7 @@
     }), {threshold: .1});
     reveals.forEach(item => { if (item.getBoundingClientRect().top > innerHeight) item.classList.add('pending'); observer.observe(item); });
     document.documentElement.classList.add('motion');
-    reduced.addEventListener('change', () => { if (reduced.matches) { reveals.forEach(item => item.classList.remove('pending')); observer.disconnect(); } });
+    onReducedChange(() => { if (reduced.matches) { reveals.forEach(item => item.classList.remove('pending')); observer.disconnect(); } });
   }
 
   // Both theme images are in the DOM. A switch changes styles in place,
@@ -93,7 +98,8 @@
     document.documentElement.dataset.theme = nextTheme;
     try { localStorage.setItem('idyeah-theme', nextTheme); } catch (_) {}
     reflectTheme();
-    changingTheme = false;
+    // Let the 200ms color ease finish, then drop the transient state.
+    setTimeout(() => { document.documentElement.classList.remove('theme-changing'); changingTheme = false; }, 320);
   });
   document.querySelectorAll('.copyright-year').forEach(el => {
     el.textContent = String(new Date().getFullYear());

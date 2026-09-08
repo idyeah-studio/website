@@ -6,13 +6,13 @@
 <meta name="theme-color" content="#fafafa">
 <title>idyeah. product &amp; brand design</title>
 <meta name="description" content="Product and brand design, personally led by Vishal Mehta. Research, interfaces, storytelling and decks. Start with an audit; build with an experienced design partner.">
-<link rel="canonical" href="https://idyeah.studio/">
+<link rel="canonical" href="https://www.idyeah.studio/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="IDYeah Studio">
 <meta property="og:title" content="Simple takes someone. · IDYeah Studio">
 <meta property="og:description" content="Product &amp; brand design. I direct. AI accelerates.">
-<meta property="og:url" content="https://idyeah.studio/">
-<meta property="og:image" content="https://idyeah.studio/assets/idyeah/social-card.png">
+<meta property="og:url" content="https://www.idyeah.studio/">
+<meta property="og:image" content="https://www.idyeah.studio/assets/idyeah/social-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="A silver needle with a knot in its shaft and a straight coral thread. Simple takes someone. IDYeah Studio.">
@@ -20,23 +20,63 @@
 <meta name="twitter:site" content="@idyeahstudio">
 <meta name="twitter:title" content="Simple takes someone. · IDYeah Studio">
 <meta name="twitter:description" content="Product &amp; brand design. I direct. AI accelerates.">
-<meta name="twitter:image" content="https://idyeah.studio/assets/idyeah/social-card.png">
+<meta name="twitter:image" content="https://www.idyeah.studio/assets/idyeah/social-card.png">
 <meta name="twitter:image:alt" content="A knotted silver needle with a straight coral thread. Simple takes someone.">
 <link rel="icon" href="assets/idyeah/favicon.svg" type="image/svg+xml" sizes="any">
 <link rel="apple-touch-icon" href="assets/idyeah/apple-touch-icon.png">
 <link rel="preload" href="assets/idyeah/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
-<script src="assets/idyeah/theme-init.js"></script>
+<link rel="preload" href="assets/idyeah/fonts/inter-bold.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+// Apply a previously chosen theme before the stylesheet and first paint.
+// New visitors see the approved light version; no-JS visitors do too.
+try {
+  const theme = localStorage.getItem('idyeah-theme');
+  if (theme === 'light' || theme === 'dark') {
+    document.documentElement.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#141414' : '#fafafa';
+  }
+} catch (_) { /* Storage can be unavailable in private or restricted contexts. */ }
+</script>
 <link rel="stylesheet" href="assets/idyeah/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.idyeah.studio/#studio",
+      "name": "IDYeah Studio",
+      "url": "https://www.idyeah.studio/",
+      "description": "Product and brand design, personally led by Vishal Mehta. Research, interfaces, storytelling and decks. Start with an audit; build with an experienced design partner.",
+      "founder": {"@id": "https://www.idyeah.studio/#vishal"},
+      "address": {"@type": "PostalAddress", "addressLocality": "Cupertino", "addressRegion": "CA", "addressCountry": "US"},
+      "image": "https://www.idyeah.studio/assets/idyeah/social-card.png"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://www.idyeah.studio/#vishal",
+      "name": "Vishal Mehta",
+      "jobTitle": "Product & Brand Designer",
+      "worksFor": {"@id": "https://www.idyeah.studio/#studio"},
+      "sameAs": [
+        "https://linkedin.com/in/vishalme",
+        "https://medium.com/@vishalme",
+        "https://x.com/idyeahstudio"
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
-<a class="skip" href="#practice">Skip to the practice</a>
+<a class="skip" href="#practice">Skip to content</a>
 <header><a class="wordmark" href="#top" aria-label="IDYeah, back to the beginning">idyeah<span>.</span></a><a class="top-contact" href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener noreferrer"><span>Book a call</span><small>30 min · Calendly</small></a></header>
 <main>
 <section class="ad" id="top" aria-labelledby="ad-title">
   <div class="ad-idea">
     <div class="object" role="img" aria-label="A silver sewing needle with a knot tied into its metal shaft. A fine coral thread runs straight through its eye.">
       <img class="hero-light" src="assets/idyeah/needle-light.webp" width="1536" height="1024" alt="" aria-hidden="true" fetchpriority="high">
-      <img class="hero-dark" src="assets/idyeah/needle-dark.webp" width="1536" height="1024" alt="" aria-hidden="true" decoding="async">
+      <img class="hero-dark" src="assets/idyeah/needle-dark.webp" width="1536" height="1024" alt="" aria-hidden="true" decoding="async" fetchpriority="low">
     </div>
     <h1 id="ad-title">Simple takes someone.</h1>
   </div>
@@ -104,13 +144,14 @@
     <li class="process-step">
       <span class="step-node" aria-hidden="true">01</span>
       <h3>Audit</h3>
-      <p>Findings with evidence and severity ratings. A roadmap for your product or brand, and a walkthrough with me.</p>
+      <p>Findings with evidence and severity ratings, delivered in days, not weeks. A roadmap for your product or brand, and a walkthrough with me.</p>
       <div class="sample-invitation"><a class="text-link" href="mailto:vishal@idyeah.studio?subject=Request%20a%20sample%20audit&amp;body=Hi%20Vishal%2C%0A%0AI%27d%20like%20to%20request%20a%20sample%20audit%20of%20my%20product%20or%20brand%20to%20get%20a%20glimpse%20of%20what%20a%20full%20audit%20could%20uncover.%0A%0AProduct%20or%20brand%3A%0AWebsite%20or%20product%20link%3A%0AThe%20area%20I%27d%20like%20you%20to%20look%20at%3A%0A%0AThanks" aria-label="Request a sample audit by email" title="Request a sample audit by email">Request a sample audit</a><span>A brief review of your product or brand.</span></div>
     </li>
     <li class="process-step">
       <span class="step-node" aria-hidden="true">02</span>
       <h3>Design</h3>
       <p>Turn those priorities into product and brand design. Work directly with me from direction through delivery.</p>
+      <div class="sample-invitation"><a class="text-link" href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener noreferrer">Start with a call</a><span>30 minutes, on your calendar.</span></div>
     </li>
   </ol>
 </section>
@@ -130,7 +171,7 @@
 <section class="conversation" id="conversation" aria-labelledby="conversation-title">
   <span class="legacy-anchor" id="contact" aria-hidden="true"></span>
   <div class="conversation-inner content-shell reveal"><h2 id="conversation-title">What’s on your mind?</h2><a class="text-link invitation" href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener noreferrer">Book a 30-minute call</a><span class="call-note">or</span><a class="email text-link" href="mailto:vishal@idyeah.studio?subject=A%20design%20partnership" aria-label="Write to me by email" title="Email vishal@idyeah.studio">Write to me</a></div>
-  <footer role="contentinfo"><span class="footer-location">Cupertino, California.</span><span class="footer-copyright">© <span class="copyright-year">2026</span> IDYeah Studio.</span></footer>
+  <footer><span class="footer-location">Cupertino, California.</span><span class="footer-copyright">© <span class="copyright-year">2026</span> IDYeah Studio.</span><a class="footer-az" href="/a-to-z">A to Z</a></footer>
 </section>
 </main>
 <button class="theme-switch" type="button" data-theme-toggle aria-label="Switch to dark mode" hidden><span class="theme-dot" aria-hidden="true"></span><span data-theme-label>Dark</span></button>

@@ -460,7 +460,8 @@ p {
   grid-area:1/1;
   opacity:0;
   visibility:hidden;
-  transition:none;
+  /* keep the outgoing figure painted while it fades, then release it */
+  transition:opacity .35s, visibility 0s linear .35s;
   pointer-events:none;
 }
 .voices.is-carousel:not(.is-expanded) figure.is-active {
@@ -682,6 +683,17 @@ footer {
 .footer-copyright {
   display:block;
   text-align:center;
+}
+.footer-az {
+  position:absolute;
+  right:var(--edge);
+  bottom:0;
+  color:inherit;
+  text-decoration:none;
+}
+.footer-az:hover,.footer-az:focus-visible {
+  color:var(--ink);
+  text-decoration:underline;
 }
 .copyright-year {
   display:inline;
@@ -997,7 +1009,7 @@ footer {
     flex-direction:column;
   }
   .read-all {
-    min-height:32px;
+    min-height:44px;
   }
   .voices {
     margin-top:21px;
@@ -1118,11 +1130,14 @@ footer {
 }
 
 @media(max-width:700px) {
-  
+
   footer {
     bottom:19px;
   }
   .footer-location {
+    bottom:35px;
+  }
+  .footer-az {
     bottom:35px;
   }
 }
@@ -1140,4 +1155,10 @@ main>section {
 }
 .theme-changing .ad-idea {
   animation:none;
+}
+@media(prefers-reduced-motion:no-preference) {
+  .theme-changing body,
+  .theme-changing body * {
+    transition:background-color .2s ease,color .2s ease,border-color .2s ease,fill .2s ease,stroke .2s ease!important;
+  }
 }
