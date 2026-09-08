@@ -31,7 +31,7 @@
     });
     controls.hidden = expanded;
     readAll.setAttribute('aria-expanded', String(expanded));
-    readAll.textContent = expanded ? 'Show one at a time' : 'Read all four';
+    readAll.textContent = expanded ? 'Show one at a time' : 'Read all';
     previous.disabled = next.disabled = rotation.disabled = expanded;
     counter.textContent = String(current + 1).padStart(2, '0') + ' / 04';
     counter.setAttribute('aria-label', 'Testimonial ' + (current + 1) + ' of 4');
