@@ -98,8 +98,7 @@
     document.documentElement.dataset.theme = nextTheme;
     try { localStorage.setItem('idyeah-theme', nextTheme); } catch (_) {}
     reflectTheme();
-    // Let the 200ms color ease finish, then drop the transient state.
-    setTimeout(() => { document.documentElement.classList.remove('theme-changing'); changingTheme = false; }, 320);
+    changingTheme = false;
   });
   document.querySelectorAll('.copyright-year').forEach(el => {
     el.textContent = String(new Date().getFullYear());
