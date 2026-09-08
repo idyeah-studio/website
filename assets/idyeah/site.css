@@ -21,11 +21,12 @@
   --ink:#202020;
   --soft:#5f5f5f;
   --line:#c3c3c3;
+  --panel:#f1f1f1;
   --accent:#c52d42;
   --edge:5.5vw;
-  --ornament-mid:#f5f5f5;
-  --ornament-edge:#eeeeee;
-  --ornament-rim:rgba(0,0,0,.035);
+  --ornament-mid:#ededed;
+  --ornament-edge:#e2e2e2;
+  --ornament-rim:rgba(0,0,0,.05);
   color:var(--ink);
   background:var(--paper);
   color-scheme:light;
@@ -37,10 +38,11 @@
   --ink:#ebebeb;
   --soft:#aaa;
   --line:#555;
+  --panel:#1c1c1c;
   --accent:#df5567;
-  --ornament-mid:#171717;
-  --ornament-edge:#1c1c1c;
-  --ornament-rim:rgba(255,255,255,.025);
+  --ornament-mid:#202020;
+  --ornament-edge:#2a2a2a;
+  --ornament-rim:rgba(255,255,255,.04);
   color-scheme:dark;
 }
 * {
@@ -293,6 +295,9 @@ p {
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:16%;
+}
+.practice-intro h2 {
+  text-wrap:balance;
 }
 .intro-copy {
   padding-top:7px;
@@ -560,15 +565,25 @@ p {
   margin-top:17px;
   max-width:340px;
 }
-.sample-invitation {
-  margin-top:19px;
+.audit-preview {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16%;
+  background:var(--panel);
+  border-radius:12px;
+  padding:36px;
+  margin:60px -36px 0;
 }
-.sample-invitation>span {
-  display:block;
-  font-size:10px;
-  line-height:1.6;
+.audit-preview h3 {
+  font-size:24px;
+  font-weight:400;
+  letter-spacing:-.04em;
+}
+.audit-preview p {
   color:var(--soft);
-  margin-top:1px;
+}
+.audit-preview .text-link {
+  margin-top:13px;
 }
 .about h2 {
   margin-top:23px;
@@ -687,7 +702,8 @@ footer {
 .footer-az {
   position:absolute;
   right:var(--edge);
-  bottom:0;
+  bottom:60px;
+  line-height:44px;
   color:inherit;
   text-decoration:none;
 }
@@ -763,7 +779,7 @@ footer {
   .content-shell {
     width:calc(100% - (var(--edge) + 78px)*2);
   }
-  .practice-intro,.services,.process-steps,.about {
+  .practice-intro,.services,.process-steps,.about,.audit-preview {
     gap:10%;
   }
   .process-step:first-child::after {
@@ -812,6 +828,12 @@ footer {
   }
   .service+.service {
     padding-top:44px;
+  }
+  .audit-preview {
+    grid-template-columns:1fr;
+    gap:20px;
+    padding:28px 20px;
+    margin-inline:-20px;
   }
   .ad-signature {
     bottom:84px;
@@ -1135,9 +1157,6 @@ footer {
     bottom:19px;
   }
   .footer-location {
-    bottom:35px;
-  }
-  .footer-az {
     bottom:35px;
   }
 }
