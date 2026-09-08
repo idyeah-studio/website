@@ -1,501 +1,140 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IDYeah Studio — Clarity that ships.</title>
-
-  <meta name="description" content="A one-person UX and brand strategy studio for founders building real products. Pitch decks, brand sprints, and product UX with 25 years of senior craft. Clarity that ships." />
-  <link rel="canonical" href="https://idyeah.studio/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://idyeah.studio/" />
-  <meta property="og:title" content="IDYeah Studio — Clarity that ships." />
-  <meta property="og:description" content="Strategic brand and UX direction for founders building real products. Built with AI, aimed by 25 years of judgment." />
-  <meta property="og:image" content="https://idyeah.studio/media/og-cover.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="IDYeah Studio — Clarity that ships." />
-  <meta name="twitter:description" content="Strategic brand and UX direction for founders building real products." />
-  <meta name="twitter:image" content="https://idyeah.studio/media/og-cover.jpg" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
-
-  <style>
-    [data-theme="light"]{
-      --bg:#f5f1ea; --bg-2:#faf8f4;
-      --text:#18130e; --text-2:rgba(24,19,14,.66); --text-3:rgba(24,19,14,.64);
-      --gold:#7a5520; --line:rgba(24,19,14,.14); --hair:rgba(24,19,14,.10);
-      --cta-bg:#18130e; --cta-text:#f5f1ea;
-      --dot:rgba(24,19,14,.025);
-    }
-    [data-theme="dark"]{
-      --bg:#0b0a09; --bg-2:#121110;
-      --text:#ede9e2; --text-2:rgba(237,233,226,.64); --text-3:rgba(237,233,226,.64);
-      --gold:#c8a96e; --line:rgba(237,233,226,.16); --hair:rgba(237,233,226,.10);
-      --cta-bg:#ede9e2; --cta-text:#0b0a09;
-      --dot:rgba(237,233,226,.02);
-    }
-    :root{
-      --coral:#b8431d;
-      --serif:'Cormorant Garamond',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --mono:'DM Mono','SF Mono',monospace;
-      --max:1180px; --ease:cubic-bezier(.16,1,.3,1);
-    }
-    html[data-theme="dark"]{ --coral:#ef7a50; }
-
-    *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
-    body{ background:var(--bg); background-image:radial-gradient(var(--dot) 1px, transparent 1px); background-size:4px 4px; color:var(--text); font-family:var(--sans); line-height:1.5; transition:background .4s var(--ease),color .4s var(--ease); overflow-x:hidden; }
-    @media (prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } html{ scroll-behavior:auto; } }
-    a{ color:inherit; text-decoration:none; }
-    ::selection{ background:var(--coral); color:#fff; }
-    :focus-visible{ outline:2px solid var(--coral); outline-offset:3px; border-radius:2px; }
-
-    .wrap{ max-width:var(--max); margin:0 auto; padding:0 7vw; }
-    @media(min-width:1000px){ .wrap{ padding:0 64px; } }
-    .skip{ position:absolute; left:-999px; top:0; background:var(--cta-bg); color:var(--cta-text); padding:12px 18px; z-index:200; }
-    .skip:focus{ left:12px; top:12px; }
-
-    /* ===== the three voices ===== */
-    /* machine = mono/faded ; pen = coral ; final = serif */
-    .mono{ font-family:var(--mono); }
-    .label{ font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-3); }
-
-    /* the pen: a struck-out (rejected) phrase */
-    .s{ color:var(--text-3); text-decoration:line-through; text-decoration-color:var(--coral); text-decoration-style:wavy; text-decoration-thickness:2px; }
-    /* the pen: a circled word */
-    .circ{ position:relative; white-space:nowrap; }
-    .circ::before{ content:""; position:absolute; inset:-6px -13px -8px -13px; border:2.5px solid var(--coral); border-radius:47% 53% 50% 50% / 62% 56% 44% 50%; transform:rotate(-1.4deg); pointer-events:none; }
-    /* the pen: the inserted/approved word */
-    .fix{ font-family:var(--serif); font-style:italic; color:var(--gold); }
-    /* a margin note in the pen's hand */
-    .note{ font-family:var(--serif); font-style:italic; font-weight:500; color:var(--coral); font-size:clamp(16px,1.5vw,20px); line-height:1.3; letter-spacing:.015em; }
-    .note::before{ content:"✎  "; font-style:normal; opacity:.7; }
-
-    /* ===== HEADER ===== */
-    header{ position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 90%,transparent); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-bottom:1px solid var(--hair); }
-    .bar{ max-width:var(--max); margin:0 auto; padding:16px 7vw; display:flex; align-items:center; justify-content:space-between; gap:24px; }
-    @media(min-width:1000px){ .bar{ padding:18px 64px; } }
-    .mark{ display:flex; align-items:center; gap:11px; }
-    .mark .sym{ width:31px; height:31px; }
-    [data-theme="light"] .mark .sym-on-dark{ display:none; }
-    [data-theme="dark"]  .mark .sym-on-light{ display:none; }
-    .mark .wordmark-img{ height:11px; width:auto; display:block; }
-    [data-theme="dark"] .mark .wordmark-img{ filter:invert(1); }
-    @media(max-width:520px){ .mark .wordmark-img{ display:none; } }
-    nav.links{ display:none; gap:30px; font-family:var(--mono); font-size:13px; letter-spacing:.04em; }
-    nav.links a{ color:var(--text-2); transition:color .25s; } nav.links a:hover{ color:var(--coral); }
-    @media(min-width:860px){ nav.links{ display:flex; } }
-    .head-right{ display:flex; align-items:center; gap:14px; }
-    .toggle{ width:38px; height:38px; border:1px solid var(--line); border-radius:50%; background:none; color:var(--text); cursor:pointer; font-size:15px; display:grid; place-items:center; }
-    .cta{ font-family:var(--mono); font-size:13px; letter-spacing:.03em; padding:11px 20px; background:var(--cta-bg); color:var(--cta-text); border-radius:999px; white-space:nowrap; transition:transform .25s var(--ease); }
-    .bar .cta{ padding:7px 16px; }
-    .cta:hover{ transform:translateY(-2px); }
-    .cta.ghost{ background:none; color:var(--text); border:1px solid var(--line); }
-    .ham{ display:none; width:38px; height:38px; border:1px solid var(--line); border-radius:50%; background:none; cursor:pointer; color:var(--text); }
-    @media(max-width:859px){ .ham{ display:grid; place-items:center; } }
-
-    /* ===== document rhythm ===== */
-    section{ padding:12vh 0; border-top:1px solid var(--hair); position:relative; }
-    .draft-tag{ font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-3); margin-bottom:40px; }
-    .draft-tag b{ color:var(--coral); font-weight:500; }
-
-    /* two-column correction block: draft + a pen note in the margin */
-    .block{ display:grid; grid-template-columns:1fr; gap:16px; }
-    @media(min-width:880px){ .block{ grid-template-columns:minmax(0,1fr) clamp(170px,21vw,270px); gap:clamp(28px,4vw,56px); align-items:start; } }
-    @media(max-width:879px){ .block .note{ border-left:2px solid var(--coral); padding-left:16px; } }
-
-    .draft{ font-family:var(--serif); font-size:clamp(24px,3vw,40px); line-height:1.3; color:var(--text-3); }
-    .fixline{ font-family:var(--serif); font-size:clamp(28px,3.6vw,52px); line-height:1.08; color:var(--text); margin-top:24px; max-width:22ch; }
-    .fixline em{ font-style:italic; color:var(--gold); }
-    .arrow{ display:block; font-family:var(--mono); color:var(--coral); font-size:14px; letter-spacing:.1em; margin-top:24px; }
-
-    /* ===== HERO ===== */
-    .hero{ padding:12vh 0 8vh; border-top:none; }
-    .eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--coral); margin-bottom:32px; }
-    .hero-h{ font-family:var(--serif); font-weight:500; }
-    .hero-h .pre{ display:block; font-size:clamp(30px,5vw,58px); line-height:1.08; color:var(--text-3); }
-    .hero-h .pre .keep{ color:var(--text); }
-    .hero-h .ships-row{ display:flex; align-items:baseline; gap:24px; flex-wrap:wrap; margin-top:6px; }
-    .hero-h .ships{ font-style:italic; color:var(--gold); font-weight:600; font-size:clamp(96px,24vw,340px); line-height:.82; margin-left:-.03em; white-space:nowrap; }
-    .hero-sub{ font-family:var(--serif); font-size:clamp(22px,3vw,34px); line-height:1.35; max-width:20ch; margin-top:clamp(48px,6vw,72px); }
-
-    /* ===== section heads ===== */
-    .sec-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:48px; }
-    .sec-head .num{ font-family:var(--mono); font-size:13px; color:var(--coral); }
-    .sec-head h2{ font-family:var(--serif); font-weight:500; font-size:clamp(34px,5vw,64px); line-height:1; letter-spacing:-.01em; }
-
-    /* ===== EVIDENCE ===== */
-    .quote{ padding:40px 0; border-top:1px solid var(--hair); display:grid; grid-template-columns:1fr; gap:12px; }
-    @media(min-width:760px){ .quote{ grid-template-columns:1fr auto; align-items:center; } }
-    .quote q{ font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(20px,2.4vw,28px); line-height:1.3; max-width:38ch; letter-spacing:.015em; }
-    .quote .who{ font-family:var(--mono); font-size:13px; color:var(--text-2); }
-    .quote .pill{ font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--gold); border:1px solid var(--gold); border-radius:999px; padding:4px 10px; display:inline-block; margin-right:6px; margin-bottom:6px; }
-    .quote q{ display:block; }
-    .quote .pill:first-of-type{ margin-top:16px; }
-    @media(min-width:760px){ .quote .who{ text-align:right; } }
-
-    /* ===== CLIENT LOGO STRIP ===== */
-    .logo-strip{ overflow:hidden; padding:48px 0; border-top:1px solid var(--hair); position:relative; background:radial-gradient(ellipse 60% 100% at 50% 50%,color-mix(in srgb,var(--text) 4%,var(--bg)),var(--bg)); }
-    .logo-strip::before,.logo-strip::after{ content:""; position:absolute; top:0; bottom:0; width:80px; z-index:2; pointer-events:none; }
-    .logo-strip::before{ left:0; background:linear-gradient(to right,var(--bg),transparent); }
-    .logo-strip::after{ right:0; background:linear-gradient(to left,var(--bg),transparent); }
-    .logo-track{ display:flex; align-items:center; width:max-content; animation:logo-scroll var(--scroll-duration,35s) linear infinite; }
-    .logo-track span{ margin-right:64px; }
-    .logo-track img{ height:26px; width:auto; opacity:.4; }
-    .logo-track .logo-sm img{ height:21px; }
-    .logo-track .logo-lg img{ height:39px; }
-    .logo-track .logo-bright img{ opacity:.55; }
-    [data-theme="light"] .logo-track .logo-dark img{ filter:grayscale(1); }
-    [data-theme="light"] .logo-track .logo-light img{ filter:grayscale(1) invert(1); }
-    [data-theme="dark"] .logo-track .logo-dark img{ filter:grayscale(1) invert(1); }
-    [data-theme="dark"] .logo-track .logo-light img{ filter:grayscale(1); }
-    @keyframes logo-scroll{ to{ transform:translateX(var(--scroll-dist,-25%)); } }
-
-    /* ===== BOOK ===== */
-    .book-grid{ display:grid; grid-template-columns:1fr; gap:40px; align-items:center; }
-    @media(min-width:760px){ .book-grid{ grid-template-columns:auto 1fr 1fr; gap:48px; } }
-    .book-grid img{ width:200px; height:auto; border-radius:4px; box-shadow:0 8px 40px rgba(0,0,0,.4); }
-    @media(max-width:759px){ .book-grid img{ width:160px; } }
-    .book-grid .book-copy{ max-width:480px; }
-    .book-grid .book-title{ font-family:var(--serif); font-size:clamp(24px,3vw,34px); font-weight:500; line-height:1.08; }
-    .book-grid .book-title em{ font-style:italic; color:var(--gold); }
-    .book-grid .book-sub{ font-family:var(--mono); font-size:13px; color:var(--text-3); letter-spacing:.04em; margin-top:8px; }
-    .book-stars{ color:var(--gold); font-size:14px; letter-spacing:2px; margin-top:24px; }
-    .book-stars span{ font-family:var(--mono); font-size:12px; color:var(--text-3); letter-spacing:.04em; margin-left:8px; }
-    .book-quote{ font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(17px,1.8vw,22px); line-height:1.4; color:var(--text-2); letter-spacing:.015em; }
-    .book-quote cite{ font-family:var(--mono); font-style:normal; font-size:12px; color:var(--text-3); display:block; margin-top:8px; }
-    .book-grid a.quiet{ display:inline-block; margin-top:24px; font-family:var(--mono); font-size:13px; color:var(--text-3); border-bottom:1px solid var(--line); padding-bottom:2px; }
-    .book-grid a.quiet:hover{ color:var(--coral); border-color:var(--coral); }
-    .video-block{ margin-top:64px; }
-    .video-el{ width:100%; display:block; border:1px solid var(--line); border-radius:4px; background:#000; }
-    .video-cap{ font-family:var(--mono); font-size:12px; color:var(--text-3); margin-top:12px; letter-spacing:.04em; }
-
-    /* ===== OFFERS (clean ledger) ===== */
-    .offer{ padding:48px 0; border-top:1px solid var(--hair); display:grid; grid-template-columns:1fr; gap:24px; }
-    @media(min-width:840px){ .offer{ grid-template-columns:.85fr 1.15fr; gap:60px; } }
-    .offer h3{ font-family:var(--serif); font-weight:500; font-size:clamp(24px,3.2vw,38px); line-height:1; }
-    .offer .lead{ font-family:var(--serif); font-style:italic; font-weight:500; color:var(--gold); font-size:18px; margin-top:12px; letter-spacing:.015em; }
-    .offer p{ color:var(--text-2); font-size:16px; max-width:46ch; }
-    .offer ul{ list-style:none; margin-top:16px; display:grid; gap:8px; }
-    .offer li{ font-family:var(--mono); font-size:13px; color:var(--text-2); padding-left:18px; position:relative; }
-    .offer li::before{ content:"·"; position:absolute; left:4px; color:var(--coral); }
-    .offer .when{ font-family:var(--mono); font-size:12px; color:var(--text-3); text-transform:uppercase; letter-spacing:.1em; margin-top:16px; }
-
-    /* ===== PERSON ===== */
-    .person{ display:grid; grid-template-columns:1fr; gap:40px; align-items:start; }
-    @media(min-width:860px){ .person{ grid-template-columns:1.4fr .9fr; gap:70px; } }
-    .person p{ font-family:var(--serif); font-size:clamp(22px,2.6vw,30px); line-height:1.4; margin-bottom:24px; }
-    .person p em{ font-style:italic; color:var(--gold); }
-    .creds .row{ display:flex; gap:16px; padding:16px 0; border-top:1px solid var(--hair); font-family:var(--mono); font-size:13px; }
-    .creds .row b{ color:var(--coral); font-weight:400; min-width:64px; }
-    .creds .row span{ color:var(--text-2); }
-    .feather{ position:absolute; right:-2vw; top:7vh; width:min(33vw,340px); height:auto; opacity:.5; pointer-events:none; mix-blend-mode:multiply; }
-    [data-theme="dark"] .feather{ mix-blend-mode:screen; opacity:.32; }
-
-
-    /* ===== CONTACT (the corrected close) ===== */
-    .contact h2{ font-family:var(--serif); font-weight:500; font-size:clamp(34px,5vw,64px); line-height:1; letter-spacing:-.01em; margin-top:24px; }
-    .contact h2 em{ font-style:italic; color:var(--gold); }
-    .contact .actions{ margin-top:48px; display:flex; gap:16px; flex-wrap:wrap; }
-
-    footer{ border-top:1px solid var(--hair); padding:40px 0 64px; }
-    .foot{ display:flex; flex-wrap:wrap; gap:16px 40px; align-items:center; justify-content:space-between; font-family:var(--mono); font-size:12px; color:var(--text-3); }
-    .foot a:hover{ color:var(--coral); }
-    .foot .home{ font-family:var(--serif); font-style:italic; font-weight:500; font-size:16px; color:var(--text-2); letter-spacing:.015em; }
-
-    .sheet{ position:fixed; inset:0; background:var(--bg); z-index:150; transform:translateY(-100%); transition:transform .45s var(--ease); display:grid; align-content:center; gap:6px; padding:0 9vw; }
-    .sheet.open{ transform:translateY(0); }
-    .sheet a{ font-family:var(--serif); font-size:38px; padding:8px 0; }
-    .sheet .close{ position:absolute; top:22px; right:9vw; font-family:var(--mono); font-size:13px; background:none; border:none; color:var(--text-2); cursor:pointer; }
-
-    .titleblock{ display:none; }
-    @media(min-width:1100px){
-      .titleblock{ display:block; position:fixed; right:18px; bottom:18px; z-index:40; border:1px solid var(--hair); background:color-mix(in srgb,var(--bg) 92%,transparent); backdrop-filter:blur(4px); font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--text-3); }
-      .titleblock div{ padding:5px 10px; border-bottom:1px solid var(--hair); display:flex; justify-content:space-between; gap:16px; }
-      .titleblock div:last-child{ border-bottom:none; }
-      .titleblock b{ color:var(--text-2); font-weight:400; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafafa">
+<title>IDYeah Studio — Product &amp; Brand Design by Vishal Mehta</title>
+<meta name="description" content="Product and brand design, personally led by Vishal Mehta. Research, interfaces, storytelling and decks. Start with an audit; build with an experienced design partner.">
+<link rel="canonical" href="https://idyeah.studio/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IDYeah Studio">
+<meta property="og:title" content="Simple takes someone. — IDYeah Studio">
+<meta property="og:description" content="Product &amp; brand design. I direct. AI accelerates.">
+<meta property="og:url" content="https://idyeah.studio/">
+<meta property="og:image" content="https://idyeah.studio/assets/idyeah/social-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A silver needle with a knot in its shaft and a straight coral thread. Simple takes someone. IDYeah Studio.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@idyeahstudio">
+<meta name="twitter:title" content="Simple takes someone. — IDYeah Studio">
+<meta name="twitter:description" content="Product &amp; brand design. I direct. AI accelerates.">
+<meta name="twitter:image" content="https://idyeah.studio/assets/idyeah/social-card.png">
+<meta name="twitter:image:alt" content="A knotted silver needle with a straight coral thread. Simple takes someone.">
+<link rel="icon" href="assets/idyeah/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="assets/idyeah/favicon.ico">
+<link rel="apple-touch-icon" href="assets/idyeah/apple-touch-icon.png">
+<link rel="preload" href="assets/idyeah/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
+<script src="assets/idyeah/theme-init.js"></script>
+<link rel="stylesheet" href="assets/idyeah/site.css">
 </head>
 <body>
-  <aside class="titleblock" aria-hidden="true">
-    <div><span>DRAFT</span><b>48</b></div>
-    <div><span>STATUS</span><b>shipped</b></div>
-    <div><span>PEN</span><b>Vishal</b></div>
-  </aside>
-  <a href="#pitch" class="skip">Skip to content</a>
-
-  <header>
-    <div class="bar">
-      <a href="#top" class="mark" aria-label="IDYeah Studio, home">
-        <img class="sym sym-on-light" src="./symbol-light.png" alt="" aria-hidden="true" width="404" height="500" />
-        <img class="sym sym-on-dark" src="./symbol-dark.png" alt="" aria-hidden="true" width="404" height="500" />
-        <img class="wordmark-img" src="./wordmark.png" alt="IDYeah Studio" width="1182" height="97" />
-      </a>
-      <nav class="links" aria-label="Primary">
-        <a href="#pitch">Studio</a>
-        <a href="#work">Work</a>
-        <a href="#offers">Engage</a>
-        <a href="#person">Vishal</a>
-      </nav>
-      <div class="head-right">
-        <button class="toggle" id="themeBtn" aria-label="Toggle light or dark theme">&#9790;</button>
-        <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a call</a>
-        <button class="ham" id="hamBtn" aria-label="Open menu" aria-expanded="false">&equiv;</button>
-      </div>
+<a class="skip" href="#practice">Skip to the practice</a>
+<header><a class="wordmark" href="#top" aria-label="IDYeah, back to the beginning">idyeah<span>.</span></a><a class="top-contact" href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener noreferrer"><span>Book a call</span><small>30 min · Calendly</small></a></header>
+<main>
+<section class="ad" id="top" aria-labelledby="ad-title">
+  <div class="ad-idea">
+    <div class="object" role="img" aria-label="A silver sewing needle with a knot tied into its metal shaft. A fine coral thread runs straight through its eye.">
+      <img class="hero-light" src="assets/idyeah/needle-light.webp" width="1536" height="1024" alt="" aria-hidden="true" fetchpriority="high">
+      <img class="hero-dark" src="assets/idyeah/needle-dark.webp" width="1536" height="1024" alt="" aria-hidden="true" decoding="async">
     </div>
-  </header>
-
-  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
-    <button class="close" id="closeBtn">close &times;</button>
-    <a href="#pitch">Studio</a>
-    <a href="#work">Work</a>
-    <a href="#offers">Engage</a>
-    <a href="#person">Vishal</a>
-    <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener">Book a call &rarr;</a>
+    <h1 id="ad-title">Simple takes someone.</h1>
   </div>
+  <div class="ad-signature"><p>Product &amp; brand design</p><p>I direct. AI accelerates.</p></div>
+  <a class="follow" href="#practice"><span>Follow the thread</span><i aria-hidden="true"></i></a>
+</section>
 
-  <main id="top">
+<section class="practice content-shell" id="practice" aria-labelledby="practice-title">
+  <span class="legacy-anchor" id="pitch" aria-hidden="true"></span>
+  <div class="practice-intro reveal">
+    <h2 id="practice-title">I take the<br>complicated part.</h2>
+    <div class="intro-copy"><p>IDYeah is my one-person studio.</p><p>Product and brand, considered together.<br> Designed with me.</p><a class="text-link" href="#about">Meet Vishal</a></div>
+  </div>
+  <div class="services">
+    <div class="service reveal"><h3>Product</h3><p>I turn research into clear flows, prototypes and interfaces. Design systems and support through handoff help your team build with confidence.</p><p class="service-note">UX <span class="service-separator">·</span> Interfaces <span class="service-separator">·</span> Design systems</p></div>
+    <div class="service reveal"><h3>Brand</h3><p>I shape your story for pitch and corporate decks, websites, and the content you share with customers, on social media, and in investor conversations.</p><p class="service-note">Storytelling <span class="service-separator">·</span> Decks <span class="service-separator">·</span> Website</p></div>
+  </div>
+</section>
 
-    <!-- HERO — the headline, corrected -->
-    <section class="hero">
-      <div class="wrap">
-        <p class="eyebrow">First draft, generated. Then aimed.</p>
-        <h1 class="hero-h">
-          <span class="pre"><span class="keep">Clarity that</span> <span class="s">empowers transformative product experiences</span></span>
-          <span class="ships-row"><span class="ships">ships.</span><span class="note" style="white-space:nowrap;">The machine wrote the line. I kept one word.</span></span>
-        </h1>
-        <p class="hero-sub">AI builds, I aim.</p>
-      </div>
-    </section>
+<section class="clients content-shell reveal" aria-labelledby="clients-title">
+  <h2 class="eyebrow" id="clients-title">Selected clients</h2>
+  <ul class="logo-grid">
+    <li><img class="logo-ink ionate" src="assets/idyeah/logos/ionate.webp" width="1392" height="216" alt="Ionate" loading="lazy"></li>
+    <li><img class="logo-ink mosaix" src="assets/idyeah/logos/mosaix.webp" width="1390" height="296" alt="Mosaix" loading="lazy"></li>
+    <li><img class="logo-reverse rialty" src="assets/idyeah/logos/rialty.webp" width="1440" height="192" alt="Rialty" loading="lazy"></li>
+    <li><img class="logo-ink benevolve" src="assets/idyeah/logos/benevolve.webp" width="665" height="115" alt="Benevolve" loading="lazy"></li>
+    <li><img class="logo-reverse simcomm" src="assets/idyeah/logos/simcomm.webp" width="1504" height="232" alt="Simcomm" loading="lazy"></li>
+    <li><img class="logo-reverse mira" src="assets/idyeah/logos/mira.webp" width="1322" height="401" alt="Mira" loading="lazy"></li>
+    <li><img class="logo-reverse midas" src="assets/idyeah/logos/midas-touch.webp" width="1460" height="215" alt="Midas Touch" loading="lazy"></li>
+    <li><img class="logo-reverse shiksha" src="assets/idyeah/logos/shiksha.webp" width="827" height="527" alt="Shiksha Productions" loading="lazy"></li>
+  </ul>
+</section>
 
-    <!-- PITCH — the studio, as the machine described it, then corrected -->
-    <section id="pitch">
-      <div class="wrap">
-        <p class="draft-tag">Exhibit A &middot; <b>the studio, as the machine wrote it</b></p>
-        <div class="block">
-          <p class="draft">"We are a <span class="s">world-class</span>, <span class="s">innovative</span> studio that <span class="s">empowers</span> founders to <span class="s">unleash their potential</span> and <span class="s">disrupt</span> their markets with <span class="s">cutting-edge solutions</span>."</p>
-          <aside class="note">Six buzzwords. Zero specifics. Strike all of it.</aside>
-        </div>
-        <p class="arrow">↓ what it actually is</p>
-        <p class="fixline">I help founders say what their product does. Then I design the thing that <em>proves</em> it.</p>
-        <a href="#" id="auditLink" class="arrow" style="display:inline-block;margin-top:28px;border-bottom:1px solid var(--line);padding-bottom:2px;">Start with an audit — back in 2–3 days &rarr;</a>
-      </div>
-    </section>
+<section class="proof content-shell" id="voices" aria-labelledby="voices-title">
+  <span class="legacy-anchor" id="work" aria-hidden="true"></span>
+  <svg class="quote-ornament" viewBox="0 0 360 340" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="speech-tone" cx="23%" cy="20%" r="100%">
+        <stop offset="0%" stop-color="var(--paper)"/>
+        <stop offset="18%" stop-color="var(--paper)"/>
+        <stop offset="63%" stop-color="var(--ornament-mid)"/>
+        <stop offset="100%" stop-color="var(--ornament-edge)"/>
+      </radialGradient>
+    </defs>
+    <path d="M174 14C274 14 348 76 348 152C348 190 331 222 301 247C300 274 310 297 329 319C298 315 270 303 248 280C226 287 201 291 174 291C79 291 12 230 12 152C12 76 79 14 174 14Z" fill="url(#speech-tone)" stroke="var(--ornament-rim)" stroke-width="1"/>
+  </svg>
+  <div class="quote-heading"><h2 class="eyebrow" id="voices-title">In their words</h2><button class="read-all" type="button" aria-expanded="false" aria-controls="client-voices" hidden>Read all four</button></div>
+  <div class="voices" id="client-voices">
+    <figure><blockquote>“A production-ready design system and code in half the time we expected.”</blockquote><figcaption>A. Adhikari<span>CEO, Ionate</span></figcaption></figure>
+    <figure><blockquote>“The audit was uncomfortably honest. It was also the most useful thing anyone’s handed us.”</blockquote><figcaption>M. Wend<span>Marketing Director, Benevolve</span></figcaption></figure>
+    <figure><blockquote>“Honestly, we didn’t think onboarding was the problem. It was.”</blockquote><figcaption>Founder<span>Stealth · B2B SaaS</span></figcaption></figure>
+    <figure><blockquote>“Investors finally got what we were building. The deck did the talking for us.”</blockquote><figcaption>B. Patni<span>Founder, Rialty</span></figcaption></figure>
+  </div>
+  <div class="quote-controls" hidden>
+    <div class="quote-navigation"><button class="quote-prev" type="button" aria-label="Previous testimonial">Previous</button><span class="quote-counter" aria-label="Testimonial 1 of 4">01 / 04</span><button class="quote-next" type="button" aria-label="Next testimonial">Next</button></div>
+    <button class="quote-rotation" type="button">Pause</button>
+  </div>
+  <span class="sr-only quote-status" role="status"></span>
+</section>
 
-    <!-- VIDEO -->
-    <section>
-      <div class="wrap">
-        <div class="video-block" style="margin-top:0;">
-          <video class="video-el" controls preload="none" playsinline poster="media/intro-cover.jpg" title="A 90-second introduction to IDYeah Studio">
-            <source src="media/intro.mp4" type="video/mp4" />
-            <track kind="captions" src="media/intro-captions.vtt" srclang="en" label="English" />
-            Your browser does not support video.
-          </video>
-          <p class="video-cap">// meet the studio. 90 seconds.</p>
-        </div>
-      </div>
-    </section>
+<section class="beginning content-shell" id="process" aria-labelledby="beginning-title">
+  <span class="legacy-anchor" id="offers" aria-hidden="true"></span>
+  <h2 id="beginning-title" class="reveal">How it works</h2>
+  <ol class="process-steps reveal">
+    <li class="process-step">
+      <span class="step-node" aria-hidden="true">01</span>
+      <h3>Audit</h3>
+      <p>Findings with evidence and severity ratings. A roadmap for your product or brand, and a walkthrough with me.</p>
+      <div class="sample-invitation"><a class="text-link" href="mailto:vishal@idyeah.studio?subject=Request%20a%20sample%20audit&amp;body=Hi%20Vishal%2C%0A%0AI%27d%20like%20to%20request%20a%20sample%20audit%20of%20my%20product%20or%20brand%20to%20get%20a%20glimpse%20of%20what%20a%20full%20audit%20could%20uncover.%0A%0AProduct%20or%20brand%3A%0AWebsite%20or%20product%20link%3A%0AThe%20area%20I%27d%20like%20you%20to%20look%20at%3A%0A%0AThanks" aria-label="Request a sample audit by email" title="Request a sample audit by email">Request a sample audit</a><span>A brief review of your product or brand.</span></div>
+    </li>
+    <li class="process-step">
+      <span class="step-node" aria-hidden="true">02</span>
+      <h3>Design</h3>
+      <p>Turn those priorities into product and brand design. Work directly with me from direction through delivery.</p>
+    </li>
+  </ol>
+</section>
 
-    <!-- CLIENT LOGOS -->
-    <div class="logo-strip">
-      <div class="logo-track">
-        <span class="logo-dark logo-sm"><img src="media/logos/ionate.png" alt="Ionate" /></span>
-        <span class="logo-dark logo-bright"><img src="media/logos/mosaix.png" alt="Mosaix" /></span>
-        <span class="logo-light logo-sm logo-bright"><img src="media/logos/midas-touch.png" alt="Midas Touch" /></span>
-        <span class="logo-light logo-sm"><img src="media/logos/mira.png" alt="Mira" /></span>
-        <span class="logo-light logo-sm"><img src="media/logos/rialty.png" alt="Rialty" /></span>
-        <span class="logo-dark logo-sm"><img src="media/logos/benevolve.png" alt="Benevolve" /></span>
-        <span class="logo-light logo-lg"><img src="media/logos/shiksha.png" alt="Shiksha Productions" /></span>
-        <span class="logo-light logo-sm"><img src="media/logos/simcomm.png" alt="Simcomm" /></span>
-        <span class="logo-dark logo-sm" aria-hidden="true"><img src="media/logos/ionate.png" alt="" /></span>
-        <span class="logo-dark" aria-hidden="true"><img src="media/logos/mosaix.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/midas-touch.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/mira.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/rialty.png" alt="" /></span>
-        <span class="logo-dark logo-sm" aria-hidden="true"><img src="media/logos/benevolve.png" alt="" /></span>
-        <span class="logo-light logo-lg" aria-hidden="true"><img src="media/logos/shiksha.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/simcomm.png" alt="" /></span>
-        <span class="logo-dark logo-sm" aria-hidden="true"><img src="media/logos/ionate.png" alt="" /></span>
-        <span class="logo-dark" aria-hidden="true"><img src="media/logos/mosaix.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/midas-touch.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/mira.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/rialty.png" alt="" /></span>
-        <span class="logo-dark logo-sm" aria-hidden="true"><img src="media/logos/benevolve.png" alt="" /></span>
-        <span class="logo-light logo-lg" aria-hidden="true"><img src="media/logos/shiksha.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/simcomm.png" alt="" /></span>
-        <span class="logo-dark logo-sm" aria-hidden="true"><img src="media/logos/ionate.png" alt="" /></span>
-        <span class="logo-dark" aria-hidden="true"><img src="media/logos/mosaix.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/midas-touch.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/mira.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/rialty.png" alt="" /></span>
-        <span class="logo-dark logo-sm" aria-hidden="true"><img src="media/logos/benevolve.png" alt="" /></span>
-        <span class="logo-light logo-lg" aria-hidden="true"><img src="media/logos/shiksha.png" alt="" /></span>
-        <span class="logo-light logo-sm" aria-hidden="true"><img src="media/logos/simcomm.png" alt="" /></span>
-      </div>
-    </div>
+<section class="about content-shell" id="about" aria-labelledby="about-title">
+  <span class="legacy-anchor" id="person" aria-hidden="true"></span>
+  <div class="about-heading reveal"><p class="eyebrow">The person behind the studio</p><h2 id="about-title">Vishal Mehta.</h2><nav class="social-links" aria-label="Vishal’s social profiles">
+    <a href="https://linkedin.com/in/vishalme" target="_blank" rel="noopener noreferrer" aria-label="Vishal on LinkedIn (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 2H3.55A1.55 1.55 0 0 0 2 3.55v16.9A1.55 1.55 0 0 0 3.55 22h16.9A1.55 1.55 0 0 0 22 20.45V3.55A1.55 1.55 0 0 0 20.45 2ZM7.92 18.75H4.96V9.2h2.96ZM6.44 7.89a1.72 1.72 0 1 1 0-3.44 1.72 1.72 0 0 1 0 3.44ZM19.04 18.75h-2.96V14.1c0-1.11-.02-2.54-1.55-2.54-1.55 0-1.79 1.21-1.79 2.46v4.73H9.78V9.2h2.84v1.31h.04a3.11 3.11 0 0 1 2.8-1.54c2.99 0 3.54 1.97 3.54 4.53v5.25Z"/></svg><span>LinkedIn</span></a>
+    <a href="https://medium.com/@vishalme" target="_blank" rel="noopener noreferrer" aria-label="Vishal on Medium (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="6.6" cy="12" rx="6.3" ry="6.45"/><ellipse cx="17.1" cy="12" rx="3.05" ry="6.06"/><ellipse cx="22.5" cy="12" rx="1.15" ry="5.44"/></svg><span>Medium</span></a>
+    <a href="https://x.com/idyeahstudio" target="_blank" rel="noopener noreferrer" aria-label="IDYeah on X (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l-4.89-7.4L5.6 22H2.48l7.08-8.1L1.2 2h6.4l4.42 6.77L18.9 2Zm-1.1 18h1.73L6.66 3.88H4.8L17.8 20Z"/></svg><span>X</span></a>
+  </nav></div>
+  <div class="about-copy reveal"><p class="bio-lead">25 years across tech, UX, design, and brand.</p><p>That experience shapes how I approach a problem: what people need, what the business needs and what can actually be built.</p><p>You work directly with me, from the first conversation through the design.</p><p>AI helps me explore and make faster. I bring the judgment and take responsibility for the work.</p>
+  <div class="credentials"><p>Speaker, World Usability Congress 2025 · Author of <a href="https://cookbook.idyeah.studio/" target="_blank" rel="noopener noreferrer">Design AI Alchemy</a></p></div>
+  </div>
+</section>
 
-    <!-- EVIDENCE -->
-    <section id="work">
-      <div class="wrap">
-        <div class="sec-head"><span class="num">B</span><h2>In their words, not mine.</h2></div>
-        <div style="margin-top:26px;">
-          <div class="quote"><div><q>The audit was uncomfortably honest. It was also the most useful thing anyone&rsquo;s handed us.</q><span class="pill">Independent Audit</span></div><div class="who">M. Wend<br/>Marketing Director, Benevolve</div></div>
-          <div class="quote"><div><q>Honestly, we didn&rsquo;t think onboarding was the problem. It was.</q><span class="pill">Onboarding Experience</span></div><div class="who">Founder<br/>Stealth · B2B SaaS</div></div>
-          <div class="quote"><div><q>A production-ready design system and code in half the time we expected.</q><span class="pill">Product Design</span> <span class="pill">Pitch Deck</span></div><div class="who">A. Adhikari<br/>CEO, Ionate</div></div>
-          <div class="quote"><div><q>Investors finally got what we were building. The deck did the talking for us.</q><span class="pill">Brand Strategy</span> <span class="pill">Product Design</span> <span class="pill">Pitch Deck</span> <span class="pill">Marketing Collaterals</span></div><div class="who">B. Patni<br/>Founder, Rialty</div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- OFFERS -->
-    <section id="offers">
-      <div class="wrap">
-        <div class="sec-head"><span class="num">C</span><h2>Four ways in.</h2></div>
-        <div class="offer">
-          <div><h3>Independent Audit</h3><p class="lead">See what your buyer sees.</p></div>
-          <div>
-            <p>A multi-angle read of your brand, your product, or both &mdash; checked across positioning, experience, visual craft, content, and the buyer's own chair. A severity matrix, a sequenced roadmap, and the honest call on what to fix first.</p>
-            <ul><li>Multi-angle evidence-based audit</li><li>Severity matrix &amp; prioritized roadmap</li><li>Confidential deliverable, ready to act on</li></ul>
-            <p class="when">2–3 day turnaround</p>
-          </div>
-        </div>
-        <div class="offer">
-          <div><h3>Pitch Deck</h3><p class="lead">Attention into conviction.</p></div>
-          <div>
-            <p>An investor-ready narrative that tells one clear, visual story. From the architecture of the argument to the final slide.</p>
-            <ul><li>Narrative structure &amp; slide flow</li><li>Investor-ready deck, final file</li><li>Two rounds of revision</li></ul>
-            <p class="when">2–3 day turnaround</p>
-          </div>
-        </div>
-        <div class="offer">
-          <div><h3>Brand Sprint</h3><p class="lead">Know what you stand for.</p></div>
-          <div>
-            <p>Positioning, messaging hierarchy, and visual identity direction for early teams who need clarity, and the confidence to say it out loud.</p>
-            <ul><li>Positioning &amp; messaging framework</li><li>Visual identity direction</li><li>Prioritized action roadmap</li></ul>
-            <p class="when">~2 week engagement</p>
-          </div>
-        </div>
-        <div class="offer">
-          <div><h3>Product UX</h3><p class="lead">Research to handoff.</p></div>
-          <div>
-            <p>End-to-end design: research, information architecture, high-fidelity UI, developer handoff. An AI-augmented workflow for faster, sharper outcomes.</p>
-            <ul><li>Research synthesis &amp; IA</li><li>High-fidelity UI &amp; interactive prototype</li><li>Developer handoff + async support</li></ul>
-            <p class="when">~2 week engagement</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PERSON -->
-    <section id="person" style="position:relative;">
-      <img class="feather" src="media/feather.png" alt="" aria-hidden="true" loading="lazy" width="2500" height="3000" />
-      <div class="wrap">
-        <div class="sec-head"><span class="num">D</span><h2>Who's holding the pen.</h2></div>
-        <div class="person">
-          <div>
-            <p>I'm Vishal. A practitioner with <em>twenty-five years</em> in the work: software engineering, design systems, and an AI-augmented practice that ships production-grade brand and product fast.</p>
-            <p>I don't just make things look good. I help teams figure out what they're actually saying, and how to say it with precision.</p>
-            <p>I keep the studio one person, <em>on purpose.</em> You work with the practitioner, not an account manager.</p>
-          </div>
-          <div class="creds">
-            <div class="row"><b>2000→</b><span>25+ years across engineering, UX strategy &amp; brand</span></div>
-            <div class="row"><b>ACM</b><span>SIGCHI member · human–computer interaction</span></div>
-            <div class="row"><b>EB1A</b><span>US Green Card for Extraordinary Ability</span></div>
-            <div class="row"><b>2025</b><span>Speaker, World Usability Congress · studio founded</span></div>
-            <div class="row"><b>HQ</b><span>Cupertino, US</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BOOK -->
-    <section>
-      <div class="wrap">
-        <p class="label" style="margin-bottom:32px;">From the studio</p>
-        <div class="book-grid">
-          <img src="media/book-cover.png" alt="Design AI Alchemy — book cover" loading="lazy" width="881" height="1140" />
-          <div class="book-copy">
-            <div class="book-title">Design <em>AI</em> Alchemy</div>
-            <p class="book-sub">75 Prompts for UX Designers</p>
-            <div class="book-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>5.0 average rating</span></div>
-            <a class="quiet" href="https://cookbook.idyeah.studio" target="_blank" rel="noopener">get the book &rarr;</a>
-          </div>
-          <div>
-            <p class="book-quote">&ldquo;This is one of those resources that&rsquo;s actually useful no matter where you are in your design career. This book helps you sort out your thinking and turn fuzzy ideas into clear, usable prompts.&rdquo;<cite>&mdash; Xing Li</cite></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT — the corrected close -->
-    <section id="contact" class="contact">
-      <div class="wrap">
-        <h2>Last page. <em>Your move.</em></h2>
-        <p class="hero-sub" style="margin-top:12px;max-width:none;">The best projects start with one honest line.</p>
-        <div class="actions">
-          <a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener" class="cta">Book a discovery call</a>
-          <a href="#" id="emailLink" class="cta ghost">Send an email</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <div class="foot">
-        <span class="home">Built with AI. Every word it added, I took out. &mdash; V</span>
-        <span style="display:flex;align-items:center;gap:16px;"><a href="https://linkedin.com/in/vishalme" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a href="https://instagram.idyeah.studio" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a> · <span id="yr"></span></span>
-        <a href="/a-to-z" style="color:var(--text-3);transition:color .25s;"><span style="font-family:var(--mono);font-size:12px;letter-spacing:.04em;">// A–Z of AI, redefined &rarr;</span></a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    var root=document.documentElement, tBtn=document.getElementById('themeBtn');
-    function setTheme(t){ root.setAttribute('data-theme',t); tBtn.innerHTML = t==='dark' ? '&#9728;' : '&#9790;'; tBtn.setAttribute('aria-label', t==='dark' ? 'Switch to light theme' : 'Switch to dark theme'); }
-    tBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
-    setTheme(root.getAttribute('data-theme')||'dark');
-
-    var sheet=document.getElementById('sheet'), ham=document.getElementById('hamBtn'), close=document.getElementById('closeBtn');
-    function openSheet(o){
-      sheet.classList.toggle('open',o); ham.setAttribute('aria-expanded',o); sheet.setAttribute('aria-hidden',!o);
-      if(o){ close.focus(); document.addEventListener('keydown',trapFocus); }
-      else{ ham.focus(); document.removeEventListener('keydown',trapFocus); }
-    }
-    function trapFocus(e){
-      if(e.key==='Escape'){ openSheet(false); return; }
-      if(e.key!=='Tab') return;
-      var focusable=sheet.querySelectorAll('button,a[href]'), first=focusable[0], last=focusable[focusable.length-1];
-      if(e.shiftKey){ if(document.activeElement===first){ e.preventDefault(); last.focus(); } }
-      else{ if(document.activeElement===last){ e.preventDefault(); first.focus(); } }
-    }
-    ham.addEventListener('click',function(){ openSheet(true); });
-    close.addEventListener('click',function(){ openSheet(false); });
-    sheet.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ openSheet(false); }); });
-
-    var u='vishal', d='idyeah.studio';
-    document.getElementById('emailLink').href='mailto:'+u+'@'+d;
-    document.getElementById('auditLink').href='mailto:'+u+'@'+d+'?subject=Independent%20Audit%20%E2%80%93%20interested';
-    document.getElementById('yr').textContent='© '+new Date().getFullYear()+' IDYeah Studio';
-
-    (function(){
-      var track=document.querySelector('.logo-track');
-      if(!track) return;
-      track.style.animationPlayState='paused';
-      var imgs=track.querySelectorAll('img'), loaded=0, total=imgs.length;
-      function measure(){
-        var w=Math.round(track.scrollWidth/4);
-        track.style.setProperty('--scroll-dist','-'+w+'px');
-        track.style.setProperty('--scroll-duration',(w/40)+'s');
-        track.style.animationPlayState='running';
-      }
-      imgs.forEach(function(img){
-        if(img.complete) { loaded++; if(loaded===total) measure(); }
-        else img.addEventListener('load',function(){ loaded++; if(loaded===total) measure(); });
-      });
-    })();
-  </script>
+<section class="conversation" id="conversation" aria-labelledby="conversation-title">
+  <span class="legacy-anchor" id="contact" aria-hidden="true"></span>
+  <div class="conversation-inner content-shell reveal"><h2 id="conversation-title">What’s on your mind?</h2><a class="text-link invitation" href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener noreferrer">Book a 30-minute call</a><span class="call-note">or</span><a class="email text-link" href="mailto:vishal@idyeah.studio?subject=A%20design%20partnership" aria-label="Write to me by email" title="Email vishal@idyeah.studio">Write to me</a></div>
+  <footer role="contentinfo"><span class="footer-location">Cupertino, California.</span><span class="footer-copyright">© <span class="copyright-year">2026</span> IDYeah Studio.</span></footer>
+</section>
+</main>
+<button class="theme-switch" type="button" data-theme-toggle aria-label="Switch to dark mode" hidden><span class="theme-dot" aria-hidden="true"></span><span data-theme-label>Dark</span></button>
+<script src="assets/idyeah/site.js"></script>
 </body>
 </html>
