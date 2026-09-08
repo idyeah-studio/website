@@ -1,73 +1,13 @@
-# React + TypeScript + Vite
+# idyeah.studio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Static website for IDYeah Studio — no build step, framework, or package manager.
 
-Currently, two official plugins are available:
+- `index.html` + `assets/idyeah/` — the homepage ("Simple takes someone."), its styles, scripts, fonts, and images. Light theme by default; the floating toggle stores an explicit choice in localStorage (`idyeah-theme`).
+- `a-to-z.html` — the A–Z editorial page, served extensionless as `/a-to-z` via Vercel clean URLs.
+- `mosaix/` — client prototype, served at `mosaix.idyeah.studio` via the host route in `vercel.json` (noindex).
+- `vercel.json` — clean URLs, host dispatch, and indexing headers. Hosted on Vercel; `main` deploys production.
+- `ms72751530.txt` — Microsoft domain verification. Do not remove.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Retired work is preserved on branches: `archive/sap-microsite`, `explore/freeway-stage1`, and git history (old version galleries, media).
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Preview locally: `python3 -m http.server 8771` from the repo root (clean URLs and host dispatch only work on Vercel).
