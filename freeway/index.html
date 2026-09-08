@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IDYeah Studio — Clarity that ships.</title>
+<meta name="description" content="A one-person UX and brand strategy studio for founders building real products. Product design, brand audit, storytelling. Built with AI, aimed by 25 years of judgment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ======================================================
+   TOKENS
+   ====================================================== */
+:root {
+  --sky-top: #faf9f7;
+  --sky-bot: #f0eee9;
+  --fog: #f4f2ee;
+  --fog-2: #eceae5;
+  --asphalt: #eceae5;
+  --asphalt-2: #f3f1ec;
+  --ghost: #d6d4cf;
+  --ghost-2: #c4c2bd;
+  --ghost-3: #b0aeaa;
+  --ink: #18130e;
+  --ink-2: rgba(24,19,14,.62);
+  --ink-3: rgba(24,19,14,.35);
+  --ink-4: rgba(24,19,14,.18);
+  --cream: #f5f1ea;
+  --gold: #7a5520;
+  --coral: #b8431d;
+  --exit-bg: #10301c;
+  --exit-border: #0b2415;
+  --exit-text: #f2f7f3;
+  --exit-dim: rgba(242,247,243,.7);
+  --exit-accent: #7dd4a0;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+
+/* ======================================================
+   RESET
+   ====================================================== */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0 }
+html { -webkit-font-smoothing: antialiased; scroll-behavior: auto; overscroll-behavior: none }
+body { background: var(--fog); color: var(--ink); font-family: var(--sans); overflow-x: hidden; overscroll-behavior: none }
+
+/* ======================================================
+   SCROLL TRACK (defines drive length)
+   ====================================================== */
+#track { height: 640vh; position: relative }
+
+/* ======================================================
+   THE WINDSHIELD (fixed viewport)
+   ====================================================== */
+#road {
+  position: fixed; inset: 0; overflow: hidden;
+  perspective: 520px; perspective-origin: 50% 46%;
+  background: linear-gradient(var(--sky-top) 0%, var(--fog) 46%, var(--sky-bot) 100%);
+}
+.horizon {
+  position: absolute; left: 0; right: 0; top: 46%; height: 1px;
+  background: var(--ink-4);
+}
+.haze {
+  position: absolute; left: 0; right: 0; top: 16%; height: 50%; pointer-events: none;
+  background: radial-gradient(55% 100% at 50% 100%, rgba(244,242,238,.92), rgba(244,242,238,0) 68%);
+}
+
+.world {
+  position: absolute; left: 50%; top: 46%;
+  transform-style: preserve-3d; transform: translate(-50%, 0);
+  z-index: 2;
+}
+
+/* ======================================================
+   GROUND PLANE
+   ====================================================== */
+.ground {
+  position: absolute; left: -1400px; top: 0; width: 2800px; height: 9000px;
+  transform-style: preserve-3d;
+  transform: rotateX(90deg); transform-origin: top center;
+  background: none;
+}
+.lane-line {
+  position: absolute; top: 0; width: 5px; height: 9000px;
+  background: repeating-linear-gradient(var(--ghost) 0 46px, transparent 46px 120px);
+}
+.edge-line {
+  position: absolute; top: 0; width: 3px; height: 9000px;
+  background: rgba(24,19,14,.10);
+}
+.my-lane {
+  position: absolute; top: 0; width: 300px; height: 9000px;
+  background: linear-gradient(rgba(184,67,29,.05), rgba(184,67,29,0));
+}
+
+/* ======================================================
+   3D OBJECTS
+   ====================================================== */
+.obj {
+  position: absolute;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+/* ======================================================
+   BILLBOARDS
+   ====================================================== */
+.bb { width: 480px; cursor: pointer }
+.bb .post {
+  position: absolute; left: calc(50% - 4px); top: 100%;
+  width: 8px; height: 250px;
+  background: linear-gradient(var(--ghost-2), var(--ghost));
+}
+.bb .panel {
+  background: var(--cream); border: 3px solid var(--ink);
+  padding: 28px 30px;
+  box-shadow: 0 24px 48px rgba(24,19,14,.08);
+  transition: box-shadow .3s;
+}
+.bb:hover .panel {
+  box-shadow: 0 24px 48px rgba(24,19,14,.12), 0 0 0 1px var(--coral);
+}
+.bb .kicker {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase; color: #b8431d;
+}
+.bb .headline {
+  font-family: var(--serif); font-size: 48px; font-weight: 600;
+  line-height: 1.04; margin-top: 10px; letter-spacing: -.01em; color: #18130e;
+}
+.bb .headline em { font-style: italic; font-weight: 500; color: #7a5520 }
+.bb .subline {
+  font-family: var(--sans); font-size: 17px; font-weight: 400;
+  color: rgba(24,19,14,.6); margin-top: 12px; line-height: 1.38;
+}
+
+/* Exit sign variant */
+.bb.exit .panel {
+  background: var(--exit-bg); border-color: var(--exit-border);
+  box-shadow: 0 24px 48px rgba(0,0,0,.15);
+}
+.bb.exit:hover .panel {
+  box-shadow: 0 24px 48px rgba(0,0,0,.2), 0 0 40px rgba(125,212,160,.08);
+}
+.bb.exit .kicker { color: var(--exit-accent) }
+.bb.exit .headline { color: var(--exit-text) }
+.bb.exit .subline { color: var(--exit-dim) }
+
+/* ======================================================
+   GANTRY OVERHEAD SIGN
+   ====================================================== */
+.gantry { width: 700px; left: -350px; cursor: pointer }
+.gantry-wrap { position: relative }
+.gantry-img { width: 100%; display: block }
+.gantry-text {
+  position: absolute;
+  top: 5%; left: 31%; width: 38%; height: 48%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transform: perspective(800px) rotateX(2.5deg);
+}
+.gantry-line {
+  font-family: var(--mono);
+  font-size: 30px;
+  font-weight: 500;
+  color: #ffb000;
+  letter-spacing: .16em;
+  line-height: 1.15;
+  text-align: center;
+  text-shadow:
+    0 0 6px rgba(255,176,0,.8),
+    0 0 18px rgba(255,176,0,.4),
+    0 0 36px rgba(255,176,0,.15);
+}
+.gantry-text::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px, transparent 2.5px,
+    rgba(0,0,0,.1) 2.5px, rgba(0,0,0,.1) 3.5px
+  );
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+/* ======================================================
+   BOARD 2 — MONOPOLE BILLBOARD (image-based)
+   ====================================================== */
+.board2 { width: 550px; cursor: pointer }
+.board2:focus-visible { outline: 2px solid var(--coral); outline-offset: 4px }
+.board2-wrap { position: relative }
+.board2-structure {
+  width: 100%; display: block;
+  transform: scaleX(-1);
+  position: relative; z-index: 2;
+  pointer-events: none;
+}
+.board2-face {
+  position: absolute; z-index: 1;
+  top: 2.5%; left: 6%; width: 84%; height: 33%;
+  overflow: hidden;
+}
+.board2-art {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: left center;
+  display: block;
+}
+.board2-copy {
+  position: absolute;
+  top: 0; left: 0; width: 40%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5% 6%;
+}
+.board2-h {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.06;
+  color: #1a1510;
+  text-shadow: 0 1px 4px rgba(255,235,200,.6);
+}
+.board2-sub {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: #2c2010;
+  margin-top: 8px;
+  letter-spacing: .02em;
+  text-shadow: 0 1px 3px rgba(255,235,200,.5);
+}
+/* ======================================================
+   BOARD 1 — PRODUCTION LINE BILLBOARD (image-based)
+   ====================================================== */
+.board1 { width: 600px }
+.board1-wrap { position: relative }
+.board1-img { width: 100%; display: block }
+.board3 { width: 620px }
+.board3-wrap { position: relative }
+.board3-img { width: 100%; display: block }
+.board4 { width: 580px }
+.board4-wrap { position: relative }
+.board4-img { width: 100%; display: block }
+/* ======================================================
+   CARS (identical, monotonous)
+   ====================================================== */
+.car { width: 100px; height: 36px }
+.car-body {
+  position: absolute; bottom: 0; width: 100px; height: 24px;
+  background: var(--ghost); border: 1.5px solid var(--ghost-2);
+  border-radius: 3px 3px 2px 2px;
+}
+.car-cab {
+  position: absolute; left: 10px; bottom: 20px; width: 80px; height: 14px;
+  background: var(--ghost-2); border: 1.5px solid var(--ghost-3);
+  border-radius: 6px 6px 0 0;
+}
+
+/* ======================================================
+   SKYLINE (SF silhouette at the horizon)
+   ====================================================== */
+.skyline {
+  position: absolute;
+  left: -5%; right: -5%;
+  bottom: 54%;
+  pointer-events: none;
+  opacity: 0.45;
+  z-index: 0;
+}
+.skyline img {
+  width: 100%;
+  display: block;
+}
+
+/* ======================================================
+   ROADSIDE SCENERY (trees, poles, buildings — CSS 3D)
+   ====================================================== */
+.ltree {
+  overflow: visible; pointer-events: none;
+  background: rgba(120,118,110,0.48);
+}
+.ltree::before {
+  content: '';
+  position: absolute;
+  width: 58%; height: 50%;
+  top: -5%; left: -8%;
+  background: rgba(128,125,118,0.22);
+  border-radius: 50% 42% 48% 45%;
+}
+.ltree::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 14%; min-width: 2px; height: 42%;
+  background: rgba(95,92,85,0.42);
+  transform: translate(-50%, 75%);
+  border-radius: 0 0 1px 1px;
+}
+/* A — broad deciduous: leafy bumps */
+.ltree-a {
+  box-shadow:
+    -3px -2px 0 2px rgba(118,115,108,0.26),
+    5px -1px 0 3px rgba(125,122,115,0.18),
+    1px 3px 0 1px rgba(112,110,104,0.16);
+}
+.ltree-a::before { width: 55%; height: 48%; top: -7%; right: -14%; left: auto }
+/* B — conifer / cypress: tall, pointed */
+.ltree-b::before { width: 36%; height: 30%; top: -10%; left: 28%; border-radius: 32% 28% 50% 46% }
+.ltree-b::after { height: 28%; width: 10% }
+/* C — multi-crown: two canopy masses */
+.ltree-c {
+  box-shadow: 2px -4px 0 2px rgba(120,118,110,0.2);
+}
+.ltree-c::before {
+  width: 72%; height: 65%;
+  top: -18%; left: -16%;
+  background: rgba(122,119,112,0.3);
+  border-radius: 52% 44% 48% 50%;
+}
+/* D — flat-top / spreading */
+.ltree-d {
+  box-shadow:
+    -5px 0 0 2px rgba(118,115,108,0.2),
+    6px 1px 0 2px rgba(122,119,112,0.16);
+}
+.ltree-d::before { width: 82%; height: 36%; top: -2%; left: 14%; border-radius: 14% 20% 50% 44% }
+.ltree-d::after { height: 46%; transform: translate(-50%, 70%) }
+.lpole { overflow: visible; pointer-events: none }
+.lpole::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 2px; height: 100%;
+  background: rgba(115,112,105,0.6);
+  transform: translateX(-50%);
+}
+.lpole::after {
+  content: '';
+  position: absolute;
+  top: 0; left: calc(50% + 4px);
+  width: 14px; height: 5px;
+  background: rgba(180,178,172,0.35);
+  border-radius: 50%;
+}
+.lbdg {
+  background: rgba(140,137,130,0.45);
+  border-top: 1px solid rgba(120,118,112,0.35);
+  pointer-events: none;
+}
+.lwall {
+  background: rgba(148,145,138,0.35);
+  border-top: 1px solid rgba(130,128,122,0.3);
+  pointer-events: none;
+}
+
+/* ======================================================
+   HUD
+   ====================================================== */
+.mark {
+  position: fixed; top: 24px; left: 28px; z-index: 8;
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: .22em; color: var(--ink-3);
+}
+.skip-btn {
+  position: fixed; top: 22px; right: 24px; z-index: 8;
+  font-family: var(--mono); font-size: 11px; font-weight: 400;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-2); border: 1px solid var(--ink-4);
+  padding: 8px 16px; border-radius: 999px;
+  background: rgba(244,242,238,.7); backdrop-filter: blur(6px);
+  cursor: pointer; transition: border-color .2s, color .2s;
+  text-decoration: none; display: inline-block;
+}
+.skip-btn:hover { border-color: var(--ink-3); color: var(--ink) }
+.hud {
+  position: fixed; left: 0; right: 0; bottom: 28px;
+  text-align: center; pointer-events: none; z-index: 6;
+}
+.hud-label {
+  font-family: var(--mono); font-size: 11px; font-weight: 400;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3);
+}
+.scroll-cue {
+  margin-top: 6px;
+  font-family: var(--serif); font-style: italic; font-size: 18px;
+  color: var(--ink-2); transition: opacity .4s;
+}
+.odo {
+  position: fixed; bottom: 28px; right: 28px; z-index: 8;
+  font-family: var(--mono); font-size: 11px;
+  font-variant-numeric: tabular-nums; color: var(--ink-3);
+}
+
+/* ======================================================
+   DESTINATION (Stage 2 placeholder)
+   ====================================================== */
+#dest {
+  position: relative; z-index: 10;
+  background: var(--cream); border-top: 1px solid var(--ink-4);
+  padding: 16vh 7vw; min-height: 60vh;
+}
+.dest-inner { max-width: 900px; margin: 0 auto }
+.dest-eyebrow {
+  display: block;
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--coral);
+}
+.dest-title {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(32px, 5vw, 58px); line-height: 1.06;
+  margin: 14px 0 18px;
+}
+.dest-text {
+  font-family: var(--serif); font-size: 19px;
+  color: var(--ink-2); max-width: 52ch; line-height: 1.52;
+}
+
+/* ======================================================
+   ACCESSIBLE CONTENT (visible to SR + crawlers)
+   ====================================================== */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.sr-only:focus-within {
+  position: static; width: auto; height: auto;
+  overflow: visible; clip: auto; white-space: normal;
+  background: var(--cream); padding: 24px;
+}
+.sr-only a {
+  display: block; padding: 8px 0; color: var(--ink);
+  font-family: var(--serif); font-size: 18px;
+}
+.sr-only a:focus { outline: 2px solid var(--coral); outline-offset: 2px }
+
+/* ======================================================
+   REDUCED-MOTION FALLBACK
+   ====================================================== */
+.fallback { display: none }
+@media (prefers-reduced-motion: reduce) {
+  #road, .hud, .odo, .mark, .skip-btn { display: none !important }
+  #track { height: auto }
+  .fallback { display: block !important; background: var(--cream); padding: 10vh 7vw }
+}
+.fb-inner { max-width: 900px; margin: 0 auto }
+.fb-tagline {
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+  font-size: clamp(28px, 4vw, 44px); line-height: 1.1;
+  color: var(--gold); margin-bottom: 6vh;
+}
+.fb-section { border-top: 1px solid var(--ink-4); padding: 5vh 0 }
+.fb-kicker {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--coral);
+}
+.fb-headline {
+  font-family: var(--serif); font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 600; line-height: 1.08; margin: 10px 0 8px;
+}
+.fb-headline em { font-style: italic; font-weight: 500; color: var(--gold) }
+.fb-sub {
+  font-family: var(--sans); font-size: 17px;
+  color: var(--ink-2); line-height: 1.45; max-width: 52ch;
+}
+.fb-cta {
+  display: inline-block; margin-top: 4vh;
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  letter-spacing: .08em; color: var(--exit-text);
+  background: var(--exit-bg); padding: 12px 28px;
+  border-radius: 6px; text-decoration: none;
+}
+.fb-cta:hover { opacity: .88 }
+
+/* ======================================================
+   RESPONSIVE (mobile adaptation)
+   ====================================================== */
+@media (max-width: 767px) {
+  #road { perspective: 420px }
+  .bb { width: min(82vw, 360px) }
+  .bb .headline { font-size: 34px }
+  .bb .subline { font-size: 15px }
+  .bb .panel { padding: 22px 24px }
+  .bb .post { height: 200px }
+  .gantry { width: min(90vw, 500px); left: calc(min(90vw, 500px) / -2) }
+  .gantry-line { font-size: 18px; letter-spacing: .12em }
+  .board2 { width: min(85vw, 400px) }
+  .board2-h { font-size: 22px }
+  .board2-sub { font-size: 12px }
+  .board1 { width: min(85vw, 420px) }
+  .car { width: 78px; height: 28px }
+  .car-body { width: 78px; height: 18px }
+  .car-cab { left: 8px; bottom: 15px; width: 62px; height: 11px }
+  .mark { top: 16px; left: 20px; font-size: 10px }
+  .skip-btn { top: 14px; right: 16px; font-size: 10px; padding: 7px 13px }
+  .odo { bottom: 20px; right: 20px; font-size: 10px }
+  .hud { bottom: 20px }
+  .scroll-cue { font-size: 16px }
+  #dest { padding: 10vh 6vw }
+  .dest-title { margin: 10px 0 14px }
+}
+</style>
+</head>
+<body>
+
+<!-- Skip link (keyboard) -->
+<a class="sr-only" href="#dest" style="display:block;padding:12px;background:var(--coral);color:#fff;text-align:center;font-family:var(--sans)">Skip to studio</a>
+
+<div class="mark" aria-hidden="true">IDYEAH STUDIO</div>
+<a class="skip-btn" href="#dest" id="skipBtn">Skip the drive</a>
+
+<!-- ====== THE DRIVE (visual, aria-hidden) ====== -->
+<div id="road" aria-hidden="true">
+  <div class="haze"></div>
+  <div class="horizon"></div>
+  <!-- SF skyline -->
+  <div class="skyline" id="skyline">
+    <img id="skylineImg" alt="" />
+  </div>
+  <div class="world" id="world">
+    <div class="ground">
+      <div class="my-lane" style="left:calc(50% + 40px)"></div>
+      <div class="edge-line" style="left:calc(50% - 420px)"></div>
+      <div class="lane-line" style="left:calc(50% - 2px)"></div>
+      <div class="edge-line" style="left:calc(50% + 400px)"></div>
+    </div>
+  </div>
+</div>
+
+<div class="hud" aria-hidden="true">
+  <div class="hud-label" id="hudLabel">everything here was generated in seconds</div>
+  <div class="scroll-cue" id="cue">scroll to drive ↓</div>
+</div>
+<div class="odo" id="odo" aria-hidden="true">0.0 mi</div>
+
+<!-- Scroll track (drives the camera) -->
+<div id="track"></div>
+
+<!-- Accessible billboard content (SR + SEO) -->
+<nav class="sr-only" aria-label="Studio pitch">
+  <h1>IDYeah Studio. Clarity that ships.</h1>
+  <a href="#dest">Do not follow the vehicle in front.</a>
+  <a href="#dest">Everyone is building it now. The same thing.</a>
+  <a href="#dest">Product design. Audit. Storytelling. The screens, the honest read, and the deck that carries it.</a>
+  <a href="#dest">You work with the practitioner. Not an account manager, not a team you never meet.</a>
+  <a href="#dest">An honest read of what you already have. The audit is the front door.</a>
+  <a href="#dest">IDYeah Studio, next exit. Enter the studio.</a>
+</nav>
+
+<!-- ====== DESTINATION (Stage 2 placeholder) ====== -->
+<section id="dest">
+  <div class="dest-inner">
+    <span class="dest-eyebrow">You took the exit</span>
+    <h2 class="dest-title">The studio is through here.</h2>
+    <p class="dest-text">This is where the store opens. Services on shelves, workflows you can order, work you can examine up close. Stage 2 of the build.</p>
+    <p class="dest-text" style="margin-top:20px">For now: you left the freeway. That was the point.</p>
+  </div>
+</section>
+
+<!-- ====== REDUCED-MOTION FALLBACK ====== -->
+<div class="fallback" role="main">
+  <div class="fb-inner">
+    <h1 style="font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--ink-3)">IDYEAH STUDIO</h1>
+    <p class="fb-tagline">Clarity that ships.</p>
+    <div class="fb-section">
+      <span class="fb-kicker">one of these is not like the others</span>
+      <h2 class="fb-headline">Everything on this road was built the <em>same way</em>.</h2>
+      <p class="fb-sub">Same tools. Same templates. Same result, faster.</p>
+    </div>
+    <div class="fb-section">
+      <span class="fb-kicker">what I do</span>
+      <h2 class="fb-headline">Product design. Audit. <em>Storytelling</em>.</h2>
+      <p class="fb-sub">The screens, the honest read, and the deck that carries it.</p>
+    </div>
+    <div class="fb-section">
+      <span class="fb-kicker">one person, no handoffs</span>
+      <h2 class="fb-headline">You work with the <em>practitioner</em>.</h2>
+      <p class="fb-sub">Not an account manager. Not a team you never meet.</p>
+    </div>
+    <div class="fb-section">
+      <span class="fb-kicker">start here</span>
+      <h2 class="fb-headline">An honest read of what you <em>already have</em>.</h2>
+      <p class="fb-sub">The audit is the front door. Small, fixed, useful.</p>
+    </div>
+    <a class="fb-cta" href="#dest">Enter the studio →</a>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   BILLBOARD DATA (content-driven, copy is placeholder)
+   ============================================================ */
+const BILLBOARDS = [
+  {
+    z: -8400,
+    kicker: 'what I do',
+    headline: 'Product design. Audit. <em>Storytelling</em>.',
+    subline: 'The screens, the honest read, and the deck that carries it.',
+  },
+  {
+    z: -12000,
+    kicker: 'one person, no handoffs',
+    headline: 'You work with the <em>practitioner</em>.',
+    subline: 'Not an account manager. Not a team you never meet.',
+  },
+  {
+    z: -15600,
+    kicker: 'start here',
+    headline: 'An honest read of what you <em>already have</em>.',
+    subline: 'The audit is the front door. Small, fixed, useful.',
+  },
+  {
+    z: -19200,
+    kicker: 'exit 01',
+    headline: 'IDYEAH STUDIO',
+    subline: 'NEXT EXIT →',
+    exit: true,
+  },
+];
+
+/* ============================================================
+   RESPONSIVE LAYOUT
+   ============================================================ */
+function getLayout() {
+  const w = window.innerWidth;
+  const mobile = w < 768;
+  return {
+    mobile,
+    bbX: mobile ? (w < 480 ? 20 : 60) : 520,
+    bbY: -380,
+    carX: mobile ? -220 : -330,
+    carY: -18,
+    carCount: mobile ? 30 : 46,
+    carSpacing: 185,
+  };
+}
+let layout = getLayout();
+
+/* ============================================================
+   BUILD WORLD
+   ============================================================ */
+const world = document.getElementById('world');
+const track = document.getElementById('track');
+const cue = document.getElementById('cue');
+const odo = document.getElementById('odo');
+const hudLabel = document.getElementById('hudLabel');
+
+// Billboards stripped — scene rebuild in progress
+
+// Build cars — 3 lanes on the opposite side
+function buildCars() {
+  document.querySelectorAll('.obj.car').forEach(c => c.remove());
+  const lanes = [-170, -280, -385];
+  const rng = mkRng(42);
+  for (let i = 0; i < layout.carCount; i++) {
+    const lane = lanes[i % 3];
+    const jitter = (rng() - 0.5) * 24;
+    const c = document.createElement('div');
+    c.className = 'obj car';
+    c.dataset.z = -260 - i * layout.carSpacing;
+    c.dataset.x = lane + jitter;
+    c.dataset.role = 'car';
+    c.innerHTML = '<div class="car-cab"></div><div class="car-body"></div>';
+    world.appendChild(c);
+  }
+}
+buildCars();
+
+// Board 1 — production line billboard
+(function buildBoard1() {
+  const el = document.createElement('div');
+  el.className = 'obj board1';
+  el.dataset.z = -2800;
+  el.dataset.x = 560;
+  el.dataset.y = -280;
+  el.dataset.role = 'billboard';
+  el.innerHTML =
+    '<div class="board1-wrap">' +
+      '<img class="board1-img" id="board1Img" alt="" />' +
+    '</div>';
+  world.appendChild(el);
+})();
+
+// Load Board 1 image (already has transparency)
+document.getElementById('board1Img').src = 'billboard-1b.png';
+
+// Board 3 — speed limit billboard
+(function buildBoard3() {
+  const el = document.createElement('div');
+  el.className = 'obj board3';
+  el.dataset.z = -5400;
+  el.dataset.x = 560;
+  el.dataset.y = -280;
+  el.dataset.role = 'billboard';
+  el.innerHTML =
+    '<div class="board3-wrap">' +
+      '<img class="board3-img" id="board3Img" alt="" />' +
+    '</div>';
+  world.appendChild(el);
+})();
+document.getElementById('board3Img').src = 'billboard-3.png';
+
+// Board 4 — stuck for a while billboard
+(function buildBoard4() {
+  const el = document.createElement('div');
+  el.className = 'obj board4';
+  el.dataset.z = -7600;
+  el.dataset.x = 560;
+  el.dataset.y = -280;
+  el.dataset.role = 'billboard';
+  el.innerHTML =
+    '<div class="board4-wrap">' +
+      '<img class="board4-img" id="board4Img" alt="" />' +
+    '</div>';
+  world.appendChild(el);
+})();
+document.getElementById('board4Img').src = 'billboard-4.png';
+
+// ---- Load SF skyline PNG, strip white bg, output to img ----
+(function loadSkyline() {
+  const src = new Image();
+  src.onload = function() {
+    const c = document.createElement('canvas');
+    c.width = src.width; c.height = src.height;
+    const ctx = c.getContext('2d');
+    ctx.drawImage(src, 0, 0);
+    const imgData = ctx.getImageData(0, 0, c.width, c.height);
+    const px = imgData.data;
+    for (let i = 0; i < px.length; i += 4) {
+      const bright = (px[i] + px[i + 1] + px[i + 2]) / 3;
+      if (bright > 246) { px[i + 3] = 0; }
+      else if (bright > 200) { px[i + 3] = Math.round((246 - bright) / 46 * px[i + 3]); }
+    }
+    ctx.putImageData(imgData, 0, 0);
+    document.getElementById('skylineImg').src = c.toDataURL();
+  };
+  src.src = 'skyline-sf.png';
+})();
+
+// ---- CSS 3D landscape (trees, poles, buildings inside .world) ----
+function mkRng(seed) {
+  let s = seed;
+  return function() { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+}
+
+function buildLandscape() {
+  document.querySelectorAll('.obj.ltree,.obj.lpole,.obj.lbdg,.obj.lwall').forEach(e => e.remove());
+  const r = mkRng(73);
+  var GY = 5;
+  function add(cls, z, x, y, w, h, css) {
+    const el = document.createElement('div');
+    el.className = 'obj ' + cls;
+    el.dataset.z = z;
+    el.dataset.x = x;
+    el.dataset.y = y;
+    el.dataset.role = 'scenery';
+    el.style.cssText = 'width:' + w + 'px;height:' + h + 'px;' + (css || '');
+    world.appendChild(el);
+  }
+  function organicBR() {
+    var a = 40+r()*20, b = 36+r()*24, c = 38+r()*20, d = 42+r()*18;
+    var e = 46+r()*14, f = 40+r()*20, g = 36+r()*18, hh = 42+r()*16;
+    return 'border-radius:'+a+'% '+b+'% '+c+'% '+d+'% / '+e+'% '+f+'% '+g+'% '+hh+'%';
+  }
+  function coniferBR() {
+    var t = 12+r()*16, b = 38+r()*20;
+    return 'border-radius:'+t+'% '+(t+r()*10)+'% '+b+'% '+(b-r()*8)+'% / '+Math.max(8,t-4)+'% '+(t+2)+'% '+(b+6)+'% '+(b+3)+'%';
+  }
+  function flatBR() {
+    var t = 5+r()*10, b = 40+r()*16;
+    return 'border-radius:'+t+'% '+(t+r()*8)+'% '+b+'% '+(b-r()*5)+'% / '+(16+r()*10)+'% '+(14+r()*12)+'% '+(b+5)+'% '+(b+2)+'%';
+  }
+  function tree(z, x, baseH, baseW) {
+    var v = r();
+    var cls, br, h = baseH, w = baseW;
+    if (v < 0.30) { cls = 'ltree ltree-a'; br = organicBR(); }
+    else if (v < 0.52) { cls = 'ltree ltree-b'; br = coniferBR(); w *= 0.6; h *= 1.35; }
+    else if (v < 0.78) { cls = 'ltree ltree-c'; br = organicBR(); }
+    else { cls = 'ltree ltree-d'; br = flatBR(); w *= 1.4; h *= 0.7; }
+    add(cls, z, x, GY - h, w, h, br);
+  }
+  // Left trees — dense line
+  for (let i = 0; i < 55; i++) {
+    tree(-(300 + i * 380), -480 - r() * 120, 32 + r() * 28, 22 + r() * 18);
+  }
+  // Left second row
+  for (let i = 0; i < 25; i++) {
+    tree(-(400 + i * 840), -620 - r() * 100, 28 + r() * 22, 20 + r() * 16);
+  }
+  // Right trees (sparser)
+  for (let i = 0; i < 25; i++) {
+    tree(-(400 + i * 840), 620 + r() * 110, 30 + r() * 25, 20 + r() * 16);
+  }
+  // Poles, buildings, walls sit directly on road (no trunk extension)
+  GY = 18;
+  // Left poles
+  for (let i = 0; i < 16; i++) {
+    add('lpole', -(250 + i * 1300), -450, GY - 80, 20, 80);
+  }
+  // Left buildings
+  for (let i = 0; i < 10; i++) {
+    const tall = r() > 0.5;
+    const h = tall ? 50 + r() * 35 : 24 + r() * 16;
+    const w = tall ? 28 + r() * 18 : 55 + r() * 40;
+    add('lbdg', -(600 + i * 2100), -660 - r() * 80, GY - h, w, h);
+  }
+  // Right buildings
+  for (let i = 0; i < 5; i++) {
+    const h = 38 + r() * 30;
+    const w = 45 + r() * 35;
+    add('lbdg', -(1000 + i * 4200), 740 + r() * 50, GY - h, w, h);
+  }
+  // Sound walls (left)
+  for (let i = 0; i < 4; i++) {
+    add('lwall', -(500 + i * 5200), -470, GY - 14, 200, 14);
+  }
+}
+buildLandscape();
+
+// Collect all objects
+let objs = [...document.querySelectorAll('.obj')];
+
+// Rebuild on resize (layout change)
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    const prev = layout.mobile;
+    layout = getLayout();
+    if (prev !== layout.mobile) {
+      buildCars();
+      objs = [...document.querySelectorAll('.obj')];
+    }
+    onScroll();
+  }, 200);
+});
+
+/* ============================================================
+   CAMERA
+   ============================================================ */
+let cam = 0;
+let target = 0;
+const MAX_Z = 8600;
+const DAMP = 5.5;        // time-based damping stiffness (frame-rate independent)
+let sceneCovered = false; // #dest fully covers the fixed scene — loop can park
+
+function onScroll() {
+  const rect = track.getBoundingClientRect();
+  const total = track.offsetHeight - window.innerHeight;
+  const p = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
+  target = p * MAX_Z;
+  sceneCovered = -rect.top >= total + window.innerHeight;
+  if (!sceneCovered) startLoop();
+
+  cue.style.opacity = p > 0.02 ? 0 : 1;
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+/* ============================================================
+   ANIMATION LOOP
+   ============================================================ */
+const skylineEl = document.getElementById('skyline');
+let running = false;
+let lastT = 0;
+let lastOdo = '';
+
+function frame(now) {
+  const dt = Math.min((now - lastT) / 1000, 0.1);
+  lastT = now;
+
+  cam += (target - cam) * (1 - Math.exp(-dt * DAMP));
+  if (Math.abs(target - cam) < 0.1) cam = target;
+
+  const odoTxt = (cam / MAX_Z * 12).toFixed(1) + ' mi';
+  if (odoTxt !== lastOdo) { odo.textContent = odoTxt; lastOdo = odoTxt; }
+
+  const creep = (now / 1000 * 8) % layout.carSpacing;
+
+  // skyline stays fixed at horizon (no parallax drift)
+
+  for (let i = 0; i < objs.length; i++) {
+    const o = objs[i];
+    const role = o.dataset.role;
+    const baseZ = +o.dataset.z;
+    const z = baseZ + cam + (role === 'car' ? creep : 0);
+
+    if (z > 140 || z < -4300) {
+      o.style.display = 'none';
+      continue;
+    }
+    o.style.display = '';
+
+    let x, y;
+    if (role === 'car') { x = +o.dataset.x; y = layout.carY; }
+    else if (role === 'billboard') { x = +o.dataset.x; y = +o.dataset.y; }
+    else { x = +o.dataset.x; y = +o.dataset.y; }
+
+    const fog = Math.min(1, Math.max(0, (z + 4200) / 3200));
+    // fade OUT as objects sweep past the camera (z: -200 → 140)
+    o.style.opacity = (z > -200 ? Math.max(0, 1 - (z + 200) / 340) : 1) * fog;
+    o.style.transform = 'translate3d(' + x + 'px,' + y + 'px,' + z + 'px)';
+  }
+
+  if (sceneCovered && cam === target) { running = false; return; }
+  requestAnimationFrame(frame);
+}
+
+function startLoop() {
+  if (running) return;
+  running = true;
+  lastT = performance.now();
+  requestAnimationFrame(frame);
+}
+startLoop();
+
+/* ============================================================
+   SKIP BUTTON
+   ============================================================ */
+document.getElementById('skipBtn').addEventListener('click', e => {
+  e.preventDefault();
+  // hard cut, not a compressed 640vh drive — kinder to motion-sensitive visitors
+  document.getElementById('dest').scrollIntoView({ behavior: 'auto' });
+  onScroll();
+  cam = target;
+});
+</script>
+</body>
+</html>
