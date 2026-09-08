@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="23" fill="#c52d42"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">IDYeah compact id. profile mark, dark</title>
+  <desc id="desc">Lowercase id in bold Inter with a coral baseline dot and a small deliberate gap. Vector glyph outlines in a dark circle.</desc>
+  <circle cx="512" cy="512" r="512" fill="#141414"/>
+  <g transform="translate(217.831104 705.960742) scale(0.181356468 -0.181356468)">
+    <path fill="#ebebeb" transform="translate(0.000000 0)" d="M170 0H596V1536H170ZM384 1734C511 1734 615 1831 615 1950C615 2068 511 2165 384 2165C258 2165 154 2068 154 1950C154 1831 258 1734 384 1734Z"/>
+    <path fill="#ebebeb" transform="translate(591.408000 0)" d="M736 -25C984 -25 1113 118 1172 246H1190V0H1610V2048H1185V1278H1172C1115 1403 992 1556 735 1556C398 1556 113 1294 113 766C113 252 386 -25 736 -25ZM871 314C662 314 548 500 548 768C548 1034 660 1217 871 1217C1078 1217 1194 1042 1194 768C1194 494 1076 314 871 314Z"/>
+    <path fill="#df5567" transform="translate(2431.096000 0)" d="M419 -26C547 -26 658 81 659 214C658 345 547 452 419 452C287 452 178 345 179 214C178 81 287 -26 419 -26Z"/>
+  </g>
+</svg>
