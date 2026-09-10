@@ -16,3 +16,5 @@ Preview locally: `python3 scripts/preview.py --port 8772`. This standard-library
 Off idyeah opens directly on the latest artwork. Its numbered page (`/off-idyeah/002`) is the canonical URL for search and sharing. Share controls are tucked below the artwork; downloads preserve the embedded credit. Social preview metadata is present; platform previews must be checked after publishing. To add a strip, copy its credited artwork, add a numbered reading page with its own canonical URL/metadata/transcript, update the latest page and homepage number, add the dated entry to `/off-idyeah/archive` (newest first), and add the numbered URL to the sitemap. Keep numbered permalinks, captions brief, and the homepage link small.
 
 No. 002 uses the existing product design strip with “Leaving was the easiest feature.” Archive dates record publication dates in Pacific time: No. 001 on 9 September 2026, No. 002 on 10 September 2026.
+
+Analytics configuration and event definitions are documented in [docs/analytics.md](docs/analytics.md). Run its checks with `node --test scripts/analytics.test.cjs`.
