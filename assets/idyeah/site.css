@@ -592,9 +592,13 @@ p {
   padding-block:105px 140px;
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:16%;
+  gap:0 16%;
+}
+.about-heading {
+  grid-area:1 / 1;
 }
 .about-copy {
+  grid-area:1 / 2 / 3 / 3;
   padding-top:69px;
 }
 .about-copy>p+p {
@@ -646,6 +650,37 @@ p {
 }
 .social-links a:hover {
   color:var(--ink);
+}
+.off-note {
+  grid-area:2 / 1;
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:8px 24px;
+  margin-top:54px;
+}
+.off-note-name {
+  display:block;
+  font-size:23px;
+  font-weight:700;
+  font-style:italic;
+  font-synthesis:style;
+  letter-spacing:-.055em;
+  white-space:nowrap;
+}
+.off-word {
+  color:var(--accent);
+}
+.series-dot {
+  margin-left:.1em;
+}
+.off-note-name:hover { color:var(--soft); }
+.off-note .off-note-view {
+  margin:0;
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:0;
+  white-space:nowrap;
 }
 .conversation {
   min-height:max(660px,85svh);
@@ -779,8 +814,11 @@ footer {
   .content-shell {
     width:calc(100% - (var(--edge) + 78px)*2);
   }
-  .practice-intro,.services,.process-steps,.about,.audit-preview {
+  .practice-intro,.services,.process-steps,.audit-preview {
     gap:10%;
+  }
+  .about {
+    column-gap:10%;
   }
   .process-step:first-child::after {
     width:calc(122.222% - 61px);

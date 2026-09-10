@@ -1,0 +1,35 @@
+.off-page header { position:static; margin:32px var(--edge) 0; }
+.off-page .top-contact { font-size:12px; }
+.off-shell { width:calc(100% - 2 * var(--edge)); max-width:600px; margin:64px auto 0; }
+.off-page header .off-note-name { font-size:25px; line-height:44px; }
+.off-page .off-caption { margin:0 0 28px; font-size:22px; line-height:1.45; letter-spacing:-.025em; font-weight:400; }
+.off-art { margin:0; }
+.off-art>a { display:block; background:#fff; }
+.off-art img { display:block; width:100%; height:auto; }
+.off-tools { display:flex; align-items:baseline; gap:32px; margin-top:20px; font-size:13px; }
+.off-number { color:var(--soft); font-variant-numeric:tabular-nums; }
+.off-share { flex:1; min-width:0; text-align:right; }
+.off-share summary { cursor:pointer; display:inline-block; padding:8px 0 8px 16px; }
+.off-share summary::marker { content:''; }
+.off-share summary::-webkit-details-marker { display:none; }
+.off-share summary:hover,.off-number:hover { color:var(--accent); }
+.off-share[open] summary { margin-bottom:16px; }
+.off-share nav { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:4px 22px; }
+.off-share .text-link { font-size:13px; margin:0; }
+.share-credit { margin-top:20px; }
+.share-credit p { color:var(--soft); font-size:12px; line-height:1.7; }
+.share-credit .text-link { margin-top:5px; }
+.share-status:empty { display:none; }
+.share-status { margin-top:12px; }
+.off-credit-manual { width:100%; min-height:120px; margin-top:12px; padding:12px; color:var(--ink); background:var(--paper); border:1px solid var(--line); font:inherit; font-size:13px; }
+.off-transcript { margin-top:18px; color:var(--soft); font-size:12px; }
+.off-transcript summary { cursor:pointer; width:fit-content; padding-block:8px; }
+.off-transcript p { margin-top:14px; line-height:1.8; }
+.off-page summary:focus-visible,.off-credit-manual:focus-visible { outline:1px solid var(--ink); outline-offset:5px; }
+.off-page footer { position:static; padding:64px 75px 35px; font-size:12px; text-align:center; }
+@media(max-width:500px) {
+  .off-page header { margin-top:23px; }
+  .off-shell { width:calc(100% - 40px); margin-top:48px; }
+  .off-page .off-caption { font-size:20px; margin-bottom:24px; }
+  .off-page footer { padding-top:45px; }
+}
