@@ -18,7 +18,7 @@
   const share = document.querySelector('.off-share');
   if (!share) return;
   const permalink = share.dataset.permalink;
-  const credit = 'off idyeah. Concept by idyeah · Made with GPT-6. Original: ' + permalink;
+  const credit = 'off idyeah. Creative direction by idyeah · Made with GPT-6. Original: ' + permalink;
   const status = share.querySelector('[role=status]');
   const fallback = share.querySelector('.off-credit-manual');
   share.querySelectorAll('[data-copy]').forEach(button => {
