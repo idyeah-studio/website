@@ -791,15 +791,14 @@ p {
   stroke-width:5;
   stroke-linecap:butt;
 }
-.tf-needle {
-  stroke:var(--soft);
-  stroke-width:1.5;
-  stroke-linecap:round;
-  stroke-linejoin:round;
+.tf-pn-d,.tf-pn-shadow-d {
+  display:none;
 }
-.tf-needle-shadow {
-  fill:var(--soft);
-  opacity:.26;
+[data-theme=dark] .tf-pn-l,[data-theme=dark] .tf-pn-shadow-l {
+  display:none;
+}
+[data-theme=dark] .tf-pn-d,[data-theme=dark] .tf-pn-shadow-d {
+  display:inline;
 }
 .tf-base {
   display:flex;
