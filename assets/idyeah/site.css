@@ -719,7 +719,6 @@ p {
   display:inline;
 }
 .tall-footer {
-  border-top:1px solid var(--line);
   padding-top:78px;
   background:var(--paper);
 }
@@ -799,21 +798,23 @@ p {
   color:var(--ink);
 }
 .tf-art {
-  margin-top:60px;
+  margin-top:24px;
+  display:flex;
+  justify-content:center;
 }
 .tf-art svg {
   display:block;
-  width:100%;
+  width:220px;
   height:auto;
-}
-.tf-needle {
-  stroke:var(--soft);
-  stroke-width:1.5;
 }
 .tf-thread {
   stroke:var(--accent);
   stroke-width:1.8;
   stroke-linecap:round;
+}
+.tf-halo {
+  stroke:var(--paper);
+  stroke-width:5;
 }
 .tf-base {
   display:flex;
@@ -1292,9 +1293,6 @@ p {
 @media(max-width:700px) {
   .tall-footer {
     padding-top:56px;
-  }
-  .tf-art {
-    margin-top:40px;
   }
   .tf-col a,.tf-legal a {
     min-height:44px;
