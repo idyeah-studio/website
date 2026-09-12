@@ -796,7 +796,7 @@ p {
   align-items:center;
   gap:10px 28px;
   flex-wrap:wrap;
-  padding-block:14px 40px;
+  padding-block:14px 28px;
   font-size:11px;
   color:var(--soft);
 }
