@@ -791,6 +791,16 @@ p {
   stroke-width:5;
   stroke-linecap:butt;
 }
+.tf-needle {
+  stroke:var(--soft);
+  stroke-width:1.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tf-needle-shadow {
+  fill:var(--soft);
+  opacity:.26;
+}
 .tf-base {
   display:flex;
   align-items:center;
