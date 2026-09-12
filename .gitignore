@@ -19,6 +19,9 @@ dist-ssr/
 # Claude Code local config
 .claude/
 
+# Local exports (meme packs, renders) - never commit
+output/
+
 # OS files
 .DS_Store
 *.swp
