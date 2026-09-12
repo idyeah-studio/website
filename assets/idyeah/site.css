@@ -751,7 +751,7 @@ p {
   transition:transform .35s ease,box-shadow .35s ease;
 }
 .tf-strip:hover img,.tf-strip:focus-visible img {
-  transform:scale(1.9);
+  transform:scale(2.8);
   box-shadow:0 14px 44px rgba(0,0,0,.22);
 }
 .tf-strip:hover,.tf-strip:focus-visible {
@@ -1289,6 +1289,9 @@ p {
   }
   .tf-strip img {
     transform-origin:bottom left;
+  }
+  .tf-strip:hover img,.tf-strip:focus-visible img {
+    transform:scale(2.2);
   }
   .tf-art .tf-thread-wide {
     display:none;
