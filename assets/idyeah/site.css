@@ -780,16 +780,6 @@ p {
   font-synthesis:style;
   letter-spacing:-.045em;
 }
-.tf-strip-caption {
-  display:block;
-  margin-top:4px;
-  font-size:11px;
-  line-height:1.5;
-  color:var(--soft);
-}
-.tf-strip:hover .tf-strip-caption,.tf-strip:focus-visible .tf-strip-caption {
-  color:var(--ink);
-}
 .tf-art {
   margin-top:34px;
 }
