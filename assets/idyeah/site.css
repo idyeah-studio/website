@@ -798,14 +798,15 @@ p {
   color:var(--ink);
 }
 .tf-art {
-  margin-top:24px;
-  display:flex;
-  justify-content:center;
+  margin-top:34px;
 }
 .tf-art svg {
   display:block;
-  width:220px;
+  width:100%;
   height:auto;
+}
+.tf-art .tf-thread-narrow {
+  display:none;
 }
 .tf-thread {
   stroke:var(--accent);
@@ -815,14 +816,14 @@ p {
 .tf-halo {
   stroke:var(--paper);
   stroke-width:5;
+  stroke-linecap:butt;
 }
 .tf-base {
   display:flex;
   align-items:center;
   gap:10px 28px;
   flex-wrap:wrap;
-  padding-block:14px 22px;
-  padding-right:calc(var(--edge) + 92px);
+  padding-block:14px 84px;
   font-size:11px;
   color:var(--soft);
 }
@@ -1294,11 +1295,14 @@ p {
   .tall-footer {
     padding-top:56px;
   }
+  .tf-art .tf-thread-wide {
+    display:none;
+  }
+  .tf-art .tf-thread-narrow {
+    display:block;
+  }
   .tf-col a,.tf-legal a {
     min-height:44px;
-  }
-  .tf-base {
-    padding-right:calc(var(--edge) + 80px);
   }
   .tf-place {
     margin-left:0;
