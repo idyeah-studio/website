@@ -747,10 +747,30 @@ p {
   height:auto;
   border:1px solid var(--line);
   background:#fff;
+  transform-origin:bottom right;
+  transition:transform .35s ease,box-shadow .35s ease;
+}
+.tf-strip:hover img,.tf-strip:focus-visible img {
+  transform:scale(1.9);
+  box-shadow:0 14px 44px rgba(0,0,0,.22);
+}
+.tf-strip:hover,.tf-strip:focus-visible {
+  position:relative;
+  z-index:6;
 }
 .tf-strip-meta {
   display:block;
   margin-top:10px;
+}
+.tf-strip-top {
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:10px;
+}
+.tf-strip-no {
+  font-size:11px;
+  color:var(--soft);
 }
 .tf-strip-name {
   display:block;
@@ -1276,6 +1296,9 @@ p {
 @media(max-width:700px) {
   .tall-footer {
     padding-top:56px;
+  }
+  .tf-strip img {
+    transform-origin:bottom left;
   }
   .tf-art .tf-thread-wide {
     display:none;
