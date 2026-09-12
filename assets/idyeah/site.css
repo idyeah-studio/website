@@ -625,39 +625,12 @@ p {
   text-underline-offset:4px;
   color:var(--ink);
 }
-.social-links {
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  gap:6px 14px;
-  margin-top:23px;
-}
-.social-links a {
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  min-height:44px;
-  min-width:44px;
-  font-size:11px;
-  line-height:1.4;
-  color:var(--soft);
-}
-.social-links svg {
-  width:16px;
-  height:16px;
-  flex:none;
-  fill:currentColor;
-}
-.social-links a:hover {
-  color:var(--ink);
-}
 .off-note {
-  grid-area:2 / 1;
   display:flex;
   align-items:baseline;
   flex-wrap:wrap;
   gap:8px 24px;
-  margin-top:54px;
+  margin-top:23px;
 }
 .off-note-name {
   display:block;
