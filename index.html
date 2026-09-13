@@ -835,6 +835,147 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 @media (max-width: 640px) {
   .lb-cap { font-size: 11px; letter-spacing: .08em; padding-inline: 16px; }
 }
+
+/* ---------- WARM LIGHT VARIANT --------------------------------------
+   Light mode only. The chambers stop being cuts into a black vault and
+   become recessed warm matting: the work mounted on warm paper a clear
+   step below the page's #fafafa surface. Dark mode is untouched; every
+   rule here is scoped to :root:not([data-theme=dark]).
+   Tokens:
+     ground          #efece6  (warm putty, clearly below the page)
+     ground, lit     ~#f6f4ef (radial center under the spotlight)
+     chamber ink     #3a3126  (captions, counters, controls; 9.3:1 on
+                               the darkest ground the type can sit on)
+     title ink       #2e261b  (10.9:1)
+     cut shadow      rgba(71,57,39,x) umber; the paper edge still casts
+   The recessed reading is kept by the inset cut shadows (deepened and
+   warmed, plus a 1px rim right at the cut), not by tonal distance.
+   Light pools under the artifacts become grounded contact shadows with
+   a whisper of each chamber's accent; glows do not survive on paper.
+-------------------------------------------------------------------- */
+:root:not([data-theme=dark]) .slit,
+:root:not([data-theme=dark]) .portal {
+  background: #efece6;
+  border-color: #ddd8cf;
+}
+:root:not([data-theme=dark]) .slit::after,
+:root:not([data-theme=dark]) .portal::after {
+  box-shadow:
+    inset 0 0 0 1px rgba(71,57,39,.16),
+    inset 0 28px 38px -18px rgba(71,57,39,.5),
+    inset 0 -28px 38px -18px rgba(71,57,39,.42),
+    inset 18px 0 32px -16px rgba(71,57,39,.32),
+    inset -18px 0 32px -16px rgba(71,57,39,.32);
+}
+:root:not([data-theme=dark]) .scene {
+  background:
+    radial-gradient(58% 44% at 50% 50%, rgba(255,251,242,.55), rgba(255,251,242,.14) 55%, transparent 75%),
+    #efece6;
+  --line: #b7ab93;
+}
+:root:not([data-theme=dark]) .up-title {
+  color: #2e261b;
+  text-shadow: none;
+}
+:root:not([data-theme=dark]) .up-title-sub,
+:root:not([data-theme=dark]) .fig,
+:root:not([data-theme=dark]) .r-count,
+:root:not([data-theme=dark]) .bf-day {
+  color: #3a3126;
+}
+:root:not([data-theme=dark]) .r-nav {
+  border-color: rgba(58,49,38,.42);
+  color: #3a3126;
+}
+:root:not([data-theme=dark]) .r-nav:hover {
+  border-color: rgba(58,49,38,.8);
+  color: #211a12;
+}
+:root:not([data-theme=dark]) .r-nav:focus-visible { outline-color: #3a3126; }
+:root:not([data-theme=dark]) .portal-rialty:focus-visible { outline-color: rgba(58,49,38,.6); }
+
+/* Rialty: white screens on warm paper need a hairline frame and a real
+   contact shadow; the violet lives on as an undertone in the ground
+   shadow, not as a glow. */
+:root:not([data-theme=dark]) .duo-real::after {
+  background: radial-gradient(50% 100% at 50% 0%, rgba(101,78,133,.17), rgba(71,57,39,.12) 55%, transparent 78%);
+}
+:root:not([data-theme=dark]) .shot-web {
+  box-shadow:
+    0 34px 60px -30px rgba(71,57,39,.55),
+    0 10px 22px -12px rgba(71,57,39,.32),
+    0 0 0 1px rgba(71,57,39,.16);
+}
+:root:not([data-theme=dark]) .shot-phone {
+  filter:
+    drop-shadow(0 22px 30px rgba(71,57,39,.4))
+    drop-shadow(0 3px 8px rgba(71,57,39,.28));
+}
+
+/* Ionate: the films are dark plates on warm matting; frame them with a
+   firmer rim and let the orange live in the ground shadow. */
+:root:not([data-theme=dark]) .film-real::after {
+  background: radial-gradient(50% 100% at 50% 0%, rgba(166,98,34,.16), rgba(71,57,39,.12) 55%, transparent 78%);
+}
+:root:not([data-theme=dark]) .film-shot {
+  box-shadow:
+    0 30px 56px -26px rgba(71,57,39,.5),
+    0 8px 20px -10px rgba(71,57,39,.3),
+    0 0 0 1px rgba(71,57,39,.24);
+}
+
+/* Mosaix: the butterfly keeps its wing tints in the ground shadow;
+   the screens take the shared frame-and-contact treatment. */
+:root:not([data-theme=dark]) .bf-real::after {
+  left: 18%; right: 18%; bottom: -14px; height: 34px;
+  background:
+    radial-gradient(42% 100% at 30% 0%, rgba(114,63,180,.1), transparent 74%),
+    radial-gradient(42% 100% at 70% 0%, rgba(176,116,16,.09), transparent 74%),
+    radial-gradient(60% 100% at 50% 0%, rgba(71,57,39,.12), transparent 78%);
+}
+:root:not([data-theme=dark]) .bf-svg {
+  filter: drop-shadow(0 20px 30px rgba(71,57,39,.35));
+}
+/* the unfilled ghost of the mark holds a touch more presence on cream */
+:root:not([data-theme=dark]) .bf-svg > use { opacity: .42; }
+:root:not([data-theme=dark]) .mosx-real::after {
+  background: radial-gradient(50% 100% at 50% 0%, rgba(114,63,180,.13), rgba(71,57,39,.12) 55%, transparent 78%);
+}
+:root:not([data-theme=dark]) .shot-mosx {
+  box-shadow:
+    0 34px 60px -30px rgba(71,57,39,.55),
+    0 10px 22px -12px rgba(71,57,39,.32),
+    0 0 0 1px rgba(71,57,39,.16);
+}
+
+/* The audit: cream pages sit naturally on warm matting; a paper edge
+   shadow and the faintest coral breath in the ground keep them from
+   melting into it. The severity dot keeps its color, loses the glow. */
+:root:not([data-theme=dark]) .aud-real::after {
+  background: radial-gradient(50% 100% at 50% 0%, rgba(71,57,39,.2), rgba(223,85,103,.05) 58%, transparent 78%);
+}
+:root:not([data-theme=dark]) .shot-aud {
+  box-shadow:
+    0 26px 46px -24px rgba(71,57,39,.5),
+    0 4px 10px -4px rgba(71,57,39,.3),
+    0 0 0 1px rgba(71,57,39,.14);
+}
+:root:not([data-theme=dark]) .portal-audit .fig::before {
+  box-shadow: 0 0 10px rgba(223,85,103,.3);
+}
+
+/* the enlarge glyph flips to a light chip over the artifacts */
+:root:not([data-theme=dark]) .lb-expand {
+  background: rgba(250,246,238,.85);
+  border-color: rgba(58,49,38,.35);
+  color: #3a3126;
+}
+:root:not([data-theme=dark]) .lb-expand:hover {
+  border-color: rgba(58,49,38,.7);
+  color: #211a12;
+}
+:root:not([data-theme=dark]) .lb-expand:focus-visible { outline-color: #3a3126; }
+/* the lightbox stays dark: a reading overlay is its own context */
 </style>
 </head>
 <body>
