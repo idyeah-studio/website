@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafafa">
+<title>{{page_title}}</title>
+<meta name="description" content="{{description}}">
+<link rel="canonical" href="{{permalink}}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="IDYeah Studio">
+<meta property="og:title" content="{{og_title}}">
+<meta property="og:description" content="{{description}}">
+<meta property="og:url" content="{{permalink}}">
+<meta property="og:image" content="{{share_image_url}}">
+<meta property="og:image:width" content="{{art_w}}">
+<meta property="og:image:height" content="{{art_h}}">
+<meta property="og:image:alt" content="{{og_alt}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@idyeahstudio">
+<meta name="twitter:title" content="{{og_title}}">
+<meta name="twitter:description" content="{{description}}">
+<meta name="twitter:image" content="{{share_image_url}}">
+<meta name="twitter:image:alt" content="{{twitter_alt}}">
+<link rel="icon" href="/assets/idyeah/favicon.svg" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="/assets/idyeah/apple-touch-icon.png">
+<link rel="preload" href="/assets/idyeah/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/idyeah/fonts/inter-bold.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+// Apply a previously chosen theme before the stylesheet and first paint.
+// New visitors see the approved light version; no-JS visitors do too.
+try {
+  const theme = localStorage.getItem('idyeah-theme');
+  if (theme === 'light' || theme === 'dark') {
+    document.documentElement.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#141414' : '#fafafa';
+  }
+} catch (_) { /* Storage can be unavailable in private or restricted contexts. */ }
+</script>
+<link rel="stylesheet" href="/assets/idyeah/site.css?v={{site_css_v}}">
+<link rel="stylesheet" href="/assets/idyeah/off-idyeah.css?v={{off_css_v}}">
+<script defer src="/assets/idyeah/analytics.js?v={{analytics_v}}" data-idyeah-analytics data-website-id="df2b0b04-1c2f-4e6f-abec-4202da3c4c30"></script>
+</head>
+<body class="off-page">
+<a class="skip" href="#reading">Skip to content</a>
+<header><a class="off-note-name" href="/off-idyeah" aria-label="off idyeah home"><span class="off-word">off</span> idyeah<span class="series-dot">.</span></a><a class="top-contact" href="/">Back to the studio</a></header>
+<main class="off-shell" id="reading">
+  <h1 class="off-caption">{{caption}}</h1>
+  <article aria-label="off idyeah {{number}}">
+    <figure class="off-art"><a href="{{art_webp}}" target="_blank" rel="noopener" aria-label="Open strip at full size in a new tab"><img src="{{art_webp}}" width="{{art_w}}" height="{{art_h}}" fetchpriority="high" alt="{{alt}}"></a></figure>
+    <div class="off-tools">
+      <a class="off-number" href="{{path}}" aria-label="Permanent link to strip {{number}}">No. {{number}}</a>
+      <a class="off-all" href="/off-idyeah/archive">View all</a>
+      <details class="off-share" data-permalink="{{permalink}}"><summary>Share</summary>
+        <nav aria-label="Share this strip"><a class="text-link" href="https://x.com/intent/tweet?text={{share_text}}&amp;url={{permalink_enc}}&amp;via=idyeahstudio" target="_blank" rel="noopener noreferrer">X</a><a class="text-link" href="https://www.linkedin.com/sharing/share-offsite/?url={{permalink_enc}}" target="_blank" rel="noopener noreferrer">LinkedIn</a><button class="text-link" type="button" data-copy="link" hidden>Copy link</button><a class="text-link" href="{{art_png}}" download="off-idyeah-{{number}}.png">Download</a></nav>
+        <div class="share-credit"><p>Keep the credit. Link back to the original.</p><button class="text-link" type="button" data-copy="credit" hidden>Copy credit &amp; link</button><noscript><p>{{credit}} Original: <a href="{{permalink}}">{{permalink}}</a></p></noscript><textarea class="off-credit-manual" aria-label="Text to copy" readonly hidden></textarea><p class="share-status" role="status" aria-live="polite"></p></div>
+      </details>
+    </div>
+    <details class="off-transcript"><summary>Transcript</summary>{{transcript}}</details>
+  </article>
+</main>
+<footer>© <span class="copyright-year">{{copyright_year}}</span> IDYeah Studio.</footer>
+<button class="theme-switch" type="button" data-theme-toggle aria-label="Switch to dark mode" hidden><span class="theme-dot" aria-hidden="true"></span><span data-theme-label>Dark</span></button>
+<script src="/assets/idyeah/off-idyeah.js?v={{off_js_v}}"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+{
+  "site": {
+    "base_url": "https://www.idyeah.studio",
+    "credit": "Creative direction by idyeah · Made with GPT-6.",
+    "art_dir": "assets/idyeah/off-idyeah",
+    "copyright_year": "2026",
+    "landing_title": "off idyeah.",
+    "archive_title": "Archive · off idyeah.",
+    "archive_description": "Every off idyeah strip, in order.",
+    "off_css_version": "20260910-archive",
+    "off_js_version": "20260910"
+  },
+  "strips": [
+    {
+      "number": "001",
+      "artwork": "001",
+      "date": "2026-09-09",
+      "date_display": "9 Sep 2026",
+      "sitemap_lastmod": "2026-09-10",
+      "caption": "Your funnel has a plumbing problem.",
+      "share_alt": "A founder asks for more traffic while customers fall through holes in a funnel. An auditor suggests fewer holes.",
+      "twitter_alt": "A founder asks for more traffic. An auditor points to a leaking checkout and suggests fewer holes.",
+      "alt": "Two panels. A founder pours customers into a leaking funnel and says, ‘We need more traffic.’ An auditor points to a hole labelled Checkout and replies, ‘Or fewer holes.’",
+      "transcript": [
+        "Panel 1: A smiling founder stands on a stool and pours people from a bucket labelled “Traffic” into a funnel. People escape through holes in its side. The founder says, “We need more traffic.”",
+        "Panel 2: An auditor with a magnifying glass points to a hole labelled “Checkout.” The founder lowers the bucket. The auditor says, “Or fewer holes.”"
+      ]
+    },
+    {
+      "number": "002",
+      "artwork": "002",
+      "date": "2026-09-10",
+      "date_display": "10 Sep 2026",
+      "caption": "Leaving was the easiest feature.",
+      "share_alt": "A team celebrates giving users more choices on a complicated control panel. The user chooses the exit.",
+      "alt": "Two panels. A team presents a wall of controls and says, ‘We gave users more choices.’ A confused user faces the controls. In the next panel, the user walks through the exit, whistling, under the words ‘They chose this one.’ A musical note is red.",
+      "transcript": [
+        "Panel 1: Two team members proudly present a wall packed with switches, dials and controls. One says, “We gave users more choices.” A user looks confused.",
+        "Panel 2: The words “They chose this one.” appear above the user, who walks through a door labelled “Exit,” whistling. A musical note is red. The team looks surprised."
+      ]
+    },
+    {
+      "number": "003",
+      "artwork": "003",
+      "date": "2026-09-13",
+      "date_display": "13 Sep 2026",
+      "caption": "They came for answers. You gave them a backstory.",
+      "share_alt": "A founder proudly shows a website that tells their story. Six chapters in, the visitor still cannot find what they sell.",
+      "alt": "Two panels. A beaming founder gestures at a monitor showing a long website page and says, ‘Our website tells our story.’ In the next panel, a weary visitor sits at the screen as the page spills out as an endless paper scroll, piling across the floor, and asks, ‘Chapter six. What do you sell?’ The word ‘sell’ is red.",
+      "transcript": [
+        "Panel 1: A beaming founder gestures at a monitor showing a long website page and says, “Our website tells our story.” A plant and an empty chair sit at the desk.",
+        "Panel 2: A weary visitor sits at the same screen, head propped on one hand, as the page spills out of the monitor as an endless paper scroll that piles up across the floor. The visitor asks, “Chapter six. What do you sell?” The word “sell” is red."
+      ]
+    },
+    {
+      "number": "004",
+      "artwork": "004",
+      "date": "2026-09-16",
+      "date_display": "16 Sep 2026",
+      "caption": "The megaphone arrived before the message did.",
+      "share_alt": "A founder asks for a louder message. The megaphone grows enormous, and the customer is only confused from farther away.",
+      "alt": "Two panels. A grinning founder holds a small megaphone and says, ‘Make the message louder.’ An eager colleague strides in with a hand raised; the two are labelled ‘FOUNDER’ and ‘MARKETER.’ In the next panel the megaphone has grown enormous. The founder braces under its weight, eyes squeezed shut, blasting the words ‘INTEGRATED SOLUTIONS!’ across the panel. Far off to the right a tiny figure with a question mark above their head says, ‘I’m confused from farther away.’ The label ‘CUSTOMER’ beneath that figure is red.",
+      "transcript": [
+        "Panel 1: A grinning founder holds a small megaphone and says, “Make the message louder.” An eager colleague strides in from the right with one hand raised. The two figures are labelled “FOUNDER” and “MARKETER.”",
+        "Panel 2: The megaphone has grown enormous and fills most of the panel. The founder braces under its weight, eyes squeezed shut, blasting the words “INTEGRATED SOLUTIONS!” outward in sharp lettering. Far off to the right, a tiny figure with a question mark above their head says, “I’m confused from farther away.” The label “CUSTOMER” beneath that figure is red."
+      ]
+    }
+  ]
+}
