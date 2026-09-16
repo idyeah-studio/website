@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafafa">
+<title>{{page_title}}</title>
+<meta name="description" content="{{description}}">
+<link rel="canonical" href="{{permalink}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IDYeah Studio">
+<meta property="og:title" content="{{page_title}}">
+<meta property="og:description" content="{{description}}">
+<meta property="og:url" content="{{permalink}}">
+<meta property="og:image" content="{{share_image_url}}">
+<meta property="og:image:width" content="{{art_w}}">
+<meta property="og:image:height" content="{{art_h}}">
+<meta property="og:image:alt" content="{{share_alt}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@idyeahstudio">
+<meta name="twitter:title" content="{{page_title}}">
+<meta name="twitter:description" content="{{description}}">
+<meta name="twitter:image" content="{{share_image_url}}">
+<meta name="twitter:image:alt" content="{{share_alt}}">
+<link rel="icon" href="/assets/idyeah/favicon.svg" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="/assets/idyeah/apple-touch-icon.png">
+<link rel="preload" href="/assets/idyeah/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/idyeah/fonts/inter-bold.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+// Apply a previously chosen theme before the stylesheet and first paint.
+// New visitors see the approved light version; no-JS visitors do too.
+try {
+  const theme = localStorage.getItem('idyeah-theme');
+  if (theme === 'light' || theme === 'dark') {
+    document.documentElement.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#141414' : '#fafafa';
+  }
+} catch (_) { /* Storage can be unavailable in private or restricted contexts. */ }
+</script>
+<link rel="stylesheet" href="/assets/idyeah/site.css?v={{site_css_v}}">
+<link rel="stylesheet" href="/assets/idyeah/off-idyeah.css?v={{off_css_v}}">
+<script defer src="/assets/idyeah/analytics.js?v={{analytics_v}}" data-idyeah-analytics data-website-id="df2b0b04-1c2f-4e6f-abec-4202da3c4c30"></script>
+</head>
+<body class="off-page">
+<a class="skip" href="#reading">Skip to content</a>
+<header><a class="off-note-name" href="/off-idyeah" aria-label="off idyeah home"><span class="off-word">off</span> idyeah<span class="series-dot">.</span></a><a class="top-contact" href="/">Back to the studio</a></header>
+<main class="off-shell off-archive" id="reading">
+  <h1 class="off-archive-title">Archive</h1>
+  <div class="off-archive-grid">
+{{rows}}  </div>
+</main>
+<footer>© <span class="copyright-year">{{copyright_year}}</span> IDYeah Studio.</footer>
+<button class="theme-switch" type="button" data-theme-toggle aria-label="Switch to dark mode" hidden><span class="theme-dot" aria-hidden="true"></span><span data-theme-label>Dark</span></button>
+<script src="/assets/idyeah/off-idyeah.js?v={{off_js_v}}"></script>
+</body>
+</html>
