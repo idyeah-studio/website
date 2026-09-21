@@ -2,7 +2,7 @@
 
 Static website for IDYeah Studio. No build step, framework, or package manager.
 
-- `index.html` + `assets/idyeah/`: the homepage ("Simple takes someone."), its styles, scripts, fonts, and images. Light theme by default; the floating toggle stores an explicit choice in localStorage (`idyeah-theme`).
+- `index.html` + `assets/idyeah/`: the homepage ("Clarity that ships."), its styles, scripts, fonts, and images. Dark theme by default; the floating toggle stores an explicit choice in localStorage (`idyeah-theme`).
 - `a-to-z.html`: the A–Z editorial page, served extensionless as `/a-to-z` via Vercel clean URLs.
 - `off-idyeah.html` + `off-idyeah/`: the latest strip and numbered permanent reading pages, with an off idyeah header and a short caption above the artwork. The first strip uses the existing credited artwork without changes. Shared styles and interactions live in `assets/idyeah/off-idyeah.css` and `off-idyeah.js`.
 - `mosaix/`: client prototype, served at `mosaix.idyeah.studio` via the host route in `vercel.json` (noindex).
