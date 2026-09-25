@@ -1,0 +1,16 @@
+/* One quiet entrance on load; fold and its invitation remain untouched. */
+@keyframes cover-arrive{
+ from{opacity:0;translate:0 10px}
+ to{opacity:1;translate:0 0}
+}
+.cover-masthead,.cover-dot,.cover-bottom,.cover-feature,.cover-launch,.cover-descriptor{
+ animation:cover-arrive 1800ms cubic-bezier(.22,.61,.36,1) both;
+}
+.cover-masthead,.cover-dot{animation-delay:650ms}
+.cover-bottom{animation-delay:650ms}
+.cover-feature{animation-delay:2400ms}
+.cover-launch{animation-delay:2950ms}
+.cover-descriptor{animation-delay:1100ms}
+@media(prefers-reduced-motion:reduce){
+ .cover-masthead,.cover-dot,.cover-bottom,.cover-feature,.cover-launch,.cover-descriptor{animation:none}
+}

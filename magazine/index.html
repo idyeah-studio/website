@@ -113,9 +113,35 @@ body.page-turning .page-hint,body.page-turning .page-hint-arrow{opacity:0}
 .cover-footer-id{position:absolute;left:4.444444vw;bottom:6.707317vh;display:flex;align-items:center;gap:16px}
 .cover-footer-id .cover-descriptor{position:static;white-space:nowrap}
 .footer-qr{display:block;width:48px;height:48px;border-radius:4px;flex:none}
-</style></head>
+</style><link rel="stylesheet" href="./assets/contents.css">
+<link rel="stylesheet" href="./assets/cover-entrance.css">
+</head>
 <body>
-<section class="magazine-under" aria-label="Page 2: contents preview" inert tabindex="-1"></section>
+<section class="magazine-under" aria-label="Page 02: contents" inert tabindex="-1">
+<div class="contents-page">
+<header class="contents-meta"><a class="contents-home" href="./" aria-label="Back to cover"><img src="./assets/wordmark-crisp.svg" alt="idyeah"><img class="contents-home-dot" src="./assets/dot-ivory-crisp.svg" alt="."></a><span>Vol. 18 / Q3</span><span>Product &amp; brand design studio</span></header>
+<div class="contents-layout">
+<div class="contents-main">
+<h1>Inside.</h1>
+
+<nav class="contents-nav" aria-label="Magazine contents">
+<a href="/archived/#process"><span class="nav-name">Design Services</span><span class="nav-subtitle">The practice</span><span class="nav-page">03</span></a>
+<a href="./mosaix.html"><span class="nav-name">Proof</span><span class="nav-subtitle">Selected Work</span><span class="nav-page">07</span></a>
+<a href="/archived/#about"><span class="nav-name">Meet Vishal</span><span class="nav-subtitle">The person</span><span class="nav-page">18</span></a>
+<a href="https://www.keya.studio" target="_blank" rel="noopener noreferrer"><span class="nav-name">Products</span><span class="nav-subtitle">Made at idyeah</span><span class="nav-page">22</span></a>
+</nav>
+<div class="contents-contact"><a href="https://calendly.com/vishal-idyeah/30min" target="_blank" rel="noopener noreferrer">Book a 30-minute discovery</a><a href="mailto:vishal@idyeah.studio">Write to me</a></div>
+</div>
+<aside class="contents-off" aria-label="Latest off idyeah">
+<div class="contents-off-top"><h2>off idyeah.</h2><span>No. 004</span></div>
+<a class="contents-strip" href="/off-idyeah/004.html" aria-label="Read off idyeah No. 004"><img src="/assets/idyeah/off-idyeah/004.webp" alt="A founder asks for a louder message. A giant megaphone makes the customer confused from farther away." width="1122" height="1402"></a>
+<div class="contents-off-links"><a href="/off-idyeah/004.html">Read No. 004 →</a><a href="/off-idyeah/archive.html">View all</a></div>
+
+</aside>
+</div>
+<footer class="contents-bottom"><nav aria-label="More from idyeah"><a href="/archived/#practice">More work</a><a href="https://crit.keya.studio" target="_blank" rel="noopener noreferrer">Crit</a><a href="https://cookbook.idyeah.studio/" target="_blank" rel="noopener noreferrer">Design AI Alchemy</a><a href="/a-to-z.html">A to Z</a><a href="https://linkedin.com/in/vishalme" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://x.com/idyeahstudio" target="_blank" rel="noopener noreferrer">X</a><a href="https://medium.com/@vishalme" target="_blank" rel="noopener noreferrer">Medium</a><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a></nav><button class="page-return">Back to cover</button><span class="folio-02">02</span></footer>
+</div>
+</section>
 <div class="magazine-sheet">
 <div class="stage">
   <canvas id="back"></canvas>
@@ -486,12 +512,14 @@ body.page-turning .page-hint,body.page-turning .page-hint-arrow{opacity:0}
 <g id="curl-surface"></g>
 </svg>
 <button class="page-handle" aria-label="Look inside" title="Look inside"><span class="page-hint">Look inside</span><svg class="page-hint-arrow" viewBox="0 0 34 28" aria-hidden="true"><path d="M5 2 C0 18 13 27 27 19 L23 15 L33 17 L29 26 L28 21 C12 32 -3 20 5 2 Z"/></svg></button>
-<button class="page-return">Back to cover</button>
+
+<a class="contents-turn" href="/archived/#process" aria-label="Turn to Design Services"></a>
 <script>
 (()=>{
- const sheet=document.querySelector('.magazine-sheet'),svg=document.querySelector('.page-fold'),shadow=document.querySelector('#fold-shadow'),surface=document.querySelector('#curl-surface'),handle=document.querySelector('.page-handle'),inside=document.querySelector('.magazine-under'),backButton=document.querySelector('.page-return');
+ let sheet=document.querySelector('.magazine-sheet');const coverSheet=sheet,svg=document.querySelector('.page-fold'),shadow=document.querySelector('#fold-shadow'),surface=document.querySelector('#curl-surface'),handle=document.querySelector('.page-handle'),inside=document.querySelector('.magazine-under'),backButton=document.querySelector('.page-return');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches, nx=.8,ny=.6,N=48;
  let width=innerWidth,height=innerHeight,depth=38,active=false,opened=false,hover=false,animation=0;
+ const nextCorner=document.querySelector('.contents-turn');
  // A cylindrical bend: points travel around a curved spine before returning
  // along the reverse face. The paper edges are sampled through the bend.
  const bands=Array.from({length:N+1},()=>{const p=document.createElementNS('http://www.w3.org/2000/svg','path');surface.append(p);return p});
@@ -502,14 +530,34 @@ body.page-turning .page-hint,body.page-turning .page-hint-arrow{opacity:0}
  function project([x,y]){const u=nx*x+ny*y-cut,t=Math.max(0,Math.min(Math.PI,u/R)),q=u<=roll?R*Math.sin(t):-(u-roll),z=R*(1-Math.cos(t));return[x+nx*(q-u)-z*.12,y+ny*(q-u)-z*.22];}
  let silhouette=[];const lifted=clip(rect,cut,false);for(let i=0;i<lifted.length;i++){const a=lifted[i],b=lifted[(i+1)%lifted.length];for(let j=0;j<28;j++){const t=j/28;silhouette.push(project([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]));}}
  shadow.setAttribute('d',path(silhouette.map(([x,y])=>[x+4,y+7])));
- for(let i=0;i<=N;i++){let lo=roll*i/N,hi=i===N?1e6:roll*(i+1)/N+.15,poly=clip(clip(rect,cut+lo,false),cut+hi),mapped=poly.map(project);bands[i].setAttribute('d',path(mapped));const t=Math.PI*(i+.5)/N;let rgb;if(i<N/2){const v=Math.round(13+35*Math.pow(Math.sin(t),5));rgb=[v,v,v];}else{const light=i===N?.97:.72+.28*Math.sin((t-Math.PI/2));rgb=[249,245,233].map(v=>Math.round(v*light));}bands[i].setAttribute('fill',`rgb(${rgb.join(',')})`);bands[i].setAttribute('stroke',`rgb(${rgb.join(',')})`);bands[i].setAttribute('stroke-width','.45');}
+ for(let i=0;i<=N;i++){let lo=roll*i/N,hi=i===N?1e6:roll*(i+1)/N+.15,poly=clip(clip(rect,cut+lo,false),cut+hi),mapped=poly.map(project);bands[i].setAttribute('d',path(mapped));const t=Math.PI*(i+.5)/N;let rgb;if(i<N/2){const v=Math.round(13+35*Math.pow(Math.sin(t),5));rgb=sheet===inside?[201,50,25].map(c=>Math.round(c*(.72+.28*Math.sin(t)))):[v,v,v];}else{const light=i===N?.97:.72+.28*Math.sin((t-Math.PI/2));rgb=[249,245,233].map(v=>Math.round(v*light));}bands[i].setAttribute('fill',`rgb(${rgb.join(',')})`);bands[i].setAttribute('stroke',`rgb(${rgb.join(',')})`);bands[i].setAttribute('stroke-width','.45');}
  }
  function animate(to,duration,done){cancelAnimationFrame(animation);let start=performance.now(),from=depth;function frame(now){let t=Math.min(1,(now-start)/duration),e=t*t*(3-2*t);draw(from+(to-from)*e);if(t<1)animation=requestAnimationFrame(frame);else if(done)done();}animation=requestAnimationFrame(frame);}
- function idle(now){if(!active&&!opened){const lift=hover?56:38+(reduced?0:2.6*Math.pow((1-Math.cos(now/1150))/2,3));draw(depth+(lift-depth)*.075);}requestAnimationFrame(idle);}
+ function idle(now){if(!active){const lift=hover?56:38+(reduced?0:2.6*Math.pow((1-Math.cos(now/1150))/2,3));draw(depth+(lift-depth)*.075);}requestAnimationFrame(idle);}
  handle.addEventListener('pointerenter',()=>hover=true);handle.addEventListener('pointerleave',()=>hover=false);handle.addEventListener('focus',()=>hover=true);handle.addEventListener('blur',()=>hover=false);
- handle.addEventListener('click',()=>{if(active||opened)return;active=true;document.body.classList.add('page-turning');animate((nx*width+ny*height)*2+150,reduced?1:1650,()=>{opened=true;active=false;document.body.classList.add('page-open');svg.style.visibility='hidden';inside.inert=false;inside.removeAttribute('tabindex');backButton.focus({preventScroll:true});});});
- backButton.addEventListener('click',()=>{if(active)return;active=true;opened=false;inside.inert=true;inside.tabIndex=-1;document.body.classList.remove('page-open');svg.style.visibility='visible';animate(38,reduced?1:1400,()=>{active=false;document.body.classList.remove('page-turning');handle.focus({preventScroll:true});});});
- addEventListener('resize',()=>{width=innerWidth;height=innerHeight;svg.setAttribute('viewBox',`0 0 ${width} ${height}`);if(!active&&!opened)draw(38);});svg.setAttribute('viewBox',`0 0 ${width} ${height}`);draw(38);requestAnimationFrame(idle);
+ handle.addEventListener('click',()=>{if(active||opened)return;active=true;document.body.classList.add('page-turning');animate((nx*width+ny*height)*2+150,reduced?1:1650,()=>{opened=true;active=false;document.body.classList.add('page-open');sheet=inside;inside.style.zIndex='2';draw(38);inside.inert=false;inside.removeAttribute('tabindex');backButton.focus({preventScroll:true});});});
+ backButton.addEventListener('click',()=>{if(active)return;active=true;opened=false;sheet=coverSheet;inside.style.clipPath='none';inside.style.zIndex='';depth=(nx*width+ny*height)*2+150;inside.inert=true;inside.tabIndex=-1;document.body.classList.remove('page-open');svg.style.visibility='visible';animate(38,reduced?1:1400,()=>{active=false;document.body.classList.remove('page-turning');handle.focus({preventScroll:true});});});
+
+ document.querySelector('.contents-home').addEventListener('click',e=>{e.preventDefault();backButton.click();});
+ nextCorner.addEventListener('pointerenter',()=>hover=true);nextCorner.addEventListener('pointerleave',()=>hover=false);
+ nextCorner.addEventListener('focus',()=>hover=true);nextCorner.addEventListener('blur',()=>hover=false);
+ const turnLinks=[...inside.querySelectorAll('a[href]'),nextCorner,...document.querySelectorAll('.cover-feature a[href]')];
+ turnLinks.forEach(link=>link.addEventListener('click',e=>{
+  if(link.classList.contains('contents-home')||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||link.target==='_blank')return;
+  const destination=new URL(link.href,location.href);
+  if(destination.origin!==location.origin||!/^https?:$/.test(destination.protocol))return;
+  e.preventDefault();if(active)return;active=true;
+  document.body.classList.add('destination-turn');
+  const preview=document.createElement('iframe');preview.className='destination-preview';preview.title='Next page';preview.tabIndex=-1;preview.inert=true;
+  preview.setAttribute('aria-hidden','true');
+  let begun=false;
+  const begin=()=>{if(begun)return;begun=true;animate((nx*width+ny*height)*2+150,reduced?1:1400,()=>location.assign(destination.href));};
+  preview.addEventListener('load',begin,{once:true});preview.src=destination.href;document.body.prepend(preview);
+  if(!opened)inside.style.visibility='hidden';
+  setTimeout(begin,1200);
+ }));
+ addEventListener('pageshow',e=>{if(e.persisted)location.reload();});
+ addEventListener('resize',()=>{width=innerWidth;height=innerHeight;svg.setAttribute('viewBox',`0 0 ${width} ${height}`);if(!active)draw(38);});svg.setAttribute('viewBox',`0 0 ${width} ${height}`);draw(38);requestAnimationFrame(idle);
 })();
 </script>
 
