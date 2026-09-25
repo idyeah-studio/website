@@ -1,0 +1,24 @@
+@font-face{font-family:KeyaDisplay;src:url("products/keya/keya-display.woff2") format("woff2");font-weight:400 600;font-style:italic;font-display:swap}
+
+.keya-v2{padding-block:50px 60px;scroll-margin-top:32px}.keya-v2 .studio-product-label{margin-bottom:26px}.kv-shell{border-radius:18px;padding:34px;--kv-ink:var(--ink);--kv-soft:var(--soft);color:var(--kv-ink)}.kv-header{display:flex;align-items:center;gap:32px;padding-bottom:30px}.kv-brand{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;flex-shrink:0}.kv-brand b{font-family:KeyaDisplay,serif;font-style:italic;font-weight:500;font-size:44px;line-height:.9;letter-spacing:-.025em}.kv-brand small{font-size:8px;letter-spacing:.22em;margin-top:9px}.kv-header p{font-size:15px;line-height:1.5;margin:0;color:var(--kv-soft)}.kv-header>a:last-child{margin-left:auto;white-space:nowrap;font-size:12px;color:inherit;text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:4px}.kv-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.kv-product{padding:28px;display:flex;flex-direction:column;align-items:flex-start;min-width:0}.kv-meta{display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:27px}.kv-meta span:first-child{font-size:9px;letter-spacing:.14em}.kv-meta span:last-child{font-size:10px;color:var(--kv-soft)}.kv-logo{height:33px;display:flex;align-items:center;margin-bottom:23px}.kv-logo img{display:block;width:auto;max-height:30px}.kv-logo .kv-diya{width:88px;height:auto}.kv-product h3{font-size:24px;letter-spacing:-.035em;font-weight:400;line-height:1.2;margin:0 0 13px;max-width:12em}.kv-product p{font-size:13px;line-height:1.75;color:var(--kv-soft);margin:0 0 26px;max-width:27em}.kv-product>a,.kv-status{margin-top:auto;font-size:12px;line-height:1.5}.kv-product>a{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:4px}.kv-status{color:var(--kv-soft)}
+.kv-cards .kv-shell{padding:0}.kv-cards .kv-header{padding:4px 0 28px}.kv-cards .kv-product{border-radius:13px;background:#efeeeb;--kv-soft:#64605a}.kv-cards .kv-crit{filter:brightness(.15)}[data-theme=dark] .kv-cards .kv-product{background:#242321;--kv-soft:#b5afa6}[data-theme=dark] .kv-cards .kv-crit{filter:none}[data-theme=dark] .kv-diya{filter:invert(1)}
+.kv-unified .kv-shell{background:#efeeeb;--kv-soft:#64605a}.kv-unified .kv-header{border-bottom:1px solid #25211c22}.kv-unified .kv-grid{gap:0}.kv-unified .kv-product{padding:30px 32px 0 0}.kv-unified .kv-product+article{border-left:1px solid #25211c22;padding:30px 0 0 32px}.kv-unified .kv-crit{filter:brightness(.15)}[data-theme=dark] .kv-unified .kv-shell{background:#242321;--kv-soft:#b5afa6}[data-theme=dark] .kv-unified .kv-header,[data-theme=dark] .kv-unified .kv-product+article{border-color:#ffffff20}[data-theme=dark] .kv-unified .kv-crit{filter:none}
+
+
+.kv-cards .kv-header p{white-space:nowrap;font-size:14px}
+.kv-cards .kv-product h3{white-space:nowrap;max-width:none;font-size:23px;letter-spacing:-.04em}
+.kv-cards .kv-logo{height:33px}
+.kv-cards .kv-logo .kv-diya{height:23px;width:auto;box-sizing:content-box;padding-block:5px}
+.kv-cards .kv-product .kv-start{margin-top:auto;border:0;border-radius:999px;background:#f36b58;color:#191817;font-size:12px;line-height:18px;padding:8px 20px;font-weight:500;text-decoration:none}
+.kv-cards .kv-start:hover{background:#ff806d}
+.kv-cards .kv-coming{margin-top:auto;display:inline-block;border-radius:999px;background:#25211c09;color:var(--kv-soft);font-size:12px;line-height:18px;padding:8px 16px}
+[data-theme=dark] .kv-cards .kv-coming{background:#ffffff08}
+
+
+.kv-cards .kv-product{container-type:inline-size}
+.kv-cards .kv-product h3{font-size:min(23px,5.65cqw)}
+.kv-cards .kv-header{gap:24px;container-type:inline-size}
+.kv-cards .kv-header p{font-size:min(14px,2.05cqw)}
+.kv-cards .kv-header>a:last-child{font-size:min(12px,2cqw)}
+
+@media(max-width:700px){.kv-cards .kv-grid{grid-template-columns:1fr}.kv-cards .kv-header{flex-wrap:wrap;gap:20px}.kv-cards .kv-header p{white-space:normal;font-size:13px;flex:1;min-width:180px}.kv-cards .kv-header>a:last-child{font-size:12px;margin-left:0}.kv-cards .kv-product h3{font-size:clamp(16px,5.65cqw,23px)}}
