@@ -27,3 +27,33 @@ test('all proof pages link the call invitation and use B2C for the selected stea
  assert.ok(read('services').includes('Founder · Stealth · B2C'));
  assert.ok(read('stealth-story').includes('Stealth · B2C</span>'));
 });
+test('turning spreads own their layout before JavaScript executes',()=>{
+ for(const n of pages.slice(2))assert.match(read(n),/<body[^>]*>\s*<div class="magazine-leaf">/,n);
+ const js=fs.readFileSync('magazine/assets/magazine-turn.js','utf8');
+ assert.ok(!js.includes('getComputedStyle(body)'));
+ assert.ok(!js.includes('Object.assign(sheet.style'));
+ assert.ok(!js.includes('setTimeout(begin,1200)'));
+});
+
+test('rotation keeps a device viewport and clips to the actual page surface',()=>{
+ const ready=fs.readFileSync('magazine/assets/magazine-ready.js','utf8');
+ assert.ok(!ready.includes('width=1024'));
+ assert.ok(!ready.includes('viewport.content='));
+ for(const file of ['magazine/index.html','magazine/assets/services.js','magazine/assets/magazine-turn.js']){
+  const s=fs.readFileSync(file,'utf8');
+  assert.ok(s.includes('width=sheet.clientWidth,height=sheet.clientHeight'),file);
+  assert.ok(s.includes('new ResizeObserver(resizeFold)'),file);
+ }
+});
+test('only corner controls intercept navigation and history restoration does not reload',()=>{
+ for(const name of ['magazine-turn','services']){
+  const source=fs.readFileSync(`magazine/assets/${name}.js`,'utf8');
+  assert.ok(!/querySelectorAll\('a(?:\[href\])?'\)/.test(source));
+  assert.ok(source.includes("handle.addEventListener('click'"));
+  assert.ok(!source.includes('location.reload()'));
+ }
+ const cover=read('index');
+ assert.ok(cover.includes('const turnLinks=[nextCorner];'));
+ assert.ok(!cover.includes("querySelector('.contents-home').addEventListener('click'"));
+ assert.ok(!cover.includes('location.reload()'));
+});

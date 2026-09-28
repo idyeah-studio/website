@@ -1,0 +1,15 @@
+@media(max-width:760px) and (orientation:portrait){
+ html,body{height:auto;min-height:100%;overflow:auto}
+ body.off-edition>.magazine-leaf{height:auto;min-height:100dvh;display:block;padding:0 7vw calc(30px + env(safe-area-inset-bottom,0px));position:relative;inset:auto;overflow:visible}
+ .off-header{gap:18px;padding:calc(20px + env(safe-area-inset-top,0px)) 0 20px;border-bottom:1px solid #c6d1d7}
+ .off-wordmark{font-size:26px;gap:9px}.off-idyeah-art{width:78px;transform:translateY(5px)}.back-inside{font-size:12px;min-height:44px;gap:7px}
+ .off-reader{display:flex;flex-direction:column;gap:28px;padding:30px 0 0;position:relative;padding-bottom:72px}
+ .off-editorial{display:contents}.issue-copy{margin:0;padding:0;max-width:none}.issue-number{font-size:12px}.issue-copy h1{font-size:34px;line-height:1.2;margin:16px 0 20px}
+ .reader-tools{gap:26px;font-size:14px}.reader-tools button{min-height:44px}.share-status{margin:0;min-height:0}
+ .strip-art{height:auto;display:block}.strip-art img{width:100%;height:auto;max-height:none}
+ .issue-nav{position:absolute;bottom:0;left:0;right:0;padding-top:14px;font-size:14px;gap:12px}.issue-nav a{min-height:44px;display:flex;align-items:center}.issue-nav a:nth-child(2){justify-content:center}.issue-nav a:last-child{justify-content:flex-end}
+ .off-archive{padding:32px 0 0;gap:30px}.archive-heading{display:block}.archive-title{font-size:34px}.archive-heading p{font-size:14px;line-height:1.6}
+ .archive-grid{grid-template-columns:1fr;gap:38px}.archive-card img{width:100%;height:auto;object-fit:contain}.archive-card>span{font-size:13px;margin:18px 0 8px}.archive-card h2{font-size:18px;line-height:1.5}
+ #off-dialog{width:94vw;max-width:94vw;height:90dvh;margin:5dvh auto;padding-top:52px}.close-dialog{width:44px;height:44px;top:4px;right:8px}
+ .dialog-content{padding:0 14px 20px}.dialog-content.transcript{padding:16px 22px;font-size:16px;line-height:1.8}.share-options a,.share-options button{min-height:44px;display:flex;align-items:center}
+}

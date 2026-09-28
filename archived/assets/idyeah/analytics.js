@@ -80,8 +80,8 @@
       send(element.closest('.audit-preview') ? 'Audit request clicked' : 'Email link clicked');
       return;
     }
-    if (url.hostname === 'x.com' && url.pathname === '/intent/tweet') { send('Share on X clicked', { strip }); return; }
-    if (url.hostname === 'www.linkedin.com' && url.pathname.startsWith('/sharing/')) { send('Share on LinkedIn clicked', { strip }); return; }
+    if (url.hostname === 'x.com' && url.pathname === '/archived/intent/tweet') { send('Share on X clicked', { strip }); return; }
+    if (url.hostname === 'www.linkedin.com' && url.pathname.startsWith('/archived/sharing/')) { send('Share on LinkedIn clicked', { strip }); return; }
     if (url.origin === location.origin || hosts.includes(url.hostname)) {
       if (url.pathname === '/archived/off-idyeah/archive') send('Archive opened');
       else if (/^\/off-idyeah(?:\/\d{3})?$/.test(url.pathname)) send('Strip opened', { strip: url.pathname.split('/archived/')[2] || 'latest' });

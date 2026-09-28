@@ -1,8 +1,8 @@
 @font-face{font-family:KeyaDisplay;src:url('/assets/idyeah/products/keya/keya-display.woff2') format('woff2');font-style:italic;font-weight:400 600;font-display:swap}
-.products-page{background:#fff;color:#302d27;grid-template-rows:10vh minmax(0,1fr) 8vh}
+.products-page{background:#fff;color:#302d27;grid-template-rows:10dvh minmax(0,1fr) 8dvh}
 .products-page .story-header{grid-template-columns:auto minmax(0,1fr)}
 .future-product{display:inline-flex;align-items:center;white-space:nowrap;padding:6px 12px;border:1px solid #e5e2df;border-radius:9999px;font-size:12px;color:#817d77}
-.product-spread{position:relative;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:30% minmax(0,1fr);width:min(920px,80vw);min-height:0;justify-self:center;padding-bottom:7vh}
+.product-spread{position:relative;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:30% minmax(0,1fr);width:min(920px,80vw);min-height:0;justify-self:center;padding-bottom:7dvh}
 .collection-heading{grid-column:1/-1;display:flex;justify-content:center;align-items:center}
 .collection-lockup{display:flex;flex-direction:column;align-items:center;gap:12px}
 .keya-brand{font:italic 500 36px/1.2 KeyaDisplay,Georgia,serif;letter-spacing:-.045em;color:#987438;padding-bottom:3px}
@@ -18,9 +18,9 @@
 .start-free{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#c93219;color:#fffaf1;font-size:11px;padding:8px 20px;align-self:end;line-height:1.4}
 .start-free:hover{background:#ad2a14}.coming-soon{display:inline-flex;align-items:center;justify-content:center;align-self:end;border:1px solid #e8e2d8;color:#a0988b;font-size:10px;line-height:1.4;border-radius:999px;padding:8px 15px}
 .products-page footer{display:flex;align-items:center;justify-content:flex-end}
-@media(max-width:1000px){.products-page{grid-template-rows:14vh minmax(0,1fr) 7vh}.future-product{font-size:10px;padding:5px 8px}.products-page .case-pills{flex-wrap:wrap}.products-page .case-navigation{gap:8px}.product-spread{width:100%;padding-bottom:5vh}.catalog-product{padding:0 22px}.catalog-copy h1,.catalog-copy h2{font-size:20px}.catalog-copy p{font-size:11px}.catalog-copy{grid-template-rows:60px 90px 35px}}
+@media(max-width:1000px){.products-page{grid-template-rows:14dvh minmax(0,1fr) 7dvh}.future-product{font-size:10px;padding:5px 8px}.products-page .case-pills{flex-wrap:wrap}.products-page .case-navigation{gap:8px}.product-spread{width:100%;padding-bottom:5dvh}.catalog-product{padding:0 22px}.catalog-copy h1,.catalog-copy h2{font-size:20px}.catalog-copy p{font-size:11px}.catalog-copy{grid-template-rows:60px 90px 35px}}
 @media(max-width:650px){.catalog-product{padding:0 15px}.catalog-logo{height:40px;margin-bottom:25px}.crit-logo{width:82px}.diya-logo{width:94px}.catalog-copy h1,.catalog-copy h2{font-size:19px}.products-page .case-pills-label{display:none}.catalog-crit::after{top:15%;bottom:15%}}
-@media(max-height:650px){.product-spread{padding-bottom:2vh}.catalog-logo{height:36px;margin-bottom:18px}.catalog-copy{grid-template-rows:48px 58px 32px}.keya-brand{font-size:30px}}
+@media(max-height:650px){.product-spread{padding-bottom:2dvh}.catalog-logo{height:36px;margin-bottom:18px}.catalog-copy{grid-template-rows:48px 58px 32px}.keya-brand{font-size:30px}}
 .product-spread{column-gap:0;row-gap:0}
 /* keya's atmospheric edition: imagery below, type above. */
 .products-page{position:relative;isolation:isolate;background:#191712;color:#f4efe5}

@@ -1,10 +1,10 @@
 /* One founder's note, opposite two landscape plates and one mobile plate. */
-.rialty-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.85fr);grid-template-rows:21% minmax(0,1fr);column-gap:5vw;padding-bottom:2vh;min-height:0}
+.rialty-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.85fr);grid-template-rows:21% minmax(0,1fr);column-gap:5vw;padding-bottom:2dvh;min-height:0}
 .rialty-intro{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}
 .rialty-logo{display:block;width:152px;height:auto}
 .rialty-intro p{font-size:13px;color:#787078;text-align:right;white-space:nowrap}
 .rialty-note.client-note{grid-column:1;grid-row:2;display:flex;align-self:start;margin-top:0;border-top:1px solid #d9d3dc;padding-top:24px}
-.rialty-grid{grid-column:2;grid-row:2;align-self:center;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.51fr);grid-template-rows:1fr 1fr;gap:18px;width:min(100%,calc(61vh * 1.43));aspect-ratio:1.43;justify-self:end;min-height:0}
+.rialty-grid{grid-column:2;grid-row:2;align-self:center;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.51fr);grid-template-rows:1fr 1fr;gap:18px;width:min(100%,calc(61dvh * 1.43));aspect-ratio:1.43;justify-self:end;min-height:0}
 .rialty-grid button{display:block;min-height:0;min-width:0;cursor:zoom-in;overflow:hidden}
 .web-plate{grid-column:1;grid-row:1;border:1px solid #ebe7ed;border-radius:3px;background:#fff}
 .web-plate img{display:block;width:100%;height:100%;object-fit:contain}

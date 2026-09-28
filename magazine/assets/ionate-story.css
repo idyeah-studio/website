@@ -1,4 +1,4 @@
-.ionate-spread{display:grid;grid-template-columns:minmax(0,2.15fr) minmax(0,1fr);grid-template-rows:21% minmax(0,1fr);gap:0 6vw;padding-bottom:2vh;min-height:0}
+.ionate-spread{display:grid;grid-template-columns:minmax(0,2.15fr) minmax(0,1fr);grid-template-rows:21% minmax(0,1fr);gap:0 6vw;padding-bottom:2dvh;min-height:0}
 .ionate-intro{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .ionate-logo{width:124px;height:auto;display:block}
 .ionate-intro p{font-size:13px;color:#787078;text-align:right}

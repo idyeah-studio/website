@@ -1,6 +1,6 @@
 /* Page 02: an editorial index, on the cover's vermilion stock. */
 .magazine-under{overflow-y:auto;color:#f4edda;font-family:CoverArchivo,Arial,sans-serif}
-.contents-page{min-height:100%;padding:3.4vh 4.45vw 4vh;display:flex;flex-direction:column;position:relative;max-width:1900px;margin:auto}
+.contents-page{min-height:100%;padding:3.4dvh 4.45vw 4dvh;display:flex;flex-direction:column;position:relative;max-width:1900px;margin:auto}
 .contents-meta{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #f4edda55;padding-bottom:16px;font:300 10px CoverMono,monospace;letter-spacing:.12em;text-transform:uppercase}
 .contents-meta strong{font:italic 26px CoverDomaine,serif;letter-spacing:-.04em;text-transform:none}
 .contents-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);column-gap:9vw;flex:1;padding-top:25px}
@@ -19,7 +19,7 @@
 .contents-off-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}.contents-off-top h2{font:italic 35px CoverDomaine,serif;letter-spacing:-.045em;margin:0}.contents-off-top span{font:300 10px CoverMono,monospace}.contents-strip{display:block;background:#f8f6ef;padding:9px;box-shadow:0 9px 18px #54120825;transform:rotate(1.5deg);transform-origin:50% 50%;transition:transform .35s ease}.contents-strip:hover{transform:rotate(0)}.contents-strip img{display:block;width:100%;height:auto}
 .contents-off-links{display:flex;justify-content:space-between;margin-top:21px;font-size:11px}.contents-off-links a{color:inherit;text-decoration:none;border-bottom:1px solid #f4edda70;padding-bottom:5px}.contents-off .contents-small{margin-top:30px;color:#f4edda99}
 .contents-bottom{display:grid;grid-template-columns:1fr auto;gap:20px;border-top:1px solid #f4edda55;margin-top:30px;padding-top:15px;font-size:10px}.contents-bottom nav{display:flex;gap:22px;flex-wrap:wrap;padding-right:125px}.contents-bottom a{color:inherit;text-decoration:none}.contents-bottom a:hover{text-decoration:underline}.contents-bottom .folio-02{font:italic 31px/.9 CoverDomaine,serif}.contents-page a:focus-visible{outline:1px solid #f4edda;outline-offset:5px}
-.page-return{right:4.45vw;bottom:3.4vh;border:0;border-radius:0;padding:4px 0;border-bottom:1px solid #f4edda70;font-size:10px;background:#c93219}.contents-bottom .folio-02{margin-right:145px}
+.page-return{right:4.45vw;bottom:3.4dvh;border:0;border-radius:0;padding:4px 0;border-bottom:1px solid #f4edda70;font-size:10px;background:#c93219}.contents-bottom .folio-02{margin-right:145px}
 @media(min-width:1500px){.contents-off{max-width:410px}.contents-layout{padding-top:35px}.contents-nav a{padding-top:16px;padding-bottom:16px}}
 @media(max-height:760px) and (min-width:800px){.contents-page{padding-top:22px}.contents-layout{padding-top:18px}.contents-main h1{font-size:10vw;margin-bottom:20px}.contents-off{padding-top:12px;max-width:290px}.contents-nav a{padding-top:10px;padding-bottom:10px}.contents-nav .nav-name{font-size:29px}.contents-off .contents-small{margin-top:18px}.contents-bottom{margin-top:20px}.contents-contact{margin-top:18px}}
 @media(max-width:760px){.contents-layout{grid-template-columns:1fr;gap:40px}.contents-main h1{font-size:115px}.contents-off{justify-self:start;max-width:380px;padding-top:0}.contents-nav .nav-name{font-size:32px}.contents-bottom{margin-bottom:45px}.contents-bottom nav{padding-right:0;gap:15px}.contents-bottom .folio-02{margin-right:0}.page-return{bottom:15px}.contents-meta{font-size:8px}.contents-page{padding-top:20px}.contents-contact{flex-wrap:wrap}}
@@ -36,33 +36,33 @@
 @media(max-width:760px){.contents-nav a{grid-template-columns:22px minmax(0,1fr) 96px 34px;gap:10px;padding:19px 0}.contents-nav .nav-name{font-size:25px}.contents-nav .nav-page{font-size:30px}.contents-nav .nav-subtitle{font-size:9px}}
 /* A single magazine leaf: size the composition to the available screen. */
 .magazine-under{overflow:hidden}
-.contents-page{height:100%;min-height:0;padding:3.4vh 4.45vw 3.4vh}
-.contents-meta{flex-shrink:0;padding-bottom:1.7vh}
-.contents-layout{min-height:0;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:9vw;padding-top:2.8vh}
+.contents-page{height:100%;min-height:0;padding:3.4dvh 4.45vw 3.4dvh}
+.contents-meta{flex-shrink:0;padding-bottom:1.7dvh}
+.contents-layout{min-height:0;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:9vw;padding-top:2.8dvh}
 .contents-main{min-height:0}
-.contents-main h1{font-size:min(12.6vw,20vh);margin-bottom:3.4vh}
+.contents-main h1{font-size:min(12.6vw,20dvh);margin-bottom:3.4dvh}
 .contents-main>.contents-small{margin:0}
-.contents-nav{margin-top:2.2vh}
-.contents-nav a{padding:2.05vh 0;grid-template-columns:26px minmax(0,1fr) 115px 45px}
-.contents-nav .nav-name{font-size:min(2.35vw,4.1vh)}
-.contents-nav .nav-page{font-size:min(35px,4.2vh)}
-.contents-contact{margin-top:calc(2.8vh + 24px)}
-.contents-off{padding-top:2.8vh;max-width:min(360px,42vh);justify-self:end;min-height:0}
-.contents-off-top{margin-bottom:1.8vh;flex-shrink:0}
-.contents-off-top h2{font-size:min(35px,4.2vh)}
-.contents-strip{min-height:0;padding:1vh;flex-shrink:1;align-self:center;max-width:100%}
-.contents-strip img{max-height:50vh;width:auto;max-width:100%;object-fit:contain}
-.contents-off-links{margin-top:2.3vh;flex-shrink:0}
-.contents-bottom{flex-shrink:0;margin-top:2.3vh;padding-top:1.7vh;margin-bottom:0}
+.contents-nav{margin-top:2.2dvh}
+.contents-nav a{padding:2.05dvh 0;grid-template-columns:26px minmax(0,1fr) 115px 45px}
+.contents-nav .nav-name{font-size:min(2.35vw,4.1dvh)}
+.contents-nav .nav-page{font-size:min(35px,4.2dvh)}
+.contents-contact{margin-top:calc(2.8dvh + 24px)}
+.contents-off{padding-top:2.8dvh;max-width:min(360px,42dvh);justify-self:end;min-height:0}
+.contents-off-top{margin-bottom:1.8dvh;flex-shrink:0}
+.contents-off-top h2{font-size:min(35px,4.2dvh)}
+.contents-strip{min-height:0;padding:1dvh;flex-shrink:1;align-self:center;max-width:100%}
+.contents-strip img{max-height:50dvh;width:auto;max-width:100%;object-fit:contain}
+.contents-off-links{margin-top:2.3dvh;flex-shrink:0}
+.contents-bottom{flex-shrink:0;margin-top:2.3dvh;padding-top:1.7dvh;margin-bottom:0}
 @media(max-width:760px){
-.contents-page{padding:3vh 4vw}.contents-layout{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:5vw;padding-top:4vh}
-.contents-main h1{font-size:15vw;margin-left:-3px;margin-bottom:4vh}
+.contents-page{padding:3dvh 4vw}.contents-layout{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:5vw;padding-top:4dvh}
+.contents-main h1{font-size:15vw;margin-left:-3px;margin-bottom:4dvh}
 .contents-meta strong{font-size:20px}.contents-meta{font-size:7px}.contents-meta>span:last-child{max-width:130px;text-align:right}
-.contents-small{font-size:7px}.contents-nav a{grid-template-columns:15px minmax(0,1fr) 25px;gap:7px;padding:2vh 0}
+.contents-small{font-size:7px}.contents-nav a{grid-template-columns:15px minmax(0,1fr) 25px;gap:7px;padding:2dvh 0}
 .contents-nav .nav-name{font-size:3.5vw}.contents-nav .nav-index{font-size:7px}.contents-nav .nav-page{font-size:4vw;grid-column:3;grid-row:1}
 .contents-nav .nav-subtitle{grid-column:2;grid-row:2;font-size:7px}.contents-contact{gap:14px;flex-wrap:wrap}.contents-contact a,.contents-contact a:first-child{font-size:9px}.contents-contact span{margin-left:7px}
-.contents-off{padding-top:2vh}.contents-off-top{gap:5px}.contents-off-top h2{font-size:4.2vw}.contents-off-top span{font-size:7px}.contents-off-links{font-size:8px;gap:10px}
-.contents-bottom{font-size:8px}.contents-bottom nav{gap:10px;padding-right:75px}.contents-bottom .folio-02{margin-right:85px;font-size:25px}.page-return{font-size:8px;bottom:3vh;right:4vw}
+.contents-off{padding-top:2dvh}.contents-off-top{gap:5px}.contents-off-top h2{font-size:4.2vw}.contents-off-top span{font-size:7px}.contents-off-links{font-size:8px;gap:10px}
+.contents-bottom{font-size:8px}.contents-bottom nav{gap:10px;padding-right:75px}.contents-bottom .folio-02{margin-right:85px;font-size:25px}.page-return{font-size:8px;bottom:3dvh;right:4vw}
 }
 
 /* Center the issue independently of the unequal left and right labels. */

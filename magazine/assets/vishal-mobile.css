@@ -1,0 +1,32 @@
+.off-work .mobile-interest-separator{display:none}
+@media(max-width:760px) and (orientation:portrait){
+ html,body,body.has-magazine-turn{height:auto;min-height:100%;overflow:auto;background:#08090c}
+ body.vishal-page>.magazine-leaf{position:relative;inset:auto;display:block;height:auto;min-height:100dvh;padding:0 7vw;overflow:hidden;clip-path:none!important;background:#08090c}
+ .leaf-fold,.leaf-handle{display:none}
+ .portrait{inset:0 0 auto;height:calc(100vw + 72px);background:#08090c}
+ .portrait img{top:72px;left:0;right:auto;width:100%;height:auto;object-fit:contain;object-position:center}
+ .portrait::after{background:linear-gradient(180deg,#08090c 0,transparent 140px,transparent 48%,#08090c88 73%,#08090c 100%)}
+ .running-head{padding:calc(20px + env(safe-area-inset-top,0px)) 0 16px;gap:20px;min-height:80px}
+ .back{min-height:44px;font-size:12px}.back-icon{width:24px;height:24px;flex-basis:24px}
+ .portrait-spread{display:block}
+ .profile{height:auto;display:flex;align-items:stretch;padding-top:calc(100vw - 150px)}
+ .profile-title{margin:0}
+ h1{font-size:clamp(68px,18vw,112px);line-height:.9;letter-spacing:-.055em;text-shadow:0 2px 20px #08090c55}
+ .name{font-size:25px;line-height:1.3;margin-top:24px}
+ .bio{width:100%;max-width:450px;margin-top:26px;font-size:15px;line-height:1.75}
+ .bio p:first-child{margin:0}.bio-line{display:inline;white-space:normal}.bio-line+.bio-line::before{content:' '}
+ .influences{order:3;position:static;width:100%;max-width:450px;margin:36px 0 0;padding-top:22px;border-top:1px solid #f5e6c32b}
+ .influences h2{font-size:12px;line-height:1.6;color:#ddd4c3;opacity:1}
+ .influence-logos{gap:24px;margin-top:24px}
+ .logo-row{gap:14px}.logo-row img{width:21%;max-width:74px;max-height:26px;opacity:.65}
+ .logo-row .influence-apple{width:17px;flex:none}
+ .logo-row .influence-stanford{width:19%;max-width:66px}
+ .logo-row .influence-usf,.logo-row .influence-wharton,.logo-row .influence-calarts{width:21%;max-width:74px}
+ .off-work{order:4;position:static;width:100%;max-width:none;margin:40px 0;text-align:left}
+ .off-work h2{font-size:25px;margin-bottom:12px}
+ .off-work p{font-size:14px;line-height:1.85}.off-work br{display:none}.off-work .mobile-interest-separator{display:inline}
+ footer{padding:20px 0 calc(25px + env(safe-area-inset-bottom,0px));gap:14px;font-size:13px}
+ .footer-contact{gap:16px}.footer-contact .social-links{gap:0;padding-left:8px;height:20px}
+ .social-links a{width:36px;height:44px;opacity:.8}
+ footer .folio{position:static;inset:auto;font-size:28px;flex:none;margin:0}
+}

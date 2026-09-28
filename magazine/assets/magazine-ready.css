@@ -23,31 +23,31 @@ body.has-magazine-turn{background:var(--fold-under,#171715)}
 
 body:has(>.services-sheet){background:#fff}
 /* One folio datum, shared with Inside. The leaf clips it during a page turn. */
-footer .folio,.contents-bottom .folio-02,.services-sheet>footer .folio{position:fixed;right:4.45vw;bottom:3.4vh;margin:0!important;transform:none!important;font-size:22px;line-height:.9;font-style:italic}
+footer .folio,.contents-bottom .folio-02,.services-sheet>footer .folio{position:fixed;right:4.45vw;bottom:3.4dvh;margin:0!important;transform:none!important;font-size:22px;line-height:.9;font-style:italic}
 .services-sheet .audit-footer .folio{right:auto;left:4.45vw}
 .audit-footer{padding-left:40px}
 .design-footer{padding-right:40px}
 @media(orientation:landscape) and (max-height:500px){
- .services-sheet .service-composition{padding:1.5vh 0 1vh}
+ .services-sheet .service-composition{padding:1.5dvh 0 1dvh}
  .services-sheet .audit,.services-sheet .design{padding-right:0;padding-left:0}
  .services-sheet .audit{padding-right:4vw}.services-sheet .design{padding-left:6vw}
- .services-sheet h1,.services-sheet .design h1{font-size:15vh;margin:1vh 0 2vh}
+ .services-sheet h1,.services-sheet .design h1{font-size:15dvh;margin:1dvh 0 2dvh}
  .services-sheet .service-intro{font-size:12px}
- .services-sheet .service-description{font-size:10px;margin-top:1.5vh}
- .services-sheet .audit-lenses{margin-top:2vh;width:100%}
+ .services-sheet .service-description{font-size:10px;margin-top:1.5dvh}
+ .services-sheet .audit-lenses{margin-top:2dvh;width:100%}
  .services-sheet .lens-row{gap:4px}
  .services-sheet .lens-pill{font-size:8px;padding:5px 5px}
- .services-sheet .audit-testimonial{margin-top:2.5vh;padding-top:1vh;padding-left:22px}
+ .services-sheet .audit-testimonial{margin-top:2.5dvh;padding-top:1dvh;padding-left:22px}
  .services-sheet .audit-testimonial blockquote{font-size:15px;line-height:1.3;transform:none}
  .services-sheet .audit-testimonial figcaption{font-size:9px;margin-top:6px;transform:none}
  .services-sheet .audit-testimonial:before{font-size:80px}
- .services-sheet .design-columns{height:33vh;margin-top:2vh}
- .services-sheet .design-columns>div{min-height:0;height:19vh;padding:12px;width:24vw}
- .services-sheet .design-columns>div:last-child{top:14vh;left:9vw}
+ .services-sheet .design-columns{height:33dvh;margin-top:2dvh}
+ .services-sheet .design-columns>div{min-height:0;height:19dvh;padding:12px;width:24vw}
+ .services-sheet .design-columns>div:last-child{top:14dvh;left:9vw}
  .services-sheet .design-columns h3{font-size:16px;margin-bottom:4px}
  .services-sheet .design-columns p{font-size:9px;line-height:1.3}
  .services-sheet .service-link{font-size:11px;padding-block:5px}
- .services-sheet footer{height:6vh;flex-shrink:0;padding-top:0!important}
+ .services-sheet footer{height:6dvh;flex-shrink:0;padding-top:0!important}
  .services-sheet>footer a{font-size:9px}
 }
 .orientation-gate:focus{outline:none}
@@ -62,4 +62,11 @@ body:not(.products-page):not(.vishal-page) .note-label{color:#716a72}
 body.page-open{background:#e9dbb8}
 @media(min-height:501px){
  .services-sheet .lens-pill{font-size:clamp(9px,.85vw,12px);padding:6px .45vw}
+}
+
+/* Safari must not independently enlarge type after landscape rotation. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media(orientation:landscape) and (max-height:500px){
+ .contents-contact{margin-top:2dvh;gap:20px}
+ .contents-contact a,.contents-contact a:first-child{font-size:12px}
 }

@@ -12,3 +12,10 @@ body.has-magazine-turn{display:block;padding:0;background:#171715}
 body.magazine-turning .leaf-handle{visibility:hidden}
 button.leaf-handle{border:0;background:transparent;padding:0}
 .leaf-handle[aria-disabled="true"]{cursor:default}
+
+/* Stable layout before scripts run, during iframe previews, and after navigation. */
+body[data-next-page]{display:block;padding:0}
+body[data-next-page]>.magazine-leaf{display:grid;grid-template-rows:9dvh minmax(0,1fr) 8dvh;padding:0 4.8vw;background-color:#fff}
+body.products-page>.magazine-leaf{grid-template-rows:10dvh minmax(0,1fr) 8dvh;background-color:#191712}
+body.vishal-page>.magazine-leaf{background-color:#151515}
+body.product-edition>.magazine-leaf{background-color:var(--paper)}
