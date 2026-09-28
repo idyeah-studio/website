@@ -1,0 +1,20 @@
+.ionate-spread{display:grid;grid-template-columns:minmax(0,2.15fr) minmax(0,1fr);grid-template-rows:21% minmax(0,1fr);gap:0 6vw;padding-bottom:2vh;min-height:0}
+.ionate-intro{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.ionate-logo{width:124px;height:auto;display:block}
+.ionate-intro p{font-size:13px;color:#787078;text-align:right}
+.main-film{grid-column:1;grid-row:2;align-self:center;min-width:0;margin:0}
+.film-poster{position:relative;display:block;width:100%;overflow:hidden;background:#151515;cursor:pointer}
+.film-poster>img{display:block;width:100%;height:auto;transition:opacity .2s}
+.film-poster:hover>img{opacity:.82}
+.play-disc{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:58px;height:58px;border:1px solid #ffffff75;border-radius:50%;background:#151515c9;box-shadow:0 3px 25px #0003}
+.play-disc svg,.small-play svg{width:22px;height:22px;fill:#fff}
+.film-caption{display:flex;justify-content:space-between;gap:10px;font-size:11px;line-height:1.3;color:#807981;margin-top:13px}
+.film-caption>span:first-child{color:#4c464f}
+.ionate-note.client-note{grid-column:2;grid-row:2;align-self:stretch;min-height:0}
+.ionate-note blockquote{font-size:clamp(15px,1.25vw,21px);line-height:1.5;margin-bottom:20px}
+.brand-film{margin-top:auto;padding-top:24px;width:100%;max-width:290px;align-self:flex-end}
+.small-play{position:absolute;right:12px;bottom:12px;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#171717bf;border:1px solid #ffffff55}
+.small-play svg{width:15px;height:15px}
+.film-viewport{display:flex;align-items:center;justify-content:center;min-height:0;padding:16px;background:#fff}
+#case-film{display:block;width:min(100%,calc((94dvh - 80px) * var(--film-ratio,1.9043)));height:auto;max-height:100%;aspect-ratio:var(--film-ratio,1.9043);object-fit:contain;background:#fff}
+@media(max-height:700px){.brand-film{max-width:220px;padding-top:15px}.ionate-note blockquote{margin-top:26px;font-size:15px}.ionate-note .attribution span{margin-top:5px}}

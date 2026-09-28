@@ -1,0 +1,24 @@
+/* One founder's note, opposite two landscape plates and one mobile plate. */
+.rialty-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.85fr);grid-template-rows:21% minmax(0,1fr);column-gap:5vw;padding-bottom:2vh;min-height:0}
+.rialty-intro{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}
+.rialty-logo{display:block;width:152px;height:auto}
+.rialty-intro p{font-size:13px;color:#787078;text-align:right;white-space:nowrap}
+.rialty-note.client-note{grid-column:1;grid-row:2;display:flex;align-self:start;margin-top:0;border-top:1px solid #d9d3dc;padding-top:24px}
+.rialty-grid{grid-column:2;grid-row:2;align-self:center;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.51fr);grid-template-rows:1fr 1fr;gap:18px;width:min(100%,calc(61vh * 1.43));aspect-ratio:1.43;justify-self:end;min-height:0}
+.rialty-grid button{display:block;min-height:0;min-width:0;cursor:zoom-in;overflow:hidden}
+.web-plate{grid-column:1;grid-row:1;border:1px solid #ebe7ed;border-radius:3px;background:#fff}
+.web-plate img{display:block;width:100%;height:100%;object-fit:contain}
+.pending-plate{grid-column:1;grid-row:2;border:1px solid #eeeaf0;background:#faf9fb;border-radius:3px}
+.phone-plate{grid-column:2;grid-row:1/3}
+.phone-plate img{display:block;width:100%;height:100%;object-fit:contain}
+.rialty-story .detail-viewport.mobile-view img{width:440px;min-width:0;max-width:100%;margin:0 auto}
+.rialty-story .detail-viewport:not(.mobile-view){display:flex;align-items:center;justify-content:center;padding:16px;background:#fff}
+.rialty-story .detail-viewport:not(.mobile-view) img{width:100%;height:100%;min-width:0;max-width:100%;max-height:100%;object-fit:contain}
+
+.deck-plate{grid-column:1;grid-row:2;border:1px solid #eeeaf0;border-radius:3px;background:white}
+.deck-plate img{display:block;width:100%;height:100%;object-fit:contain}
+.rialty-story .detail-viewport.mobile-view{display:flex;align-items:center;justify-content:center;background:#fff;padding:12px}
+.rialty-story .detail-viewport.mobile-view img{width:auto;height:100%;max-width:100%;max-height:100%;object-fit:contain}
+
+.mobile-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,3vw,44px);width:100%;height:100%;min-height:0;padding:12px clamp(0px,3vw,40px)}
+.rialty-story .detail-viewport.mobile-view .mobile-gallery img{width:100%;height:100%;min-width:0;min-height:0;object-fit:contain}

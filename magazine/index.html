@@ -76,6 +76,8 @@ body.page-open .magazine-sheet{visibility:hidden}
 .cover-feature .feature-kicker{font:400 .833333vw/1 CoverArchivo,sans-serif;letter-spacing:.14vw;color:#c9c3b8;margin-bottom:1.25vw}
 .feature-eyebrow{color:#8b8883;font-family:CoverMono,monospace;font-weight:300;font-size:.763889vw;letter-spacing:.09vw}
 .feature-name{color:#eee9dd}
+.cover-feature .feature-kicker{display:flex;align-items:center;gap:.65vw}
+.feature-mosaix-logo{display:block;width:5.8vw;height:auto;filter:brightness(0) invert(1)}
 .cover-feature .feature-headline{color:#B8A0E5;margin:0;font:italic 3.055556vw/.96 CoverDomaine,serif;letter-spacing:-.07vw;font-weight:400}
 .cover-feature .feature-credit{margin-top:1.4vw;font:400 .972222vw/1.5 CoverArchivo,sans-serif;color:#a39f98;white-space:nowrap;max-width:none}
 .feature-link{pointer-events:auto;display:inline-flex;align-items:baseline;gap:1.15vw;margin-top:1.4vw;color:#eee9dd;text-decoration:none;font:400 .902778vw/1.6 CoverArchivo,sans-serif}
@@ -89,7 +91,7 @@ body.page-open .magazine-sheet{visibility:hidden}
 .page-hint-arrow{position:absolute;right:67px;bottom:calc(6.707317vh - 32px);width:26px;height:21px;fill:#d8d5ce;stroke:none;opacity:.85;transition:opacity .25s}
 .page-handle:hover .page-hint,.page-handle:focus-visible .page-hint{opacity:1}
 .page-handle:hover .page-hint-arrow{opacity:.8}
-body.page-turning .page-hint,body.page-turning .page-hint-arrow{opacity:0}
+body.page-turning .page-handle .page-hint,body.page-turning .page-handle .page-hint-arrow{opacity:0;visibility:hidden;transition:none}
 </style><style>
 /* Twenty softly scalloped lobes, cut from vermilion stock. */
 .cover-launch{position:absolute;right:-.9vw;top:8vh;width:11.55vw;height:12.25vw;pointer-events:auto;transform:rotate(-12deg);filter:drop-shadow(-2px 4px 3px #00000065)}
@@ -127,7 +129,7 @@ body.page-turning .page-hint,body.page-turning .page-hint-arrow{opacity:0}
 
 <nav class="contents-nav" aria-label="Magazine contents">
 <a href="./services.html"><span class="nav-name">Design Services</span><span class="nav-subtitle">The practice</span><span class="nav-page">03</span></a>
-<a href="./mosaix.html"><span class="nav-name">Proof</span><span class="nav-subtitle">Selected Work</span><span class="nav-page">07</span></a>
+<a href="./mosaix-story.html"><span class="nav-name">Proof</span><span class="nav-subtitle">Selected Work</span><span class="nav-page">07</span></a>
 <a href="/archived/#about"><span class="nav-name">Meet Vishal</span><span class="nav-subtitle">The person</span><span class="nav-page">18</span></a>
 <a href="https://www.keya.studio" target="_blank" rel="noopener noreferrer"><span class="nav-name">Products</span><span class="nav-subtitle">Made at idyeah</span><span class="nav-page">22</span></a>
 </nav>
@@ -487,10 +489,10 @@ body.page-turning .page-hint,body.page-turning .page-hint-arrow{opacity:0}
 <div class="cover-type" aria-label="idyeah. Product and brand design studio. Clarity that ships. Volume 18, Q3.">
 <img class="cover-masthead" src="./assets/wordmark.svg" width="458" height="185" alt="idyeah"><img class="cover-dot" src="./assets/dot-coral-red.svg" width="62" height="62" alt=".">
 <section class="cover-feature" aria-label="Featured case: Mosaix">
-<p class="feature-kicker"><span class="feature-eyebrow">FEATURED CASE /</span> <span class="feature-name">MOSAIX</span></p>
+<p class="feature-kicker"><span class="feature-eyebrow">FEATURED CASE /</span> <img class="feature-mosaix-logo" src="/assets/idyeah/logos/mosaix.webp" width="1390" height="296" alt="Mosaix"></p>
 <h2 class="feature-headline">The first day<br>deserves a<br>grand entrance.</h2>
 <p class="feature-credit">A new onboarding, designed by Vishal</p>
-<a class="feature-link" href="./mosaix.html"><span class="feature-link-label">View story</span><span class="feature-link-folio">page 08</span></a>
+<a class="feature-link" href="./mosaix-story.html"><span class="feature-link-label">View story</span><span class="feature-link-folio">page 08</span></a>
 </section>
 <section class="cover-launch" aria-label="Crit launch announcement">
 <svg class="sticker-adhesive" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><defs>
@@ -512,7 +514,7 @@ body.page-turning .page-hint,body.page-turning .page-hint-arrow{opacity:0}
 <path id="fold-shadow" fill="#000" opacity=".32" filter="url(#paper-shadow)"/>
 <g id="curl-surface"></g>
 </svg>
-<button class="page-handle" aria-label="Look inside" title="Look inside"><span class="page-hint">Look inside</span><svg class="page-hint-arrow" viewBox="0 0 34 28" aria-hidden="true"><path d="M5 2 C0 18 13 27 27 19 L23 15 L33 17 L29 26 L28 21 C12 32 -3 20 5 2 Z"/></svg></button>
+<button class="page-handle" aria-label="Look inside"><span class="page-hint">Look inside</span><svg class="page-hint-arrow" viewBox="0 0 34 28" aria-hidden="true"><path d="M5 2 C0 18 13 27 27 19 L23 15 L33 17 L29 26 L28 21 C12 32 -3 20 5 2 Z"/></svg></button>
 
 <a class="contents-turn" href="./services.html" aria-label="Turn to Design Services"></a>
 <script>
