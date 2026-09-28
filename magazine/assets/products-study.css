@@ -52,7 +52,7 @@
 @media(max-width:650px){.catalog-copy h1,.catalog-copy h2{font-size:15px}.catalog-copy{grid-template-rows:34px 64px 35px}}
 @media(max-height:650px){.catalog-copy{grid-template-rows:32px 48px 32px}}
 /* Glass edition: retain the image's highlights with a lighter veil. */
-.products-page::before{background-image:url('./keya-glass-v1.png')}
+.products-page::before{background-image:url('./keya-glass-v1.webp')}
 .products-page::after{background:linear-gradient(180deg,rgba(8,11,14,.3),rgba(8,11,14,.13) 45%,rgba(8,11,14,.25))}
 /* Three spatial planes; typography stays front-facing. */
 .products-page{--depth-x:0;--depth-y:0}

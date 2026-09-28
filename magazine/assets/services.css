@@ -194,3 +194,12 @@ h1,.design h1{font-size:min(11vw,16vh);margin-top:1.5vh;margin-bottom:2.6vh;line
 .audit-highlight path{fill:var(--red);fill-opacity:.15}
 
 .audit-testimonial .quote-line{display:block;white-space:nowrap}
+
+/* Shared header return; both footer folios stay at the outer edges. */
+.running-head{grid-template-columns:1fr auto}
+.practice-navigation{display:flex;align-items:center;gap:18px}
+.practice-back{display:inline-flex;align-items:center;gap:8px;font:12px Archivo,Arial,sans-serif;letter-spacing:0}
+.practice-back svg{width:20px;height:20px;padding:5px;box-sizing:border-box;border-radius:50%;background:#c93219;fill:none;stroke:#fff;stroke-width:1.6;flex:none}
+.practice-back:hover{text-decoration:underline;text-decoration-color:#c93219;text-underline-offset:5px}
+.practice-separator{height:16px;width:1px;background:#c9c3b5}
+.design-footer .folio{margin-left:auto}

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>idyeah. — Magazine cover · page turn</title>
-<meta name="robots" content="noindex,nofollow">
+<title>idyeah. — Product & Brand Design</title>
+<meta name="robots" content="index,follow">
 <style>
   /* Monochrome, text-free base plate.
      Tonal translation from the colour original uses a photographic red-filter
@@ -115,10 +115,10 @@ body.page-turning .page-handle .page-hint,body.page-turning .page-handle .page-h
 .cover-footer-id{position:absolute;left:4.444444vw;bottom:6.707317vh;display:flex;align-items:center;gap:16px}
 .cover-footer-id .cover-descriptor{position:static;white-space:nowrap}
 .footer-qr{display:block;width:48px;height:48px;border-radius:4px;flex:none}
-</style><link rel="stylesheet" href="./assets/contents.css?v=inside-contact-3">
-<link rel="stylesheet" href="./assets/cover-entrance.css">
-<link rel="stylesheet" href="./assets/wordmark.css">
-</head>
+</style><link rel="stylesheet" href="./assets/contents.css?v=publication-2">
+<link rel="stylesheet" href="./assets/cover-entrance.css?v=publication-2">
+<link rel="stylesheet" href="./assets/wordmark.css?v=publication-2">
+<meta name="description" content="An independent product and brand design studio by Vishal Mehta. Explore the practice, selected work, the person, and products."><link rel="canonical" href="https://www.idyeah.studio/magazine"><meta property="og:type" content="website"><meta property="og:title" content="idyeah. — Product & Brand Design"><meta property="og:description" content="An independent product and brand design studio by Vishal Mehta. Explore the practice, selected work, the person, and products."><meta property="og:url" content="https://www.idyeah.studio/magazine"><meta property="og:image" content="https://www.idyeah.studio/magazine/assets/social-cover.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="idyeah magazine cover: product and brand design by Vishal Mehta"><link rel="icon" href="/favicon.ico"><meta name="twitter:card" content="summary_large_image"><link rel="stylesheet" href="./assets/magazine-ready.css?v=publication-2"><script src="./assets/magazine-ready.js?v=publication-2" defer></script></head>
 <body>
 <section class="magazine-under" aria-label="Page 02: contents" inert tabindex="-1">
 <div class="contents-page">
@@ -533,10 +533,10 @@ body.page-turning .page-handle .page-hint,body.page-turning .page-handle .page-h
  function project([x,y]){const u=nx*x+ny*y-cut,t=Math.max(0,Math.min(Math.PI,u/R)),q=u<=roll?R*Math.sin(t):-(u-roll),z=R*(1-Math.cos(t));return[x+nx*(q-u)-z*.12,y+ny*(q-u)-z*.22];}
  let silhouette=[];const lifted=clip(rect,cut,false);for(let i=0;i<lifted.length;i++){const a=lifted[i],b=lifted[(i+1)%lifted.length];for(let j=0;j<28;j++){const t=j/28;silhouette.push(project([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]));}}
  shadow.setAttribute('d',path(silhouette.map(([x,y])=>[x+4,y+7])));
- for(let i=0;i<=N;i++){let lo=roll*i/N,hi=i===N?1e6:roll*(i+1)/N+.15,poly=clip(clip(rect,cut+lo,false),cut+hi),mapped=poly.map(project);bands[i].setAttribute('d',path(mapped));const t=Math.PI*(i+.5)/N;let rgb;if(i<N/2){const v=Math.round(13+35*Math.pow(Math.sin(t),5));rgb=sheet===inside?[201,50,25].map(c=>Math.round(c*(.72+.28*Math.sin(t)))):[v,v,v];}else{const light=i===N?.97:.72+.28*Math.sin((t-Math.PI/2));rgb=[249,245,233].map(v=>Math.round(v*light));}bands[i].setAttribute('fill',`rgb(${rgb.join(',')})`);bands[i].setAttribute('stroke',`rgb(${rgb.join(',')})`);bands[i].setAttribute('stroke-width','.45');}
+ for(let i=0;i<=N;i++){let lo=roll*i/N,hi=i===N?1e6:roll*(i+1)/N+.15,poly=clip(clip(rect,cut+lo,false),cut+hi),mapped=poly.map(project);bands[i].setAttribute('d',path(mapped));const t=Math.PI*(i+.5)/N;let rgb;if(i<N/2){const v=Math.round(13+35*Math.pow(Math.sin(t),5));rgb=sheet===inside?[201,50,25].map(c=>Math.round(c*(1-.28*Math.pow(Math.sin(t),2)))):[v,v,v];}else{const light=i===N?.97:.72+.28*Math.sin((t-Math.PI/2));rgb=[249,245,233].map(v=>Math.round(v*light));}bands[i].setAttribute('fill',`rgb(${rgb.join(',')})`);bands[i].setAttribute('stroke',`rgb(${rgb.join(',')})`);bands[i].setAttribute('stroke-width','.45');}
  }
  function animate(to,duration,done){cancelAnimationFrame(animation);let start=performance.now(),from=depth;function frame(now){let t=Math.min(1,(now-start)/duration),e=t*t*(3-2*t);draw(from+(to-from)*e);if(t<1)animation=requestAnimationFrame(frame);else if(done)done();}animation=requestAnimationFrame(frame);}
- function idle(now){if(!active){const lift=hover?56:38+(reduced?0:2.6*Math.pow((1-Math.cos(now/1150))/2,3));draw(depth+(lift-depth)*.075);}requestAnimationFrame(idle);}
+ function idle(now){if(!active){const lift=hover?56:38+(reduced?0:2.6*Math.pow((1-Math.cos(now/1150))/2,3));if(Math.abs(lift-depth)>.03)draw(depth+(lift-depth)*.075);}requestAnimationFrame(idle);}
  handle.addEventListener('pointerenter',()=>hover=true);handle.addEventListener('pointerleave',()=>hover=false);handle.addEventListener('focus',()=>hover=true);handle.addEventListener('blur',()=>hover=false);
  handle.addEventListener('click',()=>{if(active||opened)return;active=true;document.body.classList.add('page-turning');animate((nx*width+ny*height)*2+150,reduced?1:1650,()=>{opened=true;active=false;document.body.classList.add('page-open');sheet=inside;inside.style.zIndex='2';draw(38);inside.inert=false;inside.removeAttribute('tabindex');backButton.focus({preventScroll:true});});});
  backButton.addEventListener('click',()=>{if(active)return;active=true;opened=false;sheet=coverSheet;inside.style.clipPath='none';inside.style.zIndex='';depth=(nx*width+ny*height)*2+150;inside.inert=true;inside.tabIndex=-1;document.body.classList.remove('page-open');svg.style.visibility='visible';animate(38,reduced?1:1400,()=>{active=false;document.body.classList.remove('page-turning');handle.focus({preventScroll:true});});});

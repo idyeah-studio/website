@@ -1,0 +1,65 @@
+.orientation-gate[hidden]{display:none!important}
+.orientation-gate{position:fixed;inset:0;z-index:2147483647;background:#171715;color:#f4f0e6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9vw;gap:24px;font-family:Arial,sans-serif}
+.orientation-gate h1{font:400 30px/1.2 Georgia,serif;letter-spacing:-.03em;margin:0;max-width:290px}
+.orientation-gate p{font:16px/1.5 Arial,sans-serif;margin:0;color:#d0ccc5;max-width:280px}
+.orientation-gate a{color:#f4f0e6;text-decoration:underline;text-underline-offset:6px;font:14px Arial,sans-serif}
+.rotate-device{width:65px;height:35px;border:2px solid #e45b40;border-radius:6px;display:block}
+.skip-magazine{position:fixed;left:16px;top:-80px;z-index:10000;background:#fff;color:#171715;padding:12px 18px}
+.skip-magazine:focus{top:12px}
+a:focus-visible,button:focus-visible{outline:2px solid #c93219;outline-offset:4px}
+footer .walkthrough-call{display:inline;color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+footer .walkthrough-call:hover{ text-decoration-color:#c93219 }
+body.has-magazine-turn{background:var(--fold-under,#171715)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(orientation:landscape) and (max-height:500px){
+ .case-navigation,.case-pills{flex-wrap:nowrap!important;gap:6px!important}
+ .case-pills a{padding-inline:9px!important;font-size:11px!important}
+ .story-header{gap:12px}.back-inside{font-size:11px}
+ .client-note blockquote{font-size:clamp(13px,1.45vw,18px);line-height:1.45}
+ .client-note .attribution{margin-top:12px}.note-label{margin-bottom:8px}
+ .story-header .studio-wordmark{width:70px}
+ footer p{font-size:12px}
+}
+
+body:has(>.services-sheet){background:#fff}
+/* One folio datum, shared with Inside. The leaf clips it during a page turn. */
+footer .folio,.contents-bottom .folio-02,.services-sheet>footer .folio{position:fixed;right:4.45vw;bottom:3.4vh;margin:0!important;transform:none!important;font-size:22px;line-height:.9;font-style:italic}
+.services-sheet .audit-footer .folio{right:auto;left:4.45vw}
+.audit-footer{padding-left:40px}
+.design-footer{padding-right:40px}
+@media(orientation:landscape) and (max-height:500px){
+ .services-sheet .service-composition{padding:1.5vh 0 1vh}
+ .services-sheet .audit,.services-sheet .design{padding-right:0;padding-left:0}
+ .services-sheet .audit{padding-right:4vw}.services-sheet .design{padding-left:6vw}
+ .services-sheet h1,.services-sheet .design h1{font-size:15vh;margin:1vh 0 2vh}
+ .services-sheet .service-intro{font-size:12px}
+ .services-sheet .service-description{font-size:10px;margin-top:1.5vh}
+ .services-sheet .audit-lenses{margin-top:2vh;width:100%}
+ .services-sheet .lens-row{gap:4px}
+ .services-sheet .lens-pill{font-size:8px;padding:5px 5px}
+ .services-sheet .audit-testimonial{margin-top:2.5vh;padding-top:1vh;padding-left:22px}
+ .services-sheet .audit-testimonial blockquote{font-size:15px;line-height:1.3;transform:none}
+ .services-sheet .audit-testimonial figcaption{font-size:9px;margin-top:6px;transform:none}
+ .services-sheet .audit-testimonial:before{font-size:80px}
+ .services-sheet .design-columns{height:33vh;margin-top:2vh}
+ .services-sheet .design-columns>div{min-height:0;height:19vh;padding:12px;width:24vw}
+ .services-sheet .design-columns>div:last-child{top:14vh;left:9vw}
+ .services-sheet .design-columns h3{font-size:16px;margin-bottom:4px}
+ .services-sheet .design-columns p{font-size:9px;line-height:1.3}
+ .services-sheet .service-link{font-size:11px;padding-block:5px}
+ .services-sheet footer{height:6vh;flex-shrink:0;padding-top:0!important}
+ .services-sheet>footer a{font-size:9px}
+}
+.orientation-gate:focus{outline:none}
+.audit-footer{justify-content:flex-end}
+/* Supporting copy remains quiet, with stronger contrast on light paper. */
+body:not(.products-page):not(.vishal-page) .client-note .attribution,
+body:not(.products-page):not(.vishal-page) .note-label{color:#716a72}
+.product-edition .product-description{color:#746e65}
+.theme-wabi .wabi-note p{color:#66715b}
+.theme-alchemy .prompt-heading,.theme-alchemy .reader-review figcaption{color:#76694f}
+
+body.page-open{background:#e9dbb8}
+@media(min-height:501px){
+ .services-sheet .lens-pill{font-size:clamp(9px,.85vw,12px);padding:6px .45vw}
+}

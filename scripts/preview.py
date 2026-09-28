@@ -6,6 +6,10 @@ from pathlib import Path
 
 
 class PreviewHandler(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
     def translate_path(self, path):
         resolved = super().translate_path(path)
         if not Path(resolved).suffix and Path(resolved + '.html').is_file():
