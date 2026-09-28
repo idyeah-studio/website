@@ -1,0 +1,21 @@
+body.has-magazine-turn{display:block;padding:0;background:#171715}
+.magazine-leaf{position:fixed;inset:0;width:100%;height:100dvh;overflow:hidden;z-index:2;isolation:isolate}
+.leaf-fold{position:fixed;inset:0;width:100%;height:100%;z-index:20;pointer-events:none}
+.leaf-handle{position:fixed;right:0;bottom:0;width:68px;height:68px;z-index:21;cursor:pointer}
+.leaf-handle:focus-visible{outline:2px solid #c93219;outline-offset:-8px}
+.destination-preview{position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff;z-index:1;pointer-events:none}
+.has-magazine-turn footer .folio{margin-right:45px}
+.products-page.has-magazine-turn::before,.products-page.has-magazine-turn::after{display:none}
+.products-page .magazine-leaf::before{content:"";position:absolute;inset:-14px;z-index:-2;background:url('./keya-glass-v1.webp') center/cover no-repeat;pointer-events:none}
+.products-page .magazine-leaf::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,11,14,.3),rgba(8,11,14,.13) 45%,rgba(8,11,14,.25));pointer-events:none}
+@media(prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){.products-page .magazine-leaf::before{transform:translate3d(calc(var(--depth-x,0) * -9px),calc(var(--depth-y,0) * -6px),0)}}
+body.magazine-turning .leaf-handle{visibility:hidden}
+button.leaf-handle{border:0;background:transparent;padding:0}
+.leaf-handle[aria-disabled="true"]{cursor:default}
+
+/* Stable layout before scripts run, during iframe previews, and after navigation. */
+body[data-next-page]{display:block;padding:0}
+body[data-next-page]>.magazine-leaf{display:grid;grid-template-rows:9dvh minmax(0,1fr) 8dvh;padding:0 4.8vw;background-color:#fff}
+body.products-page>.magazine-leaf{grid-template-rows:10dvh minmax(0,1fr) 8dvh;background-color:#191712}
+body.vishal-page>.magazine-leaf{background-color:#151515}
+body.product-edition>.magazine-leaf{background-color:var(--paper)}
