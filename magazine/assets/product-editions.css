@@ -1,0 +1,61 @@
+/* Product editions share only the magazine furniture; each composition is its own. */
+.product-edition{--paper:#fff;--accent:#c93219;--text:#302d29;--quiet:#827a71;background:var(--paper);color:var(--text);padding:0;display:block}
+.product-edition>.magazine-leaf{height:100dvh;display:grid;grid-template-rows:9vh minmax(0,1fr) 8vh;padding:0 4.8vw;background:var(--paper)}
+.product-edition .story-header{z-index:4}.product-edition .edition{position:relative;display:grid;min-height:0;padding:0;isolation:isolate}
+.product-edition h1{font:400 clamp(32px,4.4vw,72px)/1.04 Georgia,serif;letter-spacing:-.04em;margin:0 0 3vh}
+.product-edition h1 em{font-family:EditorialSerif,Georgia,serif;color:var(--accent);font-weight:400}
+.product-edition p{margin:0}.product-edition .eyebrow{font:10px/1.4 EditorialMono,monospace;letter-spacing:.12em;color:var(--quiet)}
+.product-edition .product-deck{font-size:clamp(15px,1.35vw,22px);line-height:1.4;letter-spacing:-.02em;margin-bottom:1.2vh}
+.product-edition .product-description{font-size:clamp(12px,1.03vw,16px);line-height:1.7;color:var(--quiet)}
+.product-action{display:inline-block;font-size:12px;margin-top:3.5vh;padding:0 0 7px;position:relative}
+.product-action:after{content:'';height:1px;position:absolute;left:0;bottom:0;width:100%;background:currentColor;opacity:.45;transition:transform .25s;transform-origin:left}
+.product-action:hover:after{transform:scaleX(.65);opacity:1}.product-edition figure{margin:0;min-height:0}.product-edition figcaption{font-size:11px;color:var(--quiet);line-height:1.5}
+.image-preview{display:block;cursor:zoom-in;line-height:0}.image-preview img{display:block;width:100%;height:100%;object-fit:contain}
+.edition-footer{color:var(--quiet);font-size:11px}.edition-footer .folio{color:var(--text)}
+/* Cover artwork and real evidence, with the prompt set directly on the page. */
+.theme-alchemy{--paper:#f7f4ec;--accent:#927449;--quiet:#81786b}
+.alchemy-edition{grid-template-columns:39% 61%;align-items:center;padding:4vh 6vw!important;gap:0}
+.book-plate{justify-self:center;width:min(21vw,37vh);position:relative}
+.book-jacket{background:#131621;box-shadow:2px 3px 0 #c9c2b5,5px 6px 0 #e5dfd3,15px 23px 30px #57463126;aspect-ratio:1224/1584;position:relative;overflow:hidden}
+.book-art{height:65%;overflow:hidden;position:relative}.book-art img{display:block;width:100%;height:auto}.book-art:after{content:'';position:absolute;inset:70% 0 0;background:linear-gradient(transparent,#131621)}
+.book-jacket-type{position:absolute;inset:61% 4% 4%;text-align:center;color:#f2ebdc;display:flex;flex-direction:column;align-items:center}.book-jacket-type>span{font:clamp(19px,2.1vw,33px)/1.08 Georgia,serif;letter-spacing:.015em}.book-jacket-type p{font-size:clamp(9px,.95vw,14px);margin-top:12px}.book-jacket-type small{font-size:clamp(8px,.75vw,11px);color:#cbb67f;margin-top:auto}
+.rating-proof{display:flex;flex-direction:column;align-items:center;gap:9px;margin-top:4vh;white-space:nowrap}.rating-stars{font:19px/1 Arial,sans-serif;letter-spacing:3px;color:#ae8a40}.rating-proof>span:last-child{font-size:11px;color:#857b6c}.rating-proof b{font-weight:500;color:#66543d}.rating-proof i{font-style:normal;padding:0 5px}.rating-proof:hover>span:last-child{text-decoration:underline;text-underline-offset:4px}
+.alchemy-editorial{padding-left:5vw;min-width:0}.alchemy-intro h1{font-size:clamp(28px,2.7vw,43px);line-height:1.15;letter-spacing:-.025em;margin-bottom:12px}.alchemy-intro p{font-size:clamp(12px,1.05vw,16px);color:#867c6c}
+.prompt-excerpt{margin-top:4vh;padding-block:2.4vh;border-top:1px solid #dcd3c3;border-bottom:1px solid #dcd3c3}.prompt-heading{display:flex;justify-content:space-between;gap:12px;font:9px EditorialMono,monospace;letter-spacing:.03em;color:#a09077;margin-bottom:2vh}.prompt-excerpt p{font:clamp(12px,1.12vw,17px)/1.7 EditorialMono,monospace;color:#6c6457;margin-top:12px}.prompt-excerpt mark{background:#ece3cd;color:#6a5736;padding:1px 3px}.prompt-excerpt .prompt-omission{margin:0;color:#ab9a80;line-height:1}
+.product-edition .reader-review{margin-top:3.5vh;position:relative;padding-left:21px}.reader-review:before{content:'“';position:absolute;left:-8px;top:-12px;font:80px/1 Georgia,serif;color:#d8c9aa}.reader-review blockquote{position:relative;margin:0;font:italic clamp(16px,1.5vw,23px)/1.45 EditorialSerif,Georgia,serif;color:#8b7959}.reader-review figcaption{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:10px;color:#9b8c76}.reader-review figcaption span:first-child{color:#746754}.alchemy-editorial>.product-action{margin-top:2.5vh}
+/* Crit iOS is a central product plate with small marginal copy. */
+.ios-edition{grid-template-columns:1fr;align-items:center;position:relative}
+.ios-masthead{position:absolute;left:5vw;right:5vw;top:5vh;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.ios-masthead h1{margin:0}.ios-masthead h1 img{width:85px;display:block}.ios-masthead p{font-size:clamp(12px,1.1vw,17px);color:#82766f}.ios-masthead .product-action{margin:0}
+.ios-plate{position:relative;justify-self:center;align-self:end;margin-bottom:6vh!important;z-index:1}
+.ios-plate:before{content:'';position:absolute;z-index:-1;inset:18% -3vw -2vh;background:#f7eeea}
+.device-pair{display:flex;gap:3vw;align-items:end;padding:0 1vw}
+.phone{height:49vh;aspect-ratio:1320/2868;flex:none;border:4px solid #242322;border-radius:clamp(18px,2.7vw,42px);overflow:hidden;background:#080808;box-shadow:9px 18px 32px #583d3020}.phone-back{height:44vh;transform:translateY(-3vh)}
+.product-edition .ios-margin-note{position:absolute;left:5vw;top:42%;font:clamp(24px,2.6vw,39px)/1.25 Georgia,serif;color:#6f635b}.ios-margin-note em{font-family:EditorialSerif,Georgia,serif;color:#c93219}
+.ios-outcome{position:absolute;right:5vw;bottom:15vh;max-width:15vw}.outcome-number{display:block;font:italic clamp(44px,6vw,88px)/1 EditorialSerif,Georgia,serif;color:#d9b9aa;margin-bottom:14px}.ios-outcome p{font-size:clamp(11px,1vw,15px);line-height:1.7;color:#82766f}
+/* Figma is a typographic canvas. No simulated product UI or invented findings. */
+.theme-crit-figma{--paper:#fafafa;--accent:#635875;--quiet:#827d87}
+.figma-edition{grid-template-columns:1fr;align-items:center;background-image:radial-gradient(#d9d5df .65px,transparent .65px);background-size:20px 20px;background-clip:content-box;padding:4vh 5vw!important}
+.figma-focus{position:absolute;top:9vh;left:10vw;right:10vw;display:flex;justify-content:space-between;font:10px EditorialMono,monospace;letter-spacing:.04em;color:#9c949f}
+.type-selection{position:relative;justify-self:center;width:74%;padding:3vh 3vw;border:1px solid #b2a1c6;margin-bottom:6vh;background:#fafafae6}
+.type-selection h1{font:400 clamp(36px,5.3vw,82px)/1.15 EditorialSans,Arial,sans-serif;letter-spacing:-.055em;margin:0}.type-selection h1 em{font-family:EditorialSerif,Georgia,serif;font-weight:400;color:#92849f}
+.handle{position:absolute;width:7px;height:7px;border:1px solid #9f89bc;background:#fff}.tl{top:-4px;left:-4px}.tr{top:-4px;right:-4px}.bl{bottom:-4px;left:-4px}.br{bottom:-4px;right:-4px}
+.figma-bottom{position:absolute;left:10vw;right:10vw;bottom:7vh;display:flex;justify-content:space-between;align-items:center;gap:30px;background:#fafafa;padding-block:10px}.figma-bottom img{width:80px;height:auto}.figma-bottom p{font-size:clamp(12px,1.1vw,16px);line-height:1.6;color:#827d87}.figma-bottom .product-action{margin:0}
+/* Wabi: a quiet asymmetrical field, with the real practice screen as its anchor. */
+.theme-wabi{--paper:#f9f6ed;--accent:#566c50;--quiet:#888574}.wabi-edition{grid-template-columns:43% 36% 21%;align-items:center}.wabi-copy{padding-left:5vw}.wabi-mark{width:105px;height:46px;object-fit:contain;object-position:left center;margin-bottom:4vh}.wabi-copy h1{font-size:clamp(32px,4.3vw,68px)}
+.wabi-plate{position:relative;justify-self:center;display:flex;flex-direction:column;align-items:center}.wabi-plate:before{content:'';position:absolute;z-index:-1;left:-22%;right:-22%;top:15%;bottom:3%;border-radius:48% 52% 49% 44%;background:#e9ebdf;transform:rotate(-8deg)}.wabi-screen{height:55vh;aspect-ratio:1242/2688;overflow:hidden;border-radius:2.7vh;box-shadow:9px 17px 30px #746d4c1a;border:1px solid #e5dfd0}.wabi-plate figcaption{margin-top:3vh;font:italic 15px EditorialSerif,Georgia,serif;color:#858675}.wabi-note{align-self:end;padding-left:1vw;margin-bottom:16vh;border-left:1px solid #d9dacb}.wabi-note>span{font:24px Georgia,serif;color:#a7ad98}.wabi-note p{margin-top:18px;font-size:12px;line-height:1.8;color:#89917e}
+/* A single lightbox. The source stays whole and can scroll at a readable size. */
+.product-viewer{position:fixed;inset:0;border:0;padding:0;margin:auto;width:min(92vw,1100px);height:92dvh;max-width:none;max-height:none;background:#fff;color:#302d29;box-shadow:0 20px 70px #0003}
+.product-viewer::backdrop{background:#17151380;backdrop-filter:blur(3px)}.product-viewer-bar{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 18px 0 24px;font-size:11px;border-bottom:1px solid #ece9e5}.close-viewer{width:32px;height:32px;font:26px/1 Arial,sans-serif;display:grid;place-items:center}.product-viewer-scroll{height:calc(100% - 48px);overflow:auto;padding:24px;overscroll-behavior:contain}.product-viewer-scroll img{display:block;width:min(100%,540px);height:auto;margin:0 auto}.product-viewer:focus{outline:none}
+@media(max-height:600px){.product-signature{margin-bottom:3vh}.product-edition h1{font-size:4vw;margin-bottom:2vh}.product-edition .product-deck{font-size:1.4vw}.product-edition .product-description{font-size:1.12vw}.product-action{margin-top:2vh}.book-index{margin-bottom:10vh}.wabi-mark{height:30px;margin-bottom:2vh}.product-signature img{width:65px}.phone{border-width:3px}.product-edition .case-navigation{gap:10px}.product-edition .case-pills a{font-size:10px;padding-inline:10px}}
+@media(prefers-reduced-motion:reduce){.book-cover,.product-action:after{transition:none}}
+.product-edition .edition{grid-template-rows:minmax(0,1fr);column-gap:0}
+/* Wabi turns the composition around: the practice first, its invitation beside it. */
+.wabi-edition{grid-template-columns:38% 45% 17%}
+.wabi-plate{grid-column:1;grid-row:1}
+.wabi-copy{grid-column:2;grid-row:1;padding-left:4vw}
+.wabi-note{grid-column:3;grid-row:1;margin-bottom:13vh}
+
+
+.store-download{display:inline-block;width:120px;height:40px;line-height:0;flex:none}.store-download img{width:100%;height:100%;object-fit:contain}.wabi-copy .store-download{margin-top:3.5vh}.figma-brand-mark{display:inline-block;width:.46em;height:.7em;object-fit:contain;margin-left:.3em;vertical-align:baseline}
+@media(max-height:600px){.alchemy-intro h1{font-size:2.7vw}.alchemy-intro p{font-size:1.15vw}.prompt-excerpt{margin-top:2.5vh;padding-block:1.5vh}.prompt-excerpt p{font-size:1.07vw;line-height:1.5;margin-top:8px}.prompt-heading{margin-bottom:1.2vh;font-size:8px}.product-edition .reader-review{margin-top:2.5vh}.reader-review blockquote{font-size:1.5vw}.reader-review figcaption{margin-top:8px;font-size:9px}.alchemy-editorial>.product-action{margin-top:2vh}.book-jacket-type p{margin-top:6px}.ios-masthead{top:3vh}.ios-masthead h1 img{width:65px}.type-selection h1{font-size:5.3vw;margin:0}.figma-focus{top:7vh}.figma-bottom{bottom:4vh}.wabi-copy .store-download{margin-top:2.5vh}}
