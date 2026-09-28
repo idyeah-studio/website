@@ -1,5 +1,11 @@
 /* Shared publication behavior: landscape presentation, keyboard access, and dialogs. */
 (()=>{
+ // Retain keyboard focus cues without leaving rings after clicks or taps.
+ const inputRoot=document.documentElement;
+ document.addEventListener('pointerdown',()=>{inputRoot.dataset.inputMode='pointer';},true);
+ document.addEventListener('keydown',event=>{
+  if(!event.metaKey&&!event.ctrlKey&&!event.altKey)inputRoot.dataset.inputMode='keyboard';
+ },true);
  const portrait=matchMedia('(orientation: portrait)'), touch=matchMedia('(pointer: coarse)');
  const gate=document.createElement('section');gate.className='orientation-gate';gate.hidden=true;gate.setAttribute('aria-label','Landscape viewing');gate.tabIndex=-1;
  gate.innerHTML='<span class="rotate-device" aria-hidden="true"></span><h1>A magazine, best opened sideways.</h1><p>Turn your phone to landscape, or widen this window, to explore idyeah.</p><a href="mailto:vishal@idyeah.studio">Write to me</a>';

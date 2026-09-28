@@ -70,3 +70,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
  .contents-contact{margin-top:2dvh;gap:20px}
  .contents-contact a,.contents-contact a:first-child{font-size:12px}
 }
+
+/* Pointer focus stays functional; only keyboard navigation draws focus rings. */
+html[data-input-mode="pointer"] :is(a,button,[tabindex]):focus{outline:none!important}
