@@ -46,7 +46,7 @@
 .contents-nav a{padding:2.05vh 0;grid-template-columns:26px minmax(0,1fr) 115px 45px}
 .contents-nav .nav-name{font-size:min(2.35vw,4.1vh)}
 .contents-nav .nav-page{font-size:min(35px,4.2vh)}
-.contents-contact{margin-top:2.8vh}
+.contents-contact{margin-top:calc(2.8vh + 24px)}
 .contents-off{padding-top:2.8vh;max-width:min(360px,42vh);justify-self:end;min-height:0}
 .contents-off-top{margin-bottom:1.8vh;flex-shrink:0}
 .contents-off-top h2{font-size:min(35px,4.2vh)}
@@ -107,3 +107,8 @@ body.destination-turn .page-return,body.destination-turn .contents-turn,body.des
 /* Treat the complete masthead as one stable link target. */
 .contents-meta .contents-home,.contents-meta .contents-home:hover{opacity:1;cursor:pointer}
 .contents-home img{pointer-events:none}
+/* Keep the contents subtitles readable beneath the larger link names. */
+.contents-nav .nav-subtitle{font-size:12px;line-height:1.5}
+@media(max-width:760px){.contents-nav .nav-subtitle{font-size:10px}}
+
+.contents-contact a,.contents-contact a:first-child{font-size:14px}

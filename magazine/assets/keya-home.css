@@ -1,0 +1,3 @@
+/* Preserve the approved composition, without the magazine furniture. */
+.keya-home .product-spread{grid-row:2}
+.keya-home .keya-copyright{grid-row:3;display:flex;align-items:center;justify-content:center;color:#bdb6a9;font:11px EditorialSans,Arial,sans-serif;letter-spacing:.02em}
