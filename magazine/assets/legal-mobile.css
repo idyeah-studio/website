@@ -1,4 +1,4 @@
-@media(max-width:760px) and (orientation:portrait){
+@media(max-width:1024px) and (orientation:portrait){
  html,body{height:auto;min-height:100%;overflow:auto}body{display:block;padding:0 7vw}
  .legal-header{padding:calc(20px + env(safe-area-inset-top,0px)) 0 20px;gap:20px}.back-inside{font-size:12px;min-height:44px}
  .legal-main{padding:28px 0 36px}.legal-intro{padding-bottom:26px}.legal-intro h1{font-size:42px;margin-bottom:18px}

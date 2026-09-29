@@ -38,7 +38,7 @@
  const link=handle;
  handle.addEventListener('click',e=>{
  const url=new URL(link.href,location.href);if(e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||link.target==='_blank'||url.origin!==location.origin||!/^https?:$/.test(url.protocol)||url.pathname===location.pathname)return;
- if(document.body.hasAttribute('data-portrait-page')&&matchMedia('(max-width:760px) and (orientation:portrait)').matches)return;
+ if(document.body.hasAttribute('data-portrait-page')&&matchMedia('(max-width:1024px) and (orientation:portrait)').matches)return;
  e.preventDefault();if(active)return;if(reduced){location.assign(url.href);return;}active=true;handle.style.pointerEvents='none';document.body.classList.add('magazine-turning');
  const frame=document.createElement('iframe');frame.className='destination-preview';frame.title='Next page';frame.tabIndex=-1;frame.setAttribute('aria-hidden','true');frame.inert=true;
  let began=false;const begin=()=>{if(began)return;began=true;animate((nx*width+ny*height)*2+150,reduced?1:1400,()=>location.assign(url.href));};

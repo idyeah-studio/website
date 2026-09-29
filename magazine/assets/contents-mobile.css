@@ -1,5 +1,5 @@
 /* Portrait contents: a readable index followed by the latest off idyeah. */
-@media(max-width:760px) and (orientation:portrait){
+@media(max-width:1024px) and (orientation:portrait){
  .magazine-under{height:100dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;clip-path:none!important}
  body.page-open .contents-turn{display:none}
  .contents-page{height:auto;min-height:100%;padding:calc(22px + env(safe-area-inset-top,0px)) 7vw calc(25px + env(safe-area-inset-bottom,0px))}

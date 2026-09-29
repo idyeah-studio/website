@@ -104,7 +104,7 @@ h1,.design h1{font-size:min(11vw,16dvh);margin-top:1.5dvh;margin-bottom:2.6dvh;l
 .services-sheet>footer{padding-right:0;column-gap:40px;align-items:center}
 .services-sheet>footer .folio{font:italic 22px/.9 Domaine,serif}
 .services-sheet>footer a{font-size:10px;padding:4px 0;border-bottom:1px solid var(--line);justify-self:end}
-@media(max-width:760px){.services-sheet{padding-bottom:3dvh}.services-sheet>footer{margin-left:-.45vw;margin-right:-.45vw;column-gap:18px}.services-sheet>footer a{font-size:8px}}
+@media(max-width:1024px){.services-sheet{padding-bottom:3dvh}.services-sheet>footer{margin-left:-.45vw;margin-right:-.45vw;column-gap:18px}.services-sheet>footer a{font-size:8px}}
 
 /* Larger colored panels, offset diagonally with a small shared corner. */
 .design-columns{height:36dvh}

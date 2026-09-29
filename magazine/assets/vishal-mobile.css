@@ -1,5 +1,5 @@
 .off-work .mobile-interest-separator{display:none}
-@media(max-width:760px) and (orientation:portrait){
+@media(max-width:1024px) and (orientation:portrait){
  html,body,body.has-magazine-turn{height:auto;min-height:100%;overflow:auto;background:#08090c}
  body.vishal-page>.magazine-leaf{position:relative;inset:auto;display:block;height:auto;min-height:100dvh;padding:0 7vw;overflow:hidden;clip-path:none!important;background:#08090c}
  .leaf-fold,.leaf-handle{display:none}

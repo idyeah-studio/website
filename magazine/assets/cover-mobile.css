@@ -1,5 +1,5 @@
 .mobile-cover-art{display:none}
-@media(max-width:760px) and (orientation:portrait){
+@media(max-width:1024px) and (orientation:portrait){
  body:not(.page-open) .magazine-sheet{clip-path:none!important}
  .mobile-cover-art{display:block;position:absolute;inset:0}
  .mobile-cover-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
@@ -24,7 +24,7 @@
  .page-handle{right:7vw;bottom:calc(env(safe-area-inset-bottom,0px) + 15px);width:130px;height:44px;border:0;border-radius:0;border-bottom:1px solid #c93219;color:#eee9dd}
  .page-hint{position:static;font:italic 18px/1 CoverDomaine,serif;color:#eee9dd;opacity:1}.page-hint-arrow{display:none}
 }
-@media(max-width:760px) and (orientation:portrait) and (max-height:730px){
+@media(max-width:1024px) and (orientation:portrait) and (max-height:730px){
  .cover-feature .feature-headline{font-size:25px}.cover-feature{bottom:64px}
  .cover-launch{bottom:133px;width:92px;height:98px}
  .cover-feature .feature-credit{max-width:210px;font-size:9px}
