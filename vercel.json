@@ -80,19 +80,11 @@
       }
     },
     {
-      "src": "/inside",
-      "dest": "/magazine/inside.html"
-    },
-    {
       "src": "/magazine/services(?:\\.html)?",
       "status": 308,
       "headers": {
         "Location": "/practice"
       }
-    },
-    {
-      "src": "/practice",
-      "dest": "/magazine/services.html"
     },
     {
       "src": "/magazine/vishal(?:\\.html)?",
@@ -102,19 +94,11 @@
       }
     },
     {
-      "src": "/person",
-      "dest": "/magazine/vishal.html"
-    },
-    {
       "src": "/magazine/products-study(?:\\.html)?",
       "status": 308,
       "headers": {
         "Location": "/products/keya"
       }
-    },
-    {
-      "src": "/products/keya",
-      "dest": "/magazine/products-study.html"
     },
     {
       "src": "/magazine/alchemy(?:\\.html)?",
@@ -124,19 +108,11 @@
       }
     },
     {
-      "src": "/products/design-ai-alchemy",
-      "dest": "/magazine/alchemy.html"
-    },
-    {
       "src": "/magazine/crit-ios(?:\\.html)?",
       "status": 308,
       "headers": {
         "Location": "/products/crit-ios"
       }
-    },
-    {
-      "src": "/products/crit-ios",
-      "dest": "/magazine/crit-ios.html"
     },
     {
       "src": "/magazine/crit-figma(?:\\.html)?",
@@ -146,19 +122,11 @@
       }
     },
     {
-      "src": "/products/crit-figma",
-      "dest": "/magazine/crit-figma.html"
-    },
-    {
       "src": "/magazine/wabi(?:\\.html)?",
       "status": 308,
       "headers": {
         "Location": "/products/wabi"
       }
-    },
-    {
-      "src": "/products/wabi",
-      "dest": "/magazine/wabi.html"
     },
     {
       "src": "/magazine/off-idyeah(?:\\.html)?",
@@ -168,19 +136,11 @@
       }
     },
     {
-      "src": "/off-idyeah",
-      "dest": "/magazine/off-idyeah.html"
-    },
-    {
       "src": "/magazine/mosaix-story(?:\\.html)?",
       "status": 308,
       "headers": {
         "Location": "/proof/mosaix"
       }
-    },
-    {
-      "src": "/proof/mosaix",
-      "dest": "/magazine/mosaix-story.html"
     },
     {
       "src": "/magazine/rialty-story(?:\\.html)?",
@@ -190,19 +150,11 @@
       }
     },
     {
-      "src": "/proof/rialty",
-      "dest": "/magazine/rialty-story.html"
-    },
-    {
       "src": "/magazine/ionate-story(?:\\.html)?",
       "status": 308,
       "headers": {
         "Location": "/proof/ionate"
       }
-    },
-    {
-      "src": "/proof/ionate",
-      "dest": "/magazine/ionate-story.html"
     },
     {
       "src": "/magazine/simcomm-story(?:\\.html)?",
@@ -212,19 +164,11 @@
       }
     },
     {
-      "src": "/proof/simcomm",
-      "dest": "/magazine/simcomm-story.html"
-    },
-    {
       "src": "/magazine/stealth-story(?:\\.html)?",
       "status": 308,
       "headers": {
         "Location": "/proof/stealth"
       }
-    },
-    {
-      "src": "/proof/stealth",
-      "dest": "/magazine/stealth-story.html"
     },
     {
       "src": "/magazine/off-001(?:\\.html)?",
@@ -234,19 +178,11 @@
       }
     },
     {
-      "src": "/off-idyeah/001",
-      "dest": "/magazine/off-001.html"
-    },
-    {
       "src": "/magazine/off-002(?:\\.html)?",
       "status": 308,
       "headers": {
         "Location": "/off-idyeah/002"
       }
-    },
-    {
-      "src": "/off-idyeah/002",
-      "dest": "/magazine/off-002.html"
     },
     {
       "src": "/magazine/off-003(?:\\.html)?",
@@ -256,10 +192,6 @@
       }
     },
     {
-      "src": "/off-idyeah/003",
-      "dest": "/magazine/off-003.html"
-    },
-    {
       "src": "/magazine/off-004(?:\\.html)?",
       "status": 308,
       "headers": {
@@ -267,19 +199,11 @@
       }
     },
     {
-      "src": "/off-idyeah/004",
-      "dest": "/magazine/off-004.html"
-    },
-    {
       "src": "/magazine/off-005(?:\\.html)?",
       "status": 308,
       "headers": {
         "Location": "/off-idyeah/005"
       }
-    },
-    {
-      "src": "/off-idyeah/005",
-      "dest": "/magazine/off-005.html"
     }
   ]
 }
