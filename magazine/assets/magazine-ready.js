@@ -29,7 +29,7 @@
  if(document.body.hasAttribute('data-portrait-cover'))new MutationObserver(orient).observe(document.body,{attributes:true,attributeFilter:['class']});
  orient();
  const main=document.querySelector('main');
- if(main){main.id ||= 'main-content';main.tabIndex=-1;const skip=document.createElement('a');skip.className='skip-magazine';skip.href='#'+main.id;skip.textContent='Skip to content';document.body.prepend(skip);}
+ if(main){main.id ||= 'main-content';main.tabIndex=-1;const skip=document.createElement('a');skip.className='skip-magazine';skip.href=location.pathname+location.search+'#'+main.id;skip.textContent='Skip to content';document.body.prepend(skip);}
  // Native dialogs handle Escape and trap focus; explicitly restore the opener.
  document.querySelectorAll('dialog').forEach(dialog=>{
   let opener=null;

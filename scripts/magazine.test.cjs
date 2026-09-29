@@ -1,14 +1,16 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const pages=['index','services','mosaix-story','rialty-story','ionate-story','simcomm-story','stealth-story','vishal','products-study','alchemy','crit-ios','crit-figma','wabi'];
+const routes=JSON.parse(fs.readFileSync('vercel.json','utf8')).routes;
+const routeFor=n=>n==='index'?'/':routes.find(r=>r.dest===`/magazine/${n}.html`).src;
 const read=n=>fs.readFileSync(`magazine/${n}.html`,'utf8');
 test('the magazine completes one ordered journey back to the cover',()=>{
  for(let i=2;i<pages.length;i++){
- const next=pages[(i+1)%pages.length],expected=next==='index'?'./':`./${next}.html`;
+ const next=pages[(i+1)%pages.length],expected=routeFor(next);
  assert.ok(read(pages[i]).includes(`data-next-page="${expected}"`),pages[i]);
  assert.ok(!read(pages[i]).includes('data-next-page="pending"'));
  }
- assert.match(read('index'),/class="contents-turn" href="\.\/services.html"/);
- assert.match(read('services'),/href="\.\/mosaix-story.html"/);
+ assert.match(read('index'),/class="contents-turn" href="\/practice"/);
+ assert.match(read('services'),/href="\/proof\/mosaix"/);
 });
 test('every published spread has metadata, landscape guidance, and existing local HTML references',()=>{
  for(const n of pages){const s=read(n);
@@ -17,8 +19,10 @@ test('every published spread has metadata, landscape guidance, and existing loca
  for(const match of s.matchAll(/(?:src|href|poster)="([^"#]+)"/g)){
  const u=match[1];if(/^(https?:|mailto:|data:)/.test(u))continue;
  const clean=decodeURIComponent(u.split(/[?#]/)[0]);if(!clean)continue;
- const file=clean.startsWith('/')?'.'+clean:path.join('magazine',clean);
- assert.ok(fs.existsSync(file),`${n}: missing ${file}`);
+ const rewrite=routes.find(r=>r.src===clean&&r.dest&&!r.has);
+ const file=rewrite?'.'+rewrite.dest:clean.startsWith('/')?'.'+clean:path.join('magazine',clean);
+ if(routes.some(r=>r.src===clean&&r.status===308))continue;
+ assert.ok((fs.existsSync(file)||fs.existsSync(file+'.html')),`${n}: missing ${file}`);
  }
  }
 });
@@ -56,4 +60,14 @@ test('only corner controls intercept navigation and history restoration does not
  assert.ok(cover.includes('const turnLinks=[nextCorner];'));
  assert.ok(!cover.includes("querySelector('.contents-home').addEventListener('click'"));
  assert.ok(!cover.includes('location.reload()'));
+});
+
+test('public links and metadata use clean routes with legacy redirects',()=>{
+ for(const n of pages){
+  const s=read(n);assert.match(s,/<base href="\/magazine\/">/);
+  assert.ok(!/href="(?:\.\/[^"#]+\.html|\/magazine\/[^"#]+\.html)/.test(s),n);
+  if(n!=='index')assert.ok(s.includes(`href="https://www.idyeah.studio${routeFor(n)}"`),n);
+ }
+ for(const r of routes.filter(r=>r.dest&&!r.has))assert.ok(fs.existsSync('.'+r.dest),r.dest);
+ assert.ok(routes.some(r=>r.src==='/inside'&&r.dest==='/magazine/inside.html'));
 });
