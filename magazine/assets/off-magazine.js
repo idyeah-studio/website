@@ -14,7 +14,7 @@ document.querySelector('[data-transcript]')?.addEventListener('click', function 
 });
 document.querySelector('[data-share]')?.addEventListener('click', function () {
   content.className = 'dialog-content share-content';
-  const issue = location.pathname.match(/off-(\d+)/)[1];
+  const issue = location.pathname.match(/(?:off-|off-idyeah\/)(\d+)/)[1];
   const url = `https://www.idyeah.studio/off-idyeah/${issue}`;
   content.innerHTML = '<h2>Share this strip</h2><nav class="share-options" aria-label="Share options"></nav><p role="status"></p>';
   const nav = content.querySelector('nav');
