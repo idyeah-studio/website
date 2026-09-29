@@ -1,5 +1,5 @@
 .mobile-work-toggle{display:none}
-@media(max-width:760px) and (orientation:portrait){
+@media(max-width:1024px) and (orientation:portrait){
  html,body,body.has-magazine-turn{height:auto;min-height:100%;overflow:auto;background:#fff}
  body[data-next-page]>.magazine-leaf{position:relative;inset:auto;height:auto;min-height:100dvh;display:block;padding:0 7vw;overflow:visible;clip-path:none!important}
  .leaf-fold,.leaf-handle,.navigation-divider{display:none}
@@ -37,7 +37,7 @@
  .detail-viewport::after{content:'Tap an image to zoom';display:block;padding:18px;font:12px EditorialSans,Arial,sans-serif;color:#716b66}
  .detail-viewport.is-zoomed::after{content:'Tap to fit · Swipe to explore';text-align:left}
 }
-@media(max-width:760px) and (orientation:portrait){
+@media(max-width:1024px) and (orientation:portrait){
  main.rialty-spread,main.ionate-spread,main.simcomm-spread,main.stealth-spread{display:flex;flex-direction:column;gap:0;padding-bottom:0}
  .rialty-intro,.ionate-intro,.simcomm-intro,.stealth-intro{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:32px 0 28px}
  .rialty-intro p,.ionate-intro p,.simcomm-intro p,.stealth-intro p{font-size:11px;line-height:1.6;white-space:normal;max-width:48%;text-align:right}

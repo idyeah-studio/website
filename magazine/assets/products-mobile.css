@@ -1,4 +1,4 @@
-@media(max-width:760px) and (orientation:portrait){
+@media(max-width:1024px) and (orientation:portrait){
  html:has(.products-page),body.products-page,body.products-page.has-magazine-turn{background:#171b20;color:#f4efe5}
  body.products-page>.magazine-leaf{background:#171b20;isolation:isolate}
  .products-page .magazine-leaf::before{position:fixed;inset:0;background-position:19% center;transform:none}

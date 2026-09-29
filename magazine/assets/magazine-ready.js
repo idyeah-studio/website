@@ -12,7 +12,7 @@
  document.body.append(gate);
  const previous=new Map();let focused=null;
  function orient(){
-  const portraitCover=(document.body.hasAttribute('data-portrait-cover')||document.body.hasAttribute('data-portrait-page'))&&matchMedia('(max-width:760px)').matches;
+  const portraitCover=(document.body.hasAttribute('data-portrait-cover')||document.body.hasAttribute('data-portrait-page'))&&matchMedia('(max-width:1024px)').matches;
   const blocked=portrait.matches&&matchMedia('(max-width:1024px)').matches&&!portraitCover;
   // Keep one device viewport through rotation. Changing its width after the
   // fold has measured the page desynchronizes Safari's layout and clip geometry.

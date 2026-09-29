@@ -1,5 +1,5 @@
 .mobile-service-footer{display:none}
-@media(max-width:760px) and (orientation:portrait){
+@media(max-width:1024px) and (orientation:portrait){
  html,body{height:auto;min-height:100%;overflow:auto;background:var(--paper)}
  .services-sheet{position:relative;inset:auto;min-height:100dvh;padding:0;background:var(--paper);clip-path:none!important}
  .services-sheet::before,.services-sheet::after,.leaf-fold,.leaf-handle,.spread-footer{display:none!important}

@@ -1,4 +1,4 @@
-@media(max-width:760px) and (orientation:portrait){
+@media(max-width:1024px) and (orientation:portrait){
  html,body{height:auto;min-height:100%;overflow:auto}
  body.off-edition>.magazine-leaf{height:auto;min-height:100dvh;display:block;padding:0 7vw calc(30px + env(safe-area-inset-bottom,0px));position:relative;inset:auto;overflow:visible}
  .off-header{gap:18px;padding:calc(20px + env(safe-area-inset-top,0px)) 0 20px;border-bottom:1px solid #c6d1d7}
