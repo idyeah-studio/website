@@ -1,7 +1,8 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const pages=['index','services','mosaix-story','rialty-story','ionate-story','simcomm-story','stealth-story','vishal','products-study','alchemy','crit-ios','crit-figma','wabi'];
 const routes=JSON.parse(fs.readFileSync('vercel.json','utf8')).routes;
-const routeFor=n=>n==='index'?'/':routes.find(r=>r.dest===`/magazine/${n}.html`).src;
+const publicPages=JSON.parse(fs.readFileSync('scripts/public-pages.json','utf8'));
+const routeFor=n=>n==='index'?'/':Object.keys(publicPages).find(k=>publicPages[k]===`/magazine/${n}.html`);
 const read=n=>fs.readFileSync(`magazine/${n}.html`,'utf8');
 test('the magazine completes one ordered journey back to the cover',()=>{
  for(let i=2;i<pages.length;i++){
@@ -69,5 +70,5 @@ test('public links and metadata use clean routes with legacy redirects',()=>{
   if(n!=='index')assert.ok(s.includes(`href="https://www.idyeah.studio${routeFor(n)}"`),n);
  }
  for(const r of routes.filter(r=>r.dest&&!r.has))assert.ok(fs.existsSync('.'+r.dest),r.dest);
- assert.ok(routes.some(r=>r.src==='/inside'&&r.dest==='/magazine/inside.html'));
+ for(const [url,source] of Object.entries(publicPages))assert.equal(fs.readFileSync('.'+url+'.html','utf8'),fs.readFileSync('.'+source,'utf8'),url);
 });
