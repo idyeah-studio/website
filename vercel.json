@@ -204,6 +204,13 @@
       "headers": {
         "Location": "/off-idyeah/005"
       }
+    },
+    {
+      "src": "/magazine/off-006(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah/006"
+      }
     }
   ]
 }
