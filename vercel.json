@@ -3,6 +3,13 @@
   "trailingSlash": false,
   "routes": [
     {
+      "src": "/products/crit-ios(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/crit-mobile"
+      }
+    },
+    {
       "src": "/(.*)",
       "headers": {
         "X-Content-Type-Options": "nosniff"
@@ -111,7 +118,7 @@
       "src": "/magazine/crit-ios(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-ios"
+        "Location": "/products/crit-mobile"
       }
     },
     {
