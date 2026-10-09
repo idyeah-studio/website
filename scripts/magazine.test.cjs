@@ -1,5 +1,5 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-const pages=['index','services','mosaix-story','rialty-story','ionate-story','simcomm-story','stealth-story','vishal','products-study','alchemy','crit-ios','crit-figma','wabi'];
+const pages=['index','services','proof','mosaix-story','rialty-story','ionate-story','simcomm-story','stealth-story','firecracker-story','vishal','products-study','alchemy','crit-ios','crit-figma','wabi'];
 const routes=JSON.parse(fs.readFileSync('vercel.json','utf8')).routes;
 const publicPages=JSON.parse(fs.readFileSync('scripts/public-pages.json','utf8'));
 const routeFor=n=>n==='index'?'/':Object.keys(publicPages).find(k=>publicPages[k]===`/magazine/${n}.html`);
@@ -11,7 +11,7 @@ test('the magazine completes one ordered journey back to the cover',()=>{
  assert.ok(!read(pages[i]).includes('data-next-page="pending"'));
  }
  assert.match(read('index'),/class="contents-turn" href="\/practice"/);
- assert.match(read('services'),/href="\/proof\/mosaix"/);
+ assert.match(read('services'),/href="\/proof"/);
 });
 test('every published spread has metadata, landscape guidance, and existing local HTML references',()=>{
  for(const n of pages){const s=read(n);
@@ -28,7 +28,7 @@ test('every published spread has metadata, landscape guidance, and existing loca
  }
 });
 test('all proof pages link the call invitation and use B2C for the selected stealth quote',()=>{
- for(const n of pages.slice(2,7))assert.match(read(n),/class="walkthrough-call" href="https:\/\/calendly.com\/vishal-idyeah\/30min"/);
+ for(const n of pages.slice(2,9))assert.match(read(n),/class="walkthrough-call" href="https:\/\/calendly.com\/vishal-idyeah\/30min"/);
  assert.ok(read('services').includes('Founder · Stealth · B2C'));
  assert.ok(read('stealth-story').includes('Stealth · B2C</span>'));
 });
@@ -71,4 +71,18 @@ test('public links and metadata use clean routes with legacy redirects',()=>{
  }
  for(const r of routes.filter(r=>r.dest&&!r.has))assert.ok(fs.existsSync('.'+r.dest),r.dest);
  for(const [url,source] of Object.entries(publicPages))assert.equal(fs.readFileSync('.'+url+'.html','utf8'),fs.readFileSync('.'+source,'utf8'),url);
+});
+
+test('Proof is a published landing page and every client links to its case study',()=>{
+ assert.equal(routeFor('proof'),'/proof');
+ assert.ok(!routes.some(r=>r.src==='/proof/?'&&r.status===308));
+ const s=read('proof');
+ assert.ok(!s.includes('palette-nav'));
+ for(const client of ['mosaix','rialty','ionate','simcomm','stealth','firecracker']){
+  assert.ok(s.includes(`href="/proof/${client}"`),client);
+ }
+ for(const name of ['mosaix-story','rialty-story','ionate-story','simcomm-story','stealth-story']){
+  assert.ok(read(name).includes('class="case-pills-label" href="/proof"'),name);
+  assert.ok(read(name).includes('href="/proof/firecracker"'),name);
+ }
 });
