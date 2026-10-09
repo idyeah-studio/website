@@ -1,20 +1,21 @@
-/* Mosaix opens as one identity group above the onboarding screens. */
-.mosaix-story .introduction.case-intro{display:block;align-content:center;grid-column:1/-1;}
-.mosaix-story .introduction>.mosaix-identity{display:grid;grid-template-columns:125px minmax(0,1fr);gap:24px;align-items:center;width:min(100%,calc((63.57dvh - 18px)/.943));}
-.mosaix-story .mosaix-identity>.case-brand{padding-top:0;}
-.mosaix-story .case-intro .case-heading h1{font-size:clamp(32px,3.3vw,52px);}
-.mosaix-story .case-intro .case-heading p{max-width:520px;margin-top:10px;}
+/* The work, its editorial opening, and the client's voice share three columns. */
+.mosaix-story main{grid-template-columns:minmax(0,1.65fr) minmax(0,.72fr) minmax(0,1fr);column-gap:3vw}
+.mosaix-story .introduction.case-intro{display:flex;justify-content:flex-start;align-items:center;grid-column:1/-1}
+.mosaix-story .collection{grid-column:1;grid-row:2}
+.mosaix-story .mosaix-heading{grid-column:2;grid-row:2;align-self:start;min-width:0}
+.mosaix-story .mosaix-heading h1{margin:0;font:400 clamp(30px,3vw,46px)/1.08 CaseSans,Arial,sans-serif;letter-spacing:-.055em}
+.mosaix-story .mosaix-heading p{margin:16px 0 0;max-width:260px;font:13px/1.65 CaseSans,Arial,sans-serif;color:#787078}
+.mosaix-story .client-note{grid-column:3;grid-row:2}
 @media(orientation:landscape) and (max-height:650px){
- .mosaix-story .introduction>.mosaix-identity{grid-template-columns:105px minmax(0,1fr);gap:20px;}
- .mosaix-story .mosaix-logo{width:105px;}
- .mosaix-story .mosaix-identity>.case-brand{padding-top:0;}
- .mosaix-story .case-intro .case-heading h1{font-size:30px;}
- .mosaix-story .case-intro .case-heading p{font-size:11px;line-height:1.45;margin-top:6px;}
+ .mosaix-story .mosaix-heading h1{font-size:30px}
+ .mosaix-story .mosaix-heading p{font-size:11px;line-height:1.55;margin-top:12px}
 }
 @media(max-width:1024px) and (orientation:portrait){
- .mosaix-story .introduction.case-intro{display:block;padding:32px 0 28px;}
- .mosaix-story .introduction>.mosaix-identity{display:block;width:100%;}
- .mosaix-story .mosaix-identity>.case-brand{padding:0;margin-bottom:22px;}
- .mosaix-story .case-intro .case-heading h1{font-size:clamp(36px,10.5vw,52px);}
- .mosaix-story .case-intro .case-heading p{margin-top:14px;font-size:13px;line-height:1.65;max-width:490px;}
+ .mosaix-story main{display:flex;flex-direction:column;gap:0;padding:0}
+ .mosaix-story .introduction.case-intro{flex-direction:row;justify-content:flex-start;align-items:center;padding:32px 0 28px}
+ .mosaix-story .collection{align-self:stretch}
+ .mosaix-story .mosaix-heading{align-self:stretch;margin:36px 0 0;padding:0}
+ .mosaix-story .mosaix-heading h1{font-size:clamp(36px,10.5vw,52px);line-height:1.08}
+ .mosaix-story .mosaix-heading p{margin-top:14px;font-size:13px;line-height:1.65;max-width:490px}
+ .mosaix-story .client-note{margin-top:32px}
 }
