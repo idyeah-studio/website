@@ -8,8 +8,8 @@
 }
 .cover-masthead,.cover-dot{animation-delay:650ms}
 .cover-bottom{animation-delay:650ms}
-.cover-feature{animation-delay:2400ms}
-.cover-launch{animation-delay:2950ms}
+.cover-feature{animation-delay:1400ms;animation-duration:1200ms}
+.cover-launch{animation-delay:1750ms;animation-duration:1200ms}
 .cover-descriptor{animation-delay:1100ms}
 @media(prefers-reduced-motion:reduce){
  .cover-masthead,.cover-dot,.cover-bottom,.cover-feature,.cover-launch,.cover-descriptor{animation:none}
