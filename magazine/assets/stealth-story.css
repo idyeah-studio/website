@@ -2,3 +2,25 @@
 @media(max-width:850px){.stealth-story .client-note blockquote{font-size:13px;line-height:1.45;margin-top:24px;padding-left:12px;margin-bottom:16px}.stealth-story .client-note .note-label{font-size:8px;letter-spacing:.08em}.stealth-story .attribution{font-size:11px}.stealth-story .attribution span{font-size:10px}}
 
 .stealth-story .detail-viewport img+img{margin-top:24px}
+
+/* The editorial heading belongs to the audit; the founder's note faces it. */
+.stealth-story main.stealth-spread{grid-template-columns:minmax(0,2.15fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);column-gap:6vw;padding-bottom:2dvh}
+.stealth-story .stealth-intro.case-intro{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;padding:0}
+.stealth-story .stealth-intro .case-brand{width:100%;height:17.01dvh;flex:none}
+.stealth-story .stealth-intro .case-heading{width:100%}
+.stealth-story .stealth-intro .case-heading p{max-width:635px;white-space:normal;text-align:left}
+.stealth-story .audit-pages{grid-column:1;grid-row:2;width:min(100%,680px,calc(46dvh * 1428 / 930));align-self:start;justify-self:start;margin-top:28px}
+.stealth-story .client-note{grid-column:2;grid-row:1/3;align-self:start;margin-top:17.01dvh}
+@media(orientation:landscape) and (max-height:750px){
+ .stealth-story .audit-pages{margin-top:22px;width:min(100%,680px,calc(44dvh * 1428 / 930))}
+ .stealth-story .client-note{padding-top:18px}
+ .stealth-story .client-note blockquote{margin-top:24px;margin-bottom:18px}
+}
+@media(max-width:1024px) and (orientation:portrait){
+ .stealth-story main.stealth-spread{display:flex;flex-direction:column;gap:0;padding-bottom:0}
+ .stealth-story .stealth-intro.case-intro{align-items:flex-start;gap:26px;padding:32px 0 28px}
+ .stealth-story .stealth-intro .case-brand{height:auto}
+ .stealth-story .stealth-intro .case-heading p{max-width:490px}
+ .stealth-story .audit-pages{width:100%;margin-top:0;align-self:stretch}
+ .stealth-story .client-note{margin-top:40px;padding-top:24px}
+}

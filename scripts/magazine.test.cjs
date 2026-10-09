@@ -1,5 +1,5 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-const pages=['index','services','proof','mosaix-story','rialty-story','ionate-story','simcomm-story','stealth-story','firecracker-story','vishal','products-study','alchemy','crit-ios','crit-figma','wabi'];
+const pages=['index','services','proof','mosaix-story','rialty-story','ionate-story','simcomm-story','stealth-story','firecracker-story','vishal','products-study','alchemy','crit-ios','crit-figma','dated-figma','wabi'];
 const routes=JSON.parse(fs.readFileSync('vercel.json','utf8')).routes;
 const publicPages=JSON.parse(fs.readFileSync('scripts/public-pages.json','utf8'));
 const routeFor=n=>n==='index'?'/':Object.keys(publicPages).find(k=>publicPages[k]===`/magazine/${n}.html`);

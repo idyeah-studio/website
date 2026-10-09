@@ -1,0 +1,60 @@
+/* Dated's charcoal and lime come from the product's own showreel. */
+.theme-dated{--paper:#161a16;--accent:#d5f36b;--text:#f5f6ef;--quiet:#adb5a6;color:var(--text);background:var(--paper)}
+.theme-dated .studio-wordmark{color:var(--text)}
+.theme-dated .back-inside,.theme-dated .case-pills .case-pills-label{color:#b9c0b2}
+.theme-dated .navigation-divider{background:#3b4337}
+.theme-dated .case-pills a{background:#20261f;border-color:#3b4337;color:#cbd1c4}
+.theme-dated .case-pills a:hover{background:#2d3528;border-color:#69745d}
+.theme-dated .case-pills a[aria-current="page"]{background:var(--accent);border-color:var(--accent);color:#1b2215}
+.theme-dated .dated-edition{grid-template-columns:minmax(0,1fr) minmax(0,1.85fr);column-gap:5vw;align-items:center;padding:3dvh 0!important}
+.dated-copy{padding-bottom:2dvh;min-width:0}
+.dated-wordmark{font:700 clamp(44px,4.4vw,68px)/1 EditorialSans,Arial,sans-serif;letter-spacing:-.075em;margin-bottom:5dvh}
+.dated-wordmark span{color:var(--accent)}
+.theme-dated .dated-platform{display:flex;align-items:center;gap:10px;font-size:12px;line-height:1.5;color:var(--quiet);margin-bottom:18px}
+.dated-platform img{display:block;flex:none}
+.theme-dated .dated-copy h1{font:400 clamp(36px,3.5vw,56px)/1.08 EditorialSans,Arial,sans-serif;letter-spacing:-.055em;margin:0 0 2.5dvh}
+.theme-dated .dated-copy h1 em{font-family:EditorialSerif,Georgia,serif;color:var(--accent)}
+.theme-dated .dated-description{font-size:15px;line-height:1.7;color:#c8d0be;margin-bottom:18px}
+.theme-dated .dated-offline{display:flex;align-items:center;gap:8px;font-size:12px;line-height:1.5;color:var(--quiet)}
+.dated-offline>span{display:block;width:5px;height:5px;background:var(--accent);border-radius:50%;flex:none}
+.dated-action{display:inline-flex;align-items:center;min-height:44px;padding:0 0 6px;margin-top:3.5dvh;border-bottom:1px solid #d5f36b88;color:var(--accent);font-size:13px;line-height:1.4}
+.dated-action:hover{border-bottom-color:var(--accent)}
+.dated-reel{min-width:0;width:100%;align-self:center}
+.dated-reel video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#10120f;border:1px solid #343d2e;border-radius:3px}
+.theme-dated .dated-reel figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-top:18px;padding-top:14px;border-top:1px solid #343d2e;font-size:11px;line-height:1.6;color:var(--quiet)}
+.dated-reel figcaption>span:last-child{white-space:nowrap}
+.theme-dated .edition-footer .folio{color:var(--text)}
+.theme-dated a:focus-visible,.theme-dated button:focus-visible,.theme-dated video:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+@media(max-width:1100px) and (orientation:landscape){
+ .theme-dated .case-pills .case-pills-label{display:none}
+ .theme-dated .case-navigation{gap:12px}
+ .theme-dated .case-pills a{font-size:11px;padding-inline:9px}
+ .theme-dated .dated-copy h1{font-size:36px}
+ .theme-dated .dated-description{font-size:13px}
+ .theme-dated .dated-platform{font-size:11px}
+}
+@media(orientation:landscape) and (max-height:650px){
+ .dated-wordmark{font-size:42px;margin-bottom:3dvh}
+ .theme-dated .dated-copy h1{font-size:32px;margin-bottom:2dvh}
+ .theme-dated .dated-platform{margin-bottom:12px}
+ .theme-dated .dated-description{font-size:12px;line-height:1.55;margin-bottom:12px}
+ .dated-action{margin-top:2dvh;font-size:12px}
+ .theme-dated .dated-reel figcaption{margin-top:12px;padding-top:10px}
+}
+@media(max-width:1024px) and (orientation:portrait){
+ body.theme-dated,body.theme-dated.has-magazine-turn{background:var(--paper)}
+ .theme-dated .story-header{border-bottom-color:#3b4337}
+ .theme-dated .mobile-work-toggle{color:var(--text)}
+ .theme-dated .dated-edition{display:flex;flex-direction:column;gap:36px;padding:36px 0 34px!important;align-items:stretch}
+ .dated-copy{padding:0}
+ .dated-wordmark{font-size:54px;margin-bottom:28px}
+ .theme-dated .dated-platform{font-size:12px;margin-bottom:18px}
+ .theme-dated .dated-copy h1{font-size:clamp(36px,10vw,52px);line-height:1.1;margin-bottom:20px}
+ .theme-dated .dated-description{font-size:15px;line-height:1.7;margin-bottom:18px}
+ .dated-action{font-size:14px;margin-top:22px}
+ .theme-dated .dated-reel figcaption{font-size:11px;line-height:1.6;gap:16px;margin-top:16px;padding-top:14px}
+ .theme-dated .edition-footer{border-top-color:#3b4337;margin-top:0}
+}
+@media(max-width:350px) and (orientation:portrait){
+ .theme-dated .dated-reel figcaption{flex-direction:column;gap:4px}
+}

@@ -21,7 +21,6 @@ body.firecracker-story[data-next-page]>.magazine-leaf{background:var(--paper);gr
 .pitch-spread{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,2.2fr);gap:5vw;min-height:0;padding:2dvh 0 3dvh}
 .pitch-intro{display:flex;flex-direction:column;justify-content:space-between;min-height:0;padding:1dvh 0 2dvh}
 .firecracker-logo{display:block;width:110px;height:auto}
-.project-scope{margin-top:18px;font-size:13px;color:var(--muted)}
 .project-identity h1{font-size:clamp(46px,4.9vw,76px);font-weight:400;letter-spacing:-.065em;line-height:1.05;margin:3dvh 0 18px;white-space:nowrap}
 .project-identity h1 em{font-family:PitchSerif,Georgia,serif;font-weight:400;color:var(--accent)}
 .pitch-summary{font-size:13px;line-height:1.75;max-width:270px;color:var(--muted)}
@@ -55,7 +54,7 @@ body.firecracker-story[data-next-page]>.magazine-leaf{background:var(--paper);gr
 .slide-viewer>footer button{font-size:12px;min-height:44px;padding:0 16px}.slide-viewer>footer button[aria-pressed=true]{text-decoration:underline;text-underline-offset:4px}
 @media(max-width:1100px) and (orientation:landscape){.case-pills .case-pills-label{display:none}.case-navigation{gap:12px}.case-pills a{padding-inline:9px;font-size:11px}.story-header{gap:14px}.pitch-spread{gap:4vw}}
 @media(orientation:landscape) and (max-height:650px){
- .pitch-spread{padding-block:1dvh 2dvh}.pitch-intro{padding:0}.firecracker-logo{width:82px}.project-scope{margin-top:10px;font-size:12px}
+ .pitch-spread{padding-block:1dvh 2dvh}.pitch-intro{padding:0}.firecracker-logo{width:82px}
  .project-identity h1{font-size:42px;margin:2dvh 0 12px}.pitch-summary{font-size:11px;line-height:1.6}.client-review{margin-top:18px;padding-top:16px}.client-review blockquote{font-size:17px;line-height:1.45;margin-bottom:12px}
  .client-review figcaption,.client-review figcaption span{font-size:11px}.pitch-gallery{width:min(100%,calc((72dvh - 118px) * 1.77778))}
  .slide-caption{min-height:32px;margin-bottom:10px}.slide-thumb{font-size:10px}.slide-thumb img{margin-bottom:6px}.slide-filmstrip{gap:7px}
@@ -70,7 +69,7 @@ body.firecracker-story[data-next-page]>.magazine-leaf{background:var(--paper);gr
  .mobile-work-toggle span{font:20px Arial,sans-serif}.case-pills{display:none;grid-column:1/-1;justify-content:flex-start;gap:8px;padding-bottom:10px}
  .case-pills.is-open{display:flex}.case-pills .case-pills-label{display:none}.case-pills a{min-height:44px;padding:13px;font-size:13px}
  .pitch-spread{display:flex;flex-direction:column;gap:0;padding:30px 0 0}.pitch-intro{display:contents}.project-identity{order:1}
- .firecracker-logo{width:100px}.project-scope{margin-top:14px}.project-identity h1{font-size:58px;margin:26px 0 14px}.pitch-summary{font-size:13px;max-width:370px;margin-bottom:28px}
+ .firecracker-logo{width:100px}.project-identity h1{font-size:58px;margin:26px 0 14px}.pitch-summary{font-size:13px;max-width:370px;margin-bottom:28px}
  .pitch-gallery{order:2;display:flex;width:100%;align-self:stretch;justify-self:auto}.slide-caption{margin-bottom:14px}
  .slide-filmstrip{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:112px;gap:12px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:thin}
  .slide-thumb{font-size:12px;min-height:90px}.slide-thumb img{margin-bottom:9px}

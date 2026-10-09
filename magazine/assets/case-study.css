@@ -1,0 +1,59 @@
+@font-face{font-family:CaseSans;src:url('./archivo.ttf');font-display:swap}
+@font-face{font-family:CaseSerif;src:url('./domaine.otf');font-style:italic;font-display:swap}
+
+/* Every case shares one header; the work below keeps its own composition. */
+[data-case-study] .story-header{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:24px;font-family:CaseSans,Arial,sans-serif}
+[data-case-study] .case-navigation{justify-self:end;display:flex;align-items:center;gap:18px;min-width:0;flex-wrap:nowrap}
+[data-case-study] .back-inside{display:inline-flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap;color:#716b66}
+[data-case-study] .back-inside svg{width:20px;height:20px;padding:5px;flex:none}
+[data-case-study] .navigation-divider{width:1px;height:16px;flex:none}
+[data-case-study] .case-pills{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:nowrap}
+[data-case-study] .case-pills a{display:inline-flex;align-items:center;justify-content:center;height:28px;min-height:28px;padding:4px 14px;font-size:12px;line-height:1;white-space:nowrap;border-radius:9999px}
+[data-case-study] .case-pills .case-pills-label{border:0;background:none;border-radius:0;padding:0;margin-right:12px;color:#716b66}
+[data-case-study] .mobile-work-toggle{display:none}
+
+/* Identity, editorial title, brief: the same information in every story. */
+.case-brand{display:flex;align-items:center}
+.case-intro .case-heading h1{margin:0;font:400 clamp(32px,3.3vw,52px)/1.06 CaseSans,Arial,sans-serif;letter-spacing:-.055em}
+.case-heading h1 em{font-family:CaseSerif,Georgia,serif;font-weight:400;color:var(--case-accent,#694098)}
+.case-intro .case-heading p{margin:10px 0 0;max-width:490px;font:13px/1.55 CaseSans,Arial,sans-serif;color:#787078;white-space:normal;text-align:left}
+.ionate-story{--case-accent:#286d91}.simcomm-story{--case-accent:#c93219}.stealth-story{--case-accent:#655d50}
+.firecracker-story{--case-accent:#c93219}
+.simcomm-logo{display:block;width:144px;height:auto}
+.stealth-identity{font:28px/1.2 CaseSans,Arial,sans-serif;letter-spacing:-.04em}
+.project-identity>.case-brand{height:11.01dvh}
+
+@media(max-width:1100px) and (orientation:landscape){
+ [data-case-study] .story-header{gap:14px}
+ [data-case-study] .case-navigation{gap:12px}
+ [data-case-study] .case-pills .case-pills-label{display:none}
+ [data-case-study] .case-pills a{padding-inline:9px;font-size:11px}
+ .case-intro .case-heading h1{font-size:36px}
+ .case-intro .case-heading p{font-size:12px;margin-top:8px}
+}
+@media(orientation:landscape) and (max-height:650px){
+ .project-identity>.case-brand{height:15.01dvh}
+ .case-intro .case-heading h1{font-size:30px}
+ .case-intro .case-heading p{font-size:11px;line-height:1.45;margin-top:6px}
+}
+@media(max-width:1024px) and (orientation:portrait){
+ [data-case-study] .story-header{grid-template-columns:1fr auto;gap:18px;padding:calc(20px + env(safe-area-inset-top,0px)) 0 16px}
+ [data-case-study] .case-navigation{display:contents}
+ [data-case-study] .navigation-divider{display:none}
+ [data-case-study] .back-inside{justify-self:end;min-height:44px}
+ [data-case-study] .back-inside svg{width:24px;height:24px;padding:6px}
+ [data-case-study] .mobile-work-toggle{display:flex;grid-column:1/-1;align-items:center;justify-content:space-between;width:100%;min-height:44px;font-size:13px;text-align:left}
+ [data-case-study] .mobile-work-toggle span{font:20px/1 Arial,sans-serif}
+ [data-case-study] .case-pills{display:none;grid-column:1/-1;justify-content:flex-start;gap:8px;flex-wrap:wrap;padding-bottom:10px}
+ [data-case-study] .case-pills.is-open{display:flex}
+ [data-case-study] .case-pills .case-pills-label{display:none}
+ [data-case-study] .case-pills a{height:44px;min-height:44px;padding:10px 15px;font-size:13px}
+ .case-intro{display:flex;flex-direction:column;align-items:flex-start;gap:26px;padding:32px 0 28px}
+ .case-intro .case-heading{width:100%}
+ .case-intro .case-heading h1{font-size:clamp(36px,10.5vw,52px);max-width:none;line-height:1.08}
+ .case-intro .case-heading p{font-size:13px;max-width:490px;line-height:1.65;margin-top:14px;text-align:left}
+ .simcomm-logo{width:120px}
+ .stealth-identity{font-size:24px}
+ .project-identity>.case-brand{height:auto}
+ .pitch-spread{padding-top:32px}
+}

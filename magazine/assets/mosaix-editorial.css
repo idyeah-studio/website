@@ -1,0 +1,20 @@
+/* Mosaix opens as one identity group above the onboarding screens. */
+.mosaix-story .introduction.case-intro{display:block;align-content:center;grid-column:1/-1;}
+.mosaix-story .introduction>.mosaix-identity{display:grid;grid-template-columns:125px minmax(0,1fr);gap:24px;align-items:center;width:min(100%,calc((63.57dvh - 18px)/.943));}
+.mosaix-story .mosaix-identity>.case-brand{padding-top:0;}
+.mosaix-story .case-intro .case-heading h1{font-size:clamp(32px,3.3vw,52px);}
+.mosaix-story .case-intro .case-heading p{max-width:520px;margin-top:10px;}
+@media(orientation:landscape) and (max-height:650px){
+ .mosaix-story .introduction>.mosaix-identity{grid-template-columns:105px minmax(0,1fr);gap:20px;}
+ .mosaix-story .mosaix-logo{width:105px;}
+ .mosaix-story .mosaix-identity>.case-brand{padding-top:0;}
+ .mosaix-story .case-intro .case-heading h1{font-size:30px;}
+ .mosaix-story .case-intro .case-heading p{font-size:11px;line-height:1.45;margin-top:6px;}
+}
+@media(max-width:1024px) and (orientation:portrait){
+ .mosaix-story .introduction.case-intro{display:block;padding:32px 0 28px;}
+ .mosaix-story .introduction>.mosaix-identity{display:block;width:100%;}
+ .mosaix-story .mosaix-identity>.case-brand{padding:0;margin-bottom:22px;}
+ .mosaix-story .case-intro .case-heading h1{font-size:clamp(36px,10.5vw,52px);}
+ .mosaix-story .case-intro .case-heading p{margin-top:14px;font-size:13px;line-height:1.65;max-width:490px;}
+}

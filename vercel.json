@@ -122,6 +122,13 @@
       }
     },
     {
+      "src": "/magazine/dated-figma(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/dated-figma"
+      }
+    },
+    {
       "src": "/magazine/wabi(?:\\.html)?",
       "status": 308,
       "headers": {
