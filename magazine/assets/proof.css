@@ -1,0 +1,84 @@
+/* Final Proof landing: the approved Sage 2 inlay. */
+/* Sage 2 changes only SimComm to the color sampled from the reference. */
+:root{
+ --inlay-page:#fcfbf7;--inlay-title:#bfc8b7;--inlay-title-ink:#263122;--inlay-title-label:#35432e;--inlay-rule:#53614d;--inlay-dot:#c93219;
+ --inlay-mosaix:#f3ecd9;--inlay-rialty:#f8f6ee;--inlay-ionate:#eeeae0;--inlay-simcomm:#e5dacd;--inlay-stealth:#ece6da;--inlay-firecracker:#f3dfca;
+ --inlay-text:#595a4e;--inlay-client-ink:#292720;--inlay-hover:#c93219;
+}
+@font-face{font-family:ProofSans;src:url('./archivo.ttf');font-display:swap}
+@font-face{font-family:ProofSerif;src:url('./domaine.otf');font-style:italic;font-display:swap}
+:root{--ink:#292720;--muted:#79766e;--red:#c93219;--line:#e4e1da}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fff;color:var(--ink)}body{font-family:ProofSans,Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}p,h1,figure{margin:0}a:focus-visible{outline:2px solid var(--red);outline-offset:5px}a:focus:not(:focus-visible){outline:none}body.proof-page[data-next-page]>.magazine-leaf{height:100dvh;padding:0 4.8vw;display:grid;grid-template-rows:10dvh minmax(0,1fr) 9dvh;overflow:hidden}.proof-header{display:flex;justify-content:space-between;align-items:center;gap:24px}.studio-wordmark{display:block;width:78px;color:var(--ink);--wordmark-dot:var(--red)}.header-right{min-width:0;display:flex;align-items:center;gap:22px}.back-inside{display:flex;align-items:center;gap:8px;font-size:12px;white-space:nowrap;color:#716b66}.back-inside svg{width:20px;height:20px;padding:5px;flex:none;fill:none;stroke:#fff;stroke-width:1.6;background:var(--red);border-radius:50%}.back-inside:hover{text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:4px}.header-divider{width:1px;height:16px;background:var(--line)}footer{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--muted)}footer a{text-decoration:underline;text-underline-offset:4px}footer a:hover{text-decoration-color:var(--red)}footer>span{font-size:12px}main{min-height:0}.client{min-width:0;position:relative}.logo-slot{height:52px;display:flex;align-items:center}.client-logo{display:block;width:140px;max-height:48px;object-fit:contain;object-position:left center}.client-rialty .client-logo{width:120px}.client-ionate .client-logo{width:120px}.client-simcomm .client-logo{width:135px}.client-firecracker .client-logo{width:92px;max-height:68px}.stealth-wordmark{font-size:23px;letter-spacing:-.025em}.stealth-wordmark>span{font-size:14px;letter-spacing:0}.client-work{font-size:14px;line-height:1.55}.client-work br{display:none}a.client::after{content:'';height:1px;background:var(--red);position:absolute;bottom:-1px;left:0;width:100%;transform:scaleX(0);transform-origin:left;transition:transform .3s}a.client:hover::after{transform:scaleX(1)}
+
+/* Interlocking ink fields, composed as one printed page. */
+.proof-page{background:var(--inlay-page)}
+body.proof-page[data-next-page]>.magazine-leaf{background:var(--inlay-page);grid-template-rows:9dvh minmax(0,1fr) 8dvh}
+.inlay-composition{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));position:relative;gap:0;margin:2dvh 0 3dvh}
+.inlay-title{grid-column:1/6;grid-row:1/5;background:var(--inlay-title);padding:4.2dvh 3vw;display:flex;flex-direction:column;justify-content:space-between;position:relative}
+.inlay-title::after{content:'';width:58px;height:2px;background:var(--inlay-rule);position:absolute;bottom:4.2dvh;right:3vw}
+.inlay-title p{font-size:13px;color:var(--inlay-title-label)}
+.inlay-title h1{font:italic clamp(96px,11vw,165px)/.9 ProofSerif,Georgia,serif;letter-spacing:-.055em;align-self:flex-start;margin:0 0 5.4dvh -.2vw;color:var(--inlay-title-ink)}
+.inlay-title h1 span{color:var(--inlay-dot)}
+.proof-page .client{display:flex;flex-direction:column;justify-content:center;padding:2.5dvh 2.5vw;align-items:flex-start;min-width:0;isolation:isolate;color:var(--inlay-client-ink)}
+.proof-page .client-work{font-size:13px;line-height:1.6;max-width:240px;margin-top:14px;color:var(--inlay-text)}
+.proof-page .logo-slot{height:48px}
+.proof-page .client-logo{max-width:100%;width:140px;max-height:42px}
+.proof-page .client-mosaix{grid-column:6/10;grid-row:1/3;background:var(--inlay-mosaix)}
+.proof-page .client-rialty{grid-column:6/10;grid-row:3/5;background:var(--inlay-rialty)}
+.proof-page .client-rialty .client-logo{width:124px}
+.proof-page .client-rialty .client-work{max-width:none;white-space:nowrap}
+.proof-page .client-ionate{grid-column:10/13;grid-row:1/4;background:var(--inlay-ionate)}
+.proof-page .client-ionate .client-logo{width:110px}
+.proof-page .client-ionate .client-work{max-width:180px}
+.proof-page .client-simcomm{grid-column:10/13;grid-row:4/7;background:var(--inlay-simcomm)}
+.proof-page .client-simcomm .client-logo{width:128px}
+.proof-page .client-stealth{grid-column:1/6;grid-row:5/7;background:var(--inlay-stealth)}
+.proof-page .client-stealth .stealth-wordmark{font-size:25px}
+.proof-page .client-firecracker{grid-column:6/10;grid-row:5/7;background:var(--inlay-firecracker)}
+.proof-page .client-firecracker .client-logo{width:84px;max-height:60px}
+.proof-page .client-firecracker .logo-slot{height:60px}
+.proof-page a.client::after{background:var(--inlay-hover);left:2.5vw;bottom:2dvh;width:36px}
+.proof-page footer{font-size:13px}
+@media(orientation:landscape) and (max-height:700px){
+ .inlay-title{padding:3dvh 2.5vw}.inlay-title h1{font-size:clamp(80px,10vw,130px);margin-bottom:3dvh}
+ .proof-page .client{padding:2dvh 2vw}.proof-page .client-work{font-size:12px;line-height:1.5;margin-top:10px}
+ .proof-page .logo-slot{height:36px}.proof-page .client-logo{max-height:34px;width:120px}
+ .proof-page .client-stealth .stealth-wordmark{font-size:22px}.proof-page .client-firecracker .client-logo{width:72px;max-height:52px}.proof-page .client-firecracker .logo-slot{height:52px}
+}
+@media(max-width:1024px) and (orientation:portrait){
+ body.proof-page[data-next-page]>.magazine-leaf{grid-template-rows:auto auto auto}
+ .inlay-composition{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;margin:24px 0 12px}
+ .inlay-title{grid-column:1/3;grid-row:auto;min-height:280px;padding:30px 24px}
+ .inlay-title h1{font-size:105px;margin:0 0 36px}.inlay-title::after{right:24px;bottom:30px}
+ .proof-page .client:nth-of-type(n){grid-column:auto;grid-row:auto;min-height:185px;padding:24px 18px}
+ .proof-page .client-work{font-size:12px;line-height:1.55;max-width:none}
+ .proof-page .logo-slot{height:45px}.proof-page .client-logo{max-width:100%;max-height:36px;width:108px}
+ .proof-page .client-rialty .client-logo{width:108px}.proof-page .client-ionate .client-logo{width:100px}.proof-page .client-simcomm .client-logo{width:112px}
+ .proof-page .stealth-wordmark{font-size:21px!important}.proof-page .stealth-wordmark>span{display:block;font-size:12px;margin-top:5px}
+ .proof-page .client-firecracker .client-logo{width:72px;max-height:52px}
+ .proof-page .client-firecracker .logo-slot{height:56px}
+ .proof-page a.client::after{background:var(--inlay-hover);left:18px;bottom:14px}
+}
+
+@media(max-width:620px) and (orientation:portrait){
+ .proof-page .client:is(.client-mosaix,.client-rialty){grid-column:1/-1;min-height:150px}
+}
+@media(max-width:389px) and (orientation:portrait){
+ .proof-page .client:nth-of-type(n){padding-inline:12px}
+}
+@media(max-width:340px) and (orientation:portrait){
+ .inlay-composition{grid-template-columns:minmax(0,1fr)}
+ .inlay-title{grid-column:1;min-height:250px}
+ .inlay-title h1{font-size:90px}
+ .proof-page .client:nth-of-type(n){min-height:160px;padding-inline:24px}
+}
+
+.proof-page footer .folio{font:italic 22px/.9 ProofSerif,Georgia,serif;color:var(--ink)}
+@media(max-width:1024px) and (orientation:portrait){
+ html,body,body.proof-page.has-magazine-turn{height:auto;min-height:100%;overflow:auto;background:var(--inlay-page)}
+ body.proof-page[data-next-page]>.magazine-leaf{position:relative;inset:auto;height:auto;min-height:100dvh;padding:0 7vw;overflow:visible;clip-path:none!important}
+ .leaf-fold,.leaf-handle{display:none}
+ .proof-header{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;padding:calc(20px + env(safe-area-inset-top,0px)) 0 16px;border-bottom:1px solid var(--line)}
+ .back-inside{min-height:44px}.back-inside svg{width:24px;height:24px;padding:6px}
+ .proof-page footer{padding:28px 0 calc(28px + env(safe-area-inset-bottom,0px));gap:24px;font-size:12px;align-items:flex-start}
+ .proof-page footer .folio{display:block;position:static;inset:auto;flex:none;font-size:28px}
+}

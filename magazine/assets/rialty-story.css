@@ -1,10 +1,13 @@
 /* One founder's note, opposite two landscape plates and one mobile plate. */
-.rialty-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.85fr);grid-template-rows:21% minmax(0,1fr);column-gap:5vw;padding-bottom:2dvh;min-height:0}
-.rialty-intro{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}
+.rialty-story main.rialty-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.85fr);grid-template-rows:auto minmax(0,1fr);column-gap:5vw;padding-bottom:2dvh;min-height:0}
+.rialty-story .rialty-intro.case-intro{grid-column:1;grid-row:1;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:0;padding:0}
+.rialty-story .rialty-intro .case-brand{width:100%;height:17.01dvh;flex:none}
+.rialty-story .rialty-intro .case-heading{width:100%}
+.rialty-story .rialty-intro .case-heading p{max-width:350px;white-space:normal;text-align:left}
 .rialty-logo{display:block;width:152px;height:auto}
 .rialty-intro p{font-size:13px;color:#787078;text-align:right;white-space:nowrap}
-.rialty-note.client-note{grid-column:1;grid-row:2;display:flex;align-self:start;margin-top:0;border-top:1px solid #d9d3dc;padding-top:24px}
-.rialty-grid{grid-column:2;grid-row:2;align-self:center;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.51fr);grid-template-rows:1fr 1fr;gap:18px;width:min(100%,calc(61dvh * 1.43));aspect-ratio:1.43;justify-self:end;min-height:0}
+.rialty-note.client-note{grid-column:1;grid-row:2;display:flex;align-self:start;margin-top:34px;border-top:1px solid #d9d3dc;padding-top:24px}
+.rialty-grid{grid-column:2;grid-row:1/3;align-self:center;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.51fr);grid-template-rows:1fr 1fr;gap:18px;width:min(100%,calc(70dvh * 1.43));aspect-ratio:1.43;justify-self:end;min-height:0}
 .rialty-grid button{display:block;min-height:0;min-width:0;cursor:zoom-in;overflow:hidden}
 .web-plate{grid-column:1;grid-row:1;border:1px solid #ebe7ed;border-radius:3px;background:#fff}
 .web-plate img{display:block;width:100%;height:100%;object-fit:contain}
@@ -22,3 +25,15 @@
 
 .mobile-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,3vw,44px);width:100%;height:100%;min-height:0;padding:12px clamp(0px,3vw,40px)}
 .rialty-story .detail-viewport.mobile-view .mobile-gallery img{width:100%;height:100%;min-width:0;min-height:0;object-fit:contain}
+
+@media(orientation:landscape) and (max-height:750px){
+ .rialty-note.client-note{margin-top:24px;padding-top:18px}
+ .rialty-note.client-note blockquote{margin-top:24px;margin-bottom:18px;line-height:1.55}
+}
+@media(max-width:1024px) and (orientation:portrait){
+ .rialty-story main.rialty-spread{display:flex;flex-direction:column;gap:0;padding-bottom:0}
+ .rialty-story .rialty-intro.case-intro{align-items:flex-start;gap:26px;padding:32px 0 28px}
+ .rialty-story .rialty-intro .case-brand{height:auto}
+ .rialty-story .rialty-intro .case-heading p{max-width:490px}
+ .rialty-story .rialty-note.client-note{margin-top:40px;padding-top:24px}
+}

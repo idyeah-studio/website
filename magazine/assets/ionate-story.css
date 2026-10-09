@@ -18,3 +18,25 @@
 .film-viewport{display:flex;align-items:center;justify-content:center;min-height:0;padding:16px;background:#fff}
 #case-film{display:block;width:min(100%,calc((94dvh - 80px) * var(--film-ratio,1.9043)));height:auto;max-height:100%;aspect-ratio:var(--film-ratio,1.9043);object-fit:contain;background:#fff}
 @media(max-height:700px){.brand-film{max-width:220px;padding-top:15px}.ionate-note blockquote{margin-top:26px;font-size:15px}.ionate-note .attribution span{margin-top:5px}}
+
+/* The editorial opening belongs to the MIRA film, rather than floating across the spread. */
+.ionate-story .ionate-intro.case-intro{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;}
+.ionate-story .main-film{align-self:start;width:min(100%,calc((63.57dvh - 120px) * 1.9043));}
+.ionate-story .main-film>.case-heading{margin-bottom:22px;}
+.ionate-story .main-film .case-heading h1{margin:0;font:400 clamp(32px,3.3vw,52px)/1.06 CaseSans,Arial,sans-serif;letter-spacing:-.055em;}
+.ionate-story .main-film .case-heading p{margin:10px 0 0;font:13px/1.55 CaseSans,Arial,sans-serif;color:#787078;max-width:660px;}
+@media(orientation:landscape) and (max-height:650px){
+ .ionate-story .main-film{width:min(100%,calc((63.57dvh - 95px) * 1.9043));}
+ .ionate-story .main-film>.case-heading{margin-bottom:16px;}
+ .ionate-story .main-film .case-heading h1{font-size:30px;}
+ .ionate-story .main-film .case-heading p{font-size:11px;line-height:1.45;margin-top:6px;}
+}
+@media(max-width:1024px) and (orientation:portrait){
+ .ionate-story .ionate-spread{display:flex;flex-direction:column;gap:0;padding:0;}
+ .ionate-story .ionate-intro.case-intro{display:flex;padding:32px 0 22px;}
+ .ionate-story .main-film{width:100%;align-self:stretch;}
+ .ionate-story .main-film>.case-heading{margin-bottom:24px;}
+ .ionate-story .main-film .case-heading h1{font-size:clamp(36px,10.5vw,52px);line-height:1.08;}
+ .ionate-story .main-film .case-heading p{margin-top:14px;font-size:13px;line-height:1.65;max-width:490px;}
+ .ionate-story .ionate-note.client-note{margin-top:40px;}
+}

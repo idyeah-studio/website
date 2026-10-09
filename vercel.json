@@ -66,13 +66,6 @@
       }
     },
     {
-      "src": "/proof/?",
-      "status": 308,
-      "headers": {
-        "Location": "/proof/mosaix"
-      }
-    },
-    {
       "src": "/products/?",
       "status": 308,
       "headers": {
@@ -129,6 +122,13 @@
       }
     },
     {
+      "src": "/magazine/dated-figma(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/dated-figma"
+      }
+    },
+    {
       "src": "/magazine/wabi(?:\\.html)?",
       "status": 308,
       "headers": {
@@ -140,6 +140,20 @@
       "status": 308,
       "headers": {
         "Location": "/off-idyeah"
+      }
+    },
+    {
+      "src": "/magazine/proof(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/proof"
+      }
+    },
+    {
+      "src": "/magazine/firecracker-story(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/proof/firecracker"
       }
     },
     {
