@@ -9,7 +9,7 @@
 .theme-dated .dated-edition{grid-template-columns:minmax(0,1fr) minmax(0,1.85fr);column-gap:5vw;align-items:center;padding:3dvh 0!important}
 .dated-copy{padding-bottom:2dvh;min-width:0}
 .dated-wordmark{font:700 clamp(44px,4.4vw,68px)/1 EditorialSans,Arial,sans-serif;letter-spacing:-.075em;margin-bottom:5dvh}
-.dated-wordmark span{color:var(--accent)}
+.dated-wordmark span{display:inline-block;margin-left:.12em;transform:translateY(-.16em);color:var(--accent)}
 .theme-dated .dated-platform{display:flex;align-items:center;gap:10px;font-size:12px;line-height:1.5;color:var(--quiet);margin-bottom:18px}
 .dated-platform img{display:block;flex:none}
 .theme-dated .dated-copy h1{font:400 clamp(36px,3.5vw,56px)/1.08 EditorialSans,Arial,sans-serif;letter-spacing:-.055em;margin:0 0 2.5dvh}
