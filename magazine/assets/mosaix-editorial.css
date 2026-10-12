@@ -6,6 +6,18 @@
 .mosaix-story .mosaix-heading h1{margin:0;font:400 clamp(30px,3vw,46px)/1.08 CaseSans,Arial,sans-serif;letter-spacing:-.055em}
 .mosaix-story .mosaix-heading p{margin:16px 0 0;max-width:260px;font:13px/1.65 CaseSans,Arial,sans-serif;color:#787078}
 .mosaix-story .client-note{grid-column:3;grid-row:2}
+
+/* Keep the entire selected film frame visible, including the butterfly and plan. */
+.mosaix-story .collection .mosaix-film{aspect-ratio:16/9;cursor:auto;background:#151515}
+.mosaix-film video{display:block;width:100%;height:100%;object-fit:contain}
+.mosaix-reel-poster{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.mosaix-reel-play{position:absolute;inset:0;display:grid;place-items:center;width:100%;height:100%;background:transparent;cursor:pointer}
+.mosaix-reel-play span{display:grid;place-items:center;width:54px;height:54px;border:1px solid #ffffff75;border-radius:50%;background:#151515c9;box-shadow:0 3px 25px #0003;transition:background .18s,transform .18s}
+.mosaix-reel-play svg{width:22px;height:22px;fill:#fff}
+.mosaix-reel-play:hover span{background:#151515e6;transform:scale(1.06)}
+@media(orientation:landscape){
+ .mosaix-story .collection{width:min(100%,calc((63.57dvh - 18px)/1.01))}
+}
 @media(orientation:landscape) and (max-height:650px){
  .mosaix-story .mosaix-heading h1{font-size:30px}
  .mosaix-story .mosaix-heading p{font-size:11px;line-height:1.55;margin-top:12px}

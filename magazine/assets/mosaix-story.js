@@ -4,3 +4,26 @@ document.querySelectorAll('[data-screen]').forEach(button=>button.addEventListen
 document.querySelector('#close-detail').addEventListener('click',()=>detail.close());
 detail.addEventListener('click',e=>{if(e.target===detail)detail.close()});
 })();
+
+(()=>{
+ const video=document.querySelector('#mosaix-reel'),play=document.querySelector('.mosaix-reel-play'),poster=document.querySelector('.mosaix-reel-poster');
+ if(!video||!play||!poster)return;
+ function showPoster(){
+  video.controls=false;
+  video.hidden=true;
+  poster.hidden=false;
+  play.hidden=false;
+ }
+ showPoster();
+ play.addEventListener('click',()=>{
+  play.hidden=true;
+  poster.hidden=true;
+  video.hidden=false;
+  video.controls=true;
+  video.play().catch(showPoster);
+ });
+ video.addEventListener('ended',()=>{
+  video.currentTime=0;
+  showPoster();
+ });
+})();
