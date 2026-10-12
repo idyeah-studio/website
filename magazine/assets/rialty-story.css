@@ -11,6 +11,13 @@
 .rialty-grid button{display:block;min-height:0;min-width:0;cursor:zoom-in;overflow:hidden}
 .web-plate{grid-column:1;grid-row:1;border:1px solid #ebe7ed;border-radius:3px;background:#fff}
 .web-plate img{display:block;width:100%;height:100%;object-fit:contain}
+.rialty-film{position:relative;min-width:0;min-height:0;overflow:hidden}
+.rialty-film video{display:block;width:100%;height:100%;object-fit:contain}
+.rialty-story .rialty-film .rialty-reel-poster{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.rialty-grid .rialty-reel-play{position:absolute;inset:0;display:grid;place-items:center;width:100%;height:100%;background:transparent;cursor:pointer}
+.rialty-reel-play span{display:grid;place-items:center;width:48px;height:48px;border:1px solid #ffffff75;border-radius:50%;background:#302d32e6;box-shadow:0 3px 25px #0003;transition:background .18s,transform .18s}
+.rialty-reel-play svg{width:20px;height:20px;fill:#fff}
+.rialty-reel-play:hover span{background:#302d32;transform:scale(1.06)}
 .pending-plate{grid-column:1;grid-row:2;border:1px solid #eeeaf0;background:#faf9fb;border-radius:3px}
 .phone-plate{grid-column:2;grid-row:1/3}
 .phone-plate img{display:block;width:100%;height:100%;object-fit:contain}
@@ -31,6 +38,7 @@
  .rialty-note.client-note blockquote{margin-top:24px;margin-bottom:18px;line-height:1.55}
 }
 @media(max-width:1024px) and (orientation:portrait){
+ .rialty-story .rialty-grid .rialty-film{width:100%;aspect-ratio:16/9;flex:none}
  .rialty-story main.rialty-spread{display:flex;flex-direction:column;gap:0;padding-bottom:0}
  .rialty-story .rialty-intro.case-intro{align-items:flex-start;gap:26px;padding:32px 0 28px}
  .rialty-story .rialty-intro .case-brand{height:auto}
