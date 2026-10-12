@@ -1,0 +1,106 @@
+.studio-product {
+  padding-block: 64px 40px;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 48px;
+}
+.studio-product-label {
+  color: var(--soft);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.5;
+  margin-bottom: 42px;
+}
+.studio-product-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.5fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 56px);
+}
+/* Original Crit wordmark@3x.png. Mask preserves the supplied artwork's
+   contours; the letters follow the theme and the dot keeps its original color. */
+.studio-product-name {
+  position: relative;
+  width: 52px;
+  height: 25.334px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.studio-product-wordmark,
+.studio-product-wordmark::after {
+  position: absolute;
+  width: 52px;
+  height: 45.158px;
+  left: 0;
+  top: -10.333px;
+  background: var(--ink);
+  -webkit-mask: url('products/crit-wordmark.png') center / contain no-repeat;
+  mask: url('products/crit-wordmark.png') center / contain no-repeat;
+}
+.studio-product-wordmark::after {
+  content: '';
+  top: 0;
+  background: url('products/crit-wordmark.png') center / contain no-repeat;
+  -webkit-mask: none;
+  mask: none;
+  clip-path: polygon(61% 23%, 74% 23%, 74% 37%, 61% 37%);
+}
+.studio-product-copy h3 {
+  font-size: clamp(26px, 2.8vw, 36px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -.045em;
+  margin-bottom: 18px;
+}
+.studio-product-description {
+  color: var(--soft);
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 29em;
+}
+.studio-product-link {
+  display: inline-block;
+  font-size: 14px;
+  margin-top: 24px;
+}
+.studio-product-install {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 26px;
+}
+.studio-product-platform {
+  color: var(--soft);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.studio-product-download {
+  flex: 0 0 120px;
+  display: block;
+  width: 120px;
+  min-height: 44px;
+  padding-block: 2px;
+  cursor: pointer;
+}
+.studio-product-download img {
+  pointer-events: none;
+  user-select: none;
+  display: block;
+  width: 120px;
+  height: 40px;
+}
+.studio-product-art { min-width: 0; }
+.studio-product-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+@media (max-width: 760px) {
+  .studio-product { padding-block: 40px 16px; scroll-margin-top: 24px; }
+  .studio-product-label { margin-bottom: 28px; }
+  .studio-product-grid { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .studio-product-name { margin-bottom: 18px; }
+  .studio-product-copy h3 { font-size: 32px; }
+  .studio-product-copy h3 br { display: none; }
+}

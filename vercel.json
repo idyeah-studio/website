@@ -3,31 +3,235 @@
   "trailingSlash": false,
   "routes": [
     {
+      "src": "/products/crit-ios(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/crit-mobile"
+      }
+    },
+    {
       "src": "/(.*)",
-      "headers": { "X-Content-Type-Options": "nosniff" },
+      "headers": {
+        "X-Content-Type-Options": "nosniff"
+      },
       "continue": true
     },
     {
       "src": "/assets/idyeah/fonts/(.*)",
-      "headers": { "Cache-Control": "public, max-age=31536000, immutable" },
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
       "continue": true
     },
     {
       "src": "/assets/(?!idyeah/fonts/)(.*)",
-      "headers": { "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800" },
+      "headers": {
+        "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800"
+      },
       "continue": true
     },
     {
       "src": "/mosaix/(.*)",
-      "headers": { "X-Robots-Tag": "noindex, nofollow" },
+      "headers": {
+        "X-Robots-Tag": "noindex, nofollow"
+      },
       "continue": true
     },
     {
       "src": "/(.*)",
-      "has": [{ "type": "host", "value": "mosaix.idyeah.studio" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "mosaix.idyeah.studio"
+        }
+      ],
       "dest": "/mosaix/$1",
       "check": true,
-      "headers": { "X-Robots-Tag": "noindex, nofollow" }
+      "headers": {
+        "X-Robots-Tag": "noindex, nofollow"
+      }
+    },
+    {
+      "src": "/archived(?:/.*)?",
+      "headers": {
+        "X-Robots-Tag": "noindex, nofollow"
+      },
+      "continue": true
+    },
+    {
+      "src": "/magazine(?:/index(?:\\.html)?)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "/"
+      }
+    },
+    {
+      "src": "/products/?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/keya"
+      }
+    },
+    {
+      "src": "/off-idyeah/archive(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah"
+      }
+    },
+    {
+      "src": "/magazine/services(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/practice"
+      }
+    },
+    {
+      "src": "/magazine/vishal(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/person"
+      }
+    },
+    {
+      "src": "/magazine/products-study(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/keya"
+      }
+    },
+    {
+      "src": "/magazine/alchemy(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/design-ai-alchemy"
+      }
+    },
+    {
+      "src": "/magazine/crit-ios(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/crit-mobile"
+      }
+    },
+    {
+      "src": "/magazine/crit-figma(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/crit-figma"
+      }
+    },
+    {
+      "src": "/magazine/dated-figma(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/dated-figma"
+      }
+    },
+    {
+      "src": "/magazine/wabi(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/wabi"
+      }
+    },
+    {
+      "src": "/magazine/off-idyeah(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah"
+      }
+    },
+    {
+      "src": "/magazine/proof(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/proof"
+      }
+    },
+    {
+      "src": "/magazine/firecracker-story(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/proof/firecracker"
+      }
+    },
+    {
+      "src": "/magazine/mosaix-story(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/proof/mosaix"
+      }
+    },
+    {
+      "src": "/magazine/rialty-story(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/proof/rialty"
+      }
+    },
+    {
+      "src": "/magazine/ionate-story(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/proof/ionate"
+      }
+    },
+    {
+      "src": "/magazine/simcomm-story(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/proof/simcomm"
+      }
+    },
+    {
+      "src": "/magazine/stealth-story(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/proof/stealth"
+      }
+    },
+    {
+      "src": "/magazine/off-001(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah/001"
+      }
+    },
+    {
+      "src": "/magazine/off-002(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah/002"
+      }
+    },
+    {
+      "src": "/magazine/off-003(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah/003"
+      }
+    },
+    {
+      "src": "/magazine/off-004(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah/004"
+      }
+    },
+    {
+      "src": "/magazine/off-005(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah/005"
+      }
+    },
+    {
+      "src": "/magazine/off-006(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah/006"
+      }
     }
   ]
 }

@@ -1,0 +1,5 @@
+/* Canonical inner-page lockup: geometry and dot are owned by idyeah-lockup.svg. */
+.contents-meta .studio-wordmark,.running-head .studio-wordmark{display:block;width:78px;flex:none;color:inherit;opacity:1;filter:none;box-shadow:none;text-shadow:none;cursor:pointer}
+.studio-wordmark-art{display:block;width:100%;height:auto;overflow:visible;pointer-events:none;filter:none}
+.running-head .studio-wordmark-ink{color:#292720;--wordmark-dot:#c93219}
+.contents-meta .studio-wordmark:hover,.running-head .studio-wordmark:hover{opacity:1}
