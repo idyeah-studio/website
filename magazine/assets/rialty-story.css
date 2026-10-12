@@ -7,11 +7,11 @@
 .rialty-logo{display:block;width:152px;height:auto}
 .rialty-intro p{font-size:13px;color:#787078;text-align:right;white-space:nowrap}
 .rialty-note.client-note{grid-column:1;grid-row:2;display:flex;align-self:start;margin-top:34px;border-top:1px solid #d9d3dc;padding-top:24px}
-.rialty-grid{grid-column:2;grid-row:1/3;align-self:center;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.51fr);grid-template-rows:1fr 1fr;gap:18px;width:min(100%,calc(70dvh * 1.43));aspect-ratio:1.43;justify-self:end;min-height:0}
+.rialty-grid{grid-column:2;grid-row:1/3;align-self:center;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.51fr);grid-template-rows:auto auto;gap:18px;width:min(100%,calc(70dvh * 1.43));justify-self:end;min-height:0}
 .rialty-grid button{display:block;min-height:0;min-width:0;cursor:zoom-in;overflow:hidden}
 .web-plate{grid-column:1;grid-row:1;border:1px solid #ebe7ed;border-radius:3px;background:#fff}
 .web-plate img{display:block;width:100%;height:100%;object-fit:contain}
-.rialty-film{position:relative;min-width:0;min-height:0;overflow:hidden}
+.rialty-film{position:relative;min-width:0;min-height:0;aspect-ratio:16/9;border:0;overflow:hidden}
 .rialty-film video{display:block;width:100%;height:100%;object-fit:contain}
 .rialty-story .rialty-film .rialty-reel-poster{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
 .rialty-grid .rialty-reel-play{position:absolute;inset:0;display:grid;place-items:center;width:100%;height:100%;background:transparent;cursor:pointer}
@@ -19,13 +19,13 @@
 .rialty-reel-play svg{width:20px;height:20px;fill:#fff}
 .rialty-reel-play:hover span{background:#302d32;transform:scale(1.06)}
 .pending-plate{grid-column:1;grid-row:2;border:1px solid #eeeaf0;background:#faf9fb;border-radius:3px}
-.phone-plate{grid-column:2;grid-row:1/3}
-.phone-plate img{display:block;width:100%;height:100%;object-fit:contain}
+.phone-plate{position:relative;grid-column:2;grid-row:1/3}
+.phone-plate img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain}
 .rialty-story .detail-viewport.mobile-view img{width:440px;min-width:0;max-width:100%;margin:0 auto}
 .rialty-story .detail-viewport:not(.mobile-view){display:flex;align-items:center;justify-content:center;padding:16px;background:#fff}
 .rialty-story .detail-viewport:not(.mobile-view) img{width:100%;height:100%;min-width:0;max-width:100%;max-height:100%;object-fit:contain}
 
-.deck-plate{grid-column:1;grid-row:2;border:1px solid #eeeaf0;border-radius:3px;background:white}
+.deck-plate{grid-column:1;grid-row:2;aspect-ratio:16/9;border:1px solid #eeeaf0;border-radius:3px;background:white}
 .deck-plate img{display:block;width:100%;height:100%;object-fit:contain}
 .rialty-story .detail-viewport.mobile-view{display:flex;align-items:center;justify-content:center;background:#fff;padding:12px}
 .rialty-story .detail-viewport.mobile-view img{width:auto;height:100%;max-width:100%;max-height:100%;object-fit:contain}
@@ -33,12 +33,23 @@
 .mobile-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,3vw,44px);width:100%;height:100%;min-height:0;padding:12px clamp(0px,3vw,40px)}
 .rialty-story .detail-viewport.mobile-view .mobile-gallery img{width:100%;height:100%;min-width:0;min-height:0;object-fit:contain}
 
+/* Fit the two 16:9 cards and their gap to the visible phone frame. */
+@media(orientation:landscape){
+ .rialty-grid{container-type:inline-size;--rialty-phone-height:calc((100cqw - 18px) * .51 / 1.51 * 1808 / 900)}
+ .rialty-grid .rialty-film,.rialty-grid .deck-plate{width:calc((var(--rialty-phone-height) - 18px) * 8 / 9);justify-self:end}
+ .rialty-grid .phone-plate{width:calc(var(--rialty-phone-height) * 876 / 1808);height:var(--rialty-phone-height);justify-self:center}
+ /* The 900x1840 source has transparent padding around its 876x1808 frame. */
+ .rialty-grid .phone-plate img{width:calc(100% * 900 / 876);height:calc(100% * 1840 / 1808);left:calc(-100% * 12 / 876);top:calc(-100% * 16 / 1808)}
+}
+
 @media(orientation:landscape) and (max-height:750px){
  .rialty-note.client-note{margin-top:24px;padding-top:18px}
  .rialty-note.client-note blockquote{margin-top:24px;margin-bottom:18px;line-height:1.55}
 }
 @media(max-width:1024px) and (orientation:portrait){
- .rialty-story .rialty-grid .rialty-film{width:100%;aspect-ratio:16/9;flex:none}
+ .rialty-story .rialty-grid .rialty-film,.rialty-story .rialty-grid .deck-plate{width:100%;aspect-ratio:16/9;flex:none}
+ .rialty-story .rialty-grid .deck-plate img{height:100%}
+ .rialty-story .rialty-grid .phone-plate img{position:static}
  .rialty-story main.rialty-spread{display:flex;flex-direction:column;gap:0;padding-bottom:0}
  .rialty-story .rialty-intro.case-intro{align-items:flex-start;gap:26px;padding:32px 0 28px}
  .rialty-story .rialty-intro .case-brand{height:auto}
