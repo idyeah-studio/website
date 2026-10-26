@@ -1,0 +1,99 @@
+.audit-page {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4vh 0 6vh;
+}
+.audit-spread {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  align-items: stretch;
+  gap: clamp(64px, 8vw, 120px);
+}
+.audit-introduction {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 64px;
+  min-width: 0;
+}
+.audit-identity { display: flex; align-items: baseline; gap: 22px; }
+.audit-wordmark { display: block; width: 148px; height: auto; }
+.audit-identity > span {
+  color: var(--quiet);
+  font: 400 10px/1.4 EditorialMono, monospace;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+.audit-purpose h1 {
+  margin: 0;
+  font: 400 clamp(24px, 2.25vw, 38px)/1.3 EditorialSans, sans-serif;
+  letter-spacing: -.025em;
+}
+.audit-purpose h1 em { font-family: EditorialSerif, Georgia, serif; font-weight: 400; }
+.audit-evidence { margin: 0; min-width: 0; align-self: end; }
+.audit-lenses {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  max-width: 100%;
+  gap: 8px;
+  margin: 17px 0 24px;
+}
+/* Existing Audit pills: services.css, magazine-ready.css and services-mobile.css.
+   EditorialSans is the same archivo.ttf face used there as Archivo. */
+.audit-page .lens-row { display: flex; gap: 8px; flex-wrap: nowrap; }
+.audit-page .lens-pill { flex: none; padding: 7px 12px; border-radius: 999px; border: 1px solid rgba(76,72,65,.045); color: #55514b; font: 12px/1.2 EditorialSans,Arial,sans-serif; white-space: nowrap; }
+.audit-page .lens-0 { background: #e0e5e8; }
+.audit-page .lens-1 { background: #e5dfec; }
+.audit-page .lens-2 { background: #eddfda; }
+.audit-page .lens-3 { background: #dce7df; }
+.audit-page .lens-4 { background: #ece4d2; }
+.audit-page .lens-5 { background: #dce7e7; }
+.audit-page .lens-6 { background: #eadfe5; }
+.audit-page .lens-7 { background: #e2e5d7; }
+@media (min-height: 501px) {
+  .audit-page .lens-pill { font-size: clamp(9px,.85vw,12px); padding: 6px .45vw; }
+}
+.audit-action { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+.audit-trial { color: var(--quiet); font: 400 12px/1.4 EditorialSans,Arial,sans-serif; }
+
+.audit-film-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #191815; }
+.audit-film, .audit-video-poster { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; border: 0; }
+.audit-film[hidden], .audit-video-poster[hidden], .audit-video-play[hidden] { display: none; }
+.audit-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  border: 1px solid rgba(244, 240, 230, .7);
+  border-radius: 50%;
+  background: rgba(24, 23, 20, .6);
+  color: #f4f0e6;
+  cursor: pointer;
+}
+.audit-video-play > span { display: block; width: 0; height: 0; margin-left: 4px; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 12px solid currentColor; }
+.audit-video-play:hover { background: rgba(201, 50, 25, .9); border-color: #f4f0e6; }
+.audit-video-play:focus-visible { outline: 2px solid #f4f0e6; outline-offset: 5px; }
+@media (max-width: 1024px), (orientation: portrait) {
+  .audit-page .lens-row { flex-wrap: wrap; }
+  .audit-page .lens-pill { font-size: 12px; padding: 8px 12px; }
+  .audit-page { flex: none; padding: 40px 0 20px; }
+  .audit-spread { grid-template-columns: minmax(0, 1fr); gap: 42px; }
+  .audit-evidence { width: 100%; max-width: 440px; }
+  .audit-introduction { gap: 64px; }
+  .audit-wordmark { width: 148px; }
+  .audit-purpose h1 { font-size: clamp(29px, 4.7vw, 42px); }
+}
+@media (max-width: 430px) {
+  .audit-identity { gap: 20px; }
+  .audit-wordmark { width: 132px; }
+  .audit-purpose h1 { font-size: 28px; }
+}
