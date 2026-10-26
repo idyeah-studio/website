@@ -17,6 +17,13 @@
       "continue": true
     },
     {
+      "src": "/api/diya-launch",
+      "dest": "https://diya.keya.studio/api/launch",
+      "headers": {
+        "Cache-Control": "no-store"
+      }
+    },
+    {
       "src": "/assets/idyeah/fonts/(.*)",
       "headers": {
         "Cache-Control": "public, max-age=31536000, immutable"
@@ -69,7 +76,14 @@
       "src": "/products/?",
       "status": 308,
       "headers": {
-        "Location": "/products/keya"
+        "Location": "/products/crit-audit"
+      }
+    },
+    {
+      "src": "/products/keya(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/crit-audit"
       }
     },
     {
@@ -94,10 +108,24 @@
       }
     },
     {
-      "src": "/magazine/products-study(?:\\.html)?",
+      "src": "/magazine/products-study(?:\\.html)?/?",
       "status": 308,
       "headers": {
-        "Location": "/products/keya"
+        "Location": "/products/crit-audit"
+      }
+    },
+    {
+      "src": "/magazine/crit-audit(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/crit-audit"
+      }
+    },
+    {
+      "src": "/magazine/diya(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/diya"
       }
     },
     {

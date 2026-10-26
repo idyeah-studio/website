@@ -1,11 +1,34 @@
 """Preview the static site locally, including Vercel-style clean HTML URLs."""
 import argparse
+import io
 import json
 import re
 from urllib.parse import urlsplit
+from urllib.request import Request, urlopen
 from functools import partial
+from http.client import HTTPException
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+
+
+DIYA_LAUNCH_PATH = '/api/diya-launch'
+DIYA_LAUNCH_URL = 'https://diya.keya.studio/api/launch'
+DIYA_LAUNCH_MAX_BYTES = 4096
+
+
+def fetch_diya_launch():
+    request = Request(DIYA_LAUNCH_URL, headers={'Accept': 'application/json'})
+    with urlopen(request, timeout=5) as response:
+        if response.status != 200:
+            raise ValueError('Unexpected launch response status')
+        body = response.read(DIYA_LAUNCH_MAX_BYTES + 1)
+    if len(body) > DIYA_LAUNCH_MAX_BYTES:
+        raise ValueError('Launch response exceeds limit')
+    payload = json.loads(body)
+    seconds = payload.get('seconds') if isinstance(payload, dict) else None
+    if type(seconds) is not int or seconds < 0:
+        raise ValueError('Invalid launch countdown')
+    return seconds
 
 
 class PreviewHandler(SimpleHTTPRequestHandler):
@@ -13,6 +36,8 @@ class PreviewHandler(SimpleHTTPRequestHandler):
     lan_preview = False
     def send_head(self):
         request_path = urlsplit(self.path).path
+        if request_path == DIYA_LAUNCH_PATH:
+            return self.send_diya_launch()
         for route in self.routes:
             if route.get('status') == 308 and re.fullmatch(route['src'], request_path):
                 self.send_response(308)
@@ -31,7 +56,7 @@ class PreviewHandler(SimpleHTTPRequestHandler):
                 return None
             pages = {'index', 'inside', 'services', 'mosaix-story', 'rialty-story',
                      'ionate-story', 'simcomm-story', 'stealth-story', 'vishal',
-                     'products-study', 'alchemy', 'crit-ios', 'crit-figma', 'dated-figma', 'wabi',
+                     'products-study', 'crit-audit', 'diya', 'alchemy', 'crit-ios', 'crit-figma', 'dated-figma', 'wabi',
                      'off-idyeah', 'off-001', 'off-002', 'off-003', 'off-004', 'off-005',
                      'off-006', 'proof', 'firecracker-story'}
             asset_types = {'.css', '.js', '.svg', '.webp', '.png', '.jpg', '.jpeg',
@@ -45,6 +70,20 @@ class PreviewHandler(SimpleHTTPRequestHandler):
                 self.send_error(404)
                 return None
         return super().send_head()
+
+    def send_diya_launch(self):
+        try:
+            payload = {'seconds': fetch_diya_launch()}
+            status = 200
+        except (OSError, HTTPException, ValueError, TypeError, RecursionError):
+            payload = {'error': 'Launch countdown unavailable'}
+            status = 502
+        body = json.dumps(payload, separators=(',', ':')).encode('utf-8')
+        self.send_response(status)
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Content-Length', str(len(body)))
+        self.end_headers()
+        return io.BytesIO(body)
 
     def end_headers(self):
         self.send_header("Cache-Control", "no-store")

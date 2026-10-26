@@ -1,0 +1,52 @@
+/* Architecture and blurred component studies come from diya.keya.studio. */
+.theme-diya .magazine-leaf { position: relative; isolation: isolate; }
+.diya-page { position: relative; display: flex; flex: 1; min-height: 0; align-items: center; padding: 36px 0 56px; color: #f2f1e9; }
+.diya-atmosphere { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: #101214; }
+.diya-atmosphere > img { width: 100%; height: 100%; object-fit: cover; object-position: 54% center; filter: blur(8px); transform: scale(1.03); }
+.diya-atmosphere::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,#0b0e108c,transparent 72%),linear-gradient(180deg,#0006,#111315ad 48%,#101214e6); }
+.diya-editorial { position: relative; z-index: 1; width: 100%; max-width: 480px; }
+.diya-signature { display: flex; align-items: center; gap: 28px; margin-bottom: 64px; }
+.diya-wordmark { display: block; width: 148px; height: auto; filter: invert(1); }
+.diya-countdown { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 24px; padding: 10px 20px; border: 1px solid #f2f1e9; border-radius: 999px; background: #f2f1e9; color: #15191a; }
+.diya-countdown-time { display: grid; grid-template-columns: repeat(4,minmax(32px,1fr)); gap: 16px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.diya-countdown-time > span { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.diya-countdown-time b { display: block; min-width: 2ch; text-align: center; font: 600 22px/1.1 EditorialSans,Arial,sans-serif; letter-spacing: -.025em; }
+.diya-countdown-time small { color: #65685e; font: 400 10px/1.2 EditorialSans,Arial,sans-serif; }
+.diya-editorial h1 { margin: 0; font: 400 clamp(42px,4.3vw,64px)/1.1 EditorialSans,Arial,sans-serif; letter-spacing: -.04em; }
+.diya-subline { margin: 18px 0 0; color: #ccd0c9; font: 400 16px/1.6 EditorialSans,Arial,sans-serif; }
+/* The launch page's original Typography, Appearance and Profile studies,
+   kept decorative, inert and blurred as they are in its launch reveal. */
+.diya-library-scene { position: absolute; z-index: 0; right: 0; top: calc(50% - 130px); width: 660px; height: 320px; opacity: .55; filter: blur(8px); transform: scale(.84); transform-origin: right center; pointer-events: none; color: #f5f5f5; }
+.diya-scene-panel { position: absolute; padding: 21px 24px; background: #242424; border: 1px solid #ffffff1f; border-radius: 15px; box-shadow: inset 0 1px 0 #ffffff20,0 10px 30px #0002; font: 400 13px/1.4 EditorialSans,Arial,sans-serif; }
+.diya-type-study { width: 330px; height: 184px; left: 0; top: 0; }
+.diya-type-preview { display: flex; align-items: center; gap: 26px; margin-top: 18px; }
+.diya-type-preview > b { width: 120px; font: 400 82px/1 EditorialSans,Arial,sans-serif; }
+.diya-type-preview > div { flex: 1; }
+.diya-type-preview > div > span { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #ffffff22; font-size: 12px; }
+.diya-type-preview small { color: #ddd; font-size: 10px; }
+.diya-appearance-study { width: 286px; height: 172px; left: 354px; top: 65px; }
+.diya-scene-segments { display: flex; margin-top: 23px; border: 1px solid #ffffff30; border-radius: 28px; padding: 3px; }
+.diya-scene-segments > span { flex: 1; padding: 10px; border-radius: 25px; text-align: center; font-size: 12px; }
+.diya-scene-segments > span:last-child { background: #ffffff25; }
+.diya-scene-glass { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; font-size: 12px; }
+.diya-scene-glass i { display: block; width: 36px; height: 22px; border: 1px solid #ffffff40; border-radius: 20px; }
+.diya-scene-glass i::before { content: ""; display: block; width: 14px; height: 14px; margin: 3px; border-radius: 50%; background: #ddd; }
+.diya-profile-study { display: flex; align-items: center; gap: 17px; width: 320px; min-height: 110px; left: 36px; top: 206px; padding: 18px 22px; }
+.diya-scene-avatar { display: grid; place-items: center; flex: none; width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(145deg,#aaa,#333); font: 20px/1 Georgia,serif; }
+.diya-profile-study p { margin: 7px 0; color: #ddd; font-size: 11px; }
+.diya-profile-study small { color: #ddd; font-size: 10px; }
+@media (max-width: 1024px), (orientation: portrait) {
+  .diya-page { flex: 1 0 auto; align-items: flex-start; min-height: calc(100svh - 150px); padding: 40px 0 190px; }
+  .diya-editorial { max-width: 480px; }
+  .diya-signature { gap: 24px; }
+  .diya-wordmark { width: 132px; }
+  .diya-editorial h1 { font-size: clamp(42px,7.2vw,58px); }
+  .diya-library-scene { top: auto; bottom: 10px; right: -120px; opacity: .3; transform: scale(.7); }
+  .diya-atmosphere > img { object-position: 62% center; }
+}
+@media (max-width: 430px) {
+  .diya-signature { gap: 20px; margin-bottom: 64px; }
+  .diya-editorial h1 { font-size: 43px; }
+  .diya-subline { font-size: 15px; }
+  .diya-library-scene { right: -170px; }
+}
