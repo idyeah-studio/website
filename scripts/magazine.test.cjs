@@ -1,6 +1,6 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const products=[
- {name:'crit-audit',route:'/products/crit-audit',label:'Crit Audit',folio:22},
+ {name:'crit-audit',route:'/products/crit-audit',label:'Crit8',folio:22},
  {name:'diya',route:'/products/diya',label:'DIYA',folio:23},
  {name:'crit-ios',route:'/products/crit-mobile',label:'Crit Mobile',folio:24},
  {name:'crit-figma',route:'/products/crit-figma',label:'Crit Figma',folio:25},
@@ -127,7 +127,7 @@ test('published HTML has no local preview metadata, addresses, or prototype asse
  assert.deepEqual([...diya.matchAll(/data-countdown-unit="([^"]+)"/g)].map(match=>match[1]),['days','hours','minutes','seconds']);
 });
 
-test('the product entry and legacy keya routes lead to Crit Audit while Wabi stays published off the journey',()=>{
+test('the product entry and legacy keya routes lead to Crit8 while Wabi stays published off the journey',()=>{
  for(const url of ['/products','/products/','/products/keya','/products/keya/','/products/keya.html','/magazine/products-study','/magazine/products-study.html']){
   const redirect=redirectFor(url);
   assert.ok(redirect,`${url}: permanent redirect`);
