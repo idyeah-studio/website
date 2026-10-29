@@ -82,7 +82,7 @@ test('public links and metadata use clean routes with legacy redirects',()=>{
  for(const r of routes.filter(r=>r.dest&&!r.has)){
   if(r.dest.startsWith('https://')){
    assert.equal(r.src,'/api/diya-launch');
-   assert.equal(r.dest,'https://diya.keya.studio/api/launch');
+   assert.equal(r.dest,'https://diya13.ai/api/launch');
    continue;
   }
   assert.ok(r.dest.startsWith('/'),r.dest);
@@ -148,7 +148,7 @@ test('DIYA launch uses one fixed uncached upstream before host dispatch',()=>{
  const proxies=routes.filter(r=>r.src==='/api/diya-launch');
  assert.equal(proxies.length,1);
  const proxy=proxies[0];
- assert.equal(proxy.dest,'https://diya.keya.studio/api/launch');
+ assert.equal(proxy.dest,'https://diya13.ai/api/launch');
  assert.equal(proxy.headers['Cache-Control'],'no-store');
  assert.ok(!proxy.continue);
  const headers=routes.findIndex(r=>r.src==='/(.*)'&&r.headers?.['X-Content-Type-Options']==='nosniff'&&r.continue);

@@ -18,7 +18,7 @@
     },
     {
       "src": "/api/diya-launch",
-      "dest": "https://diya.keya.studio/api/launch",
+      "dest": "https://diya13.ai/api/launch",
       "headers": {
         "Cache-Control": "no-store"
       }
