@@ -72,7 +72,7 @@ class LaunchProxyTests(unittest.TestCase):
         self.assertEqual(headers['Content-Type'], 'application/json; charset=utf-8')
         self.assertEqual(int(headers['Content-Length']), len(body))
         request = fetch.call_args.args[0]
-        self.assertEqual(request.full_url, preview.DIYA_LAUNCH_URL)
+        self.assertEqual(request.full_url, 'https://diya13.ai/api/launch')
         self.assertEqual(request.get_method(), 'GET')
         self.assertFalse(request.has_header('Cookie'))
         self.assertFalse(request.has_header('Authorization'))
@@ -115,6 +115,15 @@ class LaunchProxyTests(unittest.TestCase):
                 self.assertEqual(status, 502)
                 self.assertEqual(headers['Cache-Control'], 'no-store')
                 self.assertEqual(json.loads(body), {'error': 'Launch countdown unavailable'})
+
+    def test_missing_upstream_deployment_is_not_rendered_as_countdown_data(self):
+        upstream, _ = self.upstream(b'DEPLOYMENT_NOT_FOUND')
+        upstream.__enter__.return_value.status = 404
+        with patch.object(preview, 'urlopen', return_value=upstream):
+            status, headers, body = self.request()
+        self.assertEqual(status, 502)
+        self.assertEqual(headers['Cache-Control'], 'no-store')
+        self.assertEqual(json.loads(body), {'error': 'Launch countdown unavailable'})
 
     def test_other_paths_and_methods_never_proxy(self):
         with patch.object(preview, 'urlopen') as fetch:
