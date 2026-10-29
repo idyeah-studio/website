@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 DIYA_LAUNCH_PATH = '/api/diya-launch'
-DIYA_LAUNCH_URL = 'https://diya.keya.studio/api/launch'
+DIYA_LAUNCH_URL = 'https://diya13.ai/api/launch'
 DIYA_LAUNCH_MAX_BYTES = 4096
 
 
