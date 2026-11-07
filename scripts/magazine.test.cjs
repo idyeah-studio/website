@@ -2,10 +2,6 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const products=[
  {name:'crit-audit',route:'/products/crit-audit',label:'Crit8',folio:22},
  {name:'diya',route:'/products/diya',label:'DIYA',folio:23},
- {name:'crit-ios',route:'/products/crit-mobile',label:'Crit Mobile',folio:24},
- {name:'crit-figma',route:'/products/crit-figma',label:'Crit Figma',folio:25},
- {name:'dated-figma',route:'/products/dated-figma',label:'Dated Figma',folio:26},
- {name:'alchemy',route:'/products/design-ai-alchemy',label:'Design AI Alchemy',folio:27},
 ];
 const pages=['index','services','proof','mosaix-story','rialty-story','ionate-story','simcomm-story','stealth-story','firecracker-story','vishal',...products.map(product=>product.name)];
 const routes=JSON.parse(fs.readFileSync('vercel.json','utf8')).routes;
@@ -91,7 +87,7 @@ test('public links and metadata use clean routes with legacy redirects',()=>{
  for(const [url,source] of Object.entries(publicPages))assert.equal(fs.readFileSync('.'+url+'.html','utf8'),fs.readFileSync('.'+source,'utf8'),url);
 });
 
-test('all six products have the same ordered clean navigation, one current link, and consecutive folios',()=>{
+test('both products have the same ordered clean navigation, one current link, and consecutive folios',()=>{
  for(const product of products){
   assert.equal(publicPages[product.route],`/magazine/${product.name}.html`,product.name);
   const html=read(product.name);
@@ -128,16 +124,26 @@ test('published HTML has no local preview metadata, addresses, or prototype asse
  assert.match(diya,/href="https:\/\/diya13\.ai\/"/);
 });
 
-test('the product entry and legacy keya routes lead to Crit8 while Wabi stays published off the journey',()=>{
+test('the product entry, legacy keya routes and retired products redirect to their new homes',()=>{
  for(const url of ['/products','/products/','/products/keya','/products/keya/','/products/keya.html','/magazine/products-study','/magazine/products-study.html']){
   const redirect=redirectFor(url);
   assert.ok(redirect,`${url}: permanent redirect`);
   assert.equal(redirect.headers.Location,'/products/crit-audit',url);
  }
  assert.ok(!Object.hasOwn(publicPages,'/products/keya'));
- assert.equal(publicPages['/products/wabi'],'/magazine/wabi.html');
- assert.ok(fs.existsSync('products/wabi.html'));
- assert.ok(!products.some(product=>product.name==='wabi'));
+ const retired={
+  '/products/crit-mobile':'/products/crit-audit','/products/crit-ios':'/products/crit-audit','/products/crit-figma':'/products/crit-audit',
+  '/magazine/crit-ios':'/products/crit-audit','/magazine/crit-figma':'/products/crit-audit',
+  '/products/dated-figma':'https://www.figma.com/community/plugin/1686645937402418158','/magazine/dated-figma':'https://www.figma.com/community/plugin/1686645937402418158',
+  '/products/design-ai-alchemy':'/person','/magazine/alchemy':'/person',
+  '/products/wabi':'https://apps.apple.com/app/wabi-daily-practice/id6771074089','/magazine/wabi':'https://apps.apple.com/app/wabi-daily-practice/id6771074089',
+ };
+ for(const [url,location] of Object.entries(retired)){
+  assert.equal(redirectFor(url)?.headers.Location,location,`${url}: retired product redirect`);
+  assert.ok(!Object.hasOwn(publicPages,url),`${url}: no published page`);
+ }
+ for(const file of ['crit-ios','crit-figma','dated-figma','alchemy','wabi'])assert.ok(!fs.existsSync(`magazine/${file}.html`),`${file}: source removed`);
+ for(const file of ['crit-ios','crit-mobile','crit-figma','dated-figma','design-ai-alchemy','wabi'])assert.ok(!fs.existsSync(`products/${file}.html`),`${file}: public copy removed`);
  for(const name of ['index','inside']){
   const html=read(name);
   assert.match(html,/<a href="\/products\/crit-audit"><span class="nav-name">Products<\/span>/);
