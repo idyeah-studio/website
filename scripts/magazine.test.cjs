@@ -123,8 +123,9 @@ test('published HTML has no local preview metadata, addresses, or prototype asse
   assert.match(html,/assets\/product-pages\/product-pages\.js/);
  }
  const diya=read('diya');
- assert.match(diya,/assets\/product-pages\/diya-countdown\.js/);
- assert.deepEqual([...diya.matchAll(/data-countdown-unit="([^"]+)"/g)].map(match=>match[1]),['days','hours','minutes','seconds']);
+ assert.match(diya,/assets\/product-pages\/diya\.js/);
+ assert.ok(!/diya-countdown|data-countdown-unit/.test(diya),'DIYA is live: no launch countdown');
+ assert.match(diya,/href="https:\/\/diya13\.ai\/"/);
 });
 
 test('the product entry and legacy keya routes lead to Crit8 while Wabi stays published off the journey',()=>{
