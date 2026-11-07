@@ -25,6 +25,7 @@
  .off-work{order:4;position:static;width:100%;max-width:none;margin:40px 0;text-align:left}
  .off-work h2{font-size:25px;margin-bottom:12px}
  .off-work p{font-size:14px;line-height:1.85}.off-work br{display:none}.off-work .mobile-interest-separator{display:inline}
+ .footer-contact{flex-wrap:wrap;row-gap:10px}.footer-book{flex-basis:100%;order:3;padding:0;border:0;line-height:1.5}
  footer{padding:20px 0 calc(25px + env(safe-area-inset-bottom,0px));gap:14px;font-size:13px}
  .footer-contact{gap:16px}.footer-contact .social-links{gap:0;padding-left:8px;height:20px}
  .social-links a{width:36px;height:44px;opacity:.8}

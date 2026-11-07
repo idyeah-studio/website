@@ -141,14 +141,10 @@ class PublishedProductRoutesTests(unittest.TestCase):
             public_pages = json.loads((ROOT / 'scripts/public-pages.json').read_text())
         cls.handler = PublishedPreviewHandler
 
-    def test_all_six_clean_routes_serve_their_published_source(self):
+    def test_both_clean_product_routes_serve_their_published_source(self):
         for route, source in (
             ('/products/crit-audit', '/magazine/crit-audit.html'),
             ('/products/diya', '/magazine/diya.html'),
-            ('/products/crit-mobile', '/magazine/crit-ios.html'),
-            ('/products/crit-figma', '/magazine/crit-figma.html'),
-            ('/products/dated-figma', '/magazine/dated-figma.html'),
-            ('/products/design-ai-alchemy', '/magazine/alchemy.html'),
         ):
             with self.subTest(route=route):
                 status, headers, body = request_handler(self.handler, path=route)

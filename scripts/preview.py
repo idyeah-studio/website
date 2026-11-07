@@ -56,7 +56,7 @@ class PreviewHandler(SimpleHTTPRequestHandler):
                 return None
             pages = {'index', 'inside', 'services', 'mosaix-story', 'rialty-story',
                      'ionate-story', 'simcomm-story', 'stealth-story', 'vishal',
-                     'products-study', 'crit-audit', 'diya', 'alchemy', 'crit-ios', 'crit-figma', 'dated-figma', 'wabi',
+                     'products-study', 'crit-audit', 'diya',
                      'off-idyeah', 'off-001', 'off-002', 'off-003', 'off-004', 'off-005',
                      'off-006', 'proof', 'firecracker-story'}
             asset_types = {'.css', '.js', '.svg', '.webp', '.png', '.jpg', '.jpeg',
