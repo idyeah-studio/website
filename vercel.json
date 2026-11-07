@@ -6,7 +6,7 @@
       "src": "/products/crit-ios(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-mobile"
+        "Location": "/products/crit-audit"
       }
     },
     {
@@ -87,6 +87,41 @@
       }
     },
     {
+      "src": "/products/crit-mobile(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/crit-audit"
+      }
+    },
+    {
+      "src": "/products/crit-figma(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/crit-audit"
+      }
+    },
+    {
+      "src": "/products/design-ai-alchemy(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "/person"
+      }
+    },
+    {
+      "src": "/products/wabi(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "https://apps.apple.com/app/wabi-daily-practice/id6771074089"
+      }
+    },
+    {
+      "src": "/products/dated-figma(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.figma.com/community/plugin/1686645937402418158"
+      }
+    },
+    {
       "src": "/off-idyeah/archive(?:\\.html)?",
       "status": 308,
       "headers": {
@@ -132,35 +167,35 @@
       "src": "/magazine/alchemy(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/products/design-ai-alchemy"
+        "Location": "/person"
       }
     },
     {
       "src": "/magazine/crit-ios(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-mobile"
+        "Location": "/products/crit-audit"
       }
     },
     {
       "src": "/magazine/crit-figma(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-figma"
+        "Location": "/products/crit-audit"
       }
     },
     {
       "src": "/magazine/dated-figma(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/products/dated-figma"
+        "Location": "https://www.figma.com/community/plugin/1686645937402418158"
       }
     },
     {
       "src": "/magazine/wabi(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/products/wabi"
+        "Location": "https://apps.apple.com/app/wabi-daily-practice/id6771074089"
       }
     },
     {

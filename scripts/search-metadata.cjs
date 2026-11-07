@@ -58,11 +58,6 @@ const copy = {
   },
   '/products/crit-audit': { title: 'Crit8 — Product & Website Audits · idyeah' },
   '/products/diya': { title: 'DIYA — Components & Patterns in Code · idyeah' },
-  '/products/crit-mobile': { title: 'Crit Mobile — Design, Deck & Resume Critiques · idyeah' },
-  '/products/crit-figma': { title: 'Crit Figma — Frame Critiques in Figma · idyeah' },
-  '/products/dated-figma': { title: 'Dated Figma — Date Shifting Plugin · idyeah' },
-  '/products/design-ai-alchemy': { title: 'Design AI Alchemy — AI Design Prompts · idyeah' },
-  '/products/wabi': { title: 'Wabi — Daily Wellbeing Practice · idyeah' },
 };
 
 const cases = [

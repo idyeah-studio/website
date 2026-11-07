@@ -35,3 +35,6 @@
 .footer-contact{display:flex;align-items:center;gap:20px}.footer-contact .social-links{position:static;transform:none;gap:10px;padding-left:16px;border-left:1px solid #f5e6c333;height:18px}
 /* Match the visible gap on either side of the contact separator. */
 .footer-contact{gap:20px}.footer-contact .social-links{padding-left:12.5px}
+
+/* The book, one line beside the contact links. */
+.footer-book{padding-left:16px;border-left:1px solid #f5e6c333;line-height:18px;color:#d9d2c5}
