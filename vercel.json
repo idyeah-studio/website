@@ -295,6 +295,27 @@
       "headers": {
         "Location": "/off-idyeah/006"
       }
+    },
+    {
+      "src": "/magazine/off-007(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah/007"
+      }
+    },
+    {
+      "src": "/magazine/off-008(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah/008"
+      }
+    },
+    {
+      "src": "/magazine/off-009(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/off-idyeah/009"
+      }
     }
   ]
 }
