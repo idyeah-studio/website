@@ -33,10 +33,13 @@ test('every published spread has metadata, landscape guidance, and existing loca
  }
  }
 });
-test('all proof pages link the call invitation and use B2C for the selected stealth quote',()=>{
+test('all proof pages link the call invitation and the Configuratori quote is signed',()=>{
  for(const n of pages.slice(2,9))assert.match(read(n),/class="walkthrough-call" href="https:\/\/calendly.com\/vishal-idyeah\/30min"/);
- assert.ok(read('services').includes('Founder · Stealth · B2C'));
- assert.ok(read('stealth-story').includes('Stealth · B2C</span>'));
+ assert.ok(read('services').includes('Dharmesh S. · Co-Founder, Configuratori USA'));
+ assert.ok(read('stealth-story').includes('Dharmesh S.<span>Co-Founder, Configuratori USA</span>'));
+ assert.ok(read('stealth-story').includes('data-audit-pdf="./assets/crit8-configuratori-audit.pdf"'));
+ for(const n of pages.slice(2,9))assert.ok(!/note-label|A NOTE FROM/i.test(read(n)),`${n}: no note label`);
+ assert.equal(redirectFor('/proof/stealth')?.headers.Location,'/proof/configuratori');
 });
 test('turning spreads own their layout before JavaScript executes',()=>{
  for(const n of pages.slice(2))assert.match(read(n),/<body[^>]*>\s*<div class="magazine-leaf">/,n);
@@ -169,7 +172,7 @@ test('Proof is a published landing page and every client links to its case study
  assert.ok(!routes.some(r=>r.src==='/proof/?'&&r.status===308));
  const s=read('proof');
  assert.ok(!s.includes('palette-nav'));
- for(const client of ['mosaix','rialty','ionate','simcomm','stealth','firecracker']){
+ for(const client of ['mosaix','rialty','ionate','simcomm','configuratori','firecracker']){
   assert.ok(s.includes(`href="/proof/${client}"`),client);
  }
  for(const name of ['mosaix-story','rialty-story','ionate-story','simcomm-story','stealth-story']){
