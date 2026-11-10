@@ -251,7 +251,14 @@
       "src": "/magazine/stealth-story(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/proof/stealth"
+        "Location": "/proof/configuratori"
+      }
+    },
+    {
+      "src": "/proof/stealth(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "/proof/configuratori"
       }
     },
     {

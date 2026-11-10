@@ -1,12 +1,12 @@
-.audit-preview{width:min(1120px,94vw);height:92dvh;max-width:none;max-height:92dvh;margin:auto;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);box-shadow:0 24px 90px #0006;overflow:hidden}
+.audit-preview{width:min(1120px,94vw);height:92dvh;max-width:none;max-height:92dvh;margin:auto;padding:0;border:1px solid var(--line,#c9c3b5);border-radius:12px;background:var(--paper,#f4f0e6);color:var(--ink,#292720);box-shadow:0 24px 90px #0006;overflow:hidden}
 .audit-preview::backdrop{background:rgba(20,18,16,.76)}
 .audit-preview-panel{height:100%;display:flex;flex-direction:column;min-height:0}
-.audit-preview-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-bottom:1px solid var(--line);flex-shrink:0}
+.audit-preview-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-bottom:1px solid var(--line,#c9c3b5);flex-shrink:0}
 .audit-preview-header h2{margin:0;font:500 15px Archivo,Arial,sans-serif;letter-spacing:0}
 .audit-preview-actions{display:flex;align-items:center;gap:18px;flex-shrink:0}
 .audit-preview-actions a{font:12px Archivo,Arial,sans-serif;text-decoration:underline;text-underline-offset:3px}
 .audit-preview-close{display:grid;place-items:center;width:36px;height:36px;padding:8px;background:transparent;color:inherit;border:0;border-radius:6px;cursor:pointer}
-.audit-preview-close:hover{background:#2927200d}.audit-preview-close:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.audit-preview-close:hover{background:#2927200d}.audit-preview-close:focus-visible{outline:2px solid var(--red,#c93219);outline-offset:2px}
 .audit-preview-close svg{width:20px;height:20px;display:block;flex-shrink:0}
 .audit-preview-document{display:block;width:100%;flex:1;min-height:0;border:0;background:#e5e3df}
 @media(max-width:600px){.audit-preview{width:96vw;height:94dvh;max-height:94dvh}.audit-preview-header{padding:8px 12px;gap:8px}.audit-preview-header h2{font-size:13px}.audit-preview-actions{gap:10px}}

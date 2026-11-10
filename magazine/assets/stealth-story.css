@@ -24,3 +24,7 @@
  .stealth-story .audit-pages{width:100%;margin-top:0;align-self:stretch}
  .stealth-story .client-note{margin-top:40px;padding-top:24px}
 }
+
+/* Configuratori: the client mark in place of the anonymous label. */
+.configuratori-logo{display:block;width:176px;height:auto}
+@media(max-width:1024px) and (orientation:portrait){.configuratori-logo{width:148px}}
