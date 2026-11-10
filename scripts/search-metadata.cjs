@@ -30,7 +30,7 @@ const copy = {
   },
   '/proof': {
     title: 'Product Audit & Design Case Studies · idyeah',
-    description: 'Selected work for Mosaix, Rialty, Ionate, SimComm, Stealth, and FirecrackerPR: product audits, product design, brand communication, and pitch decks.',
+    description: 'Selected work for Mosaix, Rialty, Ionate, SimComm, Configuratori, and FirecrackerPR: product audits, product design, brand communication, and pitch decks.',
   },
   '/proof/mosaix': {
     title: 'Mosaix — Product Audit & Onboarding Design · idyeah',
@@ -48,9 +48,9 @@ const copy = {
     title: 'SimComm — Audit & Corporate Deck Design · idyeah',
     description: 'A corporate deck shaped by an audit, making SimComm’s platform expertise clear. Explore the narrative, presentation design, and selected slides.',
   },
-  '/proof/stealth': {
-    title: 'Stealth B2C — Brand & Product Experience Audit · idyeah',
-    description: 'A confidential B2C product audit across brand and experience. Explore the eight-lens review and why the recommendation was to realign, rather than rebuild.',
+  '/proof/configuratori': {
+    title: 'Configuratori · B2B Brand & Product Experience Audit · idyeah',
+    description: 'A B2B product audit for Configuratori across brand and experience. Explore the eight-lens review and why the recommendation was to realign, rather than rebuild.',
   },
   '/proof/firecracker': {
     title: 'FirecrackerPR — Sales Pitch Deck Design · idyeah',
@@ -65,7 +65,7 @@ const cases = [
   { slug: 'rialty', client: 'Rialty', image: '/magazine/assets/rialty/showreel-poster.webp' },
   { slug: 'ionate', client: 'Ionate', image: '/assets/idyeah/work/mira-action-poster.jpg' },
   { slug: 'simcomm', client: 'SimComm', image: '/magazine/assets/simcomm-slide-2.webp' },
-  { slug: 'stealth', client: 'Stealth · B2C' },
+  { slug: 'configuratori', client: 'Configuratori', image: '/magazine/assets/configuratori-audit-cover.webp' },
   { slug: 'firecracker', client: 'FirecrackerPR', image: '/magazine/assets/firecracker/showreel-poster.webp' },
 ];
 
@@ -149,7 +149,7 @@ function graphFor(route, title, description) {
     graph.push({
       '@type': 'CreativeWork', '@id': workId, name: title.replace(/ · idyeah$/, ''), url, description,
       genre: 'Design case study', author: { '@id': personId }, publisher: { '@id': organizationId },
-      about: project.slug === 'stealth' ? { '@type': 'Thing', name: 'Confidential B2C product audit' } : { '@type': 'Organization', name: project.client },
+      about: { '@type': 'Organization', name: project.client },
       mainEntityOfPage: { '@id': pageId },
       ...(project.image ? { image: origin + project.image } : {}),
     });
