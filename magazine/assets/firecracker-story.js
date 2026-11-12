@@ -6,6 +6,7 @@
  const title=document.querySelector('#slide-title'),position=document.querySelector('#slide-position'),detailTitle=document.querySelector('#detail-title'),zoomButton=document.querySelector('#zoom-slide');
  let current=0,requested=0,opener=null;
  function showPoster(){video.controls=false;video.hidden=true;poster.hidden=false;play.hidden=false}
+ const leaveFullscreen=then=>{const d=document,fs=d.fullscreenElement||d.webkitFullscreenElement;if(fs&&d.exitFullscreen)return void d.exitFullscreen().then(then,then);if(fs&&d.webkitExitFullscreen){d.webkitExitFullscreen();return void setTimeout(then,350)}if(video.webkitDisplayingFullscreen){video.webkitExitFullscreen();return void setTimeout(then,350)}then()};
  function showReel(){
   requested=-1;video.pause();video.currentTime=0;showPoster();
   film.hidden=false;featuredButton.hidden=true;enlarge.hidden=true;
@@ -30,7 +31,7 @@
   button.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();const next=(index+(event.key==='ArrowRight'?1:-1)+mediaThumbs.length)%mediaThumbs.length;mediaThumbs[next].focus();if(next===0)showReel();else select(next-1)}});
  });
  play.addEventListener('click',()=>{play.hidden=true;poster.hidden=true;video.hidden=false;video.controls=true;video.play().catch(showPoster)});
- video.addEventListener('ended',()=>{video.currentTime=0;showPoster()});
+ video.addEventListener('ended',()=>{video.currentTime=0;leaveFullscreen(showPoster)});
  showReel();
  featuredButton.addEventListener('click',openDetail);enlarge.addEventListener('click',openDetail);
  document.querySelector('#close-detail').addEventListener('click',()=>dialog.close());

@@ -14,6 +14,7 @@ detail.addEventListener('click',e=>{if(e.target===detail)detail.close()});
   poster.hidden=false;
   play.hidden=false;
  }
+ const leaveFullscreen=then=>{const d=document,fs=d.fullscreenElement||d.webkitFullscreenElement;if(fs&&d.exitFullscreen)return void d.exitFullscreen().then(then,then);if(fs&&d.webkitExitFullscreen){d.webkitExitFullscreen();return void setTimeout(then,350)}if(video.webkitDisplayingFullscreen){video.webkitExitFullscreen();return void setTimeout(then,350)}then()};
  showPoster();
  play.addEventListener('click',()=>{
   play.hidden=true;
@@ -24,6 +25,6 @@ detail.addEventListener('click',e=>{if(e.target===detail)detail.close()});
  });
  video.addEventListener('ended',()=>{
   video.currentTime=0;
-  showPoster();
+  leaveFullscreen(showPoster);
  });
 })();
