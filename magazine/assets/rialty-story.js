@@ -9,7 +9,8 @@ detail.addEventListener('click',e=>{if(e.target===detail)detail.close()});
  const video=document.querySelector('#rialty-reel'),play=document.querySelector('.rialty-reel-play'),poster=document.querySelector('.rialty-reel-poster');
  if(!video||!play||!poster)return;
  function showPoster(){video.controls=false;video.hidden=true;poster.hidden=false;play.hidden=false}
+ const leaveFullscreen=then=>{const d=document,fs=d.fullscreenElement||d.webkitFullscreenElement;if(fs&&d.exitFullscreen)return void d.exitFullscreen().then(then,then);if(fs&&d.webkitExitFullscreen){d.webkitExitFullscreen();return void setTimeout(then,350)}if(video.webkitDisplayingFullscreen){video.webkitExitFullscreen();return void setTimeout(then,350)}then()};
  showPoster();
  play.addEventListener('click',()=>{play.hidden=true;poster.hidden=true;video.hidden=false;video.controls=true;video.play().catch(showPoster)});
- video.addEventListener('ended',()=>{video.currentTime=0;showPoster()});
+ video.addEventListener('ended',()=>{video.currentTime=0;leaveFullscreen(showPoster)});
 })();
