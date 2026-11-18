@@ -11,7 +11,10 @@ page design.) For a new strip numbered `NNN`, where `PPP` is the previous one:
 2. **Strip page.** Copy `magazine/off-PPP.html` to `magazine/off-NNN.html`.
    - Replace every `PPP` with `NNN`.
    - Swap in the new caption. It appears in the `<h1>`, `og:description` and
-     `twitter:description`.
+     `twitter:description`, and it starts both the `<title>`
+     (`Caption · off idyeah NNN`) and the `description`
+     (`Caption off idyeah No. NNN, a two-panel comic strip on design, brands
+     and the people behind them.`).
    - Swap in the image alt text and the transcript paragraphs. Keep the final
      "Credit: …" line.
    - Point "‹ Previous" at `/off-idyeah/PPP` and leave the third nav slot
