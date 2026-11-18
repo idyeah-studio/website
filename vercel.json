@@ -101,6 +101,13 @@
       }
     },
     {
+      "src": "/founderprofile(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "/person"
+      }
+    },
+    {
       "src": "/products/design-ai-alchemy(?:\\.html)?/?",
       "status": 308,
       "headers": {
