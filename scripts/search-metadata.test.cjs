@@ -48,8 +48,12 @@ test('identity uses approved geography and verified profiles without private add
   assert.equal(organization.areaServed.name, 'San Francisco Bay Area');
   assert.ok(!('streetAddress' in organization.address));
   assert.ok(!('postalCode' in organization.address));
-  assert.deepEqual(organization.sameAs, ['https://x.com/idyeahstudio']);
-  assert.deepEqual(person.sameAs, ['https://www.linkedin.com/in/vishalme/']);
+  assert.deepEqual(organization.sameAs, ['https://x.com/idyeahstudio', 'https://github.com/idyeah-studio', 'https://idyeah.gumroad.com/']);
+  assert.deepEqual(organization.brand.map(item => item.url), ['https://crit8.ai/', 'https://diya13.ai/']);
+  assert.deepEqual(person.sameAs, ['https://www.linkedin.com/in/vishalme/', 'https://topmate.io/vishal_idyeah']);
+  const book = schema(read('/magazine/vishal.html'))['@graph'].find(node => node['@type'] === 'Book');
+  assert.equal(book.name, 'Design AI Alchemy');
+  assert.equal(book.author['@id'], person['@id']);
   assert.ok(fs.existsSync('.' + new URL(organization.logo).pathname));
   assert.ok(!fs.readFileSync('.' + new URL(organization.logo).pathname, 'utf8').includes('<symbol'));
 });

@@ -93,13 +93,17 @@ function graphFor(route, title, description) {
     email: 'vishal@idyeah.studio', founder: { '@id': personId },
     address: { '@type': 'PostalAddress', addressLocality: 'Cupertino', addressRegion: 'California', addressCountry: 'US' },
     areaServed: { '@type': 'Place', name: 'San Francisco Bay Area' },
-    sameAs: ['https://x.com/idyeahstudio'],
+    sameAs: ['https://x.com/idyeahstudio', 'https://github.com/idyeah-studio', 'https://idyeah.gumroad.com/'],
+    brand: [
+      { '@type': 'Brand', name: 'Crit8', url: 'https://crit8.ai/' },
+      { '@type': 'Brand', name: 'DIYA', url: 'https://diya13.ai/' },
+    ],
   };
   const person = {
     '@type': 'Person', '@id': personId, name: 'Vishal Mehta', url: `${origin}/person`,
     jobTitle: 'Product designer and storyteller', worksFor: { '@id': organizationId },
     image: `${origin}/magazine/assets/vishal-seated.webp`,
-    sameAs: ['https://www.linkedin.com/in/vishalme/'],
+    sameAs: ['https://www.linkedin.com/in/vishalme/', 'https://topmate.io/vishal_idyeah'],
   };
   const website = {
     '@type': 'WebSite', '@id': websiteId, name: 'idyeah', url: `${origin}/`,
@@ -114,6 +118,10 @@ function graphFor(route, title, description) {
   if (route === '/person') {
     page['@type'] = 'ProfilePage';
     page.mainEntity = { '@id': personId };
+    graph.push({
+      '@type': 'Book', '@id': `${url}#design-ai-alchemy`, name: 'Design AI Alchemy',
+      author: { '@id': personId }, url: 'https://idyeah.gumroad.com/l/design-ai-alchemy',
+    });
   }
   if (route === '/practice') {
     const catalogId = `${url}#services`;
