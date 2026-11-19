@@ -97,3 +97,17 @@
   .audit-wordmark { width: 150px; }
   .audit-purpose h1 { font-size: 28px; }
 }
+
+/* All eight lenses on one line where there is room; they wrap on narrow and portrait screens. */
+.audit-page .audit-lenses { flex-direction: row; flex-wrap: nowrap; }
+.audit-page .lens-row { display: contents; }
+@media (max-width: 1024px), (orientation: portrait) {
+  .audit-page .audit-lenses { flex-wrap: wrap; }
+}
+/* A quiet link to a full sample audit, under the main action. */
+.audit-sample { position: relative; display: inline-block; margin-top: 20px; padding: 0 0 8px; color: var(--ink, #292720); font: 400 13px/1.3 EditorialSans, Arial, sans-serif; text-decoration: none; }
+.audit-sample::after { content: ""; position: absolute; left: 0; bottom: 0; width: 32px; height: 2px; background: #c93219; transition: width .25s ease; }
+.audit-sample:hover { color: #c93219; }
+.audit-sample:hover::after { width: 100%; }
+.audit-sample:focus-visible { outline: 2px solid #c93219; outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { .audit-sample::after { transition: none; } }
