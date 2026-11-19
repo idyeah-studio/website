@@ -136,6 +136,13 @@
       }
     },
     {
+      "src": "/magazine/readers-ask(?:\\.html)?",
+      "status": 308,
+      "headers": {
+        "Location": "/readers-ask"
+      }
+    },
+    {
       "src": "/magazine/services(?:\\.html)?",
       "status": 308,
       "headers": {
