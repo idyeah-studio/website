@@ -78,7 +78,7 @@ body.firecracker-story[data-next-page]>.magazine-leaf{background:var(--paper);gr
  html,body,body.firecracker-story.has-magazine-turn{height:auto;min-height:100%;overflow:auto;background:var(--paper)}
  body.firecracker-story[data-next-page]>.magazine-leaf{position:relative;inset:auto;height:auto;min-height:100dvh;display:block;padding:0 7vw;overflow:visible;clip-path:none!important}
  .leaf-fold,.leaf-handle,.navigation-divider{display:none}
- .story-header{display:grid;grid-template-columns:1fr auto;gap:14px;padding:calc(20px + env(safe-area-inset-top,0px)) 0 14px;border-bottom:1px solid var(--line)}
+ .story-header{display:grid;grid-template-columns:1fr auto;gap:14px;padding:calc(20px + env(safe-area-inset-top,0px)) 0 14px;border-bottom:1px solid transparent}
  .case-navigation{display:contents}.back-inside{justify-self:end;min-height:44px}.back-inside svg{width:24px;height:24px;padding:6px}
  .mobile-work-toggle{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;min-height:44px;font-size:13px}
  .mobile-work-toggle span{font:20px Arial,sans-serif}.case-pills{display:none;grid-column:1/-1;justify-content:flex-start;gap:8px;padding-bottom:10px}
