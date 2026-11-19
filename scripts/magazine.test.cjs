@@ -35,7 +35,8 @@ test('every published spread has metadata, landscape guidance, and existing loca
 });
 test('all proof pages link the call invitation and the Configuratori quote is signed',()=>{
  for(const n of pages.slice(2,9))assert.match(read(n),/class="walkthrough-call" href="https:\/\/calendly.com\/vishal-idyeah\/30min"/);
- assert.ok(read('services').includes('Dharmesh S. · Co-Founder, Configuratori USA'));
+ // The quote was retired from Practice in Nov 2026; it stays on the Configuratori case study.
+ assert.ok(!read('services').includes('Dharmesh'));
  assert.ok(read('stealth-story').includes('Dharmesh S.<span>Co-Founder, Configuratori USA</span>'));
  assert.ok(read('stealth-story').includes('data-audit-pdf="./assets/crit8-configuratori-audit.pdf"'));
  for(const n of pages.slice(2,9))assert.ok(!/note-label|A NOTE FROM/i.test(read(n)),`${n}: no note label`);

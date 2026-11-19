@@ -70,3 +70,19 @@
  }
  document.fonts.ready.then(print);addEventListener('resize',print);
 })();
+
+/* The Design columns share the Audit list's top rule and height, so the two leaves read as one table. */
+(()=>{
+ const list=document.querySelector('.rate-list'),columns=document.querySelector('.rate-columns');
+ if(!list||!columns)return;
+ const portrait=matchMedia('(max-width:1024px) and (orientation:portrait)');
+ function align(){
+  columns.style.marginTop='';columns.style.minHeight='';
+  if(portrait.matches)return;
+  columns.style.marginTop='0px';
+  const from=list.getBoundingClientRect(),to=columns.getBoundingClientRect();
+  columns.style.marginTop=Math.max(0,from.top-to.top)+'px';
+  columns.style.minHeight=from.height+'px';
+ }
+ align();addEventListener('resize',align);portrait.addEventListener('change',align);document.fonts?.ready.then(align);
+})();
