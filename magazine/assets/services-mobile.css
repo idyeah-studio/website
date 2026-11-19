@@ -18,22 +18,9 @@
  .spread-ampersand{position:relative;left:auto;top:auto;transform:none;height:92px;background:linear-gradient(var(--paper) 50%,#e9dbb8 50%);display:flex;align-items:center;justify-content:center;mix-blend-mode:normal;font:italic 105px/1 Domaine,serif;letter-spacing:0}
  .printed-ampersand{display:none}.spread-ampersand::after{content:'&';color:var(--red)}
  .design{background:#e9dbb8;padding-top:25px;padding-bottom:calc(25px + env(safe-area-inset-bottom,0px))}
- /* Rate tickets, read as one column. */
+ /* Rates, read as one column. */
  .services-sheet{--u:8.6px}
  body .services-sheet h1{margin:0 0 22px}
- .offers{margin-top:36px;gap:10px}
- .ticket-body{padding:17px 18px}
- .ticket-stub{padding:17px 14px 17px 18px}
- .audit-pass{--stub:150px}
- .audit-pass>.ticket-paper>.ticket-body{padding:20px 18px 22px}
- .audit-pass>.ticket-paper>.ticket-stub{padding:20px 14px 22px 20px}
- .ticket-tuck{margin-top:17px;--stub:112px;--slit:20px}
- .ticket-tuck .ticket-body{padding:13px 10px 13px 22px}
- .ticket-tuck .ticket-stub{padding:13px 10px 13px 16px}
- .credit-coupon,.offer-ask{min-height:54px;margin-top:6px}
- .credit-coupon{padding:13px 18px;text-wrap:balance}
- .coupon-scissors{left:18px}
- .offer-ask{margin-top:14px}
  body .services-sheet .audit>.audit-actions{margin-top:24px;min-height:44px;gap:28px}
  body .services-sheet .audit-actions>.audit-self{font-size:13px}
  .design-links{margin-top:18px;min-height:44px}
@@ -45,26 +32,10 @@
  .mobile-service-footer a{font-size:13px;min-height:44px;display:flex;align-items:center;text-decoration:underline;text-underline-offset:5px;text-decoration-color:#b9aa8c}
  .mobile-service-footer span{font:italic 28px/1 Domaine,serif}
 }
-/* Phones: the design tickets turn upright, body above and stub below. */
-@media(max-width:560px) and (orientation:portrait){
- .design-offers .ticket-paper{--stubh:164px;--cut:calc(100% - var(--stubh));grid-template-columns:minmax(0,1fr);grid-template-rows:auto var(--stubh);-webkit-mask:radial-gradient(circle var(--notch) at 0 var(--cut),#0000 97%,#000),radial-gradient(circle var(--notch) at 100% var(--cut),#0000 97%,#000);-webkit-mask-composite:source-in;mask:radial-gradient(circle var(--notch) at 0 var(--cut),#0000 97%,#000),radial-gradient(circle var(--notch) at 100% var(--cut),#0000 97%,#000);mask-composite:intersect}
- .design-offers .ticket+.ticket .ticket-paper{--stubh:120px}
- .design-offers .ticket-stub::before{left:16px;right:16px;top:-1px;bottom:auto;border-left:0;border-top:2px dotted var(--perforation)}
- .design-offers .ticket-scope{max-width:none;text-wrap:balance}
- /* The audit pass turns upright too: its price runs along the foot, under the tucked ticket. */
- .audit-pass>.ticket-paper{--stubh:72px;--cut:calc(100% - var(--stubh));grid-template-columns:minmax(0,1fr);grid-template-rows:auto var(--stubh);-webkit-mask:radial-gradient(circle var(--notch) at 0 var(--cut),#0000 97%,#000),radial-gradient(circle var(--notch) at 100% var(--cut),#0000 97%,#000);-webkit-mask-composite:source-in;mask:radial-gradient(circle var(--notch) at 0 var(--cut),#0000 97%,#000),radial-gradient(circle var(--notch) at 100% var(--cut),#0000 97%,#000);mask-composite:intersect}
- .audit-pass>.ticket-paper>.ticket-stub{flex-direction:row;align-items:baseline;justify-content:flex-start;gap:14px;padding:0 18px;align-content:center}
- .audit-pass>.ticket-paper>.ticket-stub>.ticket-price{margin:0;line-height:72px}
- .audit-pass>.ticket-paper>.ticket-stub::before{left:16px;right:16px;top:-1px;bottom:auto;border-left:0;border-top:2px dotted var(--perforation)}
-}
-/* Tablets in portrait: wider tickets, audits side by side. */
+/* Tablets in portrait: a larger unit. */
 @media(min-width:700px) and (max-width:1024px) and (orientation:portrait){
  .services-sheet{--u:10.4px}
- .audit-pass{--stub:176px}
- .ticket-tuck{--stub:136px}
- .offers{gap:12px}
 }
-
 @media(max-width:1024px) and (orientation:portrait){
  .rate-list{margin-top:34px}
  .rate-row{grid-template-columns:minmax(0,1fr) auto;column-gap:16px;row-gap:8px;padding:20px 0}
@@ -75,7 +46,6 @@
  .rate-credit{font-size:13px;margin-top:16px}
  .audit .audit-actions{margin-top:26px}
 }
-
 @media(max-width:1024px) and (orientation:portrait){
  .rate-columns{display:block;margin-top:34px}
  .rate-col{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;row-gap:6px;padding:20px 0;border-left:0;border-top:1px solid #b9a985;--name:28px}
@@ -85,7 +55,6 @@
  .rate-col .rate-addon{grid-column:1;font-size:14px;margin:0}
  .rate-col .rate-price{grid-column:2;grid-row:1 / span 3;align-self:start;margin-top:0;padding-top:0;text-align:right}
 }
-
 @media(max-width:1024px) and (orientation:portrait){
  .audit-method{margin-top:26px}
  .rate-columns{display:grid;grid-template-columns:1fr;gap:10px}

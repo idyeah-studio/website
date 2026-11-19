@@ -43,7 +43,7 @@
 }
 @media(max-width:1024px) and (orientation:portrait){
  body.theme-dated,body.theme-dated.has-magazine-turn{background:var(--paper)}
- .theme-dated .story-header{border-bottom-color:#3b4337}
+ .theme-dated .story-header{border-bottom-color:transparent}
  .theme-dated .mobile-work-toggle{color:var(--text)}
  .theme-dated .dated-edition{display:flex;flex-direction:column;gap:36px;padding:36px 0 34px!important;align-items:stretch}
  .dated-copy{padding:0}
