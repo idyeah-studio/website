@@ -24,7 +24,6 @@ h3{font-size:min(16px,2dvh);font-weight:500;line-height:1.4;margin-bottom:1dvh}
 .invitation{display:flex;align-items:baseline;gap:27px;margin:1dvh 0 3dvh;font-size:12px}.invitation>span{font:italic 24px Domaine,serif;margin-right:auto}.invitation a{border-bottom:1px solid var(--line);padding-bottom:5px}.invitation a:hover{color:var(--red)}
 footer{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:30px;border-top:1px solid var(--line);padding-top:1.6dvh;padding-right:25px;font-size:10px;color:var(--quiet);flex-shrink:0}.folio{font:italic 22px Domaine,serif;color:var(--ink)}footer a{color:var(--ink)}
 .leaf-fold{position:fixed;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}.leaf-handle{position:fixed;right:0;bottom:0;width:62px;height:62px;z-index:4}.destination-preview{position:fixed;inset:0;width:100%;height:100%;border:0;background:var(--paper);z-index:1;pointer-events:none}
-
 /* Two facing leaves, held inside one running header and footer. */
 .services-sheet{background:linear-gradient(90deg,#f4f0e6 0%,#f4f0e6 50%,#e9dbb8 50%,#e9dbb8 100%)}
 .services-sheet::before{content:"";position:absolute;left:calc(50% - 14px);top:0;bottom:0;width:28px;background:linear-gradient(90deg,transparent,rgba(90,68,29,.035) 43%,rgba(90,68,29,.10) 50%,rgba(255,255,255,.18) 54%,transparent);pointer-events:none}
@@ -50,9 +49,7 @@ h1{height:auto;display:block;font-size:min(12vw,19dvh);letter-spacing:-.075em;ma
 .spread-ampersand{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font:italic min(19vw,30dvh)/1 Domaine,serif;color:var(--red);pointer-events:none;z-index:1;letter-spacing:-.09em;padding-right:.09em}
 .invitation{border-top:1px solid var(--line);padding-top:2.5dvh;margin-top:0}.invitation>span{font-size:24px}
 footer{border-top:0;padding-top:0}
-
 .design-columns h3{margin-bottom:.6dvh}.service-link{margin-top:2dvh}.design .service-link{margin-top:auto}.invitation{flex-shrink:0}.audit,.design{min-height:0}
-
 /* Paper curves into a narrow, shaded binding, with clear inner margins. */
 .services-sheet::before{left:calc(50% - 50px);width:100px;background:linear-gradient(90deg,transparent 0%,rgba(81,62,30,.025) 19%,rgba(63,47,22,.07) 37%,rgba(42,31,15,.18) 47%,rgba(31,24,14,.27) 50%,rgba(52,38,16,.17) 52%,rgba(83,63,28,.055) 65%,rgba(255,255,255,.15) 82%,transparent 100%)}
 .audit{padding-right:9.5vw}.design{padding-left:9.5vw}
@@ -67,30 +64,24 @@ footer{border-top:0;padding-top:0}
 h1,.design h1{font-size:min(11vw,16dvh);margin-top:1.5dvh;margin-bottom:2.6dvh;line-height:1.05}
 .service-description,.deliverables p,.design-columns p{font-size:min(15px,1.7dvh)}
 .service-intro{font-size:min(23px,2.6dvh)}
-
 /* The binding shades both paper and printed ink, rather than sitting behind it. */
 .services-sheet::before{display:none}
 .services-sheet::after{content:"";position:absolute;inset:0 auto 0 calc(50% - 55px);width:110px;z-index:2;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(57,42,23,.025) 18%,rgba(48,34,17,.08) 34%,rgba(37,26,13,.19) 45%,rgba(25,18,9,.30) 49.5%,rgba(35,24,12,.23) 51%,rgba(59,42,19,.10) 59%,rgba(255,250,231,.12) 78%,transparent 100%)}
 .spread-ampersand{padding:0;line-height:0;mix-blend-mode:multiply}
 .printed-ampersand{display:block}
-
 /* Matching shoulders descend into one shared binding valley. */
 .services-sheet::after{left:calc(50% - 70px);width:140px;background:linear-gradient(90deg,transparent 0%,rgba(255,253,244,.20) 14%,rgba(255,253,244,.12) 24%,rgba(55,39,19,.035) 33%,rgba(43,29,14,.12) 41%,rgba(29,20,10,.25) 48%,rgba(22,16,8,.30) 50%,rgba(29,20,10,.25) 52%,rgba(43,29,14,.12) 59%,rgba(55,39,19,.035) 67%,rgba(255,253,244,.12) 76%,rgba(255,253,244,.20) 86%,transparent 100%)}
 .running-head{grid-template-columns:1fr 1fr}
 .practice-label{justify-self:end}
-
 /* Broader left paper curvature; restrained light on the warmer right leaf. */
 .services-sheet::after{left:calc(50% - 100px);width:200px;background:linear-gradient(90deg,transparent 0%,rgba(255,255,250,.40) 15%,rgba(255,255,250,.32) 25%,rgba(70,53,30,.035) 35%,rgba(44,31,16,.13) 43%,rgba(29,20,10,.25) 48.5%,rgba(22,16,8,.30) 50%,rgba(29,20,10,.25) 51.5%,rgba(44,31,16,.13) 57%,rgba(70,53,30,.035) 65%,rgba(255,249,229,.035) 75%,rgba(255,249,229,.045) 85%,transparent 100%)}
 /* Keep the binding visible without a heavy dark stripe. */
 .services-sheet::after{background:linear-gradient(90deg,transparent 0%,rgba(255,255,250,.30) 15%,rgba(255,255,250,.24) 25%,rgba(70,53,30,.025) 35%,rgba(44,31,16,.085) 43%,rgba(29,20,10,.16) 48.5%,rgba(22,16,8,.19) 50%,rgba(29,20,10,.16) 51.5%,rgba(44,31,16,.085) 57%,rgba(70,53,30,.025) 65%,rgba(255,249,229,.03) 75%,rgba(255,249,229,.035) 85%,transparent 100%)}
-
 /* Match the Inside page masthead dimensions exactly. */
 .running-head>a:first-child{display:flex;align-items:center;gap:3px;width:86px}
 .running-head>a:first-child>img:first-child{width:76px;height:auto;display:block}
 .running-head .services-home-dot{width:10px;height:auto;display:block;align-self:center;margin-top:10px;filter:none}
-
 .running-head>a:first-child{display:block;width:78px}.running-head>a:first-child>img:first-child{width:78px;height:auto}
-
 /* Two translucent editorial panels, joined only at their corners. */
 .design-columns{display:block;position:relative;width:100%;height:min(36dvh,360px);margin-top:2dvh;flex-shrink:0}
 .design-columns>div{position:absolute;width:min(20dvh,20vw,200px);height:min(20dvh,20vw,200px);padding:clamp(12px,1.7dvh,18px);border:1px solid rgba(112,87,44,.10);background:rgba(255,252,239,.24);display:flex;flex-direction:column;justify-content:center}
@@ -99,13 +90,11 @@ h1,.design h1{font-size:min(11vw,16dvh);margin-top:1.5dvh;margin-bottom:2.6dvh;l
 .design-columns h3{font-size:min(27px,3.1dvh);line-height:1.1;margin-bottom:1dvh}
 .design-columns p{font-size:min(13px,1.45dvh,1.7vw);line-height:1.5}
 .design .service-link{margin-top:auto}
-
 .design>.service-intro{white-space:nowrap;font-size:min(23px,2.6dvh,1.65vw)}
 .services-sheet>footer{padding-right:0;column-gap:40px;align-items:center}
 .services-sheet>footer .folio{font:italic 22px/.9 Domaine,serif}
 .services-sheet>footer a{font-size:10px;padding:4px 0;border-bottom:1px solid var(--line);justify-self:end}
 @media(max-width:760px){.services-sheet{padding-bottom:3dvh}.services-sheet>footer{margin-left:-.45vw;margin-right:-.45vw;column-gap:18px}.services-sheet>footer a{font-size:8px}}
-
 /* Larger colored panels, offset diagonally with a small shared corner. */
 .design-columns{height:36dvh}
 .design-columns>div{width:min(25vw,300px);height:19dvh;min-height:125px;padding:clamp(16px,2.1dvh,24px);border:0;justify-content:center}
@@ -113,23 +102,18 @@ h1,.design h1{font-size:min(11vw,16dvh);margin-top:1.5dvh;margin-bottom:2.6dvh;l
 .design-columns>div:last-child{left:min(10vw,130px);top:16dvh;background:rgba(139,184,179,.30)}
 .design-columns h3{font-size:min(30px,3.5dvh);margin-bottom:1.2dvh}
 .design-columns p{font-size:min(14px,1.65dvh,2vw);line-height:1.55;color:#55534f}
-
 .spread-ampersand{top:42%}
-
 .invitation{border-top:0;justify-content:flex-end}.audit>.audit-actions{margin-top:auto}
-
 .services-sheet>footer.spread-footer{display:grid;grid-template-columns:1fr 1fr;gap:0;padding-top:2dvh;margin:0;align-items:center}
 .audit-footer,.design-footer{display:flex;align-items:center;gap:24px;min-width:0}
 .audit-footer{justify-content:space-between;padding-right:4vw}
 .design-footer{padding-left:4vw}.design-footer .inside-return{margin-left:auto}
 .spread-footer a{white-space:nowrap}
-
 /* Editorial calls to action: sample stamp and proof cross-reference. */
 .design>.service-link{font:italic 23px/1.2 Domaine,serif;position:relative;border:0;padding:0 0 9px;color:var(--ink)}
 .design>.service-link::after{content:"";position:absolute;bottom:0;left:0;width:32px;height:2px;background:var(--red);transition:width .25s ease}
 .design>.service-link:hover::after{width:100%}
 .design>.service-link:hover{color:var(--red)}
-
 .audit-lenses{display:flex;flex-wrap:wrap;gap:4px;list-style:none;padding:0;margin:16px 0 0;max-width:100%}
 .audit-lenses li{padding:7px 12px;border-radius:999px;background:linear-gradient(135deg,#e8e5df,#dedbd5);border:1px solid rgba(76,72,65,.07);color:#55514b;font:12px/1.2 Archivo,Arial,sans-serif;white-space:nowrap}
 .design>.service-link{font:400 13px/1.3 Archivo,Arial,sans-serif;padding-bottom:8px}
@@ -145,40 +129,29 @@ h1,.design h1{font-size:min(11vw,16dvh);margin-top:1.5dvh;margin-bottom:2.6dvh;l
 .audit-lenses li:nth-child(8){background:#e2e5d7}
 .design>.service-link:hover{color:var(--ink)}
 .audit-lenses{display:grid;grid-template-columns:repeat(5,max-content);gap:8px}
-
 .audit-lenses{display:flex;flex-wrap:wrap;gap:8px;max-width:none;width:max-content}
 .audit-lenses li{flex:0 0 auto}
 .audit-lenses .lens-row-break{flex-basis:100%;height:0;padding:0;margin:-4px 0;border:0;background:none;border-radius:0}
-
 .audit-lenses{display:flex;flex-direction:column;width:max-content;gap:8px}
 .lens-row{display:flex;gap:8px}
 .lens-pill{flex:none;padding:7px 12px;border-radius:999px;border:1px solid rgba(76,72,65,.045);color:#55514b;font:12px/1.2 Archivo,Arial,sans-serif;white-space:nowrap}
 .lens-0{background:#e0e5e8}.lens-1{background:#e5dfec}.lens-2{background:#eddfda}.lens-3{background:#dce7df}.lens-4{background:#ece4d2}.lens-5{background:#dce7e7}.lens-6{background:#eadfe5}.lens-7{background:#e2e5d7}
-
 .audit-lenses .lens-row{flex-wrap:nowrap}
-
 .service-composition{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 .audit,.design{min-width:0}
-
 .spread-ampersand{top:35%}
-
 .audit h1,.design h1{position:relative;width:max-content;isolation:isolate}
 .title-annotation{position:absolute;pointer-events:none;overflow:visible;fill:none}
 .title-annotation path{stroke:var(--red);stroke-width:1.3;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .audit-annotation{left:-3%;bottom:-9%;width:107%;height:20%;opacity:.75}
 .design-annotation{left:-9%;top:-5%;width:117%;height:116%;z-index:-1;opacity:.25;transform:rotate(-5deg)}
-
 .design h1{text-shadow:0 1px 0 rgba(255,250,229,.65),0 -1px 1px rgba(91,65,28,.22),1px 2px 1px rgba(91,65,28,.12)}
 .design h1{text-shadow:0 1px 0 rgba(255,252,237,.9),1px 3px 0 rgba(112,81,35,.27),2px 5px 3px rgba(94,66,26,.18)}
-
 .audit-registration{left:-10px;top:-6px;width:calc(100% + 20px);height:calc(100% + 12px);opacity:.65}
 .audit-registration path{stroke-width:1;stroke-linecap:butt}
-
 .audit-highlight{left:-3%;bottom:4%;width:106%;height:34%;z-index:-1;transform:rotate(-1.4deg)}
 .audit-highlight path{fill:#d9be57;fill-opacity:.30;stroke:none}
 .audit-highlight path{fill:var(--red);fill-opacity:.15}
-
-
 /* Shared header return; both footer folios stay at the outer edges. */
 .running-head{grid-template-columns:1fr auto}
 .practice-navigation{display:flex;align-items:center;gap:18px}
@@ -187,7 +160,6 @@ h1,.design h1{font-size:min(11vw,16dvh);margin-top:1.5dvh;margin-bottom:2.6dvh;l
 .practice-back:hover{text-decoration:underline;text-decoration-color:#c93219;text-underline-offset:5px}
 .practice-separator{height:16px;width:1px;background:#c9c3b5}
 .design-footer .folio{margin-left:auto}
-
 /* Audit: the way to run one yourself with Crit8. */
 .audit>.audit-actions{display:flex;align-items:center;flex-wrap:wrap;gap:14px 30px}
 .audit-actions>.audit-self{margin-top:9px}
@@ -195,38 +167,9 @@ h1,.design h1{font-size:min(11vw,16dvh);margin-top:1.5dvh;margin-bottom:2.6dvh;l
 .audit-self::after{content:"";position:absolute;bottom:0;left:0;width:32px;height:2px;background:var(--red);transition:width .25s ease}
 .audit-self:hover{color:var(--red)}.audit-self:hover::after{width:100%}
 .audit-self:focus-visible{outline:2px solid var(--red);outline-offset:4px}
-
-/* Rate tickets. Each offer is one printed ticket whose stub carries its own price.
-   A leaf's tickets are cut from the facing leaf's stock; the audit credit is a coupon. */
+/* Practice rates. --u is the shared unit that sizes the bottom links. */
 .services-sheet{--u:min(1dvh,.55vw);--detail:#5f594e}
-.audit{--stock:#e9dbb8;--under:#f4f0e6;--perforation:rgba(72,55,24,.42)}
-.design{--stock:#f6f2e8;--under:#e9dbb8;--perforation:rgba(72,62,44,.34)}
 body .services-sheet h1{margin-top:.4dvh;margin-bottom:2dvh}
-.offers{width:100%;display:grid;gap:calc(1.1*var(--u));margin-top:auto}
-.design-offers{grid-template-columns:minmax(0,1fr);--stub:calc(30*var(--u))}
-.ticket{margin:0;min-width:0;display:flex;filter:drop-shadow(0 1px 0 rgba(84,62,24,.17)) drop-shadow(0 calc(.5*var(--u)) calc(.9*var(--u)) rgba(84,62,24,.11))}
-.ticket-paper{--notch:calc(.8*var(--u));--cut:calc(100% - var(--stub));flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) var(--stub);background:var(--stock);border-radius:calc(.5*var(--u));-webkit-mask:radial-gradient(circle var(--notch) at var(--cut) 0,#0000 97%,#000),radial-gradient(circle var(--notch) at var(--cut) 100%,#0000 97%,#000);-webkit-mask-composite:source-in;mask:radial-gradient(circle var(--notch) at var(--cut) 0,#0000 97%,#000),radial-gradient(circle var(--notch) at var(--cut) 100%,#0000 97%,#000);mask-composite:intersect}
-.ticket-body,.ticket-stub{min-width:0;display:flex;flex-direction:column;justify-content:center;padding:calc(1.8*var(--u)) calc(2*var(--u))}
-.ticket-stub{position:relative;padding-left:calc(1.9*var(--u));padding-right:calc(1.5*var(--u))}
-.ticket-stub::before{content:"";position:absolute;left:-1px;top:calc(1.5*var(--u));bottom:calc(1.5*var(--u));border-left:2px dotted var(--perforation)}
-.services-sheet .ticket-name{margin:0;font:italic clamp(13px,calc(3.7*var(--u)),38px)/1.05 Domaine,serif;letter-spacing:-.02em;color:var(--ink)}
-.ticket-scope,.ticket-terms,.ticket-item,.addon-name{font-size:clamp(8.5px,calc(1.56*var(--u)),15.5px);line-height:1.45;color:var(--detail)}
-.ticket-scope{margin-top:calc(.8*var(--u));text-wrap:balance}
-.design-offers .ticket-scope{max-width:18.4em;text-wrap:wrap}
-.design-offers .ticket+.ticket .ticket-scope{text-wrap:balance}
-.ticket-item{font-weight:500;color:var(--ink)}
-.ticket-price{margin:calc(.5*var(--u)) 0 calc(.6*var(--u));font:italic clamp(15px,calc(4.2*var(--u)),44px)/1 Domaine,serif;letter-spacing:-.025em;color:var(--ink);white-space:nowrap}
-.ticket-tag{font:normal clamp(8px,calc(1.3*var(--u)),12.5px)/1 Mono,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--detail);vertical-align:.32em}
-.ticket-terms{white-space:nowrap}
-.ticket-addon{display:flex;align-items:baseline;gap:calc(.9*var(--u));margin-top:calc(1.2*var(--u));padding-top:calc(1.1*var(--u));border-top:1px dashed var(--perforation);white-space:nowrap}
-.addon-price{font:italic clamp(11px,calc(2.5*var(--u)),26px)/1 Domaine,serif;letter-spacing:-.02em;color:var(--ink)}
-.credit-coupon,.offer-ask{grid-column:1/-1;margin:calc(.6*var(--u)) 0 0;min-height:calc(4.8*var(--u));display:flex;align-items:center;font-size:clamp(8.5px,calc(1.56*var(--u)),15.5px);line-height:1.35;color:var(--ink)}
-.credit-coupon{position:relative;justify-content:center;text-align:center;padding:0 calc(2*var(--u));border:1px dashed #8d8372;border-radius:calc(.5*var(--u));background:rgba(233,219,184,.3)}
-.credit-coupon em{margin-right:.12em;font:italic 1.3em/1 Domaine,serif;letter-spacing:-.01em}
-.coupon-scissors{position:absolute;left:calc(1.8*var(--u));top:0;transform:translateY(-54%);box-sizing:content-box;width:calc(1.9*var(--u));height:calc(1.9*var(--u));padding:0 calc(.6*var(--u));background:var(--under);fill:none;stroke:var(--red);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.offer-ask a{padding-bottom:calc(.35*var(--u));border-bottom:1px solid var(--ink);font:italic 1.36em/1.1 Domaine,serif;letter-spacing:-.01em}
-.offer-ask a:hover{border-color:var(--red)}
-.offer-ask a:hover{color:var(--red)}
 body .services-sheet .audit>.audit-actions,.design-links{width:100%;margin-top:calc(1.9*var(--u));min-height:calc(5.2*var(--u));display:flex;align-items:center;flex-wrap:nowrap}
 body .services-sheet .audit>.audit-actions{gap:calc(3.6*var(--u))}
 .design-links{justify-content:space-between;gap:20px}
@@ -237,55 +180,17 @@ body .services-sheet .audit-actions>.audit-self{margin-top:0}
 body .services-sheet .audit-self,body .services-sheet .design-links>.service-link,.ask-link{font-size:clamp(9px,calc(1.62*var(--u)),13px)}
 .ask-link{color:var(--ink);border-bottom:1px solid #b9a985;padding-bottom:7px;line-height:1.3}
 .ask-link:hover{color:var(--red);border-color:var(--red)}
-/* The audit pass. The Brand Audit is one large pass cut from the facing leaf's stock; the Product Audit
-   is a ticket of this leaf's own paper, held inside it by two corner slits. One object, two prices. */
-.audit{--pass:#e9dbb8;--slit:calc(2.3*var(--u))}
-.audit-offers{grid-template-columns:minmax(0,1fr)}
-.audit-pass{--stub:calc(16.5*var(--u))}
-.audit-pass>.ticket-paper>.ticket-body{justify-content:flex-start;padding:calc(2.3*var(--u)) calc(2.3*var(--u)) calc(2.5*var(--u))}
-.audit-pass>.ticket-paper>.ticket-stub{justify-content:center;padding:calc(2.3*var(--u)) calc(1.4*var(--u)) calc(2.5*var(--u)) calc(2.1*var(--u))}
-.services-sheet .audit-pass .ticket-name{white-space:nowrap}
-.services-sheet .audit-pass>.ticket-paper>.ticket-body>.ticket-name{font-size:clamp(14px,calc(3.9*var(--u)),40px)}
-.audit-pass>.ticket-paper>.ticket-stub>.ticket-price{margin:0 0 calc(.9*var(--u));font-size:clamp(15px,calc(4.4*var(--u)),46px);line-height:1.05}
-.audit-pass .ticket-scope{text-wrap:wrap}
-.audit-pass .ticket-scope strong{display:block;font-weight:500;color:var(--ink);white-space:nowrap}
-.ticket-tuck{position:relative;margin-top:calc(1.9*var(--u));--stock:#f6f2e8;--stub:calc(12.8*var(--u));--perforation:rgba(72,62,44,.34)}
-.ticket-tuck::before,.ticket-tuck::after{content:"";position:absolute;z-index:1;width:var(--slit);height:var(--slit);pointer-events:none;--cut:rgba(66,50,22,.62);--cast:rgba(66,50,22,.2)}
-.ticket-tuck::before{left:0;top:0;border-top-left-radius:calc(.5*var(--u));background:linear-gradient(to bottom right,var(--pass) calc(50% - .8px),var(--cut) calc(50% - .8px),var(--cut) calc(50% + .2px),var(--cast) calc(50% + .2px),rgba(66,50,22,0) calc(50% + 3.5px))}
-.ticket-tuck::after{right:0;bottom:0;border-bottom-right-radius:calc(.5*var(--u));background:linear-gradient(to top left,var(--pass) calc(50% - .8px),var(--cut) calc(50% - .8px),var(--cut) calc(50% + .2px),var(--cast) calc(50% + .2px),rgba(66,50,22,0) calc(50% + 3.5px))}
-.ticket-tuck .ticket-body{padding:calc(1.5*var(--u)) calc(1.4*var(--u)) calc(1.5*var(--u)) calc(2.6*var(--u))}
-.ticket-tuck .ticket-stub{padding:calc(1.5*var(--u)) calc(1.2*var(--u)) calc(1.5*var(--u)) calc(1.9*var(--u))}
-.services-sheet .ticket-tuck .ticket-name{font-size:clamp(12px,calc(2.75*var(--u)),28px)}
-.ticket-tuck .ticket-scope{margin-top:calc(.55*var(--u))}
-.ticket-tuck .ticket-price{margin:0 0 calc(.55*var(--u));font-size:clamp(14px,calc(3.3*var(--u)),34px)}
-/* Squarer landscape screens (tablets): room to stack the audit tickets and set the type larger. */
+/* Squarer landscape screens (tablets): type set a little larger. */
 @media(orientation:landscape) and (max-aspect-ratio:3/2) and (min-height:501px){
  .services-sheet{--u:min(1dvh,.6vw)}
-}
-/* Taller landscape windows leave air above the pass, so it is printed a size up. */
-@media(orientation:landscape) and (max-aspect-ratio:8/5) and (min-height:501px){
- .audit-pass{--u:min(1.14dvh,.64vw)}
 }
 /* Phone landscape: the same spread, with type held at a readable floor. */
 @media(orientation:landscape) and (max-height:500px){
  .services-sheet{--u:.56vw}
  body .services-sheet h1{margin:0 0 1.2dvh}
- .ticket-body,.ticket-stub{padding-top:calc(1.1*var(--u));padding-bottom:calc(1.1*var(--u))}
- .audit-pass>.ticket-paper>.ticket-body{padding:calc(1.2*var(--u)) calc(2*var(--u)) calc(1.5*var(--u))}
- .audit-pass>.ticket-paper>.ticket-stub{padding:calc(1.2*var(--u)) calc(1.2*var(--u)) calc(1.5*var(--u)) calc(1.9*var(--u))}
- .services-sheet .audit-pass>.ticket-paper>.ticket-body>.ticket-name{font-size:clamp(14px,calc(3.4*var(--u)),40px)}
- .audit-pass .ticket-scope{margin-top:calc(.4*var(--u));line-height:1.3}
- .ticket-tuck{margin-top:calc(1*var(--u))}
- .ticket-tuck .ticket-body,.ticket-tuck .ticket-stub{padding-top:calc(.7*var(--u));padding-bottom:calc(.7*var(--u))}
- .ticket-tuck .ticket-scope{margin-top:calc(.3*var(--u))}
- .ticket-tuck .ticket-price{margin-bottom:calc(.3*var(--u))}
- .ticket-price{margin:calc(.3*var(--u)) 0}
- .ticket-addon{margin-top:calc(.7*var(--u));padding-top:calc(.7*var(--u))}
- .credit-coupon,.offer-ask{min-height:calc(4.1*var(--u));margin-top:calc(.3*var(--u))}
  body .services-sheet .audit>.audit-actions,.design-links{margin-top:calc(1.3*var(--u));min-height:calc(5*var(--u))}
  body .services-sheet .audit-self,body .services-sheet .design-links>.service-link,.ask-link{padding-bottom:4px}
 }
-
 /* Audit rates: a plain list in the contents style. Name, note, figure, hairline. */
 .rate-list{width:100%;margin-top:min(5.2dvh,48px);border-top:1px solid var(--line)}
 .rate-row{display:grid;--name:min(30px,2vw,3.9dvh);grid-template-columns:calc(var(--name)*3.5) minmax(0,1fr) auto;column-gap:min(2.4vw,34px);align-items:baseline;padding:min(2.3dvh,22px) 0;border-bottom:1px solid var(--line)}
@@ -301,7 +206,6 @@ body .services-sheet .audit-self,body .services-sheet .design-links>.service-lin
  .rate-row{--name:14px}.rate-note{font-size:8.5px;line-height:1.35}.rate-price{font-size:17px}.rate-price span{font-size:8px;margin-top:.3em}
  .rate-list{margin-top:3.2dvh}
 }
-
 /* Design rates: three columns in the same plain style as the Audit list. */
 .rate-columns{width:100%;margin-top:min(13dvh,120px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid #b9a985;border-bottom:1px solid #b9a985}
 .rate-col{--name:min(30px,2vw,3.9dvh);display:flex;flex-direction:column;align-items:flex-start;padding:min(2.3dvh,22px) min(1.5vw,22px) min(2.3dvh,22px);border-left:1px solid #b9a985;min-width:0}
@@ -316,7 +220,6 @@ body .services-sheet .audit-self,body .services-sheet .design-links>.service-lin
  .rate-addon{font-size:8.5px;line-height:1.35}
  .rate-col .rate-price{padding-top:.4dvh}.rate-col .rate-note{margin-top:.3em}.rate-col{padding-top:1.2dvh;padding-bottom:1.2dvh}
 }
-
 /* The lenses sit under the prices, so the Audit leaf opens with the same white space as Design. */
 @media(orientation:landscape),(min-width:1025px){
  .services-sheet .rate-list{margin-top:min(15.4dvh,136px)}

@@ -47,3 +47,6 @@
 
 /* "Free, MIT, yours to own." always starts the second line where the first sentence fits on one. */
 @media (min-width: 431px) { .diya-subline b { display: block; } }
+
+/* No line under the header on phones and portrait tablets either. */
+body.product-page.theme-diya .story-header { border-bottom-color: transparent; }

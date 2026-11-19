@@ -77,7 +77,7 @@ body.proof-page[data-next-page]>.magazine-leaf{background:var(--inlay-page);grid
  html,body,body.proof-page.has-magazine-turn{height:auto;min-height:100%;overflow:auto;background:var(--inlay-page)}
  body.proof-page[data-next-page]>.magazine-leaf{position:relative;inset:auto;height:auto;min-height:100dvh;padding:0 7vw;overflow:visible;clip-path:none!important}
  .leaf-fold,.leaf-handle{display:none}
- .proof-header{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;padding:calc(20px + env(safe-area-inset-top,0px)) 0 16px;border-bottom:1px solid var(--line)}
+ .proof-header{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;padding:calc(20px + env(safe-area-inset-top,0px)) 0 16px;border-bottom:1px solid transparent}
  .back-inside{min-height:44px}.back-inside svg{width:24px;height:24px;padding:6px}
  .proof-page footer{padding:28px 0 calc(28px + env(safe-area-inset-bottom,0px));gap:24px;font-size:12px;align-items:flex-start}
  .proof-page footer .folio{display:block;position:static;inset:auto;flex:none;font-size:28px}
