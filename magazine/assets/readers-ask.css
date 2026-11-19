@@ -1,0 +1,147 @@
+@font-face{font-family:Archivo;src:url('./archivo.ttf');font-display:swap}
+@font-face{font-family:Domaine;src:url('./domaine.otf');font-style:italic;font-display:swap}
+@font-face{font-family:Mono;src:url('./mono-light.ttf');font-display:swap}
+/* The letters page: salmon newsprint, and every question arrives as a speech bubble. */
+:root{--ground:#f3d9c9;--bubble:#fffaf1;--ink:#292720;--red:#c93219;--line:#d9b9a5;--label:#5a4a40;--answer:#37322b}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:Archivo,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,p{margin:0}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;text-align:inherit;cursor:pointer}
+.ask-sheet{min-height:100dvh;padding:3.4dvh 4.45vw 0;display:flex;flex-direction:column}
+
+.running-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:1.7dvh;border-bottom:1px solid transparent;flex-shrink:0}
+.ask-navigation{display:flex;align-items:center;gap:14px}
+.ask-back{display:inline-flex;align-items:center;gap:8px;font-size:12px}
+.ask-back svg{width:20px;height:20px;padding:5px;border-radius:50%;background:var(--red);fill:none;stroke:#fff;stroke-width:1.6;flex:none}
+.ask-back:hover{text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:5px}
+.ask-separator{width:1px;height:14px;background:var(--line)}
+.ask-label{font:10px Mono,monospace;letter-spacing:.1em;color:var(--label)}
+
+/* Masthead: the word "ask." is itself spoken. */
+.ask-title h1{display:flex;flex-direction:column;align-items:flex-start;gap:.07em;font-size:clamp(56px,7.6vw,150px);font-weight:400;letter-spacing:-.07em;line-height:.86}
+.ask-title h1 em{position:relative;display:inline-block;margin:0 0 .22em .05em;padding:.05em .26em .17em .2em;background:var(--ink);color:var(--bubble);border-radius:.3em;font:italic .9em/.9 Domaine,serif;letter-spacing:-.04em;transform:rotate(-5deg)}
+.ask-title h1 em::after{content:"";position:absolute;left:.32em;bottom:-.2em;width:.34em;height:.34em;background:var(--ink);clip-path:polygon(0 0,100% 0,8% 100%)}
+.ask-title h1 .dot{color:#ff5a3c;font-style:normal}
+.ask-index{display:flex;flex-wrap:wrap;gap:8px}
+.ask-index a{display:inline-flex;padding:8px 14px;border:1.5px solid var(--ink);border-radius:999px;font-size:13px;transition:background .2s,color .2s}
+.ask-index a:hover,.ask-index a.is-current{background:var(--ink);color:var(--bubble)}
+
+.ask-group h2{font:11px Mono,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--label)}
+.ask-item h3{font:italic clamp(20px,1.75vw,30px)/1.16 Domaine,serif;font-weight:400;letter-spacing:-.015em}
+.ask-question{position:relative;display:inline-block;max-width:100%;padding:.55em .95em .62em;background:var(--bubble);border:1.75px solid var(--ink);border-radius:1em;box-shadow:5px 6px 0 var(--ink);text-wrap:balance;transform:rotate(-1.2deg);transition:transform .25s ease,box-shadow .25s ease,background .2s,color .2s}
+.ask-item:nth-child(even) .ask-question{transform:rotate(.9deg)}
+.ask-item:nth-child(4n+3) .ask-question{transform:rotate(.6deg)}
+.ask-item:nth-child(4n) .ask-question{transform:rotate(-.9deg)}
+/* The tail: an outlined corner tucked under the bubble's lower edge. */
+.ask-question::before,.ask-question::after{content:"";position:absolute;clip-path:polygon(0 0,100% 0,10% 100%);transition:background .2s}
+.ask-question::before{left:1.3em;bottom:-.82em;width:1.05em;height:.84em;background:var(--ink)}
+.ask-question::after{left:1.43em;bottom:-.58em;width:.74em;height:.66em;background:var(--bubble)}
+.ask-question:focus-visible{outline:2px solid var(--red);outline-offset:5px}
+.ask-answer::before{content:"Vishal";display:block;margin-bottom:.9em;font:10px Mono,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.ask-answer p{line-height:1.6;color:var(--answer)}
+.ask-answer p+p{margin-top:.8em}
+.ask-answer a,.ask-closing a{text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:1.5px;text-underline-offset:4px}
+.ask-answer a:hover,.ask-closing a:hover{color:var(--red)}
+.ask-pending{background:#ffe27a;color:#292720;padding:0 .3em;border-radius:2px;font-weight:600}
+
+.ask-footer{margin-top:auto;display:flex;align-items:center;gap:30px;border-top:1px solid var(--line);padding:1.6dvh 0 3.4dvh;font-size:12px;flex-shrink:0}
+.ask-closing{margin-right:auto;font:italic 16px/1.2 Domaine,serif;letter-spacing:-.005em}
+.ask-book{border-bottom:1px solid var(--ink);padding-bottom:3px}
+.ask-book:hover{color:var(--red);border-color:var(--red)}
+.ask-footer .folio{position:static!important;margin:0!important;font:italic 22px Domaine,serif;color:var(--ink)}
+
+/* Reading column: used on portrait screens, and anywhere the script has not run. */
+.ask-spread{display:block}
+.ask-title{padding:38px 0 30px}
+.ask-index{margin-top:20px}
+.ask-group{padding:34px 0 8px;border-top:1px solid var(--line);scroll-margin-top:12px}
+.ask-group h2{margin-bottom:30px}
+.ask-item{padding-bottom:42px}
+.ask-answer{margin:2.4em 0 0 14px;max-width:34em}
+.ask-answer p{font-size:16px}
+
+/* The spread: three columns held in one screen. Title, the questions, the answer. */
+@media(orientation:landscape),(min-width:1025px){
+ html.ask-live,html.ask-live body{height:100%;overflow:hidden}
+ html.ask-live .ask-sheet{position:fixed;inset:0;min-height:0}
+ html.ask-live .ask-spread{flex:1;min-height:0;display:grid;grid-template-columns:27% minmax(0,1fr);column-gap:6vw;padding:8dvh 0 5dvh}
+ html.ask-live .ask-title{padding:0;display:flex;flex-direction:column;min-height:0}
+ html.ask-live .ask-index{margin-top:auto;flex-direction:column;align-items:flex-start;gap:1.2dvh}
+ html.ask-live .ask-index a{font:italic clamp(19px,1.75vw,29px)/1 Domaine,serif;letter-spacing:-.015em;padding:.36em .8em .44em;border-radius:999px}
+ html.ask-live .ask-index a:not(.is-current){border-color:transparent;padding-left:0}
+ html.ask-live .ask-index a:not(.is-current):hover{background:none;color:var(--red)}
+ html.ask-live .ask-letters{min-height:0;display:grid}
+ html.ask-live .ask-group{grid-area:1/1;padding:0;border:0;display:none;min-height:0}
+ html.ask-live .ask-group.is-current{display:flex;flex-direction:column}
+ html.ask-live .ask-group h2{margin-bottom:5dvh}
+ html.ask-live .ask-columns{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,46fr) minmax(0,54fr);grid-template-rows:repeat(6,auto) 1fr;column-gap:6.5vw;row-gap:min(4.4dvh,34px);align-content:start}
+ html.ask-live .ask-item{display:contents}
+ html.ask-live .ask-item h3{grid-column:1;font-size:min(1.55vw,3dvh)}
+ html.ask-live .ask-question{transform:rotate(-1deg)}
+ html.ask-live .ask-item:nth-child(even) .ask-question{transform:rotate(.8deg)}
+ html.ask-live .ask-item.is-current .ask-question{background:var(--ink);color:var(--bubble);box-shadow:5px 6px 0 var(--red);transform:rotate(0) translateX(10px)}
+ html.ask-live .ask-item.is-current .ask-question::after{background:var(--ink)}
+ /* In the spread the bubble speaks sideways, toward its answer. */
+ html.ask-live .ask-question::before,html.ask-live .ask-question::after{clip-path:polygon(0 0,100% 72%,0 100%);bottom:auto}
+ html.ask-live .ask-question::before{left:100%;top:calc(50% - .4em);width:.95em;height:.95em}
+ html.ask-live .ask-question::after{left:calc(100% - 3px);top:calc(50% - .29em);width:.72em;height:.7em}
+ html.ask-live .ask-answer{grid-column:2;grid-row:1/-1;margin:0;max-width:none;display:none;align-self:start}
+ html.ask-live .ask-item.is-current .ask-answer{display:block;animation:ask-reply .28s ease both}
+ html.ask-live .ask-answer p{font-size:min(1.42vw,2.75dvh);line-height:1.55;letter-spacing:-.01em;color:var(--ink);max-width:24em}
+ html.ask-live .ask-answer::before{margin-bottom:1.4em}
+}
+@keyframes ask-reply{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+ html.ask-live .ask-item:not(.is-current) .ask-question:hover{transform:rotate(0) translate(-2px,-2px);box-shadow:7px 8px 0 var(--ink)}
+}
+/* Short laptops: six bubbles still clear the footer. */
+@media(orientation:landscape) and (min-height:501px) and (max-height:780px){
+ html.ask-live .ask-spread{padding:5.5dvh 0 5dvh}
+ html.ask-live .ask-group h2{margin-bottom:3.6dvh}
+ html.ask-live .ask-columns{row-gap:3.1dvh}
+}
+/* Short landscape phones. */
+@media(orientation:landscape) and (max-height:500px){
+ html.ask-live .ask-spread{padding:6dvh 0 3dvh;grid-template-columns:22% minmax(0,1fr);column-gap:5vw}
+ .ask-title h1{font-size:min(6.4vw,17dvh)}
+ html.ask-live .ask-index{gap:0}
+ html.ask-live .ask-index a{font-size:min(14px,4.4dvh);padding:.3em .8em .38em}
+ html.ask-live .ask-group h2{font-size:8px;margin-bottom:4dvh}
+ html.ask-live .ask-columns{row-gap:3.2dvh}
+ html.ask-live .ask-spread{padding-top:4.5dvh}
+ html.ask-live .ask-group h2{margin-bottom:3dvh}
+ html.ask-live .ask-item h3{font-size:min(13.5px,3.4dvh)}
+ .ask-question{border-width:1.25px;box-shadow:3px 4px 0 var(--ink)}
+ html.ask-live .ask-item.is-current .ask-question{box-shadow:3px 4px 0 var(--red)}
+ html.ask-live .ask-answer p{font-size:min(12px,3.15dvh);line-height:1.48;max-width:27em}
+ .ask-answer::before{font-size:8px}
+ html.ask-live .ask-answer::before{margin-bottom:.9em}
+ html.ask-live .ask-columns{column-gap:5vw}
+ .ask-footer{font-size:10px;padding-bottom:2.4dvh}.ask-closing{font-size:12px}.ask-footer .folio{font-size:17px}
+ .ask-back{font-size:11px}.ask-label{font-size:8px}
+}
+/* Portrait phones and tablets: one reading column. */
+@media(max-width:1024px) and (orientation:portrait){
+ .ask-sheet{padding:18px 22px 0}
+ .running-head{padding-bottom:14px}
+ .ask-separator,.ask-label{display:none}
+ .ask-title h1{font-size:clamp(62px,19vw,150px)}
+ .ask-index a.is-current{background:none;color:inherit}
+ .ask-item h3{font-size:23px}
+ .ask-question{cursor:default;box-shadow:4px 5px 0 var(--ink)}
+ .ask-footer{flex-wrap:wrap;gap:16px 24px;padding:22px 0 30px;font-size:13px}
+ .ask-closing{flex-basis:100%;font-size:20px}
+ .ask-footer .folio{margin-left:auto!important;font-size:24px}
+}
+@media(min-width:700px) and (max-width:1024px) and (orientation:portrait){
+ .ask-sheet{padding-left:56px;padding-right:56px}
+ .ask-item h3{font-size:28px}
+ .ask-answer{margin-left:36px}
+ .ask-answer p{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){html.ask-live .ask-item.is-current .ask-answer{animation:none}.ask-question{transition:none}}
+
+/* No one-word last lines in answers. */
+.ask-answer p{text-wrap:pretty}

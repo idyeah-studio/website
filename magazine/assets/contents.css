@@ -1,7 +1,7 @@
 /* Page 02: an editorial index, on the cover's vermilion stock. */
 .magazine-under{overflow-y:auto;color:#f4edda;font-family:CoverArchivo,Arial,sans-serif}
 .contents-page{min-height:100%;padding:3.4dvh 4.45vw 4dvh;display:flex;flex-direction:column;position:relative;max-width:1900px;margin:auto}
-.contents-meta{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #f4edda55;padding-bottom:16px;font:300 10px CoverMono,monospace;letter-spacing:.12em;text-transform:uppercase}
+.contents-meta{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid transparent;padding-bottom:16px;font:300 10px CoverMono,monospace;letter-spacing:.12em;text-transform:uppercase}
 .contents-meta strong{font:italic 26px CoverDomaine,serif;letter-spacing:-.04em;text-transform:none}
 .contents-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);column-gap:9vw;flex:1;padding-top:25px}
 .contents-main h1{font:italic clamp(90px,12.6vw,195px)/.88 CoverDomaine,serif;letter-spacing:-.06em;margin:0 0 31px -7px;color:#291c18;font-weight:400}
@@ -112,3 +112,18 @@ body.destination-turn .page-return,body.destination-turn .contents-turn,body.des
 @media(max-width:760px){.contents-nav .nav-subtitle{font-size:10px}}
 
 .contents-contact a,.contents-contact a:first-child{font-size:14px}
+
+/* Readers ask: a spoken aside beside the contact links, quieter than the contents list. */
+.contents-contact .contents-ask{position:relative;margin:-16px 0 -16px auto;align-self:center;display:inline-flex;flex-direction:column;gap:7px;padding:10px 17px 11px;border:1.5px solid #291c18;border-radius:16px;background:#f4edda;color:#291c18;font-size:inherit;transform:rotate(3deg);box-shadow:3px 4px 0 #291c18;transition:transform .25s ease,box-shadow .25s ease}
+.contents-contact .contents-ask::before,.contents-contact .contents-ask::after{content:"";position:absolute;clip-path:polygon(0 0,100% 0,10% 100%)}
+.contents-contact .contents-ask::before{left:18px;bottom:-15px;width:19px;height:15px;background:#291c18}
+.contents-contact .contents-ask::after{left:20.5px;bottom:-10.5px;width:13px;height:12px;background:#f4edda}
+.contents-ask .ask-line{font:italic 19px/1 CoverDomaine,serif;letter-spacing:-.01em}
+.contents-ask .ask-page{font:400 9px/1 CoverMono,monospace;letter-spacing:.06em;text-transform:uppercase;color:#5b3a30}
+@media(hover:hover){.contents-contact .contents-ask:hover{transform:rotate(-2deg) translate(-1px,-2px);box-shadow:5px 6px 0 #291c18}}
+@media(prefers-reduced-motion:reduce){.contents-contact .contents-ask{transition:none}}
+@media(max-width:760px){.contents-contact .contents-ask{margin:22px 0 10px;align-self:auto}}
+@media(orientation:landscape) and (max-height:500px){.contents-contact .contents-ask{padding:5px 10px 6px;border-radius:11px;box-shadow:2px 3px 0 #291c18}.contents-contact .contents-ask{gap:4px;margin:-10px 0 -10px auto}.contents-ask .ask-line{font-size:12px}.contents-ask .ask-page{font-size:6px}.contents-contact .contents-ask::before{left:12px;bottom:-10px;width:13px;height:10px}.contents-contact .contents-ask::after{left:13.8px;bottom:-6.8px;width:8.5px;height:8px}}
+
+/* Header: volume and studio line sit level with the wordmark, as on every other page. */
+@media(orientation:landscape) and (min-width:761px){.contents-meta{align-items:center;border-bottom-width:4px}}

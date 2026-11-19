@@ -67,7 +67,9 @@ test('Practice and Proof describe existing services and real cases without fabri
   assert.deepEqual(proof.itemListElement.map(item => item.url), cases.map(item => `${origin}/proof/${item.slug}`));
   for (const source of Object.values(pages)) {
     walk(schema(read(source)), node => {
-      assert.ok(!['FAQPage', 'AggregateRating', 'Review', 'SearchAction'].includes(node['@type']), source);
+      assert.ok(!['AggregateRating', 'Review', 'SearchAction'].includes(node['@type']), source);
+      // Question data is allowed only on Readers Ask, where every question is visible on the page.
+      if (node['@type'] === 'FAQPage') assert.equal(source, '/magazine/readers-ask.html');
       for (const property of ['price', 'priceRange', 'aggregateRating', 'reviewRating', 'datePublished', 'foundingDate']) {
         assert.ok(!(property in node), `${source}: ${property}`);
       }
@@ -99,4 +101,16 @@ test('metadata generation is idempotent and all public copies stay synchronized'
     assert.equal(render(route, original), original, route);
   }
   assert.deepEqual(run(true), []);
+});
+
+test('Readers Ask question data matches the visible page and has no unfinished placeholders', () => {
+  const html = read('/magazine/readers-ask.html');
+  const faq = schema(html)['@graph'].find(node => node['@type'] === 'FAQPage');
+  const visible = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
+  assert.ok(faq.mainEntity.length >= 10);
+  for (const item of faq.mainEntity) {
+    assert.ok(visible.includes(item.name), item.name);
+    for (const sentence of item.acceptedAnswer.text.split(/(?<=\.) /)) assert.ok(visible.includes(sentence), sentence);
+  }
+  assert.ok(!/ask-pending|\[PRICE\]|\[N\]/.test(html), 'Readers Ask still has a placeholder');
 });

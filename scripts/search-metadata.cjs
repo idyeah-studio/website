@@ -83,7 +83,14 @@ function setMeta(html, key, value, property = false) {
   return matches.length ? html.replace(pattern, () => tag) : html.replace('</head>', `${tag}\n</head>`);
 }
 
-function graphFor(route, title, description) {
+// Questions and answers are read from the page, so the search data cannot drift from it.
+function readQuestions(source) {
+  const text = value => unescape(value.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim());
+  return [...source.matchAll(/<article class="ask-item"><h3>([\s\S]*?)<\/h3><div class="ask-answer">([\s\S]*?)<\/div><\/article>/g)]
+    .map(match => ({ question: text(match[1]), answer: text(match[2].replace(/<\/p><p>/g, ' ')) }));
+}
+
+function graphFor(route, title, description, source = '') {
   const url = origin + route;
   const pageId = `${url}#webpage`;
   const organization = {
@@ -150,6 +157,13 @@ function graphFor(route, title, description) {
       itemListElement: cases.map((item, index) => ({ '@type': 'ListItem', position: index + 1, name: item.client, url: `${origin}/proof/${item.slug}` })),
     });
   }
+  if (route === '/readers-ask') {
+    page['@type'] = 'FAQPage';
+    page.mainEntity = readQuestions(source).map(item => ({
+      '@type': 'Question', name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    }));
+  }
   const project = cases.find(item => route === `/proof/${item.slug}`);
   if (project) {
     const workId = `${url}#case-study`;
@@ -187,7 +201,7 @@ function render(route, source) {
   for (const [key, value] of Object.entries({ 'twitter:card': 'summary_large_image', 'twitter:title': shareTitle,
     'twitter:description': shareDescription, 'twitter:image': image, 'twitter:image:alt': imageAlt || title })) html = setMeta(html, key, value);
   // A single static graph is available on the initial response, without JS execution.
-  const graph = JSON.stringify(graphFor(route, title, description), null, 2).replace(/</g, '\\u003c');
+  const graph = JSON.stringify(graphFor(route, title, description, source), null, 2).replace(/</g, '\\u003c');
   const script = `<script id="idyeah-search-metadata" type="application/ld+json">\n${graph}\n</script>`;
   const pattern = /<script id="idyeah-search-metadata" type="application\/ld\+json">[\s\S]*?<\/script>/;
   html = pattern.test(html) ? html.replace(pattern, () => script) : html.replace('</head>', `${script}\n</head>`);

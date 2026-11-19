@@ -44,3 +44,6 @@
   .diya-subline { font-size: 15px; }
   .diya-install code { font-size: 12px; }
 }
+
+/* "Free, MIT, yours to own." always starts the second line where the first sentence fits on one. */
+@media (min-width: 431px) { .diya-subline b { display: block; } }
