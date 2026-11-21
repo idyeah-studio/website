@@ -100,7 +100,7 @@ function graphFor(route, title, description, source = '') {
     email: 'vishal@idyeah.studio', founder: { '@id': personId },
     address: { '@type': 'PostalAddress', addressLocality: 'Cupertino', addressRegion: 'California', addressCountry: 'US' },
     areaServed: { '@type': 'Place', name: 'San Francisco Bay Area' },
-    sameAs: ['https://x.com/idyeahstudio', 'https://github.com/idyeah-studio', 'https://idyeah.gumroad.com/'],
+    sameAs: ['https://x.com/idyeahstudio', 'https://github.com/idyeah-studio', 'https://idyeah.gumroad.com/', 'https://www.linkedin.com/company/idyeah-studio', 'https://www.crunchbase.com/organization/idyeah'],
     brand: [
       { '@type': 'Brand', name: 'Crit8', url: 'https://crit8.ai/' },
       { '@type': 'Brand', name: 'DIYA', url: 'https://diya13.ai/' },
