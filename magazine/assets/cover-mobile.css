@@ -15,10 +15,10 @@
  .cover-descriptor{left:7vw;top:calc(env(safe-area-inset-top,0px) + 20px + 20.5vw + 40px);bottom:auto;font-size:9px;letter-spacing:1.6px;text-shadow:none}
  .cover-feature{left:7vw;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 77px);width:70vw;transform:none}
  .cover-feature .feature-kicker{gap:8px;margin-bottom:12px;font-size:10px;letter-spacing:.7px}
- .feature-eyebrow{font-size:9px;letter-spacing:.6px}.feature-mosaix-logo{width:64px}
+ .feature-eyebrow{font-size:9px;letter-spacing:.6px}.feature-diya-logo{width:46px}
  .cover-feature .feature-headline{font-size:27px;line-height:1.04;letter-spacing:-.4px}
  .cover-feature .feature-credit{font-size:10px;line-height:1.4;margin-top:10px;white-space:normal;max-width:235px}
- .feature-link{font-size:12px;gap:12px;margin-top:7px;min-height:36px;align-items:center}.feature-link-folio{font-size:10px}
+ .cover-feature .feature-actions{gap:18px;margin-top:7px;align-items:baseline}.feature-sources{gap:14px}.feature-source{font-size:12px;padding:7px 0}.feature-link{font-size:12px;gap:12px;margin-top:0;min-height:36px;align-items:center}.feature-link-folio{font-size:10px}
  .cover-launch{right:2vw;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 180px);width:100px;height:107px;transform:rotate(-12deg)}
  .cover-barcode{--barcode-length:76px;--barcode-depth:24px;right:4.5vw;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 77px)}
  .barcode-label{display:none}
