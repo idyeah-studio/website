@@ -1,6 +1,6 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const products=[
- {name:'crit-audit',route:'/products/crit-audit',label:'Crit8',folio:22},
+ {name:'crit-audit',route:'/products/crit8',label:'Crit8',folio:22},
  {name:'diya',route:'/products/diya',label:'DIYA',folio:23},
 ];
 const pages=['index','services','proof','mosaix-story','rialty-story','ionate-story','simcomm-story','stealth-story','firecracker-story','vishal',...products.map(product=>product.name)];
@@ -132,12 +132,12 @@ test('the product entry, legacy keya routes and retired products redirect to the
  for(const url of ['/products','/products/','/products/keya','/products/keya/','/products/keya.html','/magazine/products-study','/magazine/products-study.html']){
   const redirect=redirectFor(url);
   assert.ok(redirect,`${url}: permanent redirect`);
-  assert.equal(redirect.headers.Location,'/products/crit-audit',url);
+  assert.equal(redirect.headers.Location,'/products/crit8',url);
  }
  assert.ok(!Object.hasOwn(publicPages,'/products/keya'));
  const retired={
-  '/products/crit-mobile':'/products/crit-audit','/products/crit-ios':'/products/crit-audit','/products/crit-figma':'/products/crit-audit',
-  '/magazine/crit-ios':'/products/crit-audit','/magazine/crit-figma':'/products/crit-audit',
+  '/products/crit-audit':'/products/crit8','/products/crit-mobile':'/products/crit8','/products/crit-ios':'/products/crit8','/products/crit-figma':'/products/crit8',
+  '/magazine/crit-ios':'/products/crit8','/magazine/crit-figma':'/products/crit8',
   '/products/dated-figma':'https://www.figma.com/community/plugin/1686645937402418158','/magazine/dated-figma':'https://www.figma.com/community/plugin/1686645937402418158',
   '/products/design-ai-alchemy':'/person','/magazine/alchemy':'/person',
   '/products/wabi':'https://apps.apple.com/app/wabi-daily-practice/id6771074089','/magazine/wabi':'https://apps.apple.com/app/wabi-daily-practice/id6771074089',
@@ -150,7 +150,7 @@ test('the product entry, legacy keya routes and retired products redirect to the
  for(const file of ['crit-ios','crit-mobile','crit-figma','dated-figma','design-ai-alchemy','wabi'])assert.ok(!fs.existsSync(`products/${file}.html`),`${file}: public copy removed`);
  for(const name of ['index','inside']){
   const html=read(name);
-  assert.match(html,/<a href="\/products\/crit-audit"><span class="nav-name">Products<\/span>/);
+  assert.match(html,/<a href="\/products\/crit8"><span class="nav-name">Products<\/span>/);
   assert.ok(!html.includes('href="/products/keya"'),`${name}: old product entry`);
  }
 });

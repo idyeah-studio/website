@@ -56,7 +56,7 @@ const copy = {
     title: 'FirecrackerPR — Sales Pitch Deck Design · idyeah',
     description: 'A sales proposal for FirecrackerPR that puts their story and evidence in focus. Explore selected slides, the showreel, and feedback from CEO Edward Yang.',
   },
-  '/products/crit-audit': { title: 'Crit8 — Product & Website Audits · idyeah' },
+  '/products/crit8': { title: 'Crit8 — Product & Website Audits · idyeah' },
   '/products/diya': { title: 'DIYA · Components & Patterns in Code · idyeah' },
 };
 
