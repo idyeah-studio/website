@@ -143,7 +143,7 @@ class PublishedProductRoutesTests(unittest.TestCase):
 
     def test_both_clean_product_routes_serve_their_published_source(self):
         for route, source in (
-            ('/products/crit-audit', '/magazine/crit-audit.html'),
+            ('/products/crit8', '/magazine/crit-audit.html'),
             ('/products/diya', '/magazine/diya.html'),
         ):
             with self.subTest(route=route):
@@ -159,16 +159,23 @@ class PublishedProductRoutesTests(unittest.TestCase):
             with self.subTest(route=route):
                 status, headers, body = request_handler(self.handler, path=route)
                 self.assertEqual(status, 308)
-                self.assertEqual(headers['Location'], '/products/crit-audit')
+                self.assertEqual(headers['Location'], '/products/crit8')
                 self.assertEqual(body, b'')
 
     def test_new_product_source_urls_redirect_to_clean_routes(self):
-        for name in ('crit-audit', 'diya'):
+        for name, route in (('crit-audit', '/products/crit8'), ('diya', '/products/diya')):
             for suffix in ('', '.html'):
                 with self.subTest(name=name, suffix=suffix):
                     status, headers, _ = request_handler(self.handler, path=f'/magazine/{name}{suffix}')
                     self.assertEqual(status, 308)
-                    self.assertEqual(headers['Location'], f'/products/{name}')
+                    self.assertEqual(headers['Location'], route)
+
+    def test_old_crit_audit_address_redirects_to_crit8(self):
+        for suffix in ('', '.html'):
+            with self.subTest(suffix=suffix):
+                status, headers, _ = request_handler(self.handler, path=f'/products/crit-audit{suffix}')
+                self.assertEqual(status, 308)
+                self.assertEqual(headers['Location'], '/products/crit8')
 
     def test_promoted_counter_script_is_available_in_the_published_assets(self):
         asset = '/magazine/assets/product-pages/diya-countdown.js'

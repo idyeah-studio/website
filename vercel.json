@@ -3,10 +3,17 @@
   "trailingSlash": false,
   "routes": [
     {
+      "src": "/products/crit-audit(?:\\.html)?/?",
+      "status": 308,
+      "headers": {
+        "Location": "/products/crit8"
+      }
+    },
+    {
       "src": "/products/crit-ios(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-audit"
+        "Location": "/products/crit8"
       }
     },
     {
@@ -76,28 +83,28 @@
       "src": "/products/?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-audit"
+        "Location": "/products/crit8"
       }
     },
     {
       "src": "/products/keya(?:\\.html)?/?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-audit"
+        "Location": "/products/crit8"
       }
     },
     {
       "src": "/products/crit-mobile(?:\\.html)?/?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-audit"
+        "Location": "/products/crit8"
       }
     },
     {
       "src": "/products/crit-figma(?:\\.html)?/?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-audit"
+        "Location": "/products/crit8"
       }
     },
     {
@@ -160,14 +167,14 @@
       "src": "/magazine/products-study(?:\\.html)?/?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-audit"
+        "Location": "/products/crit8"
       }
     },
     {
       "src": "/magazine/crit-audit(?:\\.html)?/?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-audit"
+        "Location": "/products/crit8"
       }
     },
     {
@@ -188,14 +195,14 @@
       "src": "/magazine/crit-ios(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-audit"
+        "Location": "/products/crit8"
       }
     },
     {
       "src": "/magazine/crit-figma(?:\\.html)?",
       "status": 308,
       "headers": {
-        "Location": "/products/crit-audit"
+        "Location": "/products/crit8"
       }
     },
     {
